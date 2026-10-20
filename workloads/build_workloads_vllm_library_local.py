@@ -178,7 +178,7 @@ output_tokens = sum(
     for r in successful
 )
 
-folder = Path("results/source-checkout")
+folder = Path("results/source-checkout-memory-pressure-local")
 folder.mkdir(parents=True, exist_ok=True)
 output = folder / f"concurrent-{datetime.now():%Y%m%d-%H%M%S-%f}.json"
 
