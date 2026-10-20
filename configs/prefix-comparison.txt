@@ -1,0 +1,91 @@
+Controlled prefix comparison (new workload, new matched baseline)
+================================================================
+
+Files:
+  workloads/compare_prefix_policies.py   workload client
+  src/serve_prefix_comparison.sh        matching server launcher
+
+The existing 25-request benchmark and scheduler implementation are untouched.
+Run these commands from /Users/nandanadileep/projects/vllm/vllm/vllm-exp.
+Only run one server at a time on port 8001. Restart before EVERY workload run.
+The client --policy labels results; the launcher selects the actual policy.
+
+Diagnostic FCFS run
+-------------------
+Terminal 1 (stop any previous source server first):
+  bash src/serve_prefix_comparison.sh fcfs trace
+
+Terminal 2, after the server is ready:
+  .venv/bin/python workloads/compare_prefix_policies.py --policy fcfs --trace-latest
+
+Diagnostic prefix-first run
+---------------------------
+Stop Terminal 1's server, then restart it:
+  bash src/serve_prefix_comparison.sh prefix_first trace
+
+Terminal 2, after the server is ready:
+  .venv/bin/python workloads/compare_prefix_policies.py --policy prefix_first --trace-latest
+
+Look for valid_run=true, max_candidates_waiting=5 and candidate_reorders in the
+prefix-first result. The actual trace must demonstrate the ordering; HTTP send
+order alone does not guarantee engine arrival order. A null/empty demonstration
+is not evidence of a policy benefit. Warm-up reuse can also vary with eviction.
+
+Performance comparison
+----------------------
+After confirming the diagnostic behavior, restart in bench mode (trace disabled):
+  bash src/serve_prefix_comparison.sh fcfs bench
+Then run:
+  .venv/bin/python workloads/compare_prefix_policies.py --policy fcfs
+
+Stop that server; start the other policy:
+  bash src/serve_prefix_comparison.sh prefix_first bench
+Then run:
+  .venv/bin/python workloads/compare_prefix_policies.py --policy prefix_first
+
+Repeat with a fresh server each time; alternate policies over at least 3 pairs.
+Do not use --trace-latest in bench mode: it would inspect an older diagnostic log.
+Results go to results/prefix-comparison/<policy>/controlled-<timestamp>.json.
+Use candidate_summary for A-E latency and throughput, and batch_summary for the
+complete timed workload including the three slot-holding requests. Warm-up is
+excluded from both. Both policies have the same fixed generation-token counts.
+There are no retries that silently alter the workload or token totals.
+
+What the workload sends
+------------------------
+1. One warm-up request containing a library document (one output token).
+2. Three requests H1-H3, each generating 128 tokens, occupying the three slots.
+3. Once all three produce their first text, submit A, B, C, D, E at 20 ms offsets.
+   All five are submitted independently; the client does not wait for A/B to end.
+   Each candidate generates exactly 64 tokens (ignore_eos=true).
+4. Save all timings, prompts, outputs, usage and trace IDs. If the blockers finish
+   before all candidates have been submitted, flag the setup as invalid.
+
+Candidates are ordinary chat messages, with no cache/scheduling hints:
+  A/B: unrelated coral/transport prompts; shared system prefix only.
+  C/D: the exact long library document used in warm-up, different questions.
+  E: the first paragraph of that document, followed by different branch details.
+
+Offline Qwen tokenizer verification (16-token blocks; cache still present):
+  A/B: 16 potential reusable tokens; C/D: 176; E: 64.
+  Chat prompt lengths: A112, B113, C207, D209, E116.
+These are cache-hit potentials, not a claim about runtime hits; verify the trace.
+The total maximum generation is 704 timed tokens (384 blockers + 320 candidates),
+plus the excluded one-token warm-up. Candidate throughput includes the artificial
+wait behind the blockers, so interpret it as this controlled workload's result.
+
+Matching server settings for both policies
+------------------------------------------
+Qwen/Qwen3-0.6B, port8001, context512, running slots3, block size16, KV blocks96,
+prefix caching and chunked prefill enabled, synchronous scheduling, seed0,
+requested batch token budget128. The backend startup log shows effective values.
+The waiting safeguard is 10 seconds for this staged test; source default stays2.
+Maximum client concurrency is8 (3 blockers + 5 candidates).
+
+This is a controlled cache-order test with more KV capacity than the previous
+16-block pressure experiment. Compare these two new runs with each other, not
+with the old pressure baseline. Once ordering is demonstrated, memory pressure
+can be introduced as a separate matched experiment.
+
+No-network workload preview:
+  .venv/bin/python workloads/compare_prefix_policies.py --policy fcfs --prepare-only
