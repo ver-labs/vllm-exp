@@ -1,0 +1,91 @@
+Experiment03: approximate non-prefix reuse with rule-based sparse repair
+=======================================================================
+
+Status: IMPLEMENTED / NOT BENCHMARKED on a pretrained model.
+This is an independent MLX prototype of the reuse-and-repair rule, not a copy,
+port, or reproduction of CacheBlend. We use existing MLX Qwen3 projection,
+normalization and MLP modules, with our own sparse prefill and cache assembly.
+The vLLM scheduler, allocator and installed dependencies are unchanged.
+
+Rule and actual compute
+-----------------------
+1. Prefill [source prefix + shared document] once; save per-layer document KV.
+2. For [new prefix + identical document token IDs + new suffix], rebuild KV from
+   the new prefix and suffix plus the reusable document rows.
+3. Move cached document keys to their new absolute positions using standard RoPE.
+   Values have no RoPE. This fixes position, not old-context contamination.
+4. Recompute a chosen subset of document tokens at EVERY transformer layer.
+   Nonselected document rows retain old-context KV. Only active rows pass
+   through Q/K/V projections, attention, output projection and MLP.
+5. Use an explicit causal mask based on original absolute token positions.
+   Selected tokens attend to the assembled full KV, not a compressed sequence.
+6. Resume ordinary MLX autoregressive decode from the assembled KVCache objects.
+
+Selectors: boundary=first ceil(ratio*document_length) rows; uniform=evenly spaced
+rows. Neither is CacheBlend's KV-deviation-based token selection algorithm.
+Ratios apply ONLY to document tokens; all new prefix/suffix tokens are computed.
+The report records actual recomputed/reused rows per layer so a10% repair ratio
+cannot be misread as a90% reduction in total prompt work.
+
+Reference arms
+--------------
+- Native dense MLX prefill: recompute the whole target prompt.
+- Ratio0: reposition and reuse document KV, no document repair (approximate).
+- Ratios10%,25%,50%: sparse repair.
+- Ratio100%: all document rows recomputed; numerical correctness endpoint.
+Cache preparation time and cache bytes are recorded separately, not hidden in
+claims about cold-request speed. Cache remains in local device memory; no
+LMCache, offloading server, connector or shared vLLM blocks are involved.
+
+Scope
+-----
+Only dense full-attention mlx_lm.models.qwen3.Model with standard nontraditional
+unscaled full-head RoPE. Reject unsupported rope_scaling, other architectures,
+empty document/suffix, invalid tokens, excessive context, or another adapter's
+cached chunk. Cache is session-local; weights must remain unchanged. Shared
+chunk equality is checked on TOKEN IDs. No production prefix-hash checks are
+removed. Incomplete repair is approximate and may reduce answer accuracy.
+
+Prepared diagnostic workload
+-----------------------------
+8 small definition/report/question cases change what ALPHA means before the
+same shared report. Gold answers change accordingly. Current local tokenizer:
+source prefix33 tokens; target33 for cases1-4 and49 for cases5-8; document94;
+suffix22. Thus the first4 cases isolate changed context at an unchanged position,
+and the last4 also shift document positions by16 tokens.
+
+Chat template text is split at a marker and the three pieces are encoded
+separately, then concatenated as token IDs. Both dense and sparse arms consume
+EXACTLY the same target IDs. This controls BPE boundary differences but is not
+a claim that independently encoded pieces equal tokenizing arbitrary joined text.
+
+The future runner records exact answer accuracy, greedy generation agreement,
+next-token KL divergence, logit error, actual repaired positions, row counts,
+cache preparation cost, cache bytes, output lengths, prefill time and first-token
+time. Greedy output lengths can differ; speed comparisons must account for this.
+It warms each arm, but uses FIXED order and one pass: timings are exploratory,
+not a randomized production-serving benchmark. Sparse tensor gathers, cache
+assembly and Python overhead may outweigh saved matrix work. No speedup claimed.
+
+Files and commands
+-------------------
+  src/nonprefix_repair.py                 sparse algorithm and cache object
+  workloads/run_nonprefix_repair.py       future quality/timing evaluation
+  tests/test_nonprefix_repair.py          tiny random-model correctness checks
+
+Preview only (no model weights loaded):
+  .venv/bin/python workloads/run_nonprefix_repair.py --prepare-only
+
+Correctness checks (tiny random models; CPU and small Metal forwards):
+  .venv/bin/python -m unittest discover -s tests -p test_nonprefix_repair.py -v
+
+For LATER execution with the already cached original Qwen3-0.6B checkpoint:
+  .venv/bin/python workloads/run_nonprefix_repair.py --selector boundary
+  .venv/bin/python workloads/run_nonprefix_repair.py --selector uniform
+No download is attempted: snapshot lookup uses local_files_only=True.
+Outputs would go to results/nonprefix-repair/repair-<timestamp>.json.
+Neither command above was used to benchmark the pretrained model during setup.
+
+Research reference: https://arxiv.org/abs/2405.16444
+Our experiment follows only the general reuse-plus-selective-recomputation rule.
+CacheBlend's published quality/speed claims do not apply to this prototype.

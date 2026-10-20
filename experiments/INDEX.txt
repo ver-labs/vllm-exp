@@ -6,9 +6,12 @@ Experiment registry
 02-frequency-eviction/ : targeted hot-prefix retention gain (RESULTS.txt).
                          Full concurrent A-Y: no overall throughput advantage
                          and identical cache hits (RESULTS-AY.txt).
+03-nonprefix-repair/ : implemented standalone MLX rule-based reuse/repair prototype.
+                      Nine tiny random-model checks passed. Pretrained-model
+                      quality and performance experiments deferred. See PLAN.txt.
 
-Current branch in harness and editable source: study/experiment-02.
-Default scheduling: FCFS. Default eviction: upstream vLLM.
-Experimental policies and tracing are opt-in. No experiment server is running.
-Previous experiment is checkpointed on study/experiment-01-prefix-scheduling.
+Current branch in both repos: study/experiment-03-nonprefix-repair.
+vLLM defaults remain FCFS scheduling and upstream eviction. Its implementation
+was not changed for experiment03. No server or pretrained benchmark is running.
+Completed code and evidence remain on the earlier experiment branches.
 Raw results/ are local generated data, excluded from Git, and preserved in place.

@@ -1,0 +1,33 @@
+{
+  "status": "implemented_not_benchmarked",
+  "pretrained_model_loaded_or_benchmarked": false,
+  "tiny_random_model_tests_passed": 9,
+  "validation_model": {
+    "architecture": "MLX Qwen3",
+    "hidden_size": 32,
+    "layers": 3,
+    "attention_heads": 4,
+    "kv_heads": 2,
+    "head_dim": 8,
+    "vocabulary": 128
+  },
+  "checks": [
+    "100% repair matches dense logits and every layer KV within float32 tolerance",
+    "0% repair with an identical prefix matches dense logits",
+    "partial uniform repair preserves prefix causality and source cache immutability",
+    "0% repair with a changed prefix can differ from dense",
+    "RoPE relocation matches native RoPE, including negative shifts",
+    "normal decode works after full repaired prefill",
+    "tiny Metal float32 dense/sparse forwards succeed",
+    "tiny Metal bfloat16 full-repair numerical check succeeds",
+    "invalid ratios, token mismatch, empty suffix and cross-session reuse rejected"
+  ],
+  "other_checks": [
+    "Ruff and Python compilation",
+    "cached tokenizer confirms same shared-document token IDs and unchanged suffix",
+    "four equal-position context-change cases and four +16-position cases",
+    "logit comparison and exact-answer normalization helpers checked"
+  ],
+  "quality_or_performance_improvement_established": false,
+  "limitations": "Tiny random-model checks do not establish pretrained-model answer quality or speed. Fixed-order runner timing is exploratory."
+}
