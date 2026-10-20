@@ -61,10 +61,14 @@ def send_request(label, prompt, batch_start):
         "stream_options": {"include_usage": True},
     }
 
+    trace_request_id = f"study-{label}-{time.time_ns()}"
     request = Request(
         URL,
         data=json.dumps(payload).encode(),
-        headers={"Content-Type": "application/json"},
+        headers={
+            "Content-Type": "application/json",
+            "X-Request-Id": trace_request_id,
+        },
         method="POST",
     )
 
@@ -76,7 +80,7 @@ def send_request(label, prompt, batch_start):
     stream_done = False
 
     with print_lock:
-        print(f"[START] {label}: {prompt}", flush=True)
+        print(f"[START] {label} ({trace_request_id}): {prompt}", flush=True)
 
     start = time.perf_counter()
 
@@ -119,6 +123,7 @@ def send_request(label, prompt, batch_start):
 
     return {
         "request_id": label,
+        "trace_request_id": trace_request_id,
         "prompt": prompt,
         "answer": answer,
         "started_ms": round((start - batch_start) * 1000, 2),
