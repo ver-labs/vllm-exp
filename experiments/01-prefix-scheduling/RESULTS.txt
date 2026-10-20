@@ -1,0 +1,24 @@
+Experiment 01: prefix-aware and fixed-FCFS-head scheduling (COMPLETED)
+
+The final A-Y comparison used three timed runs per policy, identical inputs,
+1600 candidate output tokens per run, and a fresh server and warmup each time.
+
+Policy         Median A-Y time   A first text   B first text
+FCFS                  18.77 s         3.37 s         3.40 s
+Prefix-first          18.89 s        10.79 s        10.77 s
+Hybrid                19.01 s         3.32 s         3.34 s
+
+The hybrid improved A/B latency relative to prefix-first by protecting their
+place in the queue. It did not establish an overall advantage over FCFS.
+Later requests can wait longer when others are prioritized. Timing differences
+between policies remain small relative to variation; three runs are limited.
+
+Frozen summaries and the full A-Y CSV are under evidence/. Raw logs, traces and
+individual measurements remain at their original results/ paths. Checksums for
+all existing result files are in results-inventory.json.
+
+Both Git repos have a completed checkpoint branch:
+  study/experiment-01-prefix-scheduling
+The editable source checkpoint commit is recorded in manifest.json. The next
+experiment starts from study/experiment-02 with FCFS as the default policy.
+Experimental policies and tracing remain opt-in. No data was deleted.

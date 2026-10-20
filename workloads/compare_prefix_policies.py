@@ -59,6 +59,60 @@ PROMPTS = {
         "Suggest three practical improvements for this branch."
     ),
 }
+
+
+def build_prompts(count):
+    prompts = dict(PROMPTS)
+    if count == 5:
+        return prompts
+    unrelated = {
+        "F": "A beekeeper is tracking how bees pollinate flowering plants.",
+        "I": "Astronomers are observing gas clouds where new stars are forming.",
+        "L": "An apartment building wants to turn kitchen scraps into compost.",
+        "O": "Geologists are studying earthquakes along an active fault line.",
+        "R": "A school science club is comparing rechargeable battery designs.",
+        "U": "A village is choosing water filters for its community buildings.",
+        "X": "Traffic planners are investigating congestion at a busy crossroads.",
+    }
+    long_questions = {
+        "G": "Suggest three improvements to reservation reminder emails.",
+        "J": "Explain how staff should handle cancelled reservations.",
+        "M": "Suggest three useful weekly measurements for the library.",
+        "P": "Explain how the library can support members without internet access.",
+        "S": "Suggest three ways to make collection deadlines clearer.",
+        "V": "Explain how staff can investigate repeated collection delays.",
+        "Y": "Suggest a simple plan to evaluate changes to the service.",
+    }
+    medium_questions = {
+        "H": "Explain how volunteers could organize the paper waiting list.",
+        "K": "Suggest three ways to improve telephone reminders.",
+        "N": "Explain how volunteers should record cancellations.",
+        "Q": "Suggest three ways to make collection times convenient.",
+        "T": "Explain how staff can prevent duplicate paper reservations.",
+        "W": "Suggest simple measurements for the branch to review weekly.",
+    }
+    for label in "FGHIJKLMNOPQRSTUVWXY":
+        if label in unrelated:
+            prompts[label] = unrelated[label] + (
+                " The team has limited funding and wants a practical plan. "
+                "It can collect observations weekly but cannot hire more staff. "
+                "Explain three useful steps, how to compare the results, and "
+                "one common mistake to avoid when interpreting the observations."
+            )
+        elif label in long_questions:
+            prompts[label] = DOCUMENT + "\n" + long_questions[label]
+        else:
+            prompts[label] = (
+                INTRO
+                + (
+                    "A separate branch uses paper cards and telephone calls. "
+                    "It has two volunteers each afternoon and no online accounts. "
+                )
+                + medium_questions[label]
+            )
+    return prompts
+
+
 BLOCKERS = {
     f"H{i}": (
         f"For workshop number {i}, write a detailed numbered list of forty "
@@ -169,17 +223,23 @@ def summarize(rows, duration_ms):
     return result
 
 
-def inspect_trace(path, run_id):
+def inspect_trace(path, run_id, prompts=None):
+    prompts = PROMPTS if prompts is None else prompts
     report = {
         "server_policy": None,
         "max_candidates_waiting": 0,
         "candidate_reorders": [],
         "candidate_cache_scores": {},
+        "candidate_admission_order": [],
+        "protected_fcfs_head": [],
+        "waiting_time_safeguard_count": 0,
     }
-    candidate_ids = {f"{run_id}-{label}" for label in PROMPTS}
+    candidate_ids = {f"{run_id}-{label}" for label in prompts}
 
     def is_candidate(request_id):
-        return any(key in request_id for key in candidate_ids)
+        return any(
+            request_id == key or key + "-" in request_id for key in candidate_ids
+        )
 
     with Path(path).open() as source:
         for line in source:
@@ -197,6 +257,14 @@ def inspect_trace(path, run_id):
             rid = event.get("request", {}).get("id", "")
             if not is_candidate(rid):
                 continue
+            label = rid.split(run_id + "-", 1)[-1].split("-", 1)[0]
+            if event["event"] == "ADMIT_OR_RESUME":
+                report["candidate_admission_order"].append(label)
+            if event["event"] == "PREFIX_SELECTED":
+                if event["reason"] == "protected_fcfs_head":
+                    report["protected_fcfs_head"].append(label)
+                if event["reason"] == "waiting_time_safeguard":
+                    report["waiting_time_safeguard_count"] += 1
             if event["event"] == "PREFIX_CANDIDATE":
                 scores = report["candidate_cache_scores"].setdefault(rid, [])
                 if event["cached_tokens"] not in scores:
@@ -237,19 +305,22 @@ def main():
         action="store_true",
         help="Print the workload without contacting a server",
     )
+    parser.add_argument("--candidates", type=int, choices=(5, 25), default=5)
     args = parser.parse_args()
+    prompts = build_prompts(args.candidates)
+    concurrency = len(prompts) + len(BLOCKERS)
     manifest = {
         "model": MODEL,
         "system": SYSTEM,
         "warmup": DOCUMENT + "\nSummarize this.",
         "blockers": BLOCKERS,
-        "candidates": PROMPTS,
-        "candidate_order": list(PROMPTS),
+        "candidates": prompts,
+        "candidate_order": list(prompts),
         "candidate_interval_ms": 20,
         "candidate_output_tokens": MAX_TOKENS,
         "blocker_output_tokens": BLOCKER_TOKENS,
         "ignore_eos": True,
-        "maximum_client_concurrency": 8,
+        "maximum_client_concurrency": concurrency,
     }
     if args.prepare_only:
         print(json.dumps(manifest, indent=2))
@@ -272,7 +343,7 @@ def main():
     overlap = False
     setup_error = None
     candidate_release_ms = None
-    with ThreadPoolExecutor(max_workers=8) as executor:
+    with ThreadPoolExecutor(max_workers=concurrency) as executor:
         signals = [Event() for _ in BLOCKERS]
         holders = [
             executor.submit(
@@ -288,7 +359,7 @@ def main():
         if ready and not any(job.done() for job in holders):
             release = time.perf_counter()
             candidate_release_ms = round((release - origin) * 1000, 2)
-            for index, (label, prompt) in enumerate(PROMPTS.items()):
+            for index, (label, prompt) in enumerate(prompts.items()):
                 delay = release + index * 0.020 - time.perf_counter()
                 if delay > 0:
                     time.sleep(delay)
@@ -303,18 +374,20 @@ def main():
         for job in as_completed(jobs):
             rows.append(job.result())
     duration_ms = (time.perf_counter() - origin) * 1000
-    candidates = [row for row in rows if row["request_id"] in PROMPTS]
+    candidates = [row for row in rows if row["request_id"] in prompts]
     # Include waiting from the common release, rather than measuring only decode.
     candidate_span = (
         (max(row["finished_ms"] for row in candidates) - candidate_release_ms)
         if candidates
         else None
     )
-    trace = inspect_trace(args.trace, run_id) if args.trace else None
+    trace = inspect_trace(args.trace, run_id, prompts) if args.trace else None
     policy_matches = trace is None or trace["server_policy"] == args.policy
-    queue_confirmed = trace is None or trace["max_candidates_waiting"] == 5
+    queue_confirmed = trace is None or trace["max_candidates_waiting"] == len(prompts)
     result = {
-        "workload": "controlled-prefix-v1",
+        "workload": "controlled-prefix-v2-ay"
+        if len(prompts) == 25
+        else "controlled-prefix-v1",
         "run_id": run_id,
         "policy_label": args.policy,
         "policy_verified_from_trace": trace is not None and policy_matches,
@@ -327,7 +400,7 @@ def main():
         "valid_run": overlap
         and policy_matches
         and queue_confirmed
-        and len(candidates) == 5
+        and len(candidates) == len(prompts)
         and all(row["error"] is None for row in rows),
         "batch_summary": summarize(rows, duration_ms),
         "candidate_summary": summarize(candidates, candidate_span)
@@ -355,8 +428,8 @@ def main():
     print(f"Saved: {output.resolve()}")
     if not overlap:
         print("Setup did not hold all running slots through candidate submission.")
-    if trace and trace["max_candidates_waiting"] < 5:
-        print("Trace did not confirm all five candidates waiting together.")
+    if trace and trace["max_candidates_waiting"] < len(prompts):
+        print(f"Trace did not confirm all {len(prompts)} candidates waiting together.")
     if trace and args.policy == "prefix_first" and not trace["candidate_reorders"]:
         print("No candidate reordered: inspect scores and waiting-time safeguard.")
     if not result["valid_run"]:

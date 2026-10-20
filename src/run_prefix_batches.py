@@ -44,7 +44,7 @@ def stop_server(process):
     raise RuntimeError("Server did not release port 8001")
 
 
-def run_one(folder, policy, mode, label):
+def run_one(folder, policy, mode, label, candidates=5):
     if port_open():
         raise RuntimeError("Port 8001 is occupied; stop the existing server first")
     server_log = folder / f"{label}-{policy}-{mode}-launcher.log"
@@ -77,6 +77,8 @@ def run_one(folder, policy, mode, label):
                 "workloads/compare_prefix_policies.py",
                 "--policy",
                 policy,
+                "--candidates",
+                str(candidates),
             ]
             if mode == "trace":
                 command.append("--trace-latest")
@@ -123,6 +125,7 @@ def run_one(folder, policy, mode, label):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--rounds", type=int, default=3)
+    parser.add_argument("--candidates", type=int, choices=(5, 25), default=5)
     args = parser.parse_args()
     if args.rounds < 1:
         parser.error("rounds must be positive")
@@ -132,6 +135,7 @@ def main():
     folder.mkdir(parents=True)
     summary = {
         "rounds_requested": args.rounds,
+        "candidate_count": args.candidates,
         "diagnostic": None,
         "runs": [],
         "aggregate": {},
@@ -140,13 +144,15 @@ def main():
     destination = folder / "summary.json"
     try:
         summary["diagnostic"] = run_one(
-            folder, "fcfs_head_prefix", "trace", "diagnostic"
+            folder, "fcfs_head_prefix", "trace", "diagnostic", args.candidates
         )
         for index in range(args.rounds):
             # Rotate order to reduce a consistent first/last-policy timing bias.
             order = POLICIES[index % 3 :] + POLICIES[: index % 3]
             for policy in order:
-                summary["runs"].append(run_one(folder, policy, "bench", index + 1))
+                summary["runs"].append(
+                    run_one(folder, policy, "bench", index + 1, args.candidates)
+                )
                 destination.write_text(json.dumps(summary, indent=2) + "\n")
         for policy in POLICIES:
             runs = [r for r in summary["runs"] if r["policy"] == policy]
@@ -168,6 +174,31 @@ def main():
                     r["candidate_summary"]["total_ms"]["median"] for r in runs
                 ),
             }
+        summary["per_request"] = {}
+        for policy in POLICIES:
+            data = [
+                json.loads(Path(run["result"]).read_text())
+                for run in summary["runs"]
+                if run["policy"] == policy
+            ]
+            labels = data[0]["manifest"]["candidate_order"]
+            summary["per_request"][policy] = {}
+            for label in labels:
+                rows = [
+                    next(
+                        row for row in result["requests"] if row["request_id"] == label
+                    )
+                    for result in data
+                ]
+                summary["per_request"][policy][label] = {
+                    "median_first_text_ms": statistics.median(
+                        row["first_text_ms"] for row in rows
+                    ),
+                    "median_total_ms": statistics.median(
+                        row["total_ms"] for row in rows
+                    ),
+                    "total_ms_samples": [row["total_ms"] for row in rows],
+                }
         summary["complete"] = True
     except Exception as exc:
         summary["error"] = f"{type(exc).__name__}: {exc}"

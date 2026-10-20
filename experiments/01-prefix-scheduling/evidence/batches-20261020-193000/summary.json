@@ -1,0 +1,501 @@
+{
+  "rounds_requested": 3,
+  "diagnostic": {
+    "round": "diagnostic",
+    "policy": "fcfs_head_prefix",
+    "mode": "trace",
+    "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/fcfs_head_prefix/controlled-20261020-193036-962006.json",
+    "launcher_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261020-193000/diagnostic-fcfs_head_prefix-trace-launcher.log",
+    "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261020-193000/diagnostic-fcfs_head_prefix-trace-client.log",
+    "candidate_summary": {
+      "successful_requests": 5,
+      "failed_requests": 0,
+      "successful_output_tokens": 320,
+      "duration_ms": 7454.04,
+      "output_tokens_per_second": 42.93,
+      "requests_per_second": 0.671,
+      "first_text_ms": {
+        "median": 3750.2,
+        "p95_nearest_rank": 5617.49
+      },
+      "total_ms": {
+        "median": 5654.26,
+        "p95_nearest_rank": 7372.71
+      }
+    },
+    "batch_summary": {
+      "successful_requests": 8,
+      "failed_requests": 0,
+      "successful_output_tokens": 704,
+      "duration_ms": 7516.86,
+      "output_tokens_per_second": 93.66,
+      "requests_per_second": 1.064,
+      "first_text_ms": {
+        "median": 3722.93,
+        "p95_nearest_rank": 5617.49
+      },
+      "total_ms": {
+        "median": 5615.03,
+        "p95_nearest_rank": 7372.71
+      }
+    },
+    "trace_analysis": {
+      "server_policy": "fcfs_head_prefix",
+      "max_candidates_waiting": 5,
+      "candidate_reorders": [],
+      "candidate_cache_scores": {
+        "chatcmpl-prefix-study-1792504836961952000-D-b02de11a": [
+          192
+        ],
+        "chatcmpl-prefix-study-1792504836961952000-E-ba6e50ec": [
+          64
+        ]
+      }
+    }
+  },
+  "runs": [
+    {
+      "round": 1,
+      "policy": "fcfs",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/fcfs/controlled-20261020-193115-538471.json",
+      "launcher_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261020-193000/1-fcfs-bench-launcher.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261020-193000/1-fcfs-bench-client.log",
+      "candidate_summary": {
+        "successful_requests": 5,
+        "failed_requests": 0,
+        "successful_output_tokens": 320,
+        "duration_ms": 6698.65,
+        "output_tokens_per_second": 47.77,
+        "requests_per_second": 0.746,
+        "first_text_ms": {
+          "median": 3402.25,
+          "p95_nearest_rank": 5032.38
+        },
+        "total_ms": {
+          "median": 5071.76,
+          "p95_nearest_rank": 6617.51
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 8,
+        "failed_requests": 0,
+        "successful_output_tokens": 704,
+        "duration_ms": 6780.73,
+        "output_tokens_per_second": 103.82,
+        "requests_per_second": 1.18,
+        "first_text_ms": {
+          "median": 3384.02,
+          "p95_nearest_rank": 5032.38
+        },
+        "total_ms": {
+          "median": 5042.78,
+          "p95_nearest_rank": 6617.51
+        }
+      },
+      "trace_analysis": null
+    },
+    {
+      "round": 1,
+      "policy": "prefix_first",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/prefix_first/controlled-20261020-193152-237742.json",
+      "launcher_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261020-193000/1-prefix_first-bench-launcher.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261020-193000/1-prefix_first-bench-client.log",
+      "candidate_summary": {
+        "successful_requests": 5,
+        "failed_requests": 0,
+        "successful_output_tokens": 320,
+        "duration_ms": 6644.48,
+        "output_tokens_per_second": 48.16,
+        "requests_per_second": 0.753,
+        "first_text_ms": {
+          "median": 3359.79,
+          "p95_nearest_rank": 5090.77
+        },
+        "total_ms": {
+          "median": 4998.7,
+          "p95_nearest_rank": 6623.63
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 8,
+        "failed_requests": 0,
+        "successful_output_tokens": 704,
+        "duration_ms": 6706.39,
+        "output_tokens_per_second": 104.97,
+        "requests_per_second": 1.193,
+        "first_text_ms": {
+          "median": 3338.47,
+          "p95_nearest_rank": 5090.77
+        },
+        "total_ms": {
+          "median": 4971.73,
+          "p95_nearest_rank": 6623.63
+        }
+      },
+      "trace_analysis": null
+    },
+    {
+      "round": 1,
+      "policy": "fcfs_head_prefix",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/fcfs_head_prefix/controlled-20261020-194338-052142.json",
+      "launcher_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261020-193000/1-fcfs_head_prefix-bench-launcher.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261020-193000/1-fcfs_head_prefix-bench-client.log",
+      "candidate_summary": {
+        "successful_requests": 5,
+        "failed_requests": 0,
+        "successful_output_tokens": 320,
+        "duration_ms": 7963.55,
+        "output_tokens_per_second": 40.18,
+        "requests_per_second": 0.628,
+        "first_text_ms": {
+          "median": 3530.4,
+          "p95_nearest_rank": 6042.09
+        },
+        "total_ms": {
+          "median": 6076.88,
+          "p95_nearest_rank": 7886.69
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 8,
+        "failed_requests": 0,
+        "successful_output_tokens": 704,
+        "duration_ms": 8038.58,
+        "output_tokens_per_second": 87.58,
+        "requests_per_second": 0.995,
+        "first_text_ms": {
+          "median": 3505.09,
+          "p95_nearest_rank": 6042.09
+        },
+        "total_ms": {
+          "median": 6037.63,
+          "p95_nearest_rank": 7886.69
+        }
+      },
+      "trace_analysis": null
+    },
+    {
+      "round": 2,
+      "policy": "prefix_first",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/prefix_first/controlled-20261020-194422-175414.json",
+      "launcher_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261020-193000/2-prefix_first-bench-launcher.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261020-193000/2-prefix_first-bench-client.log",
+      "candidate_summary": {
+        "successful_requests": 5,
+        "failed_requests": 0,
+        "successful_output_tokens": 320,
+        "duration_ms": 7036.77,
+        "output_tokens_per_second": 45.48,
+        "requests_per_second": 0.711,
+        "first_text_ms": {
+          "median": 3256.21,
+          "p95_nearest_rank": 5210.14
+        },
+        "total_ms": {
+          "median": 5119.75,
+          "p95_nearest_rank": 7029.7
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 8,
+        "failed_requests": 0,
+        "successful_output_tokens": 704,
+        "duration_ms": 7100.87,
+        "output_tokens_per_second": 99.14,
+        "requests_per_second": 1.127,
+        "first_text_ms": {
+          "median": 3234.11,
+          "p95_nearest_rank": 5210.14
+        },
+        "total_ms": {
+          "median": 5094.68,
+          "p95_nearest_rank": 7029.7
+        }
+      },
+      "trace_analysis": null
+    },
+    {
+      "round": 2,
+      "policy": "fcfs_head_prefix",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/fcfs_head_prefix/controlled-20261020-194506-255088.json",
+      "launcher_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261020-193000/2-fcfs_head_prefix-bench-launcher.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261020-193000/2-fcfs_head_prefix-bench-client.log",
+      "candidate_summary": {
+        "successful_requests": 5,
+        "failed_requests": 0,
+        "successful_output_tokens": 320,
+        "duration_ms": 7424.99,
+        "output_tokens_per_second": 43.1,
+        "requests_per_second": 0.673,
+        "first_text_ms": {
+          "median": 3720.88,
+          "p95_nearest_rank": 5542.88
+        },
+        "total_ms": {
+          "median": 5579.98,
+          "p95_nearest_rank": 7340.94
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 8,
+        "failed_requests": 0,
+        "successful_output_tokens": 704,
+        "duration_ms": 7491.59,
+        "output_tokens_per_second": 93.97,
+        "requests_per_second": 1.068,
+        "first_text_ms": {
+          "median": 3694.73,
+          "p95_nearest_rank": 5542.88
+        },
+        "total_ms": {
+          "median": 5534.84,
+          "p95_nearest_rank": 7340.94
+        }
+      },
+      "trace_analysis": null
+    },
+    {
+      "round": 2,
+      "policy": "fcfs",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/fcfs/controlled-20261020-194545-344814.json",
+      "launcher_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261020-193000/2-fcfs-bench-launcher.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261020-193000/2-fcfs-bench-client.log",
+      "candidate_summary": {
+        "successful_requests": 5,
+        "failed_requests": 0,
+        "successful_output_tokens": 320,
+        "duration_ms": 7389.23,
+        "output_tokens_per_second": 43.31,
+        "requests_per_second": 0.677,
+        "first_text_ms": {
+          "median": 4239.64,
+          "p95_nearest_rank": 5807.48
+        },
+        "total_ms": {
+          "median": 5848.23,
+          "p95_nearest_rank": 7309.65
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 8,
+        "failed_requests": 0,
+        "successful_output_tokens": 704,
+        "duration_ms": 7460.28,
+        "output_tokens_per_second": 94.37,
+        "requests_per_second": 1.072,
+        "first_text_ms": {
+          "median": 4206.43,
+          "p95_nearest_rank": 5807.48
+        },
+        "total_ms": {
+          "median": 5813.94,
+          "p95_nearest_rank": 7309.65
+        }
+      },
+      "trace_analysis": null
+    },
+    {
+      "round": 3,
+      "policy": "fcfs_head_prefix",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/fcfs_head_prefix/controlled-20261020-194630-951852.json",
+      "launcher_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261020-193000/3-fcfs_head_prefix-bench-launcher.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261020-193000/3-fcfs_head_prefix-bench-client.log",
+      "candidate_summary": {
+        "successful_requests": 5,
+        "failed_requests": 0,
+        "successful_output_tokens": 320,
+        "duration_ms": 8391.17,
+        "output_tokens_per_second": 38.14,
+        "requests_per_second": 0.596,
+        "first_text_ms": {
+          "median": 4472.96,
+          "p95_nearest_rank": 6408.11
+        },
+        "total_ms": {
+          "median": 6432.53,
+          "p95_nearest_rank": 8311.58
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 8,
+        "failed_requests": 0,
+        "successful_output_tokens": 704,
+        "duration_ms": 8686.4,
+        "output_tokens_per_second": 81.05,
+        "requests_per_second": 0.921,
+        "first_text_ms": {
+          "median": 4204.66,
+          "p95_nearest_rank": 6408.11
+        },
+        "total_ms": {
+          "median": 6415.28,
+          "p95_nearest_rank": 8311.58
+        }
+      },
+      "trace_analysis": null
+    },
+    {
+      "round": 3,
+      "policy": "fcfs",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/fcfs/controlled-20261020-194716-308350.json",
+      "launcher_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261020-193000/3-fcfs-bench-launcher.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261020-193000/3-fcfs-bench-client.log",
+      "candidate_summary": {
+        "successful_requests": 5,
+        "failed_requests": 0,
+        "successful_output_tokens": 320,
+        "duration_ms": 7965.47,
+        "output_tokens_per_second": 40.17,
+        "requests_per_second": 0.628,
+        "first_text_ms": {
+          "median": 4146.46,
+          "p95_nearest_rank": 6054.02
+        },
+        "total_ms": {
+          "median": 6093.6,
+          "p95_nearest_rank": 7882.05
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 8,
+        "failed_requests": 0,
+        "successful_output_tokens": 704,
+        "duration_ms": 8258.11,
+        "output_tokens_per_second": 85.25,
+        "requests_per_second": 0.969,
+        "first_text_ms": {
+          "median": 4110.19,
+          "p95_nearest_rank": 6054.02
+        },
+        "total_ms": {
+          "median": 6040.3,
+          "p95_nearest_rank": 7882.05
+        }
+      },
+      "trace_analysis": null
+    },
+    {
+      "round": 3,
+      "policy": "prefix_first",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/prefix_first/controlled-20261020-194800-573001.json",
+      "launcher_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261020-193000/3-prefix_first-bench-launcher.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261020-193000/3-prefix_first-bench-client.log",
+      "candidate_summary": {
+        "successful_requests": 5,
+        "failed_requests": 0,
+        "successful_output_tokens": 320,
+        "duration_ms": 7623.12,
+        "output_tokens_per_second": 41.98,
+        "requests_per_second": 0.656,
+        "first_text_ms": {
+          "median": 3632.86,
+          "p95_nearest_rank": 5685.29
+        },
+        "total_ms": {
+          "median": 5581.43,
+          "p95_nearest_rank": 7602.13
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 8,
+        "failed_requests": 0,
+        "successful_output_tokens": 704,
+        "duration_ms": 7704.98,
+        "output_tokens_per_second": 91.37,
+        "requests_per_second": 1.038,
+        "first_text_ms": {
+          "median": 3611.53,
+          "p95_nearest_rank": 5685.29
+        },
+        "total_ms": {
+          "median": 5554.08,
+          "p95_nearest_rank": 7602.13
+        }
+      },
+      "trace_analysis": null
+    }
+  ],
+  "aggregate": {
+    "fcfs": {
+      "candidate_duration_median_ms": 7389.23,
+      "candidate_duration_range_ms": [
+        6698.65,
+        7965.47
+      ],
+      "candidate_throughput_median_tokens_s": 43.31,
+      "median_first_text_median_ms": 4146.46,
+      "median_request_latency_median_ms": 5848.23
+    },
+    "prefix_first": {
+      "candidate_duration_median_ms": 7036.77,
+      "candidate_duration_range_ms": [
+        6644.48,
+        7623.12
+      ],
+      "candidate_throughput_median_tokens_s": 45.48,
+      "median_first_text_median_ms": 3359.79,
+      "median_request_latency_median_ms": 5119.75
+    },
+    "fcfs_head_prefix": {
+      "candidate_duration_median_ms": 7963.55,
+      "candidate_duration_range_ms": [
+        7424.99,
+        8391.17
+      ],
+      "candidate_throughput_median_tokens_s": 40.18,
+      "median_first_text_median_ms": 3720.88,
+      "median_request_latency_median_ms": 6076.88
+    }
+  },
+  "complete": true,
+  "validation": {
+    "all_10_workloads_valid": true,
+    "identical_manifests": true,
+    "timed_output_tokens_per_run": 704,
+    "candidate_output_tokens_per_run": 320,
+    "hybrid_diagnostic_admission_order": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E"
+    ],
+    "hybrid_diagnostic_selections": [
+      [
+        "A",
+        "protected_fcfs_head"
+      ],
+      [
+        "B",
+        "protected_fcfs_head"
+      ],
+      [
+        "C",
+        "protected_fcfs_head"
+      ],
+      [
+        "D",
+        "cached_prefix_then_fcfs"
+      ],
+      [
+        "E",
+        "cached_prefix_then_fcfs"
+      ]
+    ],
+    "hybrid_trace": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/fcfs_head_prefix/server-trace-3mUQnD/events-26716-1792504833338708000.jsonl",
+    "code_sha256": {
+      "vllm-src/vllm/v1/core/sched/study_prefix_policy.py": "dc1f6226129d7681aa818d8849bf3c8595d0a1c8347474a18136a98d665da8ff",
+      "workloads/compare_prefix_policies.py": "379ee10ccb093affc97dde6e2368c2f04cc4dac8254dde7db7139629df580e31",
+      "src/serve_prefix_comparison.sh": "314662e8c88fcfd409d7e6a32808571b4bb047f90727b55c13a4f2fe676c7619"
+    }
+  }
+}

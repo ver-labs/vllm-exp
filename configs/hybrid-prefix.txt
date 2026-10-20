@@ -34,3 +34,17 @@ in a unique results/prefix-comparison/batches-<timestamp> directory.
 The launcher still uses the comparison's 10-second wait safeguard, 3 slots,
 512 context, 96 blocks, 128 scheduled tokens, and 16-token block size.
 This is not the older 16-block memory-pressure workload.
+
+A-Y expansion
+-------------
+  .venv/bin/python src/run_prefix_batches.py --rounds 3 --candidates 25
+
+This retains A-E, adds F-Y with interleaved unrelated, short shared-prefix, and
+long shared-prefix prompts. All 25 candidates are submitted at 20ms offsets
+behind the same 3 blockers (maximum client concurrency28, running slots3).
+Each timed run generates1600 candidate tokens plus384 blocker tokens=1984.
+The 10-second waiting safeguard and 16-request scoring lookahead are unchanged;
+longer waits may therefore switch some later selections back to FCFS.
+Every policy uses identical inputs and fresh warmup. summary.json includes
+per_request medians and raw completion-latency samples for A-Y, including A/B.
+The five-candidate workload remains available as the default.

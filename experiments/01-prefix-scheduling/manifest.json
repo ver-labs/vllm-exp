@@ -1,0 +1,32 @@
+{
+  "experiment_id": "01-prefix-scheduling",
+  "status": "completed",
+  "date": "2026-10-20",
+  "policies": [
+    "fcfs",
+    "prefix_first",
+    "fcfs_head_prefix"
+  ],
+  "completed_branch": "study/experiment-01-prefix-scheduling",
+  "source_commit": "a78919e0ea1e6d57557c0d67c7fb200ed420d3fb",
+  "source_base_commit": "db9527a46873454610df6dbedf79a36d6bf1a7f6",
+  "workloads": [
+    5,
+    25
+  ],
+  "timed_runs_per_policy_per_workload": 3,
+  "primary_results": [
+    "results/prefix-comparison/batches-20261020-193000/summary.json",
+    "results/prefix-comparison/batches-20261020-195946/summary.json",
+    "results/prefix-comparison/batches-20261020-195946/per-request-latency.csv"
+  ],
+  "raw_results_location": "results/",
+  "raw_results_moved_or_deleted": false,
+  "findings": [
+    "The hybrid protects the first max_num_seqs waiting requests in each cohort, then prioritizes cached prefixes.",
+    "In the A-Y workload, hybrid A/B median first-text latency was about 3.3s versus about 10.8s for prefix-first.",
+    "The hybrid did not establish an overall latency/throughput advantage over FCFS in these workloads.",
+    "Three matched timed runs per policy; diagnostic tracing was separate from timings."
+  ],
+  "reproduce": "See configs/hybrid-prefix.txt and configs/prefix-comparison.txt; source and harness are checkpointed on the completed branch in their respective Git repos."
+}
