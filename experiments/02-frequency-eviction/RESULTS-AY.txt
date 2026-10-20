@@ -1,0 +1,37 @@
+Experiment02 follow-up: full concurrent A-Y comparison
+======================================================
+
+Completed3 untraced matched pairs, plus1 separate diagnostic per policy.
+The A-Y manifest exactly matches the previous scheduling experiment. Both policies
+use FCFS,96 physical blocks (95 allocatable), context512,3 running slots,28 client
+workers,128 batch tokens, blocksize16 and synchronous scheduling. Each run has25
+candidates generating1600 tokens plus3 blockers generating384 tokens=1984 total.
+Every run starts a fresh server and performs the same one-token warmup.
+
+Median across3 runs                  vLLM baseline       LFU
+A-Y completion time                       19.243 s     19.730 s
+A-Y output throughput                      83.15/s      81.10/s
+Median candidate first-text latency       10.525 s     10.197 s
+Median candidate request latency          12.167 s     11.989 s
+Cached candidate-prefix tokens/run           2432         2432
+
+A-Y completion ranges:
+  baseline18.904-19.460s; LFU19.451-19.886s.
+LFU's median batch time was2.5% longer; median first-text latency was3.1% lower.
+Small timing differences from3 pairs do not establish a universal causal effect.
+
+Both diagnostics had107 cached evictions,0 preemptions, and admission orderA-Y.
+All25 candidates were observed waiting together. More importantly, every candidate
+had exactly the same cached-token count across all8 diagnostic/timed runs. There
+was no additional prefix reuse to explain a performance advantage in this batch.
+The algorithm itself was unchanged from the targeted temporal experiment.
+
+Conclusion: no overall throughput advantage demonstrated on the full concurrent
+A-Y workload. The earlier16-to272-token retention and hot-return latency benefit
+in RESULTS.txt remains valid for that targeted workload. It did not generalize
+to this A-Y batch, where vLLM already retained the same needed prefixes.
+
+Frozen summary and A-Y per-request CSV: evidence-ay/.
+Original logs and results: results/cache-eviction-ay/batches-20261020-204802/.
+Checksums and validation: results-inventory-ay.json and the frozen summary.
+Reproduction: PLAN-AY.txt. All experimental servers are stopped.

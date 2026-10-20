@@ -1,0 +1,952 @@
+{
+  "workload": "controlled-prefix-v2-ay",
+  "rounds_requested": 3,
+  "scheduling": "fcfs",
+  "diagnostics": [
+    {
+      "round": "diagnostic",
+      "policy": "vllm",
+      "mode": "trace",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261020-204833-001340.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/batches-20261020-204802/diagnostic-vllm-trace-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/batches-20261020-204802/diagnostic-vllm-trace-client.log",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 22334.14,
+        "output_tokens_per_second": 71.64,
+        "requests_per_second": 1.119,
+        "first_text_ms": {
+          "median": 11870.56,
+          "p95_nearest_rank": 18086.71
+        },
+        "total_ms": {
+          "median": 13863.26,
+          "p95_nearest_rank": 20169.74
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 22411.37,
+        "output_tokens_per_second": 88.53,
+        "requests_per_second": 1.249,
+        "first_text_ms": {
+          "median": 9856.63,
+          "p95_nearest_rank": 18086.71
+        },
+        "total_ms": {
+          "median": 11920.11,
+          "p95_nearest_rank": 20169.74
+        }
+      },
+      "cached_prompt_tokens": 2432,
+      "trace_analysis": {
+        "server_policy": "fcfs",
+        "eviction_policy": "vllm",
+        "evicted_cached_blocks": 107,
+        "preemptions": 0,
+        "max_candidates_waiting": 25,
+        "candidate_reorders": [],
+        "candidate_cache_scores": {},
+        "candidate_admission_order": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y"
+        ],
+        "protected_fcfs_head": [],
+        "waiting_time_safeguard_count": 0
+      }
+    },
+    {
+      "round": "diagnostic",
+      "policy": "lfu",
+      "mode": "trace",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/lfu/controlled-20261020-204928-724562.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/batches-20261020-204802/diagnostic-lfu-trace-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/batches-20261020-204802/diagnostic-lfu-trace-client.log",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 22469.05,
+        "output_tokens_per_second": 71.21,
+        "requests_per_second": 1.113,
+        "first_text_ms": {
+          "median": 12120.13,
+          "p95_nearest_rank": 18337.25
+        },
+        "total_ms": {
+          "median": 14234.31,
+          "p95_nearest_rank": 20335.76
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 22615.87,
+        "output_tokens_per_second": 87.73,
+        "requests_per_second": 1.238,
+        "first_text_ms": {
+          "median": 10104.65,
+          "p95_nearest_rank": 18337.25
+        },
+        "total_ms": {
+          "median": 12167.28,
+          "p95_nearest_rank": 20335.76
+        }
+      },
+      "cached_prompt_tokens": 2432,
+      "trace_analysis": {
+        "server_policy": "fcfs",
+        "eviction_policy": "lfu",
+        "evicted_cached_blocks": 107,
+        "preemptions": 0,
+        "max_candidates_waiting": 25,
+        "candidate_reorders": [],
+        "candidate_cache_scores": {},
+        "candidate_admission_order": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y"
+        ],
+        "protected_fcfs_head": [],
+        "waiting_time_safeguard_count": 0
+      }
+    }
+  ],
+  "runs": [
+    {
+      "round": 1,
+      "policy": "vllm",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261020-205024-552998.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/batches-20261020-204802/1-vllm-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/batches-20261020-204802/1-vllm-bench-client.log",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 19243.49,
+        "output_tokens_per_second": 83.15,
+        "requests_per_second": 1.299,
+        "first_text_ms": {
+          "median": 10342.23,
+          "p95_nearest_rank": 15579.09
+        },
+        "total_ms": {
+          "median": 12105.52,
+          "p95_nearest_rank": 17309.47
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 19321.45,
+        "output_tokens_per_second": 102.68,
+        "requests_per_second": 1.449,
+        "first_text_ms": {
+          "median": 8679.83,
+          "p95_nearest_rank": 15579.09
+        },
+        "total_ms": {
+          "median": 10399.06,
+          "p95_nearest_rank": 17309.47
+        }
+      },
+      "cached_prompt_tokens": 2432,
+      "trace_analysis": null
+    },
+    {
+      "round": 1,
+      "policy": "lfu",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/lfu/controlled-20261020-205119-426258.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/batches-20261020-204802/1-lfu-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/batches-20261020-204802/1-lfu-bench-client.log",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 19451.18,
+        "output_tokens_per_second": 82.26,
+        "requests_per_second": 1.285,
+        "first_text_ms": {
+          "median": 10197.2,
+          "p95_nearest_rank": 15561.34
+        },
+        "total_ms": {
+          "median": 11973.73,
+          "p95_nearest_rank": 17402.38
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 19550.89,
+        "output_tokens_per_second": 101.48,
+        "requests_per_second": 1.432,
+        "first_text_ms": {
+          "median": 8523.33,
+          "p95_nearest_rank": 15561.34
+        },
+        "total_ms": {
+          "median": 10231.37,
+          "p95_nearest_rank": 17402.38
+        }
+      },
+      "cached_prompt_tokens": 2432,
+      "trace_analysis": null
+    },
+    {
+      "round": 2,
+      "policy": "lfu",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/lfu/controlled-20261020-205214-056522.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/batches-20261020-204802/2-lfu-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/batches-20261020-204802/2-lfu-bench-client.log",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 19885.73,
+        "output_tokens_per_second": 80.46,
+        "requests_per_second": 1.257,
+        "first_text_ms": {
+          "median": 11038.86,
+          "p95_nearest_rank": 16319.96
+        },
+        "total_ms": {
+          "median": 12803.98,
+          "p95_nearest_rank": 18033.23
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 20042.39,
+        "output_tokens_per_second": 98.99,
+        "requests_per_second": 1.397,
+        "first_text_ms": {
+          "median": 9283.77,
+          "p95_nearest_rank": 16319.96
+        },
+        "total_ms": {
+          "median": 11100.49,
+          "p95_nearest_rank": 18033.23
+        }
+      },
+      "cached_prompt_tokens": 2432,
+      "trace_analysis": null
+    },
+    {
+      "round": 2,
+      "policy": "vllm",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261020-205305-879677.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/batches-20261020-204802/2-vllm-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/batches-20261020-204802/2-vllm-bench-client.log",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 19460.38,
+        "output_tokens_per_second": 82.22,
+        "requests_per_second": 1.285,
+        "first_text_ms": {
+          "median": 10653.33,
+          "p95_nearest_rank": 15904.43
+        },
+        "total_ms": {
+          "median": 12400.41,
+          "p95_nearest_rank": 17618.12
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 19571.39,
+        "output_tokens_per_second": 101.37,
+        "requests_per_second": 1.431,
+        "first_text_ms": {
+          "median": 8911.44,
+          "p95_nearest_rank": 15904.43
+        },
+        "total_ms": {
+          "median": 10695.72,
+          "p95_nearest_rank": 17618.12
+        }
+      },
+      "cached_prompt_tokens": 2432,
+      "trace_analysis": null
+    },
+    {
+      "round": 3,
+      "policy": "vllm",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261020-205356-266427.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/batches-20261020-204802/3-vllm-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/batches-20261020-204802/3-vllm-bench-client.log",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 18903.57,
+        "output_tokens_per_second": 84.64,
+        "requests_per_second": 1.323,
+        "first_text_ms": {
+          "median": 10524.8,
+          "p95_nearest_rank": 15422.04
+        },
+        "total_ms": {
+          "median": 12166.71,
+          "p95_nearest_rank": 17071.32
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 18986.33,
+        "output_tokens_per_second": 104.5,
+        "requests_per_second": 1.475,
+        "first_text_ms": {
+          "median": 8806.21,
+          "p95_nearest_rank": 15422.04
+        },
+        "total_ms": {
+          "median": 10575.28,
+          "p95_nearest_rank": 17071.32
+        }
+      },
+      "cached_prompt_tokens": 2432,
+      "trace_analysis": null
+    },
+    {
+      "round": 3,
+      "policy": "lfu",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/lfu/controlled-20261020-205446-389376.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/batches-20261020-204802/3-lfu-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/batches-20261020-204802/3-lfu-bench-client.log",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 19729.76,
+        "output_tokens_per_second": 81.1,
+        "requests_per_second": 1.267,
+        "first_text_ms": {
+          "median": 10137.37,
+          "p95_nearest_rank": 18359.5
+        },
+        "total_ms": {
+          "median": 11988.85,
+          "p95_nearest_rank": 18416.68
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 19792.15,
+        "output_tokens_per_second": 100.24,
+        "requests_per_second": 1.415,
+        "first_text_ms": {
+          "median": 8341.53,
+          "p95_nearest_rank": 18359.5
+        },
+        "total_ms": {
+          "median": 10186.38,
+          "p95_nearest_rank": 18416.68
+        }
+      },
+      "cached_prompt_tokens": 2432,
+      "trace_analysis": null
+    }
+  ],
+  "aggregate": {
+    "vllm": {
+      "candidate_duration_median_ms": 19243.49,
+      "candidate_duration_range_ms": [
+        18903.57,
+        19460.38
+      ],
+      "candidate_throughput_median_tokens_s": 83.15,
+      "median_first_text_ms": 10524.8,
+      "median_request_latency_ms": 12166.71,
+      "cached_prompt_tokens_per_run": [
+        2432,
+        2432,
+        2432
+      ]
+    },
+    "lfu": {
+      "candidate_duration_median_ms": 19729.76,
+      "candidate_duration_range_ms": [
+        19451.18,
+        19885.73
+      ],
+      "candidate_throughput_median_tokens_s": 81.1,
+      "median_first_text_ms": 10197.2,
+      "median_request_latency_ms": 11988.85,
+      "cached_prompt_tokens_per_run": [
+        2432,
+        2432,
+        2432
+      ]
+    }
+  },
+  "per_request": {
+    "vllm": {
+      "A": {
+        "median_first_text_ms": 3468.21,
+        "median_total_ms": 5240.6,
+        "cached_tokens_per_run": [
+          16,
+          16,
+          16
+        ]
+      },
+      "B": {
+        "median_first_text_ms": 3466.78,
+        "median_total_ms": 5251.1,
+        "cached_tokens_per_run": [
+          16,
+          16,
+          16
+        ]
+      },
+      "C": {
+        "median_first_text_ms": 3479.91,
+        "median_total_ms": 5278.51,
+        "cached_tokens_per_run": [
+          176,
+          176,
+          176
+        ]
+      },
+      "D": {
+        "median_first_text_ms": 5213.63,
+        "median_total_ms": 7023.35,
+        "cached_tokens_per_run": [
+          192,
+          192,
+          192
+        ]
+      },
+      "E": {
+        "median_first_text_ms": 5238.81,
+        "median_total_ms": 7040.06,
+        "cached_tokens_per_run": [
+          64,
+          64,
+          64
+        ]
+      },
+      "F": {
+        "median_first_text_ms": 5263.24,
+        "median_total_ms": 7062.89,
+        "cached_tokens_per_run": [
+          16,
+          16,
+          16
+        ]
+      },
+      "G": {
+        "median_first_text_ms": 7002.61,
+        "median_total_ms": 8798.59,
+        "cached_tokens_per_run": [
+          192,
+          192,
+          192
+        ]
+      },
+      "H": {
+        "median_first_text_ms": 7022.85,
+        "median_total_ms": 8815.43,
+        "cached_tokens_per_run": [
+          64,
+          64,
+          64
+        ]
+      },
+      "I": {
+        "median_first_text_ms": 7057.25,
+        "median_total_ms": 8834.68,
+        "cached_tokens_per_run": [
+          16,
+          16,
+          16
+        ]
+      },
+      "J": {
+        "median_first_text_ms": 8779.11,
+        "median_total_ms": 10570.63,
+        "cached_tokens_per_run": [
+          176,
+          176,
+          176
+        ]
+      },
+      "K": {
+        "median_first_text_ms": 8796.04,
+        "median_total_ms": 10565.35,
+        "cached_tokens_per_run": [
+          96,
+          96,
+          96
+        ]
+      },
+      "L": {
+        "median_first_text_ms": 8816.38,
+        "median_total_ms": 10579.94,
+        "cached_tokens_per_run": [
+          16,
+          16,
+          16
+        ]
+      },
+      "M": {
+        "median_first_text_ms": 10524.8,
+        "median_total_ms": 12166.71,
+        "cached_tokens_per_run": [
+          192,
+          192,
+          192
+        ]
+      },
+      "N": {
+        "median_first_text_ms": 10543.64,
+        "median_total_ms": 12185.07,
+        "cached_tokens_per_run": [
+          96,
+          96,
+          96
+        ]
+      },
+      "O": {
+        "median_first_text_ms": 10591.41,
+        "median_total_ms": 12199.79,
+        "cached_tokens_per_run": [
+          16,
+          16,
+          16
+        ]
+      },
+      "P": {
+        "median_first_text_ms": 12143.34,
+        "median_total_ms": 13838.7,
+        "cached_tokens_per_run": [
+          192,
+          192,
+          192
+        ]
+      },
+      "Q": {
+        "median_first_text_ms": 12159.4,
+        "median_total_ms": 13860.04,
+        "cached_tokens_per_run": [
+          96,
+          96,
+          96
+        ]
+      },
+      "R": {
+        "median_first_text_ms": 12177.59,
+        "median_total_ms": 13874.1,
+        "cached_tokens_per_run": [
+          16,
+          16,
+          16
+        ]
+      },
+      "S": {
+        "median_first_text_ms": 13817.79,
+        "median_total_ms": 15561.25,
+        "cached_tokens_per_run": [
+          192,
+          192,
+          192
+        ]
+      },
+      "T": {
+        "median_first_text_ms": 13836.52,
+        "median_total_ms": 15597.09,
+        "cached_tokens_per_run": [
+          96,
+          96,
+          96
+        ]
+      },
+      "U": {
+        "median_first_text_ms": 14135.66,
+        "median_total_ms": 15927.16,
+        "cached_tokens_per_run": [
+          16,
+          16,
+          16
+        ]
+      },
+      "V": {
+        "median_first_text_ms": 15562.48,
+        "median_total_ms": 17291.04,
+        "cached_tokens_per_run": [
+          192,
+          192,
+          192
+        ]
+      },
+      "W": {
+        "median_first_text_ms": 15559.12,
+        "median_total_ms": 17287.32,
+        "cached_tokens_per_run": [
+          96,
+          96,
+          96
+        ]
+      },
+      "X": {
+        "median_first_text_ms": 15579.09,
+        "median_total_ms": 17309.47,
+        "cached_tokens_per_run": [
+          16,
+          16,
+          16
+        ]
+      },
+      "Y": {
+        "median_first_text_ms": 17248.78,
+        "median_total_ms": 18758.84,
+        "cached_tokens_per_run": [
+          176,
+          176,
+          176
+        ]
+      }
+    },
+    "lfu": {
+      "A": {
+        "median_first_text_ms": 3473.58,
+        "median_total_ms": 5132.56,
+        "cached_tokens_per_run": [
+          16,
+          16,
+          16
+        ]
+      },
+      "B": {
+        "median_first_text_ms": 3497.11,
+        "median_total_ms": 5152.35,
+        "cached_tokens_per_run": [
+          16,
+          16,
+          16
+        ]
+      },
+      "C": {
+        "median_first_text_ms": 3503.2,
+        "median_total_ms": 5173.34,
+        "cached_tokens_per_run": [
+          176,
+          176,
+          176
+        ]
+      },
+      "D": {
+        "median_first_text_ms": 5113.33,
+        "median_total_ms": 6853.91,
+        "cached_tokens_per_run": [
+          192,
+          192,
+          192
+        ]
+      },
+      "E": {
+        "median_first_text_ms": 5136.07,
+        "median_total_ms": 6878.49,
+        "cached_tokens_per_run": [
+          64,
+          64,
+          64
+        ]
+      },
+      "F": {
+        "median_first_text_ms": 5162.77,
+        "median_total_ms": 6892.77,
+        "cached_tokens_per_run": [
+          16,
+          16,
+          16
+        ]
+      },
+      "G": {
+        "median_first_text_ms": 6835.27,
+        "median_total_ms": 8535.8,
+        "cached_tokens_per_run": [
+          192,
+          192,
+          192
+        ]
+      },
+      "H": {
+        "median_first_text_ms": 6854.56,
+        "median_total_ms": 8543.76,
+        "cached_tokens_per_run": [
+          64,
+          64,
+          64
+        ]
+      },
+      "I": {
+        "median_first_text_ms": 6878.46,
+        "median_total_ms": 8557.62,
+        "cached_tokens_per_run": [
+          16,
+          16,
+          16
+        ]
+      },
+      "J": {
+        "median_first_text_ms": 8502.99,
+        "median_total_ms": 10203.08,
+        "cached_tokens_per_run": [
+          176,
+          176,
+          176
+        ]
+      },
+      "K": {
+        "median_first_text_ms": 8513.47,
+        "median_total_ms": 10222.44,
+        "cached_tokens_per_run": [
+          96,
+          96,
+          96
+        ]
+      },
+      "L": {
+        "median_first_text_ms": 8533.19,
+        "median_total_ms": 10240.29,
+        "cached_tokens_per_run": [
+          16,
+          16,
+          16
+        ]
+      },
+      "M": {
+        "median_first_text_ms": 10197.2,
+        "median_total_ms": 11995.18,
+        "cached_tokens_per_run": [
+          192,
+          192,
+          192
+        ]
+      },
+      "N": {
+        "median_first_text_ms": 10202.37,
+        "median_total_ms": 11994.82,
+        "cached_tokens_per_run": [
+          96,
+          96,
+          96
+        ]
+      },
+      "O": {
+        "median_first_text_ms": 10242.01,
+        "median_total_ms": 12015.94,
+        "cached_tokens_per_run": [
+          16,
+          16,
+          16
+        ]
+      },
+      "P": {
+        "median_first_text_ms": 11954.18,
+        "median_total_ms": 14659.99,
+        "cached_tokens_per_run": [
+          192,
+          192,
+          192
+        ]
+      },
+      "Q": {
+        "median_first_text_ms": 11978.27,
+        "median_total_ms": 14658.8,
+        "cached_tokens_per_run": [
+          96,
+          96,
+          96
+        ]
+      },
+      "R": {
+        "median_first_text_ms": 12818.69,
+        "median_total_ms": 14674.37,
+        "cached_tokens_per_run": [
+          16,
+          16,
+          16
+        ]
+      },
+      "S": {
+        "median_first_text_ms": 14620.96,
+        "median_total_ms": 16308.95,
+        "cached_tokens_per_run": [
+          192,
+          192,
+          192
+        ]
+      },
+      "T": {
+        "median_first_text_ms": 14642.99,
+        "median_total_ms": 16328.16,
+        "cached_tokens_per_run": [
+          96,
+          96,
+          96
+        ]
+      },
+      "U": {
+        "median_first_text_ms": 14630.27,
+        "median_total_ms": 16341.57,
+        "cached_tokens_per_run": [
+          16,
+          16,
+          16
+        ]
+      },
+      "V": {
+        "median_first_text_ms": 16282.79,
+        "median_total_ms": 17999.84,
+        "cached_tokens_per_run": [
+          192,
+          192,
+          192
+        ]
+      },
+      "W": {
+        "median_first_text_ms": 16299.25,
+        "median_total_ms": 18021.2,
+        "cached_tokens_per_run": [
+          96,
+          96,
+          96
+        ]
+      },
+      "X": {
+        "median_first_text_ms": 16319.96,
+        "median_total_ms": 18033.23,
+        "cached_tokens_per_run": [
+          16,
+          16,
+          16
+        ]
+      },
+      "Y": {
+        "median_first_text_ms": 17982.08,
+        "median_total_ms": 19245.34,
+        "cached_tokens_per_run": [
+          176,
+          176,
+          176
+        ]
+      }
+    }
+  },
+  "complete": true,
+  "validation": {
+    "all_8_runs_valid": true,
+    "manifest_identical_to_previous_A_Y_experiment": true,
+    "output_tokens_per_run": 1984,
+    "candidate_output_tokens_per_run": 1600,
+    "cached_tokens_identical_for_each_candidate_across_all_runs": {
+      "A": 16,
+      "B": 16,
+      "C": 176,
+      "D": 192,
+      "E": 64,
+      "F": 16,
+      "G": 192,
+      "H": 64,
+      "I": 16,
+      "J": 176,
+      "K": 96,
+      "L": 16,
+      "M": 192,
+      "N": 96,
+      "O": 16,
+      "P": 192,
+      "Q": 96,
+      "R": 16,
+      "S": 192,
+      "T": 96,
+      "U": 16,
+      "V": 192,
+      "W": 96,
+      "X": 16,
+      "Y": 176
+    },
+    "physical_blocks": 96,
+    "allocatable_blocks": 95,
+    "configured_running_slots": 3,
+    "diagnostic_admission_order": "ABCDEFGHIJKLMNOPQRSTUVWXY",
+    "code_sha256": {
+      "vllm-src/vllm/v1/core/study_cache_eviction.py": "2fb16ec04911fb83e291c55a16b891c7841316ea863bb8bea748ecef0b6d8c02",
+      "vllm-src/vllm/v1/core/block_pool.py": "40d87e3950155fdb4ed0516d169f3e866e854e9a4cf85d95bc88660d6c4a4d40",
+      "workloads/compare_prefix_policies.py": "28dc994f3dec7701e2764e9afd937e44ee80fc84796fd4650501b5f834a8d595",
+      "src/serve_cache_eviction.sh": "5de17f43a86586abf1c75618cd594aa631c362351e9795919bad26f853613306",
+      "src/run_cache_eviction_ay.py": "f1e0c6d18b1d175b09c9679f1ca2aabf306f36089d3eca373895270e68535bb3"
+    }
+  }
+}

@@ -20,5 +20,14 @@
     "Cumulative LFU has no decay and may retain obsolete hot prefixes.",
     "Experimental selection sorts the free list; large-pool overhead and changing hotsets remain untested."
   ],
-  "validation": "See evidence/summary.json and PLAN.txt; full pytest suite was not run."
+  "validation": "See evidence/summary.json and PLAN.txt; full pytest suite was not run.",
+  "follow_up_A_Y": {
+    "status": "completed",
+    "source_commit": "b8ab85af5e74845719a37af18358da86aa8722ef",
+    "summary": "results/cache-eviction-ay/batches-20261020-204802/summary.json",
+    "matched_pairs": 3,
+    "cached_candidate_tokens_per_run": 2432,
+    "lfu_batch_median_change_percent": 2.53,
+    "conclusion": "No overall throughput advantage on full concurrent A-Y; identical per-request prefix reuse."
+  }
 }

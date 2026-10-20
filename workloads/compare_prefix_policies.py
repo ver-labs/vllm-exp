@@ -227,6 +227,9 @@ def inspect_trace(path, run_id, prompts=None):
     prompts = PROMPTS if prompts is None else prompts
     report = {
         "server_policy": None,
+        "eviction_policy": None,
+        "evicted_cached_blocks": 0,
+        "preemptions": 0,
         "max_candidates_waiting": 0,
         "candidate_reorders": [],
         "candidate_cache_scores": {},
@@ -249,6 +252,11 @@ def inspect_trace(path, run_id, prompts=None):
                 continue  # A live trace may end with a partially written line.
             if event["event"] == "TRACE_READY":
                 report["server_policy"] = event.get("waiting_policy")
+                report["eviction_policy"] = event.get("eviction_policy")
+            if event["event"] == "EVICT_CACHED_BLOCK":
+                report["evicted_cached_blocks"] += 1
+            if event["event"] == "PREEMPT_END":
+                report["preemptions"] += 1
             waiting = event.get("waiting", [])
             count = sum(is_candidate(r["id"]) for r in waiting)
             report["max_candidates_waiting"] = max(
@@ -306,7 +314,14 @@ def main():
         help="Print the workload without contacting a server",
     )
     parser.add_argument("--candidates", type=int, choices=(5, 25), default=5)
+    parser.add_argument(
+        "--eviction-policy",
+        choices=("vllm", "lfu"),
+        help="Compare eviction with FCFS; save separately from scheduling runs",
+    )
     args = parser.parse_args()
+    if args.eviction_policy and args.policy != "fcfs":
+        parser.error("Eviction comparison requires --policy fcfs")
     prompts = build_prompts(args.candidates)
     concurrency = len(prompts) + len(BLOCKERS)
     manifest = {
@@ -326,7 +341,11 @@ def main():
         print(json.dumps(manifest, indent=2))
         return
     run_id = f"prefix-study-{time.time_ns()}"
-    folder = Path("results/prefix-comparison") / args.policy
+    folder = (
+        Path("results/cache-eviction-ay") / args.eviction_policy
+        if args.eviction_policy
+        else Path("results/prefix-comparison") / args.policy
+    )
     folder.mkdir(parents=True, exist_ok=True)
     output = folder / f"controlled-{datetime.now():%Y%m%d-%H%M%S-%f}.json"
     if args.trace_latest:
@@ -384,6 +403,16 @@ def main():
     trace = inspect_trace(args.trace, run_id, prompts) if args.trace else None
     policy_matches = trace is None or trace["server_policy"] == args.policy
     queue_confirmed = trace is None or trace["max_candidates_waiting"] == len(prompts)
+    eviction_matches = (
+        not args.eviction_policy
+        or trace is None
+        or trace["eviction_policy"] == args.eviction_policy
+    )
+    if args.eviction_policy:
+        for row in rows:
+            row["cached_prompt_tokens"] = (
+                row["usage"].get("prompt_tokens_details") or {}
+            ).get("cached_tokens")
     result = {
         "workload": "controlled-prefix-v2-ay"
         if len(prompts) == 25
@@ -400,6 +429,7 @@ def main():
         "valid_run": overlap
         and policy_matches
         and queue_confirmed
+        and eviction_matches
         and len(candidates) == len(prompts)
         and all(row["error"] is None for row in rows),
         "batch_summary": summarize(rows, duration_ms),
@@ -414,6 +444,14 @@ def main():
         "trace_analysis": trace,
         "requests": sorted(rows, key=lambda r: r["request_id"]),
     }
+    if args.eviction_policy:
+        result["eviction_policy"] = args.eviction_policy
+        result["valid_run"] = result["valid_run"] and all(
+            isinstance(row["cached_prompt_tokens"], int) for row in rows
+        )
+        result["candidate_cached_prompt_tokens"] = sum(
+            row["cached_prompt_tokens"] or 0 for row in candidates
+        )
     output.write_text(json.dumps(result, indent=2) + "\n")
     print(
         json.dumps(

@@ -1,0 +1,36 @@
+Experiment02 follow-up: full concurrent A-Y workload
+===================================================
+
+Use the exact A-Y prompts, system prompt, one-token warmup, three H1-H3 slot
+holders, candidate arrival order and20ms stagger from experiment01. Each candidate
+generates64 tokens; blockers128 each. Total1600 candidate output tokens plus384
+blocker output tokens=1984 timed output tokens per run.
+
+Only the eviction policy varies: upstream vLLM vs experimental LFU. Both use FCFS
+scheduling, three running slots, client concurrency28, context512, batch token
+budget128, blocksize16,96 physical KV blocks (95 allocatable), synchronous V1,
+Qwen/Qwen3-0.6B and seed0. These are the earlier A-Y comparison's server settings.
+Prompt token details are enabled in BOTH policies to measure actual cached tokens.
+
+This test is separate from the42-request temporal experiment, whose pool had32
+blocks and whose targeted hot-prefix benefit is preserved in RESULTS.txt.
+We do not require a cache-hit gain in this broader workload before timing it.
+
+Run:
+  .venv/bin/python src/run_cache_eviction_ay.py --rounds 3
+
+The runner first traces both policies, checks their identities and verifies all25
+candidates waited together. It then runs3 fresh-server pairs with trace disabled,
+alternating policy order. Each run includes the same fresh warmup. No servers are
+left running. Results are under results/cache-eviction-ay/batches-<timestamp>/.
+The summary includes candidate latency, throughput, cache hits, per-request A-Y
+medians and diagnostic eviction/preemption counts. A CSV is also saved.
+
+Individual server:
+  bash src/serve_cache_eviction.sh vllm bench ay
+Individual workload:
+  .venv/bin/python workloads/compare_prefix_policies.py --policy fcfs --candidates 25 --eviction-policy vllm
+
+Use lfu instead of vllm for the candidate. For diagnostics use trace instead of
+bench and add --trace-latest to the workload. Restart before EVERY full run.
+The original temporal launcher profile remains the default when ay is omitted.
