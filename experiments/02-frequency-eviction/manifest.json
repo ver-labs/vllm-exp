@@ -1,0 +1,24 @@
+{
+  "experiment_id": "02-frequency-eviction",
+  "status": "completed-controlled-test",
+  "branch": "study/experiment-02",
+  "source_commit": "b8ab85af5e74845719a37af18358da86aa8722ef",
+  "source_base_commit": "a78919e0ea1e6d57557c0d67c7fb200ed420d3fb",
+  "policies": [
+    "vllm",
+    "lfu"
+  ],
+  "scheduling": "fcfs",
+  "timed_runs_per_policy": 3,
+  "diagnostic_runs_per_policy": 1,
+  "requests_per_run": 42,
+  "output_tokens_per_run": 336,
+  "result_summary": "results/cache-eviction/batches-20261020-203704/summary.json",
+  "limitations": [
+    "Targeted hot/scan/return workload, not production traffic.",
+    "No-reuse control has timing variation despite identical cache hits; do not attribute all total-time differences to LFU.",
+    "Cumulative LFU has no decay and may retain obsolete hot prefixes.",
+    "Experimental selection sorts the free list; large-pool overhead and changing hotsets remain untested."
+  ],
+  "validation": "See evidence/summary.json and PLAN.txt; full pytest suite was not run."
+}

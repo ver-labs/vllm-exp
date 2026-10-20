@@ -1,10 +1,13 @@
 Experiment registry
 ===================
 
-01-prefix-scheduling/ : completed; manifest, findings, frozen evidence and
-                       original-result checksums. See RESULTS.txt.
+01-prefix-scheduling/ : completed; protected early-request latency, no established
+                       overall advantage over FCFS. See RESULTS.txt.
+02-frequency-eviction/ : completed controlled test; LFU preserved hot zero-ref
+                         blocks across one-off scans. See RESULTS.txt and PLAN.txt.
 
-Active branch in the harness and editable source: study/experiment-02.
-Default policy: FCFS. Next experimental change has not been selected yet.
-Previous policies and workload drivers remain available for reproduction.
+Current branch in harness and editable source: study/experiment-02.
+Default scheduling: FCFS. Default eviction: upstream vLLM.
+Experimental policies and tracing are opt-in. No experiment server is running.
+Previous experiment is checkpointed on study/experiment-01-prefix-scheduling.
 Raw results/ are local generated data, excluded from Git, and preserved in place.

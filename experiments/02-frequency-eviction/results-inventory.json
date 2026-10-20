@@ -1,0 +1,58 @@
+{
+  "results": [
+    {
+      "path": "results/cache-eviction/vllm/temporal-20261020-203733-336208.json",
+      "sha256": "5e126d89b958f72328caebda814870c6fb48d25ac618401d700240e5f11683c5"
+    },
+    {
+      "path": "results/cache-eviction/lfu/temporal-20261020-203814-834598.json",
+      "sha256": "f18f4042d3ca8d0b5c55644f5af846d66ba1bd2999d81a864714f34fcc0a4e25"
+    },
+    {
+      "path": "results/cache-eviction/vllm/temporal-20261020-203855-495219.json",
+      "sha256": "c14d52150d0b48669e0b3dd89fa06423a840014b30719522b82aa8981292e410"
+    },
+    {
+      "path": "results/cache-eviction/lfu/temporal-20261020-203938-380882.json",
+      "sha256": "408428f0b12ff0f8cb70fdeec3ee2691fc4f51d6d95cc28da51cddc08a8bfaac"
+    },
+    {
+      "path": "results/cache-eviction/lfu/temporal-20261020-204019-400261.json",
+      "sha256": "c412032bbb90f49d933ad89ab1d05a5ef30e8aa494215a034a911618fdfa4fb1"
+    },
+    {
+      "path": "results/cache-eviction/vllm/temporal-20261020-204103-271823.json",
+      "sha256": "1216ff38825b37c99a05edbc86cbbdb9f01120b8b2a859e2b9977fc5a01b0034"
+    },
+    {
+      "path": "results/cache-eviction/vllm/temporal-20261020-204147-733508.json",
+      "sha256": "4e37004c137dc00dc2e485ed6e92136cc0b867d9b899440cf92f2e8c6f93b5d6"
+    },
+    {
+      "path": "results/cache-eviction/lfu/temporal-20261020-204229-266004.json",
+      "sha256": "f87fdc0a1c2f4279c54c47cbef7fc3c89a5ac1ff61df12fda50b35668f118be4"
+    }
+  ],
+  "trace_checks": {
+    "vllm": {
+      "usage_vs_trace_matches": 42,
+      "zero_ref_probe_blocks_verified": [
+        "C1-P",
+        "C2-P",
+        "C3-P"
+      ],
+      "evictions": 297,
+      "trace": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction/vllm/server-trace-cBfmZT/events-29854-1792508849974927000.jsonl"
+    },
+    "lfu": {
+      "usage_vs_trace_matches": 42,
+      "zero_ref_probe_blocks_verified": [
+        "C1-P",
+        "C2-P",
+        "C3-P"
+      ],
+      "evictions": 249,
+      "trace": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction/lfu/server-trace-tDY27d/events-29922-1792508891729918000.jsonl"
+    }
+  }
+}

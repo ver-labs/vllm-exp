@@ -1,0 +1,35 @@
+Experiment 02: frequency-based free cached-block retention
+===========================================================
+
+Completed3 matched untraced runs per policy and1 traced run per policy.
+FCFS scheduling and all other settings were held constant. Each run sent42
+sequential requests and generated336 timed output tokens, excluding warmup.
+
+Returning hot prefix after a scan of one-off prompts:
+                              vLLM baseline     LFU
+Cached prefix tokens/request             16     272
+Median first-text latency          119.50ms   52.54ms
+Median request latency             305.71ms  202.27ms
+
+Latency values are medians of the three per-run medians (three probes per run).
+First-text median ranges: baseline112.09-119.78ms; LFU52.37-57.64ms.
+All9 timed probes per policy showed the same respective cached-token counts.
+Trace inspection confirmed the preserved blocks had ref_cnt=0 and usage reports
+matched actual cache lookups for all42 requests in each diagnostic run.
+LFU evicted249 cached blocks (all zero-use) versus297 in the baseline diagnostic.
+Neither diagnostic had preemptions; active blocks were not eviction candidates.
+
+Measured probe first-text latency was56.0% lower, and request latency33.8% lower.
+The median full workload time was10.889s baseline versus9.957s LFU, but the no-reuse
+control also varied (first-text medians94.88ms versus70.13ms) despite identical
+cache hits. Therefore the entire8.6% batch difference cannot be attributed solely
+to the eviction change. Cache retention itself was directly demonstrated.
+
+Conclusion: basic LFU preserved free hot prefixes across cold scans in this
+controlled workload. This is evidence of scan resistance, not a universal speedup.
+Changing hotsets, aging/decay, mixed concurrency and large-pool overhead remain
+untested. See PLAN.txt for exact implementation and reproduction commands.
+
+Results and CSV are frozen under evidence/; original paths remain unchanged.
+The source commit and code hashes are recorded in manifest.json and the summary.
+Default eviction remains upstream vLLM. All experimental servers are stopped.

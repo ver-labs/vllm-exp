@@ -1,0 +1,55 @@
+Experiment 02: preserve frequently reused free cached blocks
+===========================================================
+
+Compare upstream vLLM eviction order with basic LFU; keep FCFS scheduling in both.
+Default behavior stays upstream (STUDY_EVICTION_POLICY=vllm or unset).
+Opt in using STUDY_EVICTION_POLICY=lfu.
+
+Rules
+- Consider only free ref_cnt=0 blocks; never overwrite active blocks.
+- Reuse uncached blocks first; otherwise evict the least frequently reused cached
+  block. Equal counts retain the existing free-queue eviction order.
+- Increment a cached block's frequency on actual BlockPool.touch adoption,
+  not on cache lookup/probing. Counters belong to the current cached contents.
+- Reset frequency on reassignment, explicit hash eviction, or successful cache reset.
+- Deferred-reader blocks retain last-resort preference and reuse notifications.
+- This is basic cumulative LFU: no aging, admission filter or adaptive decay.
+  Stale historical popularity is a known limitation to test separately.
+- Experimental selection sorts the free list (O(N log N)); overhead is part of
+  measured timings. Counts use O(number of physical blocks) memory.
+
+Controlled workload
+- One excluded model warmup, then12 unrelated one-off requests as a control.
+- Three cycles:3 uses of one library document,6 unrelated one-off prompts that
+  pressure the cache, then1 return to the library document.
+- 42 timed sequential requests, each generating exactly8 tokens=336 output tokens.
+- Prompt lengths147-297 tokens; context384,32 physical KV blocks (31 allocatable),
+  blocksize16,3 configured running slots,128 batch token budget, synchronous V1.
+- Model Qwen/Qwen3-0.6B through the existing vllm-metal/MLX GPU setup.
+- enable-prompt-tokens-details records actual cached tokens in every response.
+- Same input sequence, token limits, scheduling, memory, and fresh server per run.
+- This deliberately exercises scan resistance; it is not a production workload.
+  The no-reuse phase is a control and does not prove adaptability to changing hotsets.
+
+Execution
+  .venv/bin/python src/run_cache_eviction_batches.py --rounds 3
+
+The runner diagnoses BOTH policies with tracing, checks that LFU preserves more
+hot-probe tokens, then runs3 untraced matched pairs with alternating order.
+Logs, results and summary live under results/cache-eviction/. Servers are stopped
+between runs. Model warmup and diagnostic traces are excluded from timed results.
+The workload version is cache-eviction-v1; see the embedded manifest in each JSON.
+
+Individual launch
+  bash src/serve_cache_eviction.sh vllm trace
+  .venv/bin/python workloads/compare_cache_eviction.py --policy vllm --trace-latest
+Use lfu instead of vllm for the candidate. Use bench and omit --trace-latest when
+measuring timing. Restart the server before each complete workload.
+
+Validation so far
+- Four focused real BlockPool checks: hot/cold victim choice, eventual hot-block
+  availability, no active overwrite, uncached-first and stable ties, reset, and
+  deferred-reader callbacks. Default policy retains upstream queue behavior.
+- Six existing scheduler-policy focused checks and the observer regression pass.
+- No full pytest suite executed in this Mac environment.
+- Python compilation and Ruff checks pass; all workload contexts fit the KV budget.
