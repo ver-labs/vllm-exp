@@ -1,0 +1,58 @@
+SCHEDULER OBSERVATION — LOCAL CHECKOUT ONLY
+
+Start from the experiment root:
+  bash src/serve_trace.sh
+
+Stop the existing port-8001 server first. For isolated observations, also stop
+the installed-library server. The launcher does not stop existing processes,
+submit requests, download additional models intentionally, or force preemption.
+It uses the existing editable environment and Qwen model configuration.
+
+The printed trace directory contains server.log and events-PID-TIME.jsonl.
+Each launch gets a separate directory. Original server logs are untouched.
+Point the concurrent workload at http://127.0.0.1:8001/v1/chat/completions.
+The existing workloads/build_workloads_vllm_library_local.py now sends an
+X-Request-Id such as study-A-TIMESTAMP and saves trace_request_id in its result.
+The engine ID includes this label, so A-Y can be matched to queue entries.
+Run it yourself from another terminal with .venv/bin/python; no workload was
+executed while adding this instrumentation.
+
+Read one file, substituting the directory/file actually printed:
+  .venv/bin/python src/read_scheduler_trace.py results/source-checkout/trace-XXXXXX/events-PID-TIME.jsonl
+Add --request REQUEST_ID or --event PREEMPT to filter.
+
+Events:
+  ENQUEUE_BEGIN/END: request counters and queue membership.
+  SCHEDULE_BEGIN/END: queues, assigned positions, optimistic counter state.
+  TOKEN_BUDGET: actual available token/input budgets at step start.
+  CONSIDER_RUNNING/WAITING: request being examined and remaining budgets.
+  READINESS_BEGIN/END: actual blocked status and readiness result. Includes
+    grammar compilation, remote KV, and streaming-input waits when encountered.
+  SKIP_WAITING: skipped request, also visible in deferred_waiting.
+  STOP_WAITING_ADMISSION: active limit, unchunked budget, or allocation failure.
+  PREFIX_LOOKUP_END: actual hit tokens and cache block IDs by group.
+  ALLOCATE_BEGIN/END: requested positions, available blocks, success/failure,
+    new blocks, and complete owned blocks. Retries appear as repeated attempts.
+  ALLOCATE_PHYSICAL_BEGIN/END: actual new physical block allocation.
+  CLAIM_CACHED_BLOCKS: reference counts before/after cached block acquisition.
+  RELEASE_REFERENCES: reference counts before/after releases, in release order.
+  EVICT_CACHED_BLOCK: old identity removed, ID, old hash and before/after refs.
+  PREEMPT_BEGIN/END: victim, counters, reset and waiting queue placement.
+  ADMIT_OR_RESUME/ASSIGN_RUNNING: selected positions and actual remaining budget.
+  APPEND_OUTPUT_BEGIN/END: output counters and stopping-status changes.
+  FINISH_BEGIN/END: actual final status and cleanup.
+  RESULT_HANDLING_BEGIN/END: results accepted; in-flight counters may drain.
+
+All records include sequence, step, process, timestamps, queue IDs/statuses,
+and free-block count. Current-request and queued-request snapshots include
+prompt/output/stored/computed counters, in-flight work, preemption count,
+block IDs, reference counts, cached/null flags. No prompt or output text is logged.
+
+This observes scheduler bookkeeping, not GPU forward completion. A computed
+counter can advance before execution. There is no fake grammar delay, eviction,
+or preemption: ordinary chat does not request grammar, and an ample KV pool may
+never preempt. Those branches require suitable workloads/configurations later.
+
+This diagnostic trace is expensive and must not be used for performance claims.
+Without VLLM_STUDY_TRACE=1, observers are not installed. Existing launch commands
+keep tracing off. The installed wheel and Metal kernels are not modified.
