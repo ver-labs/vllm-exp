@@ -1,0 +1,36 @@
+Hybrid: fixed FCFS head, then prefix-aware tail
+==============================================
+
+Policy name: fcfs_head_prefix
+Enable using src/serve_prefix_comparison.sh fcfs_head_prefix trace|bench.
+The workload accepts --policy fcfs_head_prefix and saves in that policy folder.
+
+The protected count comes from scheduler_config.max_num_seqs (3 here).
+A cohort is a snapshot of the current waiting backlog when none of the previous
+cohort remains waiting. Its first min(max_num_seqs, eligible-head-size) requests
+are fixed in their current FCFS queue order. After their admission, remaining
+requests use prefix-first scoring with FCFS ties and the existing wait safeguard.
+The protected head is not reset after each request; that would collapse to FCFS.
+New arrivals do not displace an active cohort's protected requests. If a cohort
+contains fewer than max_num_seqs requests, only those present can be protected.
+Preempted and special requests retain their existing precedence.
+
+The same A-E workload is intentionally retained for comparison. It protects
+A,B,C; the tail D,E already has descending cache reuse. Consequently this test
+is expected to produce the same candidate order as FCFS. Timing differences
+between those two must be treated as variation unless more evidence is found.
+Unit checks also use a mixed tail to verify the hybrid can actually reorder it.
+
+Batch runner:
+  .venv/bin/python src/run_prefix_batches.py --rounds 3
+
+Stop other servers on port8001 first. The runner performs one hybrid diagnostic,
+then three fresh-server benchmark runs for each of fcfs, prefix_first and
+fcfs_head_prefix, rotating the policy order each round. All workloads use the
+same warmup, prompts, stagger, token counts and server settings. It starts and
+stops its own server processes, saves logs and results, and writes summary.json
+in a unique results/prefix-comparison/batches-<timestamp> directory.
+
+The launcher still uses the comparison's 10-second wait safeguard, 3 slots,
+512 context, 96 blocks, 128 scheduled tokens, and 16-token block size.
+This is not the older 16-block memory-pressure workload.
