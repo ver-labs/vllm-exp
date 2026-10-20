@@ -1,0 +1,72 @@
+Prefix-first waiting admission experiment
+========================================
+
+This modifies the editable vllm-src checkout only. The installed-library server
+and previously saved baseline results are unchanged. Restart the source server
+with the opt-in environment setting to enable the experiment.
+
+Selection rules
+- Before each fresh waiting admission, inspect at most the first 16 requests.
+- Stop looking at a preempted, blocked, partially computed, or other special
+  request; never move a candidate across it. KV-holding requests retain priority.
+- Choose the candidate with most reusable cached prefix tokens NOW. This uses
+  vLLM's existing hash-chain lookup and prompt-length-minus-one limit.
+- Equal reusable-token counts: earlier arrival wins (FCFS).
+- If the oldest inspected candidate has waited at least 2 seconds, choose it
+  regardless of cache score. This is a waiting-time safeguard, not a latency
+  guarantee: token budgets, active slots and KV capacity still gate admission.
+- Scoring neither pins blocks nor records an actual prefix-cache hit.
+- After promotion, all existing readiness, budget and allocation checks run.
+  A chosen request that cannot fit still follows the normal scheduler behavior.
+- Recompute scores before the next admission, since allocations can evict blocks.
+- Running request scheduling and preemption victim selection are unchanged.
+
+Supported scope: synchronous FCFS, prefix caching enabled, one full-attention
+KV group, no LoRA, speculative decoding or KV connector. Unsupported opt-in
+configurations fail early. The policy is deliberately scoped to this study.
+
+From /Users/nandanadileep/projects/vllm/vllm/vllm-exp:
+
+Diagnostic launch (same memory-pressure settings as the baseline):
+
+STUDY_WAITING_POLICY=prefix_first STUDY_PREFIX_MAX_WAIT_S=2 STUDY_PREFIX_LOOKAHEAD=16 \
+  bash src/serve_trace.sh --max-model-len 128 --block-size 16 \
+  --num-gpu-blocks-override 16 --no-async-scheduling
+
+Stop the existing port-8001 server first. This starts only the server; run your
+existing concurrent workload yourself after it reports ready. Keep the same
+prompts, output limit and concurrency; save results under a separate directory.
+
+Look for PREFIX_CANDIDATE and PREFIX_SELECTED in the new trace. Candidate scores
+are probes; actual reuse remains PREFIX_LOOKUP_END. PREFIX_SELECTED includes
+cached_tokens, previous_head, reordered, and the selection reason. On fairness
+selections cached_tokens is null because scoring was not needed.
+
+Restore baseline policy: use STUDY_WAITING_POLICY=fcfs with the same command.
+The default when the variable is absent is also fcfs.
+
+Performance launch (no diagnostic tracing; compare against an untraced baseline):
+
+mkdir -p results/prefix-first
+STUDY_WAITING_POLICY=prefix_first STUDY_PREFIX_MAX_WAIT_S=2 STUDY_PREFIX_LOOKAHEAD=16 \
+  VLLM_STUDY_TRACE=0 VLLM_LOGGING_LEVEL=INFO \
+  .venv/bin/vllm serve Qwen/Qwen3-0.6B --host 127.0.0.1 --port 8001 \
+  --max-model-len 128 --max-num-seqs 3 --block-size 16 \
+  --num-gpu-blocks-override 16 --enable-prefix-caching --no-async-scheduling \
+  2>&1 | tee results/prefix-first/server.log
+
+For the comparison restart with STUDY_WAITING_POLICY=fcfs and save its log
+separately. Use matching settings, cache warmup and output-token counts; repeat
+runs to account for thermal and timing variation. Diagnostic traces add overhead.
+
+Many current prompts may have the same 16-token system-prefix hit. Those ties
+correctly fall back to FCFS; this workload need not show an improvement.
+
+Validation performed without starting a model or submitting workload requests:
+- Four focused test functions in tests/v1/core/test_scheduler.py, executed with
+  the experiment interpreter (isolated from pytest's heavyweight conftest).
+- Real KVCacheManager, hashed Request objects and FCFSRequestQueue verify cache
+  ordering, cache reset re-evaluation, no pinning/free-list mutation, FCFS ties,
+  waiting-time override, special-request preservation, lookahead and opt-in guards.
+- Python compilation, Ruff checks, and existing observer regression check.
+The full pytest scheduler suite and end-to-end latency benchmark were not run.
