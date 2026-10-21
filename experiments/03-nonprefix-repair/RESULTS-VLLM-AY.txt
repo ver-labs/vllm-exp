@@ -1,0 +1,69 @@
+Experiment03: original A-Y vLLM baseline comparison
+==================================================
+
+Completed 2026-10-21. This is the requested serving comparison. The earlier
+standalone diagnostic in RESULTS-AY.txt is separate and is not used as baseline.
+
+Same original A-Y manifest, Qwen3-0.6B, Metal GPU,96 physical blocks,16 tokens
+per block,3 running slots,128 batch tokens, context512, FCFS/upstream eviction,
+28 client workers, identical warmup and arrivals.25 candidates x64 output tokens
+plus3 blockers x128=1984 output tokens. No extra persistent KV cache is added.
+Each variant has a separate traced diagnostic and3 fresh-server untraced runs.
+Pair launch order: baseline/repair, repair/baseline, baseline/repair.
+
+Median across3 timed runs              Native vLLM       Experiment03
+A-Y completion time                         17.687 s          17.359 s
+A-Y output throughput                        90.46/s           92.17/s
+Median candidate first-text latency          10.331 s           9.491 s
+Median candidate request latency             11.874 s          10.814 s
+Normal prefix-cached tokens per run                2432               2432
+Additional matched non-prefix tokens/run              0                352
+KV rows skipped per layer per run                     0                308
+
+Paired A-Y completion times (seconds):
+  Pair1: baseline17.687, repair17.359 (-1.85%, repair faster)
+  Pair2: baseline16.161, repair17.088 (+5.73%, repair slower)
+  Pair3: baseline19.127, repair19.542 (+2.17%, repair slower)
+
+The ratio of group medians is1.85% lower for repair, but repair lost2/3 matched
+pairs; the median paired change is2.17% slower. Ranges overlap substantially:
+baseline16.161-19.127s; repair17.088-19.542s. No reliable overall speedup is
+established. Neither throughput nor latency differences from3 pairs establish
+statistical significance or a general advantage. Do not label this a win.
+
+The reuse path actually ran in every diagnostic/timed repair run:22 physical
+source pages,352 matching tokens,44 repaired rows,308 skipped rows per layer.
+The10% requested boundary ratio rounds to2/16 rows (12.5% actual repair/page).
+This includes64 matching/56 skipped blocker tokens and288 matching/252 skipped
+candidate tokens, across6 candidates (I,L,O,R,U,X). The normal prefix cache
+already reused2432 candidate tokens in both variants. Matching middle-page
+lookup adds CPU work; hit steps gather KV and use separate dense SDPA segments,
+which can outweigh the skipped projection/attention/MLP rows. The scheduler
+still accounts for the original token positions and allocates normal KV blocks.
+
+Output comparison:10/25 candidate answers exactly match baseline in every pair;
+15/25 differ. Each variant's answers are stable across its3 repeats. The changes
+can reflect approximate non-prefix reuse and the alternate mixed-step SDPA
+calculation, including numerical effects on other requests in that step.
+There are no gold answers for this open-ended workload. These are not accuracy
+scores, and quality preservation has NOT been established. Each request emits
+the same fixed64 output tokens, so throughput does not benefit from shorter text.
+
+Both diagnostics confirm all25 candidates queued, admission orderA-Y,0
+preemptions,107 cached evictions. All8 serving runs are valid and all28 requests
+succeeded per run. The manifest matches experiment02's original A-Y byte-for-byte
+as parsed JSON.12 tiny-model tests pass, including paged continuation and stale
+source exclusion. Baseline defaults and installed packages remain unchanged.
+All experimental servers were stopped after their runs.
+
+Code and procedure: PLAN-VLLM.txt. Reproduce:
+  .venv/bin/python src/run_nonprefix_vllm_batches.py --rounds 3
+
+Frozen evidence: evidence-vllm-ay/{summary.json,per-request.csv,raw-sha256.json,tests.txt}.
+Raw run results and logs: results/nonprefix-vllm/batches-20261021-094514/.
+The earlier partial batch094329 is retained separately as troubleshooting evidence
+and is excluded from these measurements (baseline launcher failed before startup).
+
+Conclusion: the intended baseline comparison is complete. It demonstrates actual
+non-prefix compute reuse inside vLLM, but no established performance or quality
+advantage on the original concurrent A-Y workload.

@@ -1,0 +1,64 @@
+Experiment03: comparison with the original concurrent vLLM A-Y baseline
+=====================================================================
+
+The standalone MLX diagnostic in RESULTS-AY.txt was not the intended serving
+comparison. This follow-up implements the rule inside the Metal worker and
+replays the unchanged controlled-prefix-v2-ay workload used in experiments01/02.
+
+Baseline: editable vLLM0.31.0 + installed Metal worker, FCFS, upstream eviction.
+Repair: same launcher and configuration, opt-in StudyNonPrefixWorker subclass.
+No installed package, model weights or vLLM scheduler/hash logic is changed.
+Default server scripts remain unchanged. An explicit --worker-cls opts in.
+
+Same Qwen/Qwen3-0.6B, seed0, context512, max_num_seqs3, batch token budget128,
+96 physical KV blocks, blocksize16, native prefix caching and chunked prefill,
+synchronous scheduling. Exact original manifest:25 A-Y candidates at20ms arrival
+intervals,28 client workers,3 blockers, one-token warmup. Candidates each produce
+64 output tokens, blockers128; ignore_eos gives1984 output tokens overall.
+
+The worker indexes complete resident physical pages by token IDs and preceding
+prefix. It searches scheduled prompt chunks for matching16-token page contents
+whose preceding context differs. Matching true prefixes are left to normal APC.
+It excludes every page written/zeroed/copied into this step from source choices,
+and invalidates its CPU metadata when content changes. No extra persistent KV
+pool or precomputed offline source cache is allocated. Source pages can still
+belong to live requests; they are read-only and excluded if this step writes them.
+The scheduler continues allocating the full normal destination KV footprint.
+This experiment saves selected prompt computation, not cache capacity or budget.
+
+For a matching page, recompute first ceil(0.1*16)=2 rows at every layer (12.5%
+actual repair per page). Always recompute each scheduled chunk's final row.
+Keep other matched rows' old-context KV and apply a constant RoPE shift to keys.
+Compute all unmatched rows and preserve original absolute causal positions.
+Gather the request's earlier KV, assemble target chunk KV, write through native
+reshape_and_cache into vLLM-assigned destination pages, then continue native
+sampling and decoding. On steps with no skipped rows, use native forward.
+On hit steps, the prototype processes the packed segments separately in MLX;
+its additional gathers, assembly, scatter and lost batching can outweigh savings.
+This is approximate and may change generated answers. Position adjustment alone
+cannot correct contextual dependence. This is not CacheBlend's token selector.
+
+Supported scope: plain single-device dense Qwen3, standard RoPE, unquantized KV,
+no LoRA, speculative model, pooling, multimodal work or prompt logprobs.
+A private experimental worker API is used; this is version-specific research code.
+
+Validation: existing9 tiny-model tests plus3 paged tests check stale/excluded
+pages, source immutability, prefix causality, full-repair correctness and decode
+continuation from the written paged KV. They are not semantic quality evaluations.
+Diagnostic serving runs inspect actual A-Y queue overlap and skipped-row events.
+Three fresh-server untraced timing pairs alternate baseline/repair launch order.
+Both variants include ordinary HTTP/engine logging; the repair path writes a
+small per-hit event record, included in its measured overhead. Startup excluded.
+Results include latency, throughput, prefix cache hits and exact answer agreement;
+open-ended answer agreement does not establish answer correctness.
+
+Reproduce:
+  .venv/bin/python -m unittest discover -s tests -p test_nonprefix_repair.py -v
+  .venv/bin/python src/run_nonprefix_vllm_batches.py --rounds 3
+
+Launch only (no requests):
+  bash src/serve_nonprefix_comparison.sh baseline bench
+  bash src/serve_nonprefix_comparison.sh repair bench
+
+Raw batch artifacts: results/nonprefix-vllm/batches-<timestamp>/.
+Per-hit source-page / target-position details: server run nonprefix-events.jsonl.

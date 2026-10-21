@@ -1,16 +1,32 @@
 {
   "experiment_id": "03-nonprefix-repair",
-  "status": "completed_diagnostic_baseline_failed_quality_task",
+  "status": "completed_vllm_baseline_comparison",
   "branch": "study/experiment-03-nonprefix-repair",
   "approach": "independent rule-based sparse non-prefix repair",
-  "backend": "standalone MLX Qwen3; no vLLM integration",
+  "backend": "vLLM Metal worker, same concurrent A-Y workload; standalone MLX diagnostic retained separately",
   "source_checkout_commit_unchanged": "b8ab85af5e74845719a37af18358da86aa8722ef",
   "code_sha256": {
     "src/nonprefix_repair.py": "9b5a51fc93472ad1aebbbbc7ea69ea2a7f14552176667a6115a8eb5b7b7f542e",
     "workloads/run_nonprefix_repair.py": "18faca305e140040c49a3e2c40e8087871a64c88e0810e655d8eb420c4bdac6b",
-    "tests/test_nonprefix_repair.py": "cc7f5f6bb66171232f15fed6e596fcf150368741c9c6844368f284933f55678c"
+    "tests/test_nonprefix_repair.py": "cd29d88692945a90e58ab010d7134dc1a55bde03454b9eb68e2bb97eba78e9e4",
+    "src/study_nonprefix_worker.py": "bbb007d8d8296d75a6844d96334858214b90a0d1f8096c09686e57cfbad2e11f",
+    "src/serve_nonprefix_comparison.sh": "9111f67d776623e3c404ebb7321ed02fdf54482d4d87286f4351175c342ba328",
+    "src/run_nonprefix_vllm_batches.py": "30fd5292c8f163ddad146fd63cdb84e2048cdb28be0df9b432a919ce248d17c5",
+    "workloads/compare_prefix_policies.py": "28dc994f3dec7701e2764e9afd937e44ee80fc84796fd4650501b5f834a8d595"
   },
   "pretrained_model_benchmark_run": true,
-  "next_step": "Replace the failed semantic task with a validated quality workload before drawing quality or deployment conclusions.",
-  "results_summary": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/experiments/03-nonprefix-repair/evidence-ay/summary.json"
+  "next_step": "No established speedup; stronger controlled quality evaluation and implementation profiling needed before further claims.",
+  "results_summary": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/experiments/03-nonprefix-repair/evidence-ay/summary.json",
+  "result_summary": "experiments/03-nonprefix-repair/evidence-vllm-ay/summary.json",
+  "serving_comparison": {
+    "matched_pairs": 3,
+    "diagnostics_per_variant": 1,
+    "baseline": "unmodified Metal worker; FCFS and upstream eviction",
+    "candidate": "opt-in StudyNonPrefixWorker, requested repair ratio0.1;2 of16 rows/page",
+    "same_KV_pool": true,
+    "new_persistent_KV_side_cache": false,
+    "historical_manifest_identical": true,
+    "skipped_rows_each_run": 308,
+    "timing_conclusion": "No established overall speedup: repair slower in two of three pairs; answer quality preservation not established."
+  }
 }

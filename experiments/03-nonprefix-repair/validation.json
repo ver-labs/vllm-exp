@@ -1,7 +1,7 @@
 {
-  "status": "implemented_not_benchmarked",
-  "pretrained_model_loaded_or_benchmarked": false,
-  "tiny_random_model_tests_passed": 9,
+  "status": "completed_vllm_baseline_comparison",
+  "pretrained_model_loaded_or_benchmarked": true,
+  "tiny_random_model_tests_passed": 12,
   "validation_model": {
     "architecture": "MLX Qwen3",
     "hidden_size": 32,
@@ -20,7 +20,10 @@
     "normal decode works after full repaired prefill",
     "tiny Metal float32 dense/sparse forwards succeed",
     "tiny Metal bfloat16 full-repair numerical check succeeds",
-    "invalid ratios, token mismatch, empty suffix and cross-session reuse rejected"
+    "invalid ratios, token mismatch, empty suffix and cross-session reuse rejected",
+    "Physical-page index rejects identical-prefix and currently-written sources and invalidates overwritten sources",
+    "Full paged repair matches dense followed by continuation from the written physical cache",
+    "Sparse paged repair preserves source pages and causal prefix keys"
   ],
   "other_checks": [
     "Ruff and Python compilation",
@@ -29,5 +32,16 @@
     "logit comparison and exact-answer normalization helpers checked"
   ],
   "quality_or_performance_improvement_established": false,
-  "limitations": "Tiny random-model checks do not establish pretrained-model answer quality or speed. Fixed-order runner timing is exploratory."
+  "limitations": "Twelve tiny-model checks and valid serving runs do not establish semantic answer quality or a reliable speedup.",
+  "serving_validation": {
+    "historical_A_Y_manifest_identical": true,
+    "all_eight_runs_valid": true,
+    "all_28_requests_successful_each_run": true,
+    "output_tokens_per_run": 1984,
+    "candidate_output_tokens_per_run": 1600,
+    "original_prefix_cached_tokens_each_run": 2432,
+    "diagnostic_waiting_candidates": 25,
+    "preemptions_each_diagnostic": 0,
+    "cached_evictions_each_diagnostic": 107
+  }
 }

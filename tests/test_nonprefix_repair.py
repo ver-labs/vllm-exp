@@ -150,3 +150,107 @@ class NonPrefixRepairTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class PagedRepairTests(unittest.TestCase):
+    """Catch stale-page reuse and verify writes feed normal native decode."""
+
+    def setUp(self):
+        from types import SimpleNamespace
+
+        from study_nonprefix_worker import PagedRepair
+        from vllm_metal.attention.caches.kv_cache import MetalPagedKVCache
+        from vllm_metal.metal import get_ops
+
+        mx.set_default_device(mx.gpu)
+        mx.random.seed(9)
+        self.model = Model(
+            ModelArgs(
+                model_type="qwen3",
+                hidden_size=128,
+                num_hidden_layers=2,
+                intermediate_size=256,
+                num_attention_heads=2,
+                rms_norm_eps=1e-6,
+                vocab_size=128,
+                num_key_value_heads=2,
+                max_position_embeddings=128,
+                rope_theta=1000000.0,
+                head_dim=64,
+                tie_word_embeddings=True,
+            )
+        )
+        self.model.set_dtype(mx.float16)
+        self.model.eval()
+        self.adapter = NonPrefixRepair(self.model)
+        self.doc = list(range(20, 36))
+        self.target = [3, 4] + self.doc + [8, 9]
+        self.dense = self.adapter.dense([], self.target, [10]).evaluate()
+        self.source = self.adapter.prepare([], self.doc)
+        self.paged = MetalPagedKVCache(2, 2, 64, 8, 16, mx.float16)
+        for i, (k, v) in enumerate(self.source.layers):
+            nk, nv = get_ops().reshape_and_cache(
+                mx.contiguous(k[0].transpose(1, 0, 2)),
+                mx.contiguous(v[0].transpose(1, 0, 2)),
+                self.paged.key_caches[i],
+                self.paged.value_caches[i],
+                mx.array(list(range(32, 48)), dtype=mx.int64),
+            )
+            self.paged.replace_layer_cache(i, nk, nv)
+        mx.eval(*self.paged.key_caches, *self.paged.value_caches)
+        self.study = PagedRepair(SimpleNamespace(_forward_model=self.model), 1)
+        self.study.cache = self.paged
+        for layer in self.model.layers:
+            object.__setattr__(layer.self_attn, "_inner", layer.self_attn)
+
+    def tearDown(self):
+        for layer in self.model.layers:
+            object.__delattr__(layer.self_attn, "_inner")
+
+    def test_full_paged_repair_matches_dense_and_continuation(self):
+        from study_nonprefix_worker import ResidentBlock
+
+        source = ResidentBlock(2, tuple(self.doc), ())
+        hidden = self.study.forward(
+            [("test", self.target, 0, [[4, 5]])], {"test": [(2, source)]}
+        )
+        # Continue from the written paged KV, without rebuilding a private cache.
+        hidden = self.study.forward([("test", [10], len(self.target), [[4, 5]])], {})
+        logits = self.model.model.embed_tokens.as_linear(hidden)[:, -1, :]
+        mx.eval(logits)
+        error = float(mx.max(mx.abs(logits - self.dense.logits)).item())
+        self.assertLess(error, 0.08)
+
+    def test_sparse_paged_repair_preserves_source_and_prefix_causality(self):
+        from study_nonprefix_worker import ResidentBlock
+
+        self.study.ratio = 0.1
+        before = [self.study.gather(i, list(range(32, 48))).tolist() for i in range(2)]
+        source = ResidentBlock(2, tuple(self.doc), ())
+        hidden = self.study.forward(
+            [("test", self.target, 0, [[4, 5]])], {"test": [(2, source)]}
+        )
+        mx.eval(hidden, *self.paged.key_caches, *self.paged.value_caches)
+        for i in range(2):
+            self.assertEqual(
+                before[i], self.study.gather(i, list(range(32, 48))).tolist()
+            )
+        # Early keys cannot depend on the later reused document.
+        reference = NonPrefixRepair(self.model).prepare([], self.target)
+        for i in range(2):
+            actual = self.study.gather(i, [64, 65])
+            error = float(
+                mx.max(mx.abs(actual - reference.layers[i][0][..., :2, :])).item()
+            )
+            self.assertLess(error, 0.02)
+
+    def test_block_index_rejects_written_and_identical_prefix_pages(self):
+        from study_nonprefix_worker import BlockIndex, ResidentBlock
+
+        index = BlockIndex()
+        index.blocks[7] = ResidentBlock(7, (1, 2, 3, 4), (8,))
+        self.assertEqual(index.matches([1, 2, 3, 4], [8], set(), 4), [])
+        self.assertEqual(index.matches([1, 2, 3, 4], [9], {7}, 4), [])
+        self.assertEqual(len(index.matches([1, 2, 3, 4], [9], set(), 4)), 1)
+        index.invalidate({7})
+        self.assertEqual(index.matches([1, 2, 3, 4], [9], set(), 4), [])

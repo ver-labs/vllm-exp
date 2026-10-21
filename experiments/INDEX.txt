@@ -6,13 +6,14 @@ Experiment registry
 02-frequency-eviction/ : targeted hot-prefix retention gain (RESULTS.txt).
                          Full concurrent A-Y: no overall throughput advantage
                          and identical cache hits (RESULTS-AY.txt).
-03-nonprefix-repair/ : implemented standalone MLX rule-based reuse/repair prototype.
-                      A-Y diagnostic completed: 450 evaluations, no established
-                      speedup; dense baseline failed quality task.
-                      See RESULTS-AY.txt and evidence-ay/.
+03-nonprefix-repair/ : integrated Metal-worker comparison against native vLLM.
+                      Original concurrent A-Y,3 matched pairs; actual middle-page
+                      reuse, no established speedup or quality preservation.
+                      See RESULTS-VLLM-AY.txt and evidence-vllm-ay/.
+                      Earlier standalone diagnostic retained in RESULTS-AY.txt.
 
 Current branch in both repos: study/experiment-03-nonprefix-repair.
 vLLM defaults remain FCFS scheduling and upstream eviction. Its implementation
-was not changed for experiment03. No server or pretrained benchmark remains running.
+was not changed for experiment03; the optional Metal worker is separate. No server or pretrained benchmark remains running.
 Completed code and evidence remain on the earlier experiment branches.
 Raw results/ are local generated data, excluded from Git, and preserved in place.
