@@ -1,0 +1,51 @@
+Experiment03: A-Y diagnostic results
+===================================
+
+Completed 2026-10-21 on the Mac Apple GPU using cached Qwen/Qwen3-0.6B.
+Standalone MLX prototype, no vLLM serving or concurrent requests.
+25 unique definition/report cases x 6 variants x 3 passes = 450 evaluations.
+Boundary selector; arm orders rotated by offsets 0,2,4. Max output16, greedy.
+
+Measured prefill time (median of three per-pass medians):
+  Native dense      43.77 ms  (pass medians 41.25-45.35 ms)
+  Repair 0%         45.22 ms  (pass medians 44.46-47.51 ms)
+  Repair 10%        42.78 ms  (pass medians 37.99-44.52 ms)
+  Repair 25%        44.15 ms  (pass medians 44.09-47.48 ms)
+  Repair 50%        50.18 ms  (pass medians 48.46-53.03 ms)
+  Repair 100%       60.03 ms  (pass medians 59.99-68.30 ms)
+
+Finding: no established speedup. The 10% repair median is about 2.3% below
+dense, but pass ranges overlap. Larger repair budgets add overhead on this
+small 94-token document. Three rotated passes do not establish significance.
+
+QUALITY TASK FAILED: native dense scored 0/25 in every pass, as did all
+repair arms. The expected words vary, but native dense answered A throughout.
+Independent mlx_lm.generate reproduced A on the exact case-A prompt; a simple
+arithmetic prompt produced a plausible answer. Thus the diagnostic task is
+unsuitable for claiming preserved answer quality on this model.
+100% repair matched dense greedy outputs on all 75 repeated cases, while
+BF16 next-token logits were not bitwise identical (mean KL about0.00104).
+0% repair matched dense complete output IDs on72/75 repeated cases; all
+other repair budgets matched75/75. Agreement with a wrong baseline is not
+evidence of semantic correctness. The75 observations are25 cases repeated.
+
+Offline source-cache preparation median: 27.05 ms.
+Preparation cost is excluded from arm times and recorded separately in raw
+files. These are warm reusable-cache timings, not cold-request speedups.
+Model load and warmup excluded; synchronization included in prefill timing.
+Decode output lengths may vary; total latency is in per-case.csv, and this
+report uses prefill time rather than claiming serving throughput.
+
+Validation: all450 rows audited for completion, GPU device, A-Y coverage,
+identical target token IDs across passes, expected repair row counts and
+output limits. Existing nine tiny-model correctness checks remain separate.
+
+Evidence: evidence-ay/summary.json, per-case.csv, raw-sha256.json.
+Raw files and pass logs remain under results/nonprefix-repair/.
+Next: validate a semantic task the dense baseline can solve before a new
+quality comparison. No vLLM integration or production benefit established.
+
+Reproduce each pass from the experiment directory:
+  .venv/bin/python workloads/run_nonprefix_repair.py --cases 25 --selector boundary --order-offset 0
+  .venv/bin/python workloads/run_nonprefix_repair.py --cases 25 --selector boundary --order-offset 2
+  .venv/bin/python workloads/run_nonprefix_repair.py --cases 25 --selector boundary --order-offset 4

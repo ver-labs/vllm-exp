@@ -35,7 +35,7 @@ DOCUMENT = (
 MARKER = "<<<INSERT_SHARED_REPORT_HERE>>>"
 
 
-def cases():
+def cases(count=8):
     rows = []
     for index, (old, new) in enumerate(
         [
@@ -47,8 +47,27 @@ def cases():
             ("green", "yellow"),
             ("boat", "train"),
             ("east", "west"),
+            ("apple", "pear"),
+            ("Monday", "Friday"),
+            ("silver", "gold"),
+            ("small", "large"),
+            ("winter", "summer"),
+            ("tea", "coffee"),
+            ("river", "forest"),
+            ("copper", "iron"),
+            ("circle", "square"),
+            ("left", "right"),
+            ("paper", "glass"),
+            ("quiet", "loud"),
+            ("early", "late"),
+            ("mouse", "horse"),
+            ("rain", "snow"),
+            ("Berlin", "Madrid"),
+            ("open", "closed"),
         ]
     ):
+        if index >= count:
+            break
         extra = (
             ""
             if index < 4
@@ -59,7 +78,7 @@ def cases():
         )
         rows.append(
             {
-                "id": f"case-{index + 1:02}",
+                "id": chr(65 + index) if count == 25 else f"case-{index + 1:02}",
                 "source_context": f"Definition for this case: ALPHA means {old}. ",
                 "target_context": extra
                 + f"Definition for this case: ALPHA means {new}. ",
@@ -139,6 +158,13 @@ def main():
     )
     parser.add_argument("--max-output-tokens", type=int, default=16)
     parser.add_argument("--prepare-only", action="store_true")
+    parser.add_argument("--cases", type=int, choices=(8, 25), default=8)
+    parser.add_argument(
+        "--order-offset",
+        type=int,
+        default=0,
+        help="Rotate measured arms; compare to dense after all arms",
+    )
     args = parser.parse_args()
     try:
         ratios = sorted(set(float(value) for value in args.ratios.split(",")))
@@ -155,7 +181,8 @@ def main():
         "selector": args.selector,
         "repair_ratios": ratios,
         "max_output_tokens": args.max_output_tokens,
-        "cases": cases(),
+        "cases": cases(args.cases),
+        "order_offset": args.order_offset,
         "semantics": (
             "approximate; not the CacheBlend paper's token-selection algorithm"
         ),
@@ -236,11 +263,11 @@ def main():
                 "variants": [],
             }
             result["cases"].append(case_result)
-            dense_logits = None
-            dense_ids = None
-            # This is a correctness/quality prototype. Order is fixed and timings
-            # are exploratory, not a randomized production benchmark.
-            for ratio in [None] + ratios:
+            observations = []
+            arms = [None] + ratios
+            offset = args.order_offset % len(arms)
+            arms = arms[offset:] + arms[:offset]
+            for ratio in arms:
                 mx.synchronize()
                 start = time.perf_counter()
                 prefill = (
@@ -255,8 +282,6 @@ def main():
                 first_logits = prefill.logits
                 ids, first = generate(model, prefill, args.max_output_tokens, eos_ids)
                 end = time.perf_counter()
-                if ratio is None:
-                    dense_logits, dense_ids = first_logits, ids
                 text = tokenizer.decode(ids, skip_special_tokens=True)
                 row = {
                     "mode": "dense" if ratio is None else "reuse_repair",
@@ -268,19 +293,25 @@ def main():
                     "answer": text,
                     "answer_exact_match": normalized_answer(text)
                     == normalized_answer(case["expected"]),
-                    "matches_dense_generation": ids == dense_ids,
                     "repaired_doc_positions": list(prefill.repaired_document_positions),
                     "recomputed_rows_per_layer": prefill.recomputed_rows_per_layer,
                     "reused_rows_per_layer": prefill.reused_rows_per_layer,
-                    **compare_logits(dense_logits, first_logits),
                 }
                 case_result["variants"].append(row)
+                observations.append((row, first_logits, ids))
                 print(
                     f"{case['id']} {row['mode']} ratio={ratio}: "
                     f"correct={row['answer_exact_match']} prefill={prefill_ms:.2f}ms",
                     flush=True,
                 )
                 destination.write_text(json.dumps(result, indent=2) + "\n")
+            _, dense_logits, dense_ids = next(
+                item for item in observations if item[0]["ratio"] is None
+            )
+            for row, first_logits, ids in observations:
+                row.update(compare_logits(dense_logits, first_logits))
+                row["matches_dense_generation"] = ids == dense_ids
+            destination.write_text(json.dumps(result, indent=2) + "\n")
         result["aggregate"] = []
         for ratio in [None] + ratios:
             rows = [

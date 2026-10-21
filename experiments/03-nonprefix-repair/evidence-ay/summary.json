@@ -1,0 +1,122 @@
+{
+  "experiment": "03-nonprefix-repair",
+  "status": "completed_diagnostic_baseline_failed_quality_task",
+  "unique_cases": 25,
+  "passes": 3,
+  "evaluations": 450,
+  "order_offsets": [
+    0,
+    2,
+    4
+  ],
+  "runs": [
+    {
+      "pass": 1,
+      "order_offset": 0,
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/nonprefix-repair/repair-20261021-093032-596221.json",
+      "log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/nonprefix-repair/batches-20261021-093026/pass-1.log"
+    },
+    {
+      "pass": 2,
+      "order_offset": 2,
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/nonprefix-repair/repair-20261021-093052-504855.json",
+      "log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/nonprefix-repair/batches-20261021-093026/pass-2.log"
+    },
+    {
+      "pass": 3,
+      "order_offset": 4,
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/nonprefix-repair/repair-20261021-093110-359128.json",
+      "log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/nonprefix-repair/batches-20261021-093026/pass-3.log"
+    }
+  ],
+  "backend": "standalone MLX Qwen3 on Apple GPU; no vLLM serving",
+  "quality_limitation": "All arms including native dense returned A for every case, whereas gold labels vary. This workload cannot establish quality preservation. Native mlx_lm.generate independently reproduced A on case A.",
+  "timing_method": "Median of per-pass median prefill times; three exploratory passes, fixed rotation offsets; offline cache preparation excluded.",
+  "variants": [
+    {
+      "ratio": null,
+      "median_of_pass_median_prefill_ms": 43.77424996346235,
+      "pass_median_prefill_ms": [
+        41.25345917418599,
+        43.77424996346235,
+        45.34766636788845
+      ],
+      "correct_evaluations": 0,
+      "total_evaluations": 75,
+      "dense_generation_agreements": 75,
+      "mean_first_token_kl": 0.0,
+      "max_abs_first_logit_error": 0.0
+    },
+    {
+      "ratio": 0.0,
+      "median_of_pass_median_prefill_ms": 45.220582745969296,
+      "pass_median_prefill_ms": [
+        45.220582745969296,
+        44.461500365287066,
+        47.507249750196934
+      ],
+      "correct_evaluations": 0,
+      "total_evaluations": 75,
+      "dense_generation_agreements": 72,
+      "mean_first_token_kl": 0.008227166837314144,
+      "max_abs_first_logit_error": 2.609375
+    },
+    {
+      "ratio": 0.1,
+      "median_of_pass_median_prefill_ms": 42.77795786038041,
+      "pass_median_prefill_ms": [
+        42.77795786038041,
+        37.98845782876015,
+        44.51895831152797
+      ],
+      "correct_evaluations": 0,
+      "total_evaluations": 75,
+      "dense_generation_agreements": 75,
+      "mean_first_token_kl": 0.003936323753732722,
+      "max_abs_first_logit_error": 2.140625
+    },
+    {
+      "ratio": 0.25,
+      "median_of_pass_median_prefill_ms": 44.15112501010299,
+      "pass_median_prefill_ms": [
+        44.086291920393705,
+        44.15112501010299,
+        47.48262511566281
+      ],
+      "correct_evaluations": 0,
+      "total_evaluations": 75,
+      "dense_generation_agreements": 75,
+      "mean_first_token_kl": 0.0055324731115251775,
+      "max_abs_first_logit_error": 1.8125
+    },
+    {
+      "ratio": 0.5,
+      "median_of_pass_median_prefill_ms": 50.18279189243913,
+      "pass_median_prefill_ms": [
+        48.46429172903299,
+        50.18279189243913,
+        53.027375135570765
+      ],
+      "correct_evaluations": 0,
+      "total_evaluations": 75,
+      "dense_generation_agreements": 75,
+      "mean_first_token_kl": 0.004992195588856703,
+      "max_abs_first_logit_error": 1.75
+    },
+    {
+      "ratio": 1.0,
+      "median_of_pass_median_prefill_ms": 60.0337078794837,
+      "pass_median_prefill_ms": [
+        60.0337078794837,
+        59.989291708916426,
+        68.29883297905326
+      ],
+      "correct_evaluations": 0,
+      "total_evaluations": 75,
+      "dense_generation_agreements": 75,
+      "mean_first_token_kl": 0.0010428175658853433,
+      "max_abs_first_logit_error": 0.875
+    }
+  ],
+  "offline_cache_prepare_median_ms": 27.051541954278946
+}

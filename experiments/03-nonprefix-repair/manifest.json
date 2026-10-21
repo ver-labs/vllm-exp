@@ -1,15 +1,16 @@
 {
   "experiment_id": "03-nonprefix-repair",
-  "status": "implemented_not_benchmarked",
+  "status": "completed_diagnostic_baseline_failed_quality_task",
   "branch": "study/experiment-03-nonprefix-repair",
   "approach": "independent rule-based sparse non-prefix repair",
   "backend": "standalone MLX Qwen3; no vLLM integration",
   "source_checkout_commit_unchanged": "b8ab85af5e74845719a37af18358da86aa8722ef",
   "code_sha256": {
     "src/nonprefix_repair.py": "9b5a51fc93472ad1aebbbbc7ea69ea2a7f14552176667a6115a8eb5b7b7f542e",
-    "workloads/run_nonprefix_repair.py": "3877a9e84a98ebddb5c5c5161d0f623f2d5ffd0423542e98609fff4ac002968b",
+    "workloads/run_nonprefix_repair.py": "18faca305e140040c49a3e2c40e8087871a64c88e0810e655d8eb420c4bdac6b",
     "tests/test_nonprefix_repair.py": "cc7f5f6bb66171232f15fed6e596fcf150368741c9c6844368f284933f55678c"
   },
-  "pretrained_model_benchmark_run": false,
-  "next_step": "Run quality-first evaluation later; no performance result claimed."
+  "pretrained_model_benchmark_run": true,
+  "next_step": "Replace the failed semantic task with a validated quality workload before drawing quality or deployment conclusions.",
+  "results_summary": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/experiments/03-nonprefix-repair/evidence-ay/summary.json"
 }

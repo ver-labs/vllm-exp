@@ -7,11 +7,12 @@ Experiment registry
                          Full concurrent A-Y: no overall throughput advantage
                          and identical cache hits (RESULTS-AY.txt).
 03-nonprefix-repair/ : implemented standalone MLX rule-based reuse/repair prototype.
-                      Nine tiny random-model checks passed. Pretrained-model
-                      quality and performance experiments deferred. See PLAN.txt.
+                      A-Y diagnostic completed: 450 evaluations, no established
+                      speedup; dense baseline failed quality task.
+                      See RESULTS-AY.txt and evidence-ay/.
 
 Current branch in both repos: study/experiment-03-nonprefix-repair.
 vLLM defaults remain FCFS scheduling and upstream eviction. Its implementation
-was not changed for experiment03. No server or pretrained benchmark is running.
+was not changed for experiment03. No server or pretrained benchmark remains running.
 Completed code and evidence remain on the earlier experiment branches.
 Raw results/ are local generated data, excluded from Git, and preserved in place.
