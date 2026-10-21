@@ -1,0 +1,117 @@
+Experiment 08: queue-informed retention of free cached prefix blocks
+======================================================================
+
+Completed on the Mac Metal GPU with the pinned Qwen3-1.7B model.
+Three policies: upstream vLLM, existing cumulative LFU, queue-aware retention.
+All use FCFS, exact 16-token prefix matching, synchronous chunked prefill,
+identical page budgets, request manifests, arrivals and fixed output counts.
+Earlier partial-prefix and skip/continue changes are disabled.
+Each profile has a separate diagnostic per policy and 3 untraced timed rounds
+with rotated policy order and a fresh server for every run: 24 runs total.
+
+Profile: targeted
+----------------------------------------------------------------------
+25 candidates: 13 unrelated 256-token prompts and 12 returning 202-token
+prompts sharing 176 tokens with a seeded current prefix. One running
+slot, 32 physical pages (31 usable), context 384, batch 128.
+Before release: historical 192-token prefix x3, current 192-token prefix
+x1 (8 output tokens each), then one 48-token blocker generating 128.
+Each candidate generates 32 tokens, 10ms arrivals. Full measured lifecycle
+includes cache priming/blocker/candidates: 960 output tokens; candidates 800.
+
+Median of3 runs             vLLM           LFU          Queue
+Candidate completion s            34.585        35.020        34.094
+Full lifecycle s                  35.732        36.158        35.257
+Output tokens/s                   23.130        22.840        23.460
+First text median s               18.715        19.016        18.689
+First text p95 s                  31.938        32.424        31.593
+Request latency median s          19.909        20.147        19.747
+
+Candidate cached-token totals per timed run:
+  vllm: [2224, 2224, 2224]
+  lfu: [928, 928, 928]
+  queue: [2320, 2320, 2320]
+
+Paired candidate completion-time change versus vLLM (%; negative=faster):
+  lfu: [-8.004, 1.363, -1.204]; median paired change -1.20%; ratio of group medians +1.26%.
+  queue: [-11.448, -4.371, 1.842]; median paired change -4.37%; ratio of group medians -1.42%.
+  Queue versus LFU: [-3.744, -5.657, 3.083]; ratio of group medians -2.65%.
+
+Exact candidate answers matching baseline, each round (out of 25):
+  lfu: [25, 25, 25]
+  queue: [25, 25, 25]
+
+First return (B) diagnostic cached tokens: {'vllm': 80, 'lfu': 16, 'queue': 176}.
+  vllm timed first-return hits: [80, 80, 80]; returning median first text 18.726s.
+    First-return B first-text ms by round: [6634.37, 5466.73, 5513.34].
+    Unrelated A post-first-text span ms by round: [1405.34, 963.53, 1054.04].
+  lfu timed first-return hits: [16, 16, 16]; returning median first text 18.968s.
+    First-return B first-text ms by round: [6170.34, 4983.82, 5017.36].
+    Unrelated A post-first-text span ms by round: [1171.18, 916.36, 925.06].
+  queue timed first-return hits: [176, 176, 176]; returning median first text 18.661s.
+    First-return B first-text ms by round: [5307.42, 4800.18, 5037.91].
+    Unrelated A post-first-text span ms by round: [1089.38, 908.09, 1058.5].
+
+Validation: all 25 candidates waited together; admission remained A-Y;
+zero preemptions; all traced cached evictions had ref_count=0;
+per-request API cached-token counts matched actual prefix lookups.
+
+Profile: ay
+----------------------------------------------------------------------
+Original A-Y manifest, 3 slots, 96 physical pages (95 usable),
+context 512, batch 128. 25 candidates x64 output tokens and 3 blockers
+x128:1984 total output tokens; 20ms arrivals and original warmup.
+
+Median of3 runs             vLLM           LFU          Queue
+Candidate completion s            26.319        29.026        29.030
+Full lifecycle s                  26.418        29.131        29.140
+Output tokens/s                   60.790        55.120        55.120
+First text median s               14.079        15.996        15.930
+First text p95 s                  21.274        23.793        23.725
+Request latency median s          16.508        18.524        18.427
+
+Candidate cached-token totals per timed run:
+  vllm: [2432, 2432, 2432]
+  lfu: [2432, 2432, 2432]
+  queue: [2432, 2432, 2432]
+
+Paired candidate completion-time change versus vLLM (%; negative=faster):
+  lfu: [3.525, 10.287, -1.269]; median paired change +3.52%; ratio of group medians +10.29%.
+  queue: [15.337, 2.879, 1.572]; median paired change +2.88%; ratio of group medians +10.30%.
+  Queue versus LFU: [11.41, -6.717, 2.877]; ratio of group medians +0.01%.
+
+Exact candidate answers matching baseline, each round (out of 25):
+  lfu: [25, 25, 25]
+  queue: [25, 25, 25]
+
+Validation: all 25 candidates waited together; admission remained A-Y;
+zero preemptions; all traced cached evictions had ref_count=0;
+per-request API cached-token counts matched actual prefix lookups.
+
+Interpretation and limits
+----------------------------------------------------------------------
+The targeted diagnostic shows queue information can preserve a prefix that
+both recency and cumulative frequency lose before the first queued return.
+On 1.7B targeted, queue median completion was 1.42% lower than stock and 2.65%
+lower than LFU. Queue won 2/3 matched rounds against each control.
+On 1.7B A-Y, queue median completion was 10.30% higher than stock and nearly
+identical to LFU (+0.013%). Queue lost all 3 rounds to stock and 2/3 to LFU.
+Group-median ratios and median paired changes differ; both are reported.
+All A-Y policies reused 2432 prompt tokens and queue changed no upstream
+allocation choices in its diagnostic. There is no additional reuse gain there.
+Conclusion: cache retention generalizes to the larger model, but a consistent
+overall speed advantage is not established. Earlier 0.6B evidence is unchanged.
+This does not imply a general throughput gain. All paired timings are
+reported above; 3 repeats and machine variability limit causal speed claims.
+The targeted workload deliberately exposes this retention opportunity; the
+original A-Y workload is the generalization control. First-text time includes
+waiting, and candidate completion includes remaining blocker time after release.
+Cache-hit token counts are not FLOP or elapsed-time measurements.
+Answer agreement is an exact-text comparison, not a semantic quality score.
+Diagnostic selection CPU timings include probes/bucketing, exclude event writing,
+and are not used to rank performance; timed runs have tracing disabled.
+No extra KV capacity, approximate middle-block reuse, or queue reordering is used.
+
+Frozen summaries, per-request CSV, diagnostic validation and raw checksums:
+evidence/. Source/model revisions and file hashes: manifest.json.
+Reproduction and implementation: PLAN.txt. All experimental servers stopped.

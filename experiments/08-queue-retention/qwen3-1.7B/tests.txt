@@ -1,0 +1,18 @@
+$ /Users/nandanadileep/.cache/pre-commit/reporh6_dz_e/py_env-python3.12/bin/ruff format src/run_queue_retention.py workloads/compare_queue_retention.py workloads/compare_queue_retention_ay.py
+1 file reformatted, 2 files left unchanged
+
+
+$ /Users/nandanadileep/.cache/pre-commit/reporh6_dz_e/py_env-python3.12/bin/ruff check src/run_queue_retention.py workloads/compare_queue_retention.py workloads/compare_queue_retention_ay.py
+All checks passed!
+
+
+$ /Users/nandanadileep/projects/vllm/vllm/vllm-exp/.venv/bin/python -m py_compile src/run_queue_retention.py workloads/compare_queue_retention.py workloads/compare_queue_retention_ay.py
+
+
+$ bash -n src/serve_queue_retention.sh
+
+
+Qwen/Qwen3-0.6B:25 requests; prompt lengths202/256; shared prefix176; checkpointc1899de289a04d12100db370d81485cdf75e47ca; PASS
+Qwen/Qwen3-1.7B:25 requests; prompt lengths202/256; shared prefix176; checkpoint70d244cc86ccca08cf5af4e1e306ecf908b1ad5e; PASS
+The prepared1.7B workload matches the frozen0.6B workload except model ID. PASS
+No scheduler source changes.

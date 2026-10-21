@@ -1,0 +1,18 @@
+Experiment08 follow-up: Qwen3-1.7B
+==================================
+
+Repeat the targeted and original A-Y profiles against stock vLLM, cumulative
+LFU and queue-informed eviction. The scheduler source is unchanged at ab12684.
+Pinned model revision70d244cc86ccca08cf5af4e1e306ecf908b1ad5e was already cached.
+Same request text, output lengths, arrival intervals, one-token warmup, FCFS,
+synchronous chunked prefill and16-token blocks as the0.6B comparison.
+Targeted:25 candidates,1 running slot,32 physical KV pages, context384,batch128.
+A-Y:25 candidates,3 running slots,96 physical KV pages, context512,batch128.
+Page counts match across models; KV bytes per page can differ by architecture.
+Each policy/profile has1 diagnostic and3 untraced fresh-server timing runs,
+with policy order rotated.24 runs total. Preserve all earlier0.6B evidence.
+Report latency, throughput, cached tokens, paired times and exact answer agreement.
+
+Commands from the experiment root:
+  .venv/bin/python src/run_queue_retention.py --model Qwen/Qwen3-1.7B --profile targeted --rounds 3
+  .venv/bin/python src/run_queue_retention.py --model Qwen/Qwen3-1.7B --profile ay --rounds 3

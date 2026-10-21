@@ -24,8 +24,9 @@ export VLLM_LOGGING_LEVEL=INFO
 export VLLM_STUDY_TRACE=0
 export VLLM_STUDY_TRACE_STDOUT=0
 export VLLM_SERVER_DEV_MODE=0
-mkdir -p "results/queue-retention/$profile/$policy"
-run_dir="$(mktemp -d "$experiment_root/results/queue-retention/$profile/$policy/server-$mode-XXXXXX")"
+result_root="${STUDY_QUEUE_RESULTS_ROOT:-$experiment_root/results/queue-retention}"
+mkdir -p "$result_root/$profile/$policy"
+run_dir="$(mktemp -d "$result_root/$profile/$policy/server-$mode-XXXXXX")"
 echo "Server results: $run_dir"
 export VLLM_STUDY_TRACE_DIR="$run_dir"
 if [ "$mode" = trace ]; then export VLLM_STUDY_TRACE=1; fi

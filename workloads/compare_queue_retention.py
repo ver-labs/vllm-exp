@@ -114,7 +114,11 @@ def main():
     if args.prepare_only:
         print(json.dumps(manifest, indent=2))
         return
-    folder = Path("results/queue-retention/targeted") / args.eviction_policy
+    folder = (
+        Path(os.environ.get("STUDY_QUEUE_RESULTS_ROOT", "results/queue-retention"))
+        / "targeted"
+        / args.eviction_policy
+    )
     folder.mkdir(parents=True, exist_ok=True)
     output = folder / f"controlled-{datetime.now():%Y%m%d-%H%M%S-%f}.json"
     run_id = f"queue-study-{time.time_ns()}"

@@ -1,0 +1,52 @@
+{
+  "experiment": "08-queue-retention",
+  "status": "completed",
+  "source_base_commit": "ab12684fdff56dac5e7990442c15655bdfccac42",
+  "source_commit": "ab12684fdff56dac5e7990442c15655bdfccac42",
+  "root_base_commit": "1a8d099",
+  "policies": [
+    "vllm",
+    "lfu",
+    "queue"
+  ],
+  "profiles": [
+    "targeted",
+    "ay"
+  ],
+  "serving_runs": 24,
+  "timed_runs_per_policy_profile": 3,
+  "diagnostics_per_policy_profile": 1,
+  "per_request_rows": 522,
+  "raw_files_hashed": 128,
+  "model": "Qwen/Qwen3-1.7B",
+  "model_revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e",
+  "code_sha256": {
+    "vllm-src/vllm/v1/core/study_queue_eviction.py": "463deca040727e1cc14b4eff40d18c2f71217c1e4eaf1fa5f1d9f328b8cb1e51",
+    "vllm-src/vllm/v1/core/study_cache_eviction.py": "5a41c36ce63b3cb00257eb4016c0e435745b5cec316c30662a441304b51e4532",
+    "vllm-src/vllm/v1/core/sched/scheduler.py": "c93c45db076e74456afe72596f7cdb258083929786b865038e06ffb36308fa52",
+    "vllm-src/vllm/v1/core/sched/study_trace.py": "6138527b6a02ead1e7137f5d77a4b595737be37a1ffe2786bead3ee77b9bd5f6",
+    "workloads/compare_prefix_policies.py": "bf9f6aed025188551eff2085dec4d9df189596d95241b433c9a33eddf5bcf068",
+    "workloads/compare_queue_retention.py": "dd7090177db060d626b36e5d351767557070e408512b83b148694733bf172971",
+    "workloads/compare_queue_retention_ay.py": "a85fbcc09ee61b673ebd807c997d168bb51dec7671480ef41ac31f4bac39f546",
+    "src/run_queue_retention.py": "43b7475c3eea4aa46eb0e8d3b707707dbe06ec3fa8d28e4c1f375c5b7e34544e",
+    "src/serve_queue_retention.sh": "a98016b57f6efa1101d0b417021a8445cf0156e28e0a9fa10ec3a3540bff875d",
+    "experiments/08-queue-retention/test_queue_retention.py": "52b4f6cbdf880c0d234b26d0a266bab472f376d311225412c7dbbbd3830050c1"
+  },
+  "environment": {
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "machine": "arm64",
+    "packages": {
+      "vllm": "0.31.0+cpu",
+      "vllm-metal": "0.31.0.dev20261020082747",
+      "mlx": "0.32.2",
+      "mlx-lm": "0.32.0",
+      "torch": "2.13.0",
+      "transformers": "5.17.0"
+    }
+  },
+  "summaries": {
+    "targeted": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/Qwen--Qwen3-1.7B/targeted/batches-20261021-233533/summary.json",
+    "ay": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/Qwen--Qwen3-1.7B/ay/batches-20261021-234720/summary.json"
+  },
+  "excluded_attempts": {}
+}
