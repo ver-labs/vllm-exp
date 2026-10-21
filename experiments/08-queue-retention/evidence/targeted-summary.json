@@ -1,0 +1,1025 @@
+{
+  "experiment": "08-queue-retention",
+  "profile": "targeted",
+  "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+  "rounds": 3,
+  "diagnostics": [
+    {
+      "label": "diagnostic",
+      "probe": null,
+      "variant": "vllm",
+      "mode": "trace",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/batches-20261021-231718/diagnostic-vllm-trace.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/vllm/controlled-20261021-231730-873306.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/batches-20261021-231718/diagnostic-vllm-trace-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/batches-20261021-231718/diagnostic-vllm-trace-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/vllm/server-trace-WOVxtZ",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 800,
+        "duration_ms": 14838.63,
+        "output_tokens_per_second": 53.91,
+        "requests_per_second": 1.685,
+        "first_text_ms": {
+          "median": 8110.2,
+          "p95_nearest_rank": 13626.12
+        },
+        "total_ms": {
+          "median": 8609.18,
+          "p95_nearest_rank": 14094.14
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 30,
+        "failed_requests": 0,
+        "successful_output_tokens": 960,
+        "duration_ms": 15406.41,
+        "output_tokens_per_second": 62.31,
+        "requests_per_second": 1.947,
+        "first_text_ms": {
+          "median": 6909.72,
+          "p95_nearest_rank": 13626.12
+        },
+        "total_ms": {
+          "median": 7388.44,
+          "p95_nearest_rank": 14094.14
+        }
+      },
+      "trace_analysis": {
+        "server_policy": "fcfs",
+        "eviction_policy": "vllm",
+        "evicted_cached_blocks": 255,
+        "preemptions": 0,
+        "max_candidates_waiting": 25,
+        "candidate_reorders": [],
+        "candidate_cache_scores": {},
+        "candidate_admission_order": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y"
+        ],
+        "protected_fcfs_head": [],
+        "waiting_time_safeguard_count": 0
+      },
+      "nonprefix_totals": {},
+      "sha256": "6c2311ebda1b21cdff2a43eaa4f7879e56a94edeb63795d4595bf276d0657c9c",
+      "round": "diagnostic",
+      "queue_retention": {
+        "selections": 0,
+        "prevented_upstream_choices": 0,
+        "forced_demanded": 0,
+        "selection_ns": 0
+      }
+    },
+    {
+      "label": "diagnostic",
+      "probe": null,
+      "variant": "lfu",
+      "mode": "trace",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/batches-20261021-231718/diagnostic-lfu-trace.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/lfu/controlled-20261021-231802-879324.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/batches-20261021-231718/diagnostic-lfu-trace-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/batches-20261021-231718/diagnostic-lfu-trace-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/lfu/server-trace-WbAOan",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 800,
+        "duration_ms": 15194.02,
+        "output_tokens_per_second": 52.65,
+        "requests_per_second": 1.645,
+        "first_text_ms": {
+          "median": 8164.14,
+          "p95_nearest_rank": 13982.64
+        },
+        "total_ms": {
+          "median": 8841.24,
+          "p95_nearest_rank": 14451.75
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 30,
+        "failed_requests": 0,
+        "successful_output_tokens": 960,
+        "duration_ms": 15763.1,
+        "output_tokens_per_second": 60.9,
+        "requests_per_second": 1.903,
+        "first_text_ms": {
+          "median": 6874.47,
+          "p95_nearest_rank": 13982.64
+        },
+        "total_ms": {
+          "median": 7367.15,
+          "p95_nearest_rank": 14451.75
+        }
+      },
+      "trace_analysis": {
+        "server_policy": "fcfs",
+        "eviction_policy": "lfu",
+        "evicted_cached_blocks": 336,
+        "preemptions": 0,
+        "max_candidates_waiting": 25,
+        "candidate_reorders": [],
+        "candidate_cache_scores": {},
+        "candidate_admission_order": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y"
+        ],
+        "protected_fcfs_head": [],
+        "waiting_time_safeguard_count": 0
+      },
+      "nonprefix_totals": {},
+      "sha256": "9d05d170ad82adb8c05a1a3c3be63035631dcdfc8d324aad4fcf99b360e5c4e7",
+      "round": "diagnostic",
+      "queue_retention": {
+        "selections": 0,
+        "prevented_upstream_choices": 0,
+        "forced_demanded": 0,
+        "selection_ns": 0
+      }
+    },
+    {
+      "label": "diagnostic",
+      "probe": null,
+      "variant": "queue",
+      "mode": "trace",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/batches-20261021-231718/diagnostic-queue-trace.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/queue/controlled-20261021-231835-917010.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/batches-20261021-231718/diagnostic-queue-trace-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/batches-20261021-231718/diagnostic-queue-trace-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/queue/server-trace-W4X5LV",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 800,
+        "duration_ms": 14885.33,
+        "output_tokens_per_second": 53.74,
+        "requests_per_second": 1.68,
+        "first_text_ms": {
+          "median": 8088.36,
+          "p95_nearest_rank": 13652.78
+        },
+        "total_ms": {
+          "median": 8565.46,
+          "p95_nearest_rank": 14130.79
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 30,
+        "failed_requests": 0,
+        "successful_output_tokens": 960,
+        "duration_ms": 15446.19,
+        "output_tokens_per_second": 62.15,
+        "requests_per_second": 1.942,
+        "first_text_ms": {
+          "median": 6813.52,
+          "p95_nearest_rank": 13652.78
+        },
+        "total_ms": {
+          "median": 7302.24,
+          "p95_nearest_rank": 14130.79
+        }
+      },
+      "trace_analysis": {
+        "server_policy": "fcfs",
+        "eviction_policy": "queue",
+        "evicted_cached_blocks": 249,
+        "preemptions": 0,
+        "max_candidates_waiting": 25,
+        "candidate_reorders": [],
+        "candidate_cache_scores": {},
+        "candidate_admission_order": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y"
+        ],
+        "protected_fcfs_head": [],
+        "waiting_time_safeguard_count": 0
+      },
+      "nonprefix_totals": {},
+      "sha256": "cff7b1024eac1a0f6400b7abedb36da7a993d7c1e7dbec3e645719fd6ed351d7",
+      "round": "diagnostic",
+      "queue_retention": {
+        "selections": 108,
+        "prevented_upstream_choices": 6,
+        "forced_demanded": 0,
+        "selection_ns": 8501916
+      }
+    }
+  ],
+  "runs": [
+    {
+      "label": 1,
+      "probe": null,
+      "variant": "vllm",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/batches-20261021-231718/1-vllm-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/vllm/controlled-20261021-231913-206853.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/batches-20261021-231718/1-vllm-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/batches-20261021-231718/1-vllm-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/vllm/server-bench-BifV81",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 800,
+        "duration_ms": 34157.35,
+        "output_tokens_per_second": 23.42,
+        "requests_per_second": 0.732,
+        "first_text_ms": {
+          "median": 27725.67,
+          "p95_nearest_rank": 32937.6
+        },
+        "total_ms": {
+          "median": 28167.56,
+          "p95_nearest_rank": 33409.44
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 30,
+        "failed_requests": 0,
+        "successful_output_tokens": 960,
+        "duration_ms": 35255.79,
+        "output_tokens_per_second": 27.23,
+        "requests_per_second": 0.851,
+        "first_text_ms": {
+          "median": 26521.26,
+          "p95_nearest_rank": 32937.6
+        },
+        "total_ms": {
+          "median": 26983.03,
+          "p95_nearest_rank": 33409.44
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "e44b18249fc112d4906db0b4912e6597c73232e1ac2d5aff1c93d563a2acb3a0",
+      "round": 1
+    },
+    {
+      "label": 1,
+      "probe": null,
+      "variant": "lfu",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/batches-20261021-231718/1-lfu-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/lfu/controlled-20261021-232005-123548.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/batches-20261021-231718/1-lfu-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/batches-20261021-231718/1-lfu-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/lfu/server-bench-yCM4GA",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 800,
+        "duration_ms": 13941.68,
+        "output_tokens_per_second": 57.38,
+        "requests_per_second": 1.793,
+        "first_text_ms": {
+          "median": 7631.24,
+          "p95_nearest_rank": 12777.88
+        },
+        "total_ms": {
+          "median": 8071.85,
+          "p95_nearest_rank": 13225.91
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 30,
+        "failed_requests": 0,
+        "successful_output_tokens": 960,
+        "duration_ms": 14477.43,
+        "output_tokens_per_second": 66.31,
+        "requests_per_second": 2.072,
+        "first_text_ms": {
+          "median": 6438.19,
+          "p95_nearest_rank": 12777.88
+        },
+        "total_ms": {
+          "median": 6887.92,
+          "p95_nearest_rank": 13225.91
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "b81f9233b076954c7e18af5627419ee9b992a1b956302ad48428e8269e3b87cf",
+      "round": 1
+    },
+    {
+      "label": 1,
+      "probe": null,
+      "variant": "queue",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/batches-20261021-231718/1-queue-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/queue/controlled-20261021-232035-652640.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/batches-20261021-231718/1-queue-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/batches-20261021-231718/1-queue-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/queue/server-bench-9sMwFk",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 800,
+        "duration_ms": 14372.01,
+        "output_tokens_per_second": 55.66,
+        "requests_per_second": 1.739,
+        "first_text_ms": {
+          "median": 7939.42,
+          "p95_nearest_rank": 13175.22
+        },
+        "total_ms": {
+          "median": 8409.6,
+          "p95_nearest_rank": 13633.98
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 30,
+        "failed_requests": 0,
+        "successful_output_tokens": 960,
+        "duration_ms": 14919.57,
+        "output_tokens_per_second": 64.35,
+        "requests_per_second": 2.011,
+        "first_text_ms": {
+          "median": 6702.76,
+          "p95_nearest_rank": 13175.22
+        },
+        "total_ms": {
+          "median": 7167.88,
+          "p95_nearest_rank": 13633.98
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "0625b21cd059e454c0c6ffc678b092ac6b4d800e835f0a50e3211e9be098d994",
+      "round": 1
+    },
+    {
+      "label": 2,
+      "probe": null,
+      "variant": "lfu",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/batches-20261021-231718/2-lfu-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/lfu/controlled-20261021-232106-498484.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/batches-20261021-231718/2-lfu-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/batches-20261021-231718/2-lfu-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/lfu/server-bench-25IKkm",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 800,
+        "duration_ms": 14848.72,
+        "output_tokens_per_second": 53.88,
+        "requests_per_second": 1.684,
+        "first_text_ms": {
+          "median": 7949.23,
+          "p95_nearest_rank": 13615.26
+        },
+        "total_ms": {
+          "median": 8410.21,
+          "p95_nearest_rank": 14098.99
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 30,
+        "failed_requests": 0,
+        "successful_output_tokens": 960,
+        "duration_ms": 15398.03,
+        "output_tokens_per_second": 62.35,
+        "requests_per_second": 1.948,
+        "first_text_ms": {
+          "median": 6719.59,
+          "p95_nearest_rank": 13615.26
+        },
+        "total_ms": {
+          "median": 7187.78,
+          "p95_nearest_rank": 14098.99
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "2b24143c5a68e2a6d4386fa29ced8a85c3e811748ff6030cb1c4a4c8308a02f8",
+      "round": 2
+    },
+    {
+      "label": 2,
+      "probe": null,
+      "variant": "queue",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/batches-20261021-231718/2-queue-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/queue/controlled-20261021-232137-940592.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/batches-20261021-231718/2-queue-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/batches-20261021-231718/2-queue-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/queue/server-bench-xnGM0p",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 800,
+        "duration_ms": 15121.48,
+        "output_tokens_per_second": 52.9,
+        "requests_per_second": 1.653,
+        "first_text_ms": {
+          "median": 7832.87,
+          "p95_nearest_rank": 13783.61
+        },
+        "total_ms": {
+          "median": 8350.65,
+          "p95_nearest_rank": 14324.53
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 30,
+        "failed_requests": 0,
+        "successful_output_tokens": 960,
+        "duration_ms": 15775.68,
+        "output_tokens_per_second": 60.85,
+        "requests_per_second": 1.902,
+        "first_text_ms": {
+          "median": 6493.25,
+          "p95_nearest_rank": 13783.61
+        },
+        "total_ms": {
+          "median": 6992.75,
+          "p95_nearest_rank": 14324.53
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "b384e15875b3edb49cfba38266a8939cd5b27b00d7db9490d98d21fc60a50fb5",
+      "round": 2
+    },
+    {
+      "label": 2,
+      "probe": null,
+      "variant": "vllm",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/batches-20261021-231718/2-vllm-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/vllm/controlled-20261021-232209-850926.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/batches-20261021-231718/2-vllm-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/batches-20261021-231718/2-vllm-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/vllm/server-bench-zdVCx7",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 800,
+        "duration_ms": 16768.04,
+        "output_tokens_per_second": 47.71,
+        "requests_per_second": 1.491,
+        "first_text_ms": {
+          "median": 9342.99,
+          "p95_nearest_rank": 15455.67
+        },
+        "total_ms": {
+          "median": 9853.56,
+          "p95_nearest_rank": 15964.94
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 30,
+        "failed_requests": 0,
+        "successful_output_tokens": 960,
+        "duration_ms": 17314.23,
+        "output_tokens_per_second": 55.45,
+        "requests_per_second": 1.733,
+        "first_text_ms": {
+          "median": 7682.03,
+          "p95_nearest_rank": 15455.67
+        },
+        "total_ms": {
+          "median": 8350.24,
+          "p95_nearest_rank": 15964.94
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "96642a79fb8e9787ce1775bf7c4176cde26a1dc7e7df187fd7289a26695ecd45",
+      "round": 2
+    },
+    {
+      "label": 3,
+      "probe": null,
+      "variant": "queue",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/batches-20261021-231718/3-queue-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/queue/controlled-20261021-232243-912676.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/batches-20261021-231718/3-queue-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/batches-20261021-231718/3-queue-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/queue/server-bench-XUQZmG",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 800,
+        "duration_ms": 16732.76,
+        "output_tokens_per_second": 47.81,
+        "requests_per_second": 1.494,
+        "first_text_ms": {
+          "median": 9320.56,
+          "p95_nearest_rank": 15467.61
+        },
+        "total_ms": {
+          "median": 9831.75,
+          "p95_nearest_rank": 15954.33
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 30,
+        "failed_requests": 0,
+        "successful_output_tokens": 960,
+        "duration_ms": 17282.84,
+        "output_tokens_per_second": 55.55,
+        "requests_per_second": 1.736,
+        "first_text_ms": {
+          "median": 7786.35,
+          "p95_nearest_rank": 15467.61
+        },
+        "total_ms": {
+          "median": 8391.51,
+          "p95_nearest_rank": 15954.33
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "a1570bbb22a977fb652f91688bb8c762e1d5b488eee8b003803ecda9aab0142d",
+      "round": 3
+    },
+    {
+      "label": 3,
+      "probe": null,
+      "variant": "vllm",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/batches-20261021-231718/3-vllm-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/vllm/controlled-20261021-232317-400430.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/batches-20261021-231718/3-vllm-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/batches-20261021-231718/3-vllm-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/vllm/server-bench-vOAVuA",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 800,
+        "duration_ms": 16147.93,
+        "output_tokens_per_second": 49.54,
+        "requests_per_second": 1.548,
+        "first_text_ms": {
+          "median": 8887.26,
+          "p95_nearest_rank": 14874.21
+        },
+        "total_ms": {
+          "median": 9390.28,
+          "p95_nearest_rank": 15362.16
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 30,
+        "failed_requests": 0,
+        "successful_output_tokens": 960,
+        "duration_ms": 16741.54,
+        "output_tokens_per_second": 57.34,
+        "requests_per_second": 1.792,
+        "first_text_ms": {
+          "median": 7494.47,
+          "p95_nearest_rank": 14874.21
+        },
+        "total_ms": {
+          "median": 8028.05,
+          "p95_nearest_rank": 15362.16
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "6a7a1f63550f2aede96e7668eef0e68250529ec968be21eaba33763bec5c68eb",
+      "round": 3
+    },
+    {
+      "label": 3,
+      "probe": null,
+      "variant": "lfu",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/batches-20261021-231718/3-lfu-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/lfu/controlled-20261021-232350-272949.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/batches-20261021-231718/3-lfu-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/batches-20261021-231718/3-lfu-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/queue-retention/targeted/lfu/server-bench-tHf8zA",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 800,
+        "duration_ms": 16493.65,
+        "output_tokens_per_second": 48.5,
+        "requests_per_second": 1.516,
+        "first_text_ms": {
+          "median": 9196.03,
+          "p95_nearest_rank": 15229.18
+        },
+        "total_ms": {
+          "median": 9712.94,
+          "p95_nearest_rank": 15713.01
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 30,
+        "failed_requests": 0,
+        "successful_output_tokens": 960,
+        "duration_ms": 17045.26,
+        "output_tokens_per_second": 56.32,
+        "requests_per_second": 1.76,
+        "first_text_ms": {
+          "median": 7711.2,
+          "p95_nearest_rank": 15229.18
+        },
+        "total_ms": {
+          "median": 8298.65,
+          "p95_nearest_rank": 15713.01
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "144874da6dafd87760ae3c4926d9199a894519efc13f13955373d27b2dcdfeae",
+      "round": 3
+    }
+  ],
+  "complete": true,
+  "diagnostic_first_return_hits": {
+    "vllm": 80,
+    "lfu": 16,
+    "queue": 176
+  },
+  "manifest": {
+    "workload": "queue-retention-v1",
+    "model": "Qwen/Qwen3-0.6B",
+    "system": "You are a helpful assistant. Explain clearly and concisely.",
+    "historical_prompt": "Historical handbook: A mountain weather team records wind and rainfall. Explain how to organize observations and check measurements. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+    "current_prompt": "Current handbook: A library manages reservations and collection notices. Explain how staff can record requests and improve service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+    "blocker": "List household objects and explain their uses. detail detail detail detail detail detail detail detail detail detail",
+    "historical_repeats": 3,
+    "training_output_tokens": 8,
+    "blocker_output_tokens": 128,
+    "candidate_output_tokens": 32,
+    "candidate_interval_ms": 10,
+    "maximum_client_concurrency": 26,
+    "candidates": {
+      "A": "Independent case A: A community project needs a plan. Explain how to compare costs, observations and practical changes. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+      "B": "Current handbook: A library manages reservations and collection notices. Explain how staff can record requests and improve service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nQuestion B: Suggest one practical improvement.",
+      "C": "Independent case C: A community project needs a plan. Explain how to compare costs, observations and practical changes. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+      "D": "Current handbook: A library manages reservations and collection notices. Explain how staff can record requests and improve service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nQuestion D: Suggest one practical improvement.",
+      "E": "Independent case E: A community project needs a plan. Explain how to compare costs, observations and practical changes. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+      "F": "Current handbook: A library manages reservations and collection notices. Explain how staff can record requests and improve service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nQuestion F: Suggest one practical improvement.",
+      "G": "Independent case G: A community project needs a plan. Explain how to compare costs, observations and practical changes. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+      "H": "Current handbook: A library manages reservations and collection notices. Explain how staff can record requests and improve service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nQuestion H: Suggest one practical improvement.",
+      "I": "Independent case I: A community project needs a plan. Explain how to compare costs, observations and practical changes. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+      "J": "Current handbook: A library manages reservations and collection notices. Explain how staff can record requests and improve service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nQuestion J: Suggest one practical improvement.",
+      "K": "Independent case K: A community project needs a plan. Explain how to compare costs, observations and practical changes. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+      "L": "Current handbook: A library manages reservations and collection notices. Explain how staff can record requests and improve service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nQuestion L: Suggest one practical improvement.",
+      "M": "Independent case M: A community project needs a plan. Explain how to compare costs, observations and practical changes. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+      "N": "Current handbook: A library manages reservations and collection notices. Explain how staff can record requests and improve service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nQuestion N: Suggest one practical improvement.",
+      "O": "Independent case O: A community project needs a plan. Explain how to compare costs, observations and practical changes. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+      "P": "Current handbook: A library manages reservations and collection notices. Explain how staff can record requests and improve service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nQuestion P: Suggest one practical improvement.",
+      "Q": "Independent case Q: A community project needs a plan. Explain how to compare costs, observations and practical changes. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+      "R": "Current handbook: A library manages reservations and collection notices. Explain how staff can record requests and improve service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nQuestion R: Suggest one practical improvement.",
+      "S": "Independent case S: A community project needs a plan. Explain how to compare costs, observations and practical changes. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+      "T": "Current handbook: A library manages reservations and collection notices. Explain how staff can record requests and improve service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nQuestion T: Suggest one practical improvement.",
+      "U": "Independent case U: A community project needs a plan. Explain how to compare costs, observations and practical changes. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+      "V": "Current handbook: A library manages reservations and collection notices. Explain how staff can record requests and improve service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nQuestion V: Suggest one practical improvement.",
+      "W": "Independent case W: A community project needs a plan. Explain how to compare costs, observations and practical changes. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+      "X": "Current handbook: A library manages reservations and collection notices. Explain how staff can record requests and improve service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nQuestion X: Suggest one practical improvement.",
+      "Y": "Independent case Y: A community project needs a plan. Explain how to compare costs, observations and practical changes. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail"
+    },
+    "candidate_order": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J",
+      "K",
+      "L",
+      "M",
+      "N",
+      "O",
+      "P",
+      "Q",
+      "R",
+      "S",
+      "T",
+      "U",
+      "V",
+      "W",
+      "X",
+      "Y"
+    ],
+    "prompt_groups": {
+      "cold": [
+        "A",
+        "C",
+        "E",
+        "G",
+        "I",
+        "K",
+        "M",
+        "O",
+        "Q",
+        "S",
+        "U",
+        "W",
+        "Y"
+      ],
+      "returning": [
+        "B",
+        "D",
+        "F",
+        "H",
+        "J",
+        "L",
+        "N",
+        "P",
+        "R",
+        "T",
+        "V",
+        "X"
+      ]
+    },
+    "candidate_prompt_lengths": {
+      "A": 256,
+      "B": 202,
+      "C": 256,
+      "D": 202,
+      "E": 256,
+      "F": 202,
+      "G": 256,
+      "H": 202,
+      "I": 256,
+      "J": 202,
+      "K": 256,
+      "L": 202,
+      "M": 256,
+      "N": 202,
+      "O": 256,
+      "P": 202,
+      "Q": 256,
+      "R": 202,
+      "S": 256,
+      "T": 202,
+      "U": 256,
+      "V": 202,
+      "W": 256,
+      "X": 202,
+      "Y": 256
+    },
+    "shared_current_prefix_tokens": [
+      176,
+      176,
+      176,
+      176,
+      176,
+      176,
+      176,
+      176,
+      176,
+      176,
+      176,
+      176
+    ],
+    "ignore_eos": true
+  },
+  "aggregate": {
+    "vllm": {
+      "duration_ms": [
+        34157.35,
+        16768.04,
+        16147.93
+      ],
+      "median_duration_ms": 16768.04,
+      "median_batch_ms": 17314.23,
+      "median_throughput": 47.71,
+      "median_first_text_ms": 9342.99,
+      "median_p95_first_text_ms": 15455.67,
+      "median_request_ms": 9853.56,
+      "cached_tokens": [
+        2224,
+        2224,
+        2224
+      ],
+      "groups": {
+        "cold": {
+          "median_first_text_ms": 9342.99,
+          "cached_tokens": [
+            208,
+            208,
+            208
+          ],
+          "first_request_hits": [
+            16,
+            16,
+            16
+          ]
+        },
+        "returning": {
+          "median_first_text_ms": 9314.035,
+          "cached_tokens": [
+            2016,
+            2016,
+            2016
+          ],
+          "first_request_hits": [
+            80,
+            80,
+            80
+          ]
+        }
+      }
+    },
+    "lfu": {
+      "duration_ms": [
+        13941.68,
+        14848.72,
+        16493.65
+      ],
+      "median_duration_ms": 14848.72,
+      "median_batch_ms": 15398.03,
+      "median_throughput": 53.88,
+      "median_first_text_ms": 7949.23,
+      "median_p95_first_text_ms": 13615.26,
+      "median_request_ms": 8410.21,
+      "cached_tokens": [
+        928,
+        928,
+        928
+      ],
+      "groups": {
+        "cold": {
+          "median_first_text_ms": 7949.23,
+          "cached_tokens": [
+            208,
+            208,
+            208
+          ],
+          "first_request_hits": [
+            16,
+            16,
+            16
+          ]
+        },
+        "returning": {
+          "median_first_text_ms": 7945.3,
+          "cached_tokens": [
+            720,
+            720,
+            720
+          ],
+          "first_request_hits": [
+            16,
+            16,
+            16
+          ]
+        }
+      }
+    },
+    "queue": {
+      "duration_ms": [
+        14372.01,
+        15121.48,
+        16732.76
+      ],
+      "median_duration_ms": 15121.48,
+      "median_batch_ms": 15775.68,
+      "median_throughput": 52.9,
+      "median_first_text_ms": 7939.42,
+      "median_p95_first_text_ms": 13783.61,
+      "median_request_ms": 8409.6,
+      "cached_tokens": [
+        2320,
+        2320,
+        2320
+      ],
+      "groups": {
+        "cold": {
+          "median_first_text_ms": 7939.42,
+          "cached_tokens": [
+            208,
+            208,
+            208
+          ],
+          "first_request_hits": [
+            16,
+            16,
+            16
+          ]
+        },
+        "returning": {
+          "median_first_text_ms": 7926.9800000000005,
+          "cached_tokens": [
+            2112,
+            2112,
+            2112
+          ],
+          "first_request_hits": [
+            176,
+            176,
+            176
+          ]
+        }
+      }
+    }
+  },
+  "paired": [
+    {
+      "round": 1,
+      "duration_change_pct": {
+        "lfu": -59.184,
+        "queue": -57.924
+      },
+      "answers_matching_baseline": {
+        "lfu": 18,
+        "queue": 25
+      }
+    },
+    {
+      "round": 2,
+      "duration_change_pct": {
+        "lfu": -11.446,
+        "queue": -9.82
+      },
+      "answers_matching_baseline": {
+        "lfu": 18,
+        "queue": 25
+      }
+    },
+    {
+      "round": 3,
+      "duration_change_pct": {
+        "lfu": 2.141,
+        "queue": 3.622
+      },
+      "answers_matching_baseline": {
+        "lfu": 18,
+        "queue": 25
+      }
+    }
+  ]
+}

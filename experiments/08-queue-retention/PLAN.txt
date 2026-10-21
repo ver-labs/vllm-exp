@@ -1,0 +1,44 @@
+Experiment 08: retention of exact cached prefixes needed by waiting requests
+============================================================================
+
+Compare upstream eviction, the existing cumulative LFU policy, and queue-aware
+eviction, independently of all earlier scheduling and partial-prefix changes.
+All variants use the same editable source, FCFS, synchronous chunked prefill,
+16-token physical/hash blocks, pinned Qwen3-0.6B snapshot and fixed output lengths.
+
+Queue policy: inspect at most the first 16 waiting positions before each nonzero
+physical allocation. Read-only coordinator prefix lookup supplies contiguous
+exact-hit blocks. Count eligible queued requests needing each free block; select
+zero-demand blocks first, then lower-demand blocks, keeping free-queue order for
+ties and deferred-reader priority. Allocate demanded blocks too when necessary.
+No references are acquired by probes and admission order is never changed.
+Refresh demand on each allocation so evicted/reassigned hashes cannot stay pinned.
+
+Targeted: one running slot, 32 physical pages (31 usable), context384, batch128.
+Prime a historical 192-token prefix three times, then a different current
+192-token prefix once. A 48-token blocker generates128 tokens while A-Y queue.
+The 25 candidates alternate 13 unrelated256-token prompts and12 returning
+current-prefix questions; every candidate generates32 tokens, arrivals10ms apart.
+This intentionally creates memory pressure and distinguishes past popularity
+from queued demand. Report both candidate timing and full measured lifecycle
+including the identical cache-priming requests. No extra cache capacity is added.
+
+Control: original concurrent A-Y manifest, 3 slots, 96 pages, context512,
+batch128, 25x64 candidate output tokens and3x128 blocker output tokens. Existing
+warmup and20ms arrivals preserved. This tests generalization to the old workload.
+
+Run separate diagnostics for each variant, verify full queue overlap, FCFS,
+cache hits, free-page selection and no preemptions. Require the targeted diagnostic
+to show additional retained first-return tokens before collecting timing.
+Then run three untraced rounds with rotated policy order, fresh server each time.
+Record all paired completion times, first text median/p95, request latency,
+throughput, cache tokens, per-request answers and source revisions/checksums.
+Do not infer a universal speedup from a larger cache-hit count or three runs.
+
+Reproduce from the experiment root:
+  .venv/bin/python experiments/08-queue-retention/test_queue_retention.py
+  .venv/bin/python src/run_queue_retention.py --profile targeted --rounds 3
+  .venv/bin/python src/run_queue_retention.py --profile ay --rounds 3
+
+Related idea: PEEK, https://arxiv.org/abs/2607.02525 . This is a small independent
+queue-informed eviction study, not a reproduction of PEEK's full scheduler.

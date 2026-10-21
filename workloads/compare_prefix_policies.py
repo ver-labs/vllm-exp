@@ -318,7 +318,7 @@ def main():
     parser.add_argument("--candidates", type=int, default=5)
     parser.add_argument(
         "--eviction-policy",
-        choices=("vllm", "lfu"),
+        choices=("vllm", "lfu", "queue"),
         help="Compare eviction with FCFS; save separately from scheduling runs",
     )
     args = parser.parse_args()
@@ -348,7 +348,8 @@ def main():
         return
     run_id = f"prefix-study-{time.time_ns()}"
     folder = (
-        Path("results/cache-eviction-ay") / args.eviction_policy
+        Path(globals().get("EVICTION_RESULT_ROOT", "results/cache-eviction-ay"))
+        / args.eviction_policy
         if args.eviction_policy
         else Path("results/prefix-comparison") / args.policy
     )

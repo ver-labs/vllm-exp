@@ -1,0 +1,43 @@
+$ /Users/nandanadileep/.cache/pre-commit/reporh6_dz_e/py_env-python3.12/bin/ruff check vllm-src/vllm/v1/core/study_queue_eviction.py vllm-src/vllm/v1/core/study_cache_eviction.py vllm-src/vllm/v1/core/sched/scheduler.py vllm-src/vllm/v1/core/sched/study_trace.py workloads/compare_prefix_policies.py workloads/compare_queue_retention.py workloads/compare_queue_retention_ay.py src/run_queue_retention.py experiments/08-queue-retention/test_queue_retention.py
+All checks passed!
+
+
+Exit: 0
+
+$ /Users/nandanadileep/.cache/pre-commit/reporh6_dz_e/py_env-python3.12/bin/ruff format --check vllm-src/vllm/v1/core/study_queue_eviction.py vllm-src/vllm/v1/core/study_cache_eviction.py vllm-src/vllm/v1/core/sched/scheduler.py vllm-src/vllm/v1/core/sched/study_trace.py workloads/compare_prefix_policies.py workloads/compare_queue_retention.py workloads/compare_queue_retention_ay.py src/run_queue_retention.py experiments/08-queue-retention/test_queue_retention.py
+9 files already formatted
+
+
+Exit: 0
+
+$ /Users/nandanadileep/projects/vllm/vllm/vllm-exp/.venv/bin/python -m py_compile vllm-src/vllm/v1/core/study_queue_eviction.py vllm-src/vllm/v1/core/study_cache_eviction.py vllm-src/vllm/v1/core/sched/scheduler.py vllm-src/vllm/v1/core/sched/study_trace.py workloads/compare_prefix_policies.py workloads/compare_queue_retention.py workloads/compare_queue_retention_ay.py src/run_queue_retention.py experiments/08-queue-retention/test_queue_retention.py
+
+
+Exit: 0
+
+$ bash -n src/serve_queue_retention.sh
+
+
+Exit: 0
+
+$ /Users/nandanadileep/projects/vllm/vllm/vllm-exp/.venv/bin/python experiments/08-queue-retention/test_queue_retention.py
+
+objc[71784]: Class AVFFrameReceiver is implemented in both /opt/homebrew/Cellar/ffmpeg/8.1.2/lib/libavdevice.62.3.102.dylib (0x13a60c328) and /Users/nandanadileep/projects/vllm/vllm/vllm-exp/.venv/lib/python3.12/site-packages/cv2/.dylibs/libavdevice.61.3.100.dylib (0x13a8783a8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+objc[71784]: Class AVFAudioReceiver is implemented in both /opt/homebrew/Cellar/ffmpeg/8.1.2/lib/libavdevice.62.3.102.dylib (0x13a60c378) and /Users/nandanadileep/projects/vllm/vllm/vllm-exp/.venv/lib/python3.12/site-packages/cv2/.dylibs/libavdevice.61.3.100.dylib (0x13a8783f8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+......
+----------------------------------------------------------------------
+Ran 6 tests in 0.003s
+
+OK
+
+Exit: 0
+
+$ git diff --check
+
+
+Exit: 0
+
+$ git -C vllm-src diff --check
+
+
+Exit: 0
