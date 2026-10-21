@@ -23,8 +23,14 @@ Experiment registry
                      worse. Original A-Y did not activate the policy.
                      See RESULTS.txt, PLAN.txt and evidence/.
 
+06-combined/ : experiments02 frequency-aware eviction,04 exact partial-prefix
+               reuse and05 unchunked skip/continue enabled together. Stable
+               mechanism activation across three matched profiles; batch speed
+               inconsistent across pairs, with a long-prompt latency penalty.
+               See RESULTS.txt, PLAN.txt and evidence/.
 
-Current branch in both repos: study/experiment-05-skip-continue.
+Current experiment branch: study/experiment-06-combined in vllm-exp.
+Nested vLLM source remains at e04a615 on study/experiment-05-skip-continue.
 vLLM defaults remain FCFS scheduling and upstream eviction. Its implementation
 was not changed for experiment03; the optional Metal worker is separate. No server or pretrained benchmark remains running.
 Completed code and evidence remain on the earlier experiment branches.

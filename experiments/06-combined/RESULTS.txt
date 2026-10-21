@@ -1,0 +1,78 @@
+Experiment 06: experiments 02, 04 and 05 enabled together
+==========================================================
+
+Completed on 2026-10-21 with Qwen3-0.6B on the Mac Metal GPU. The combined
+variant enables frequency-aware eviction (02), exact interior-prefix indexing
+(04), and bounded unchunked skip/continue scheduling (05) at the same time.
+Native FCFS with upstream eviction, 16-token prefix matching and all three study
+switches off is the baseline. Both variants use the editable vLLM source, the
+same model, prompts, arrival patterns, seed, output limits and per-profile
+serving settings. Every run starts a fresh server. Experiment03's approximate
+non-prefix repair is off. All 24 runs completed: one traced diagnostic and
+three timed matched pairs per variant on each of three profiles.
+
+The three profiles exercise distinct bottlenecks. A-Y uses the original 25
+concurrent prompts with 3 running slots and 96 KV pages. Targeted uses 13 long
+then 12 short prompts with 8 slots and 256 pages. Temporal uses 42 sequential
+hot-prefix, cold-scan and return requests with 3 slots and 32 pages. All use
+unchunked prefill, so skip/continue can be enabled throughout. A-Y and targeted
+use a 512-token batch/context limit; temporal uses 384. Physical pages hold 16
+tokens. Therefore these are new matched comparisons, not historical cross-run
+comparisons with experiments 02, 04 or 05, some of which used chunked prefill.
+
+Median over three timed runs           Baseline       Combined
+A-Y completion                          18.512 s      18.410 s
+A-Y candidate cached tokens/run           2432           2563
+Targeted completion                     12.932 s      10.060 s
+Targeted output throughput              123.72/s      159.04/s
+Targeted candidate cached tokens/run        400            549
+Temporal full batch                     12.965 s      12.603 s
+Temporal hot-return first text          170.98 ms      83.55 ms
+Temporal hot-return cached tokens          16            277
+
+These medians alone overstate certainty. Paired completion-time changes were:
+  A-Y:      -2.17%, +1.83%, -9.54% (combined faster in 2/3 pairs).
+  Targeted: -22.67%, -2.45%, +28.00% (combined faster in 2/3 pairs).
+  Temporal: -13.35%, +0.08%, +46.79% (combined faster in 1/3 pairs).
+The large swings affected both variants. Three pairs do not establish a stable
+overall speedup. The hot-return cache-hit gain was stable in all runs: 16 tokens
+per probe in baseline, 277 in combined. This shows retention and finer prefix
+reuse together, not a throughput guarantee. The 277 versus experiment02's 272
+under its different configuration suggests partial-prefix reuse adds five
+tokens, but this run did not isolate that contribution with an ablation.
+
+The targeted diagnostic logged 28 skip events in combined versus zero in
+baseline; baseline stopped at an oversized waiting prompt six times versus two
+stops in combined. Original A-Y and temporal diagnostics logged no skips. A-Y
+candidate cache hits rose by 131 tokens/run in all three timed runs. Targeted
+hits rose by 149. Temporal hot-return hits were 16 versus 277 for every one of
+the three probes in every timed run. All diagnostic traces confirmed the intended
+eviction and scheduling switches, source checkout, unchunked prefill and zero
+preemptions. Cached-block evictions occurred in all profiles.
+
+The targeted workload retains a substantial fairness cost:
+  Long-prompt median first text: 2.580 -> 6.194 s (about 2.4x slower).
+  Short-prompt median first text: 7.770 -> 3.865 s (about 50% faster).
+These are medians of each run's group median. The combined policy's bounds do not
+free running slots held by shorter requests. Reporting only whole-batch time
+would hide this cost.
+
+Successful output-token counts matched for each profile: 1984 per A-Y run,
+2112 per targeted run, and 336 per temporal run. All manifests matched within
+each profile and every request succeeded. Exact answer matches across paired
+timed runs were A-Y 28/28, 28/28, 26/28; targeted 28/33, 28/33, 27/33;
+temporal 42/42 in every pair. Answers were not semantically scored. Different
+scheduling or prefill shapes can alter low-precision generation; this experiment
+does not isolate the cause of each text difference or establish quality parity.
+
+Conclusion: all three changes can operate together. Their mechanisms activated
+on the profiles designed for them, including stable extra prefix reuse and
+short-request latency gains. Combined batch speed was inconsistent, while long
+prompts paid a clear latency penalty. Keep this an opt-in research result; do
+not claim a general faster scheduler from these runs.
+
+Raw data: results/combined/batches-20261021-202430/.
+Frozen summary and checksums: evidence/.
+Reproduction and exact settings: PLAN.txt.
+Both git trees were clean before experiment06; vLLM source needed no new edits.
+All experimental servers were stopped.

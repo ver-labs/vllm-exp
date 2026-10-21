@@ -1,0 +1,38 @@
+Experiment 06 comparison procedure
+==================================
+
+From the vllm-exp folder:
+  .venv/bin/python src/run_combined_batches.py --rounds 3
+
+For a single server, start one of:
+  bash src/serve_combined_comparison.sh baseline bench targeted
+  bash src/serve_combined_comparison.sh combined bench targeted
+  bash src/serve_combined_comparison.sh baseline trace ay
+  bash src/serve_combined_comparison.sh combined trace temporal
+
+Profiles are ay, targeted, temporal. Modes are bench or trace. The launcher
+starts the editable checkout in .venv on port 8001 with Qwen/Qwen3-0.6B,
+seed0, native Metal worker, FCFS, prefix caching and unchunked synchronous
+scheduling. Baseline uses upstream cache eviction, 16-token prefix matching,
+and no study features. Combined uses LFU, one-token prefix hashes with exact
+interior aliases, and bounded skip/continue (16 lookahead, four skip attempts,
+30-second age threshold). Both use physical 16-token KV pages. The optional
+non-prefix Metal worker is never selected.
+
+The runner alternates variant order and excludes server startup from request
+timing. Trace runs are diagnostic and not used for timing comparisons. It uses
+the existing A-Y, targeted long/short, and temporal hot-scan-return clients.
+The clients save raw request results; the runner copies canonical results,
+records full traces and logs, verifies run validity, and writes summary.json.
+The temporal client writes under results/cache-eviction/<policy>/ before the
+runner copies it. All output limits are fixed and identical between variants.
+
+Quality checks:
+  .venv/bin/python -m unittest discover -s tests -p test_skip_continue.py -q
+  .venv/bin/python -m unittest discover -s tests -p test_partial_prefix.py -q
+  bash -n src/serve_combined_comparison.sh
+  ruff check src/run_combined_batches.py src/run_nonprefix_vllm_batches.py
+
+Experiment04 and experiment05 implementation remains on source commit
+e04a615e70e411b08125f3b13f7dd5db88d98642. The present experiment adds
+only launch, orchestration and result records in vllm-exp.

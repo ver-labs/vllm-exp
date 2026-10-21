@@ -25,6 +25,7 @@ def run_one(
     probe=None,
     launcher_args=(),
     client_script="workloads/compare_prefix_policies.py",
+    client_eviction_policy="vllm",
 ):
     if port_open():
         raise RuntimeError("Port 8001 is occupied")
@@ -69,7 +70,7 @@ def run_one(
                 "--candidates",
                 "25",
                 "--eviction-policy",
-                "vllm",
+                client_eviction_policy,
             ]
             if mode == "trace":
                 cmd += ["--trace", str(next(run_dir.glob("events-*.jsonl")))]
