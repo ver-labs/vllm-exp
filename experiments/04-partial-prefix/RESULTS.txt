@@ -1,0 +1,76 @@
+Experiment04: partial-prefix caching against the original vLLM baseline
+=====================================================================
+
+Implemented and benchmarked 2026-10-21. Reuse through an interior prefix works:
+in the32-token GPU probe, baseline reused16 tokens and the new mode reused31.
+Eight generated tokens matched a cold recomputation in all three variants.
+Six allocation/configuration tests pass, including the original7-of8 example,
+source retention, eviction/reset, promotion, and deferred-free cleanup.
+
+The original concurrent A-Y manifest was reused unchanged. Same Qwen3-0.6B
+checkpoint, Metal GPU,96 physical blocks,16 tokens/block,3 running slots,
+128 batch tokens,512 context, FCFS, upstream eviction and native Metal worker.
+Experiment03's approximate reuse/repair is disabled. No new persistent KV pool.
+25 candidates generate64 tokens each;3 blockers generate128 each (1984 total).
+Three fresh-server timing rounds per variant, rotated order. Traced diagnostics
+are separate from timings. Startup is excluded; hash/index/copy costs included.
+
+Median across3 timed runs         Baseline        Fine hashes only     Partial
+A-Y completion time               18.057 s             18.242 s       17.941 s
+A-Y output throughput              88.61/s              87.71/s        89.18/s
+Median candidate first text         9.817 s              9.714 s        9.746 s
+Median candidate request latency   11.456 s             11.412 s       11.351 s
+Candidate prefix tokens reused/run    2432                 2432           2563
+
+Partial versus baseline in each matched round:
+  Round1:18.057 ->17.941s (-0.64%)
+  Round2:18.332 ->18.314s (-0.10%)
+  Round3:18.042 ->17.910s (-0.73%)
+
+The median A-Y completion time is0.64% lower and throughput0.64% higher.
+Partial was slightly faster than baseline in all3 rounds, but the effect is
+small, timing ranges overlap, and3 rounds do not establish significance or a
+general speedup. Partial beat the finer-hash-only control in2/3 rounds; that
+comparison also has substantial variation. Keep this as a small observed gain.
+
+Actual reuse increased by131 candidate tokens/run (2432 ->2563), consistently
+across every diagnostic/timing run. Diagnostic examples:
+  A:16 ->21 cached tokens
+  C:176 ->189 cached tokens
+  D:192 ->192 cached tokens
+  I:16 ->22 cached tokens
+  Y:176 ->191 cached tokens
+There were23 A-Y CoW page copies in the partial diagnostic,0 in both controls.
+All diagnostics observed25 candidates waiting and admission orderA-Y, with0
+preemptions. All12 serving runs were valid; all28 requests succeeded per run.
+
+Output comparison:
+  Fine-hash-only:25/25 candidate answers identical to baseline in every round.
+  Partial:16/25 identical in every round;9 differ (C,I,J,K,M,P,Q,S,V).
+  Each variant's answers were stable across its three repeats.
+The algorithm reuses only matching full-prefix KV; no stale-context approximation
+or selective repair is used. Different prefill chunk shapes and low-precision
+execution can change generated text. This run does not isolate the cause of
+every text difference or score semantic quality; do not claim bitwise output
+identity or quality preservation from these results. The targeted31/32 probe
+and ownership tests support correct partial-cache operation, not universal quality.
+
+Implementation details and reproduction: PLAN.txt.
+Source checkpoint:f2fcd5e (full hash in manifest.json); patch saved in source.patch.
+Defaults remain unchanged unless the dedicated launcher opts in. Metadata is
+owned by physical pages, invalidated on eviction/reset and republished after
+partial/full promotion. Interior aliases publish after GPU work completes;
+copy endpoints are retained until native copying finishes.
+
+Evidence: evidence/summary.json, evidence/per-request.csv, evidence/raw-sha256.json,
+manifest.json, tests.txt and the frozen test source. Raw artifacts remain at:
+  results/partial-prefix/batches-20261021-183359/
+Earlier failed startup/probe batches182313 and183222 are retained separately and
+excluded. They exposed single-group granularity resolution and the disabled
+cache-reset API; both were fixed before any successful comparison was recorded.
+Diagnostic reset API was localhost-only; timing servers did not enable it.
+
+Reproduce:
+  .venv/bin/python -m unittest discover -s tests -p test_partial_prefix.py -v
+  .venv/bin/python src/run_partial_prefix_batches.py --rounds 3
+All experimental servers were stopped. Earlier experiments and raw results remain.

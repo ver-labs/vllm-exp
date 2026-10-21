@@ -1,0 +1,74 @@
+Experiment04: exact interior-prefix caching in fixed-size KV pages
+=================================================================
+
+Goal: reuse matching prefix tokens inside a physical block, with unchanged
+preceding context. This is exact causal KV reuse, not experiment03's approximate
+non-prefix reuse. Experiment03's Metal worker is disabled in every run.
+
+Keep16-token physical pages and96 physical pages, context512,3 running requests,
+128 batch tokens, synchronous scheduling, FCFS and upstream eviction, Qwen3-0.6B.
+Use exactly the prior A-Y concurrent manifest, arrivals, warmup and output limits.
+No persistent KV side cache or variable-sized memory allocator is added.
+
+Variants:
+  baseline: original16-token matching and native Metal worker.
+  fine_hash: one-token hashes, block-aligned lookup, no new interior indexing.
+  partial: one-token hashes plus post-execution interior indexing and fine lookup.
+The finer-hash control separates hashing/coordinator overhead from added reuse.
+All variants use the same cached checkpoint offline, same served-model name,
+seed0, block count and native attention kernels. Baseline flags remain unchanged
+unless this dedicated launcher is used. The experiment is off by default.
+
+Implementation reuses existing block-pool alias ownership, full-prefix chained
+hashes (including extra identifiers), partial-hit allocation, retained CoW copies,
+native Metal whole-page copying, and alias removal on eviction/reset. The private
+copy can contain an unused old suffix; new target tokens overwrite their own
+positions, and normal attention lengths exclude everything beyond valid context.
+The scheduler counts the reused length and schedules only the uncached suffix.
+
+New plumbing makes prefix_match_unit effective for a single full-attention group
+and routes fine-grained layouts through the existing multi-granularity coordinator.
+The opt-in allows full-attention partial lookup, which was otherwise gated on
+hybrid Mamba groups. It preserves earlier interior aliases as more are registered.
+
+Safety: publish interior aliases only after update_from_output confirms GPU work
+has completed, before finishing/freeing the request. Ordinary speculative cache
+allocation can happen before GPU work; using that point for partial aliases could
+copy uncomputed KV. Disable the normal eager prompt-tail publication in this mode.
+When a partial block is promoted to full, rebuild its lost interior aliases.
+Track publication progress per active request; free/deferred-free/reset clear it.
+Metadata is associated with resident pages and disappears on page eviction.
+Requested support is limited to synchronous non-speculative single-device,
+single-group plain full attention. No new approximate matching is allowed.
+
+Checks:6 allocation/configuration tests cover7/8 reuse, first differing token,
+cache salts, private CoW pages and retained endpoints, completed-only publication,
+partial/full promotion, eviction/reset, flag-off behavior, deferred-free cleanup,
+and the runtime matching-granularity resolver.
+
+Serving diagnostic on each variant: prompt A and B have32 actual token IDs and
+match through token31. Expect16 cached tokens in baseline/fine_hash and31 in
+partial. Compare eight generated tokens with a reset-cache cold B. Cache resets
+are checked and the original A-Y warmup follows. Diagnostic servers alone expose
+the localhost development reset API; timing servers do not enable it.
+
+Timing:3 fresh-server runs per variant, order rotated across rounds. Separate
+traced diagnostics inspect queue overlap, partial-prefix cache hits, and physical
+CoW copies. All timing includes hashing, indexing, allocation and copying overhead.
+Startup/model loading is excluded. All25 candidates generate64 tokens;3 blockers
+produce128 each (1984 output tokens per run), as in the previous experiments.
+
+Report latency, A-Y completion time, throughput, per-request cache reuse, paired
+changes and answer agreement. Causal KV reuse is mathematically valid, but different
+prefill chunk shapes can still change low-precision numerical results. Exact text
+agreement is not a semantic-quality score. Small timing differences from three
+rounds do not establish significance. No performance benefit assumed in advance.
+
+Reproduce from the experiment folder:
+  .venv/bin/python -m unittest discover -s tests -p test_partial_prefix.py -v
+  .venv/bin/python src/run_partial_prefix_batches.py --rounds 3
+
+Launch only:
+  bash src/serve_partial_prefix_comparison.sh baseline bench
+  bash src/serve_partial_prefix_comparison.sh fine_hash bench
+  bash src/serve_partial_prefix_comparison.sh partial bench

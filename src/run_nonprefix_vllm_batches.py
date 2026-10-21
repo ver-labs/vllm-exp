@@ -15,7 +15,15 @@ from urllib.request import urlopen
 from run_prefix_batches import ROOT, port_open, stop_server
 
 
-def run_one(folder, variant, mode, label):
+def run_one(
+    folder,
+    variant,
+    mode,
+    label,
+    *,
+    launcher="src/serve_nonprefix_comparison.sh",
+    probe=None,
+):
     if port_open():
         raise RuntimeError("Port 8001 is occupied")
     server_log = folder / f"{label}-{variant}-{mode}-server.log"
@@ -23,7 +31,7 @@ def run_one(folder, variant, mode, label):
     print(f"START {label}: {variant} ({mode})", flush=True)
     with server_log.open("w") as stream:
         server = subprocess.Popen(
-            ["bash", "src/serve_nonprefix_comparison.sh", variant, mode],
+            ["bash", launcher, variant, mode],
             cwd=ROOT,
             stdout=stream,
             stderr=subprocess.STDOUT,
@@ -50,6 +58,7 @@ def run_one(folder, variant, mode, label):
                     if line.startswith("Server results: ")
                 )
             )
+            probe_result = probe(variant) if probe else None
             cmd = [
                 sys.executable,
                 "workloads/compare_prefix_policies.py",
@@ -90,6 +99,7 @@ def run_one(folder, variant, mode, label):
                 print("NOTE: no eligible middle-block reuse observed", flush=True)
             result = dict(
                 label=label,
+                probe=probe_result,
                 variant=variant,
                 mode=mode,
                 result=str(copied),

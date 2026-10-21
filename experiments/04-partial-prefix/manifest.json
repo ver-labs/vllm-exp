@@ -1,0 +1,26 @@
+{
+  "experiment_id": "04-partial-prefix",
+  "status": "completed",
+  "branch": "study/experiment-04-partial-prefix",
+  "source_base_commit": "b8ab85af5e74845719a37af18358da86aa8722ef",
+  "source_commit": "f2fcd5e022642e107166643dd4be717f7ab860fd",
+  "variants": [
+    "baseline",
+    "fine_hash",
+    "partial"
+  ],
+  "rounds": 3,
+  "diagnostics_per_variant": 1,
+  "raw_summary": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/batches-20261021-183359/summary.json",
+  "frozen_summary": "experiments/04-partial-prefix/evidence/summary.json",
+  "model": "Qwen/Qwen3-0.6B",
+  "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+  "source_patch_sha256": "c1955f3f72c3d3335b0d266c172070d097e809b23836dd68a239f7165dcf53cd",
+  "code_sha256": {
+    "src/run_partial_prefix_batches.py": "5cd85d09b55159ede2d86988fb3553cc70618fcd171c2d3061e092cd56b184e8",
+    "src/run_nonprefix_vllm_batches.py": "774c7ba1a4b4dddb85c4b6af1a0210a2b6cc7fa5ad1975d31ccd3d91363739b2",
+    "src/serve_partial_prefix_comparison.sh": "0d5afeb6841432ec026f4f45da40f35598903ddb0aa90bdb9fb485ae6826db5e",
+    "tests/test_partial_prefix.py": "fd3faa340c6a7ef26490a3c6e3ba48615d048914fbdd45dca980b8d1108a9651"
+  },
+  "conclusion": "Partial-prefix reuse works. Small observed timing gain (~0.6% median) in three rounds; general speedup or semantic quality preservation not established."
+}

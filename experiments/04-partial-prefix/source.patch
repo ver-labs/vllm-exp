@@ -1,0 +1,289 @@
+diff --git a/vllm/v1/core/block_pool.py b/vllm/v1/core/block_pool.py
+index 357ace0..ef7caea 100644
+--- a/vllm/v1/core/block_pool.py
++++ b/vllm/v1/core/block_pool.py
+@@ -458,6 +458,7 @@ class BlockPool:
+         kv_cache_group_id: int,
+         block_size: int,
+         replace_existing_hashes: bool = False,
++        preserve_existing_hashes: bool = False,
+     ) -> BlockHashWithGroupId | None:
+         """Register a partial prefix-cache entry for an existing block.
+ 
+@@ -485,6 +486,8 @@ class BlockPool:
+                 entry hash itself is always the prefix-chain hash at
+                 ``num_tokens``; ``block_size`` is used to assert that the
+                 entry is partial within the owning cache block.
++            preserve_existing_hashes: Keep shorter valid prefix aliases when
++                appending metadata for the same computed block contents.
+             replace_existing_hashes: Whether the block contents were replaced
+                 and all existing cache entries must be removed before the new
+                 entry is registered.
+@@ -516,7 +519,8 @@ class BlockPool:
+             self._emit_block_removed_events(removed_hashes)
+             already_cached = False
+         elif (
+-            not already_cached
++            not preserve_existing_hashes
++            and not already_cached
+             and block.block_hash is not None
+             and block.block_hash_num_tokens is not None
+             and block.block_hash_num_tokens < num_hash_blocks * self.hash_block_size
+diff --git a/vllm/v1/core/kv_cache_coordinator.py b/vllm/v1/core/kv_cache_coordinator.py
+index daf0cd1..5eb3339 100644
+--- a/vllm/v1/core/kv_cache_coordinator.py
++++ b/vllm/v1/core/kv_cache_coordinator.py
+@@ -1,5 +1,6 @@
+ # SPDX-License-Identifier: Apache-2.0
+ # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
++import os
+ from abc import ABC, abstractmethod
+ from collections.abc import Sequence
+ from typing import NamedTuple
+@@ -684,8 +685,9 @@ class HybridKVCacheCoordinator(KVCacheCoordinator):
+                     "full-attention, Mamba, and replicated draft groups, got: "
+                     f"{type(spec).__name__}."
+                 )
+-        # Fine-grained hash hits require Mamba "align" and compatible cache
+-        # managers in every group. TP needs hashing finer than the Mamba block;
++        # Fine-grained hits normally require Mamba "align" and compatible
++        # managers. The study flag also permits plain full attention.
++        # TP needs hashing finer than the Mamba block;
+         # DCP accepts equality because it scales the effective full-attention
+         # block instead.
+         has_partial_mamba_group = any(
+@@ -699,8 +701,16 @@ class HybridKVCacheCoordinator(KVCacheCoordinator):
+             )
+             for g in kv_cache_config.kv_cache_groups
+         )
+-        self.enable_partial_hash_hits = (
+-            allow_partial_hash_hits and has_partial_mamba_group
++        self.enable_partial_hash_hits = allow_partial_hash_hits and (
++            has_partial_mamba_group
++            or (
++                os.environ.get("STUDY_PARTIAL_PREFIX", "0") == "1"
++                and all(
++                    type(g.kv_cache_spec) is FullAttentionSpec
++                    for g in kv_cache_config.kv_cache_groups
++                )
++                and hash_block_size < scheduler_block_size
++            )
+         )
+         if self.enable_partial_hash_hits:
+             unsupported_partial_hit_managers = {
+@@ -1040,7 +1050,10 @@ def get_kv_cache_coordinator(
+             metrics_collector=metrics_collector,
+             num_prefill_lookahead=num_prefill_lookahead,
+         )
+-    if len(kv_cache_config.kv_cache_groups) == 1:
++    if (
++        len(kv_cache_config.kv_cache_groups) == 1
++        and hash_block_size == scheduler_block_size
++    ):
+         return UnitaryKVCacheCoordinator(
+             kv_cache_config,
+             max_model_len,
+diff --git a/vllm/v1/core/kv_cache_manager.py b/vllm/v1/core/kv_cache_manager.py
+index 2d39a38..cd23415 100644
+--- a/vllm/v1/core/kv_cache_manager.py
++++ b/vllm/v1/core/kv_cache_manager.py
+@@ -16,6 +16,7 @@ from vllm.v1.core.kv_cache_coordinator import (
+ from vllm.v1.core.kv_cache_metrics import KVCacheMetricsCollector
+ from vllm.v1.core.kv_cache_utils import KVCacheBlock, KVCacheBlockCopy
+ from vllm.v1.core.single_type_kv_cache_manager import MambaManager
++from vllm.v1.core.study_partial_prefix import StudyPartialPrefix
+ from vllm.v1.kv_cache_interface import (
+     AttentionSpec,
+     CrossAttentionSpec,
+@@ -195,6 +196,7 @@ class KVCacheManager:
+                     manager.shared_prefix_checkpoint = True
+         self.num_kv_cache_groups = len(kv_cache_config.kv_cache_groups)
+         self.block_pool = self.coordinator.block_pool
++        self._study_partial_prefix = StudyPartialPrefix.from_environment(self)
+         self.retained_hit_group_ids = tuple(
+             manager.kv_cache_group_id
+             for manager in self.coordinator.single_type_managers
+@@ -622,6 +624,8 @@ class KVCacheManager:
+             request: The request to free the blocks.
+ 
+         """
++        if self._study_partial_prefix is not None:
++            self._study_partial_prefix.forget(request.request_id)
+         self.coordinator.free(request.request_id)
+ 
+     def remove_skipped_blocks(
+@@ -656,6 +660,8 @@ class KVCacheManager:
+             The request's blocks in allocation order.
+ 
+         """
++        if self._study_partial_prefix is not None:
++            self._study_partial_prefix.forget(request.request_id)
+         return self.coordinator.pop_blocks_for_free(request.request_id)
+ 
+     def evict_blocks(self, block_ids: set[int]) -> None:
+@@ -679,6 +685,8 @@ class KVCacheManager:
+         """
+         if not self.coordinator.reset_prefix_cache():
+             return False
++        if self._study_partial_prefix is not None:
++            self._study_partial_prefix.progress.clear()
+         if self.log_stats:
+             assert self.prefix_cache_stats is not None
+             self.prefix_cache_stats.reset = True
+diff --git a/vllm/v1/core/kv_cache_utils.py b/vllm/v1/core/kv_cache_utils.py
+index 8fc327f..7cb4909 100644
+--- a/vllm/v1/core/kv_cache_utils.py
++++ b/vllm/v1/core/kv_cache_utils.py
+@@ -748,7 +748,8 @@ def resolve_kv_cache_block_sizes(
+       group's effective block size. Attention groups are scaled by DCP;
+       Mamba groups keep their full per-rank state and are not scaled.
+     - ``hash_block_size`` is the granularity at which ``Request.block_hashes``
+-      is computed. Single group: equals scheduler block size. Multiple groups:
++      is computed. Single full-attention group: explicit prefix_match_unit or scheduler
++      block size. Multiple groups:
+       ``cache_config.prefix_match_unit`` override if set, else the GCD of
+       group block sizes; every group's block size must be divisible by it.
+       Returns the scheduler block size (i.e. disables finer hashing) if block
+@@ -762,6 +763,18 @@ def resolve_kv_cache_block_sizes(
+         if groups and not groups[0].kv_cache_spec.dcp_sharded:
+             dcp = 1
+         bs = cache_config.block_size * dcp
++        requested = cache_config.prefix_match_unit
++        if (
++            groups
++            and type(groups[0].kv_cache_spec) is FullAttentionSpec
++            and cache_config.enable_prefix_caching
++            and requested is not None
++        ):
++            if bs % requested:
++                raise ValueError(
++                    "prefix_match_unit must divide the physical block size"
++                )
++            return bs, requested
+         return bs, bs
+ 
+     group_block_sizes = [
+diff --git a/vllm/v1/core/sched/scheduler.py b/vllm/v1/core/sched/scheduler.py
+index 9e3e4f8..b1dd2f8 100644
+--- a/vllm/v1/core/sched/scheduler.py
++++ b/vllm/v1/core/sched/scheduler.py
+@@ -2119,6 +2119,17 @@ class Scheduler(SchedulerInterface):
+             if output_is_stale and request.drop_stale_output:
+                 continue
+ 
++            if self.kv_cache_manager._study_partial_prefix is not None:
++                if (
++                    self.scheduler_config.async_scheduling
++                    or self.vllm_config.speculative_config
++                ):
++                    raise ValueError(
++                        "Study partial-prefix mode needs synchronous "
++                        "non-speculative execution"
++                    )
++                self.kv_cache_manager._study_partial_prefix.publish(request)
++
+             req_index = model_runner_output.req_id_to_index[req_id]
+             generated_token_ids = (
+                 sampled_token_ids[req_index] if sampled_token_ids else []
+diff --git a/vllm/v1/core/sched/study_trace.py b/vllm/v1/core/sched/study_trace.py
+index 8d0df6f..eaa26f1 100644
+--- a/vllm/v1/core/sched/study_trace.py
++++ b/vllm/v1/core/sched/study_trace.py
+@@ -233,6 +233,10 @@ class SchedulerTrace:
+             after=lambda output: {
+                 "assigned_positions": output.num_scheduled_tokens,
+                 "assigned_total": output.total_num_scheduled_tokens,
++                "kv_block_copies": [
++                    {"source": c.src_block_id, "destination": c.dst_block_id}
++                    for c in (output.kv_cache_block_copies or [])
++                ],
+                 "computed_counter_phase": "optimistic scheduling bookkeeping",
+             },
+         )
+diff --git a/vllm/v1/core/single_type_kv_cache_manager.py b/vllm/v1/core/single_type_kv_cache_manager.py
+index a097c9e..46a4b32 100644
+--- a/vllm/v1/core/single_type_kv_cache_manager.py
++++ b/vllm/v1/core/single_type_kv_cache_manager.py
+@@ -859,7 +859,8 @@ class FullAttentionManager(SingleTypeKVCacheManager):
+         hash_block_size = self.block_pool.hash_block_size
+         if self.block_size == hash_block_size:
+             return
+-        self._cache_partial_tail_block(request, num_tokens)
++        if not getattr(self.block_pool, "_study_partial_prefix_enabled", False):
++            self._cache_partial_tail_block(request, num_tokens)
+ 
+     def _cache_partial_tail_block(
+         self,
+diff --git a/vllm/v1/core/study_partial_prefix.py b/vllm/v1/core/study_partial_prefix.py
+new file mode 100644
+index 0000000..a2e72a9
+--- /dev/null
++++ b/vllm/v1/core/study_partial_prefix.py
+@@ -0,0 +1,67 @@
++# SPDX-License-Identifier: Apache-2.0
++"""Opt-in indexing of computed interior prompt-prefix boundaries."""
++
++import os
++
++from vllm.v1.kv_cache_interface import FullAttentionSpec
++
++
++class StudyPartialPrefix:
++    @classmethod
++    def from_environment(cls, cache_manager):
++        if os.environ.get("STUDY_PARTIAL_PREFIX", "0") != "1":
++            return None
++        managers = cache_manager.coordinator.single_type_managers
++        if (
++            not cache_manager.enable_caching
++            or cache_manager.use_eagle
++            or len(managers) != 1
++            or type(managers[0].kv_cache_spec) is not FullAttentionSpec
++            or managers[0].dcp_world_size != 1
++            or managers[0].pcp_world_size != 1
++            or cache_manager.block_pool.hash_block_size >= managers[0].block_size
++        ):
++            raise ValueError(
++                "Study partial-prefix indexing needs fine-grained, "
++                "single-device, single-group full attention"
++            )
++        cache_manager.block_pool._study_partial_prefix_enabled = True
++        return cls(managers[0])
++
++    def __init__(self, manager):
++        self.manager = manager
++        self.progress = {}
++
++    def publish(self, request):
++        """Called only after this request's model work has completed."""
++        manager = self.manager
++        pool = manager.block_pool
++        unit, size = pool.hash_block_size, manager.block_size
++        valid = min(request.num_computed_tokens, request.num_prompt_tokens)
++        history = self.progress.setdefault(request.request_id, {})
++        for index, block in enumerate(manager.req_to_blocks[request.request_id]):
++            start = index * size
++            end = min(valid, start + size - unit)
++            if end <= start:
++                break
++            signature = (block.block_id, block.block_hash)
++            previous, boundary = history.get(index, (None, start))
++            if previous != signature:
++                boundary = start
++            if not block.is_null:
++                for position in range(boundary + unit, end + 1, unit):
++                    pool.cache_partial_block(
++                        request,
++                        block,
++                        position,
++                        manager.kv_cache_group_id,
++                        size,
++                        preserve_existing_hashes=True,
++                    )
++                history[index] = (
++                    (block.block_id, block.block_hash),
++                    end // unit * unit,
++                )
++
++    def forget(self, request_id):
++        self.progress.pop(request_id, None)

@@ -11,8 +11,14 @@ Experiment registry
                       reuse, no established speedup or quality preservation.
                       See RESULTS-VLLM-AY.txt and evidence-vllm-ay/.
                       Earlier standalone diagnostic retained in RESULTS-AY.txt.
+04-partial-prefix/ : exact interior-prefix indexing implemented and benchmarked.
+                    GPU probe reuses31/32 tokens; original A-Y gains131 cached
+                    tokens/run, small observed0.64% timing gain in3 rounds.
+                    Nine candidate answers differ; semantic quality unscored.
+                    See RESULTS.txt, PLAN.txt and evidence/.
 
-Current branch in both repos: study/experiment-03-nonprefix-repair.
+
+Current branch in both repos: study/experiment-04-partial-prefix.
 vLLM defaults remain FCFS scheduling and upstream eviction. Its implementation
 was not changed for experiment03; the optional Metal worker is separate. No server or pretrained benchmark remains running.
 Completed code and evidence remain on the earlier experiment branches.
