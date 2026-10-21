@@ -26,6 +26,7 @@ def run_one(
     launcher_args=(),
     client_script="workloads/compare_prefix_policies.py",
     client_eviction_policy="vllm",
+    client_candidates=25,
 ):
     if port_open():
         raise RuntimeError("Port 8001 is occupied")
@@ -68,7 +69,7 @@ def run_one(
                 "--policy",
                 "fcfs",
                 "--candidates",
-                "25",
+                str(client_candidates),
                 "--eviction-policy",
                 client_eviction_policy,
             ]
@@ -116,13 +117,16 @@ def run_one(
                 nonprefix_totals=records[-1] if records else {},
                 sha256=hashlib.sha256(copied.read_bytes()).hexdigest(),
             )
-            print(
+            message = (
                 f"DONE {label}: {variant}; "
-                f"A-Y {data['candidate_summary']['duration_ms']}ms; "
-                f"nonprefix skipped "
-                f"{result['nonprefix_totals'].get('skipped_rows_total', 0)}",
-                flush=True,
+                f"candidates {data['candidate_summary']['duration_ms']}ms"
             )
+            if records:
+                message += (
+                    "; middle-block rows skipped "
+                    f"{result['nonprefix_totals'].get('skipped_rows_total', 0)}"
+                )
+            print(message, flush=True)
             return result
         finally:
             stop_server(server)
