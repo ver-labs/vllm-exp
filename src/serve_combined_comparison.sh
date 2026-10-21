@@ -5,6 +5,8 @@ cd "$experiment_root"
 variant="${1:?baseline or combined}"
 mode="${2:?trace or bench}"
 profile="${3:?ay, targeted or temporal}"
+model="${STUDY_MODEL:-Qwen/Qwen3-0.6B}"
+model_source="${STUDY_MODEL_PATH:-$model}"
 case "$variant" in baseline|combined) ;; *) exit 2 ;; esac
 case "$mode" in trace|bench) ;; *) exit 2 ;; esac
 case "$profile" in
@@ -38,9 +40,9 @@ export VLLM_STUDY_TRACE_STDOUT=0
 export VLLM_STUDY_TRACE=0
 export VLLM_SERVER_DEV_MODE=0
 if [ "$mode" = trace ]; then export VLLM_STUDY_TRACE=1; fi
-"$experiment_root/.venv/bin/vllm" serve Qwen/Qwen3-0.6B \
+"$experiment_root/.venv/bin/vllm" serve "$model_source" \
   --host 127.0.0.1 --port 8001 --seed 0 --worker-cls auto \
-  --served-model-name Qwen/Qwen3-0.6B \
+  --served-model-name "$model" \
   --max-model-len "$model_len" --max-num-seqs "$slots" \
   --max-num-batched-tokens "$batch" \
   --block-size 16 --num-gpu-blocks-override "$blocks" \
