@@ -3,6 +3,7 @@
 import argparse
 import json
 import math
+import os
 import statistics
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -11,7 +12,7 @@ from pathlib import Path
 from threading import Event, Lock
 from urllib.request import Request, urlopen
 
-MODEL = "Qwen/Qwen3-0.6B"
+MODEL = os.environ.get("STUDY_MODEL", "Qwen/Qwen3-0.6B")
 SYSTEM = "You are a helpful assistant. Explain clearly and concisely."
 INTRO = (
     "Our town library is reviewing its reservation service. Members search the "
@@ -123,6 +124,7 @@ BLOCKERS = {
 }
 MAX_TOKENS = 64
 BLOCKER_TOKENS = 128
+CANDIDATE_INTERVAL_S = 0.020
 PRINT_LOCK = Lock()
 
 
@@ -313,13 +315,15 @@ def main():
         action="store_true",
         help="Print the workload without contacting a server",
     )
-    parser.add_argument("--candidates", type=int, choices=(5, 25), default=5)
+    parser.add_argument("--candidates", type=int, default=5)
     parser.add_argument(
         "--eviction-policy",
         choices=("vllm", "lfu"),
         help="Compare eviction with FCFS; save separately from scheduling runs",
     )
     args = parser.parse_args()
+    if args.candidates < 1:
+        parser.error("candidates must be positive")
     if args.eviction_policy and args.policy != "fcfs":
         parser.error("Eviction comparison requires --policy fcfs")
     prompts = build_prompts(args.candidates)
@@ -331,12 +335,14 @@ def main():
         "blockers": BLOCKERS,
         "candidates": prompts,
         "candidate_order": list(prompts),
-        "candidate_interval_ms": 20,
+        "candidate_interval_ms": CANDIDATE_INTERVAL_S * 1000,
         "candidate_output_tokens": MAX_TOKENS,
         "blocker_output_tokens": BLOCKER_TOKENS,
         "ignore_eos": True,
         "maximum_client_concurrency": concurrency,
     }
+    if groups := globals().get("PROMPT_GROUPS"):
+        manifest["prompt_groups"] = groups
     if args.prepare_only:
         print(json.dumps(manifest, indent=2))
         return
@@ -379,7 +385,7 @@ def main():
             release = time.perf_counter()
             candidate_release_ms = round((release - origin) * 1000, 2)
             for index, (label, prompt) in enumerate(prompts.items()):
-                delay = release + index * 0.020 - time.perf_counter()
+                delay = release + index * CANDIDATE_INTERVAL_S - time.perf_counter()
                 if delay > 0:
                     time.sleep(delay)
                 jobs.append(
@@ -414,9 +420,14 @@ def main():
                 row["usage"].get("prompt_tokens_details") or {}
             ).get("cached_tokens")
     result = {
-        "workload": "controlled-prefix-v2-ay"
-        if len(prompts) == 25
-        else "controlled-prefix-v1",
+        "workload": globals().get("WORKLOAD_NAME")
+        or (
+            "controlled-prefix-v2-ay"
+            if len(prompts) == 25
+            else "controlled-prefix-v1"
+            if len(prompts) == 5
+            else f"scaled-combined-{len(prompts)}"
+        ),
         "run_id": run_id,
         "policy_label": args.policy,
         "policy_verified_from_trace": trace is not None and policy_matches,
