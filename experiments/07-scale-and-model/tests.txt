@@ -1,0 +1,14 @@
+Experiment 07 validation
+========================
+
+All48 fresh-server runs completed: six scale points x two variants x one
+traced diagnostic plus three untraced timing rounds. Every run had the expected
+request count, 320/64 actual candidate prompt tokens, fixed64 candidate output
+tokens, and all successful output tokens. Diagnostic traces confirmed all
+candidates waiting together, editable source, baseline/combined flags and no
+preemptions. The Qwen3-1.7B server log confirms MLX GPU execution.
+
+Ruff check, Ruff format --check, Python compilation, launcher shell syntax
+and git whitespace checks passed. The nested vLLM source has no changes.
+Port8001 had no listener after benchmarking. Evidence includes frozen summaries,
+2,100 per-request candidate rows and SHA-256 hashes for156 raw files.

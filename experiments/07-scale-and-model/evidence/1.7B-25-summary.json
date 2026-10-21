@@ -1,0 +1,679 @@
+{
+  "experiment": "07-scaled-combined",
+  "model": "Qwen/Qwen3-1.7B",
+  "local_model_revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e",
+  "candidates": 25,
+  "rounds": 3,
+  "diagnostics": [
+    {
+      "label": "diagnostic",
+      "probe": null,
+      "variant": "baseline",
+      "mode": "trace",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/scaled-combined/Qwen--Qwen3-1.7B/candidates-25/batches-20261021-215904/diagnostic-baseline-trace.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261021-215920-478454.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/scaled-combined/Qwen--Qwen3-1.7B/candidates-25/batches-20261021-215904/diagnostic-baseline-trace-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/scaled-combined/Qwen--Qwen3-1.7B/candidates-25/batches-20261021-215904/diagnostic-baseline-trace-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/targeted/baseline/server-trace-eKbB9T",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 28417.41,
+        "output_tokens_per_second": 56.3,
+        "requests_per_second": 0.88,
+        "first_text_ms": {
+          "median": 15514.11,
+          "p95_nearest_rank": 20499.15
+        },
+        "total_ms": {
+          "median": 20245.35,
+          "p95_nearest_rank": 25651.27
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 33,
+        "failed_requests": 0,
+        "successful_output_tokens": 2624,
+        "duration_ms": 28605.86,
+        "output_tokens_per_second": 91.73,
+        "requests_per_second": 1.154,
+        "first_text_ms": {
+          "median": 14620.8,
+          "p95_nearest_rank": 20499.15
+        },
+        "total_ms": {
+          "median": 19928.81,
+          "p95_nearest_rank": 25651.27
+        }
+      },
+      "trace_analysis": {
+        "server_policy": "fcfs",
+        "eviction_policy": "vllm",
+        "evicted_cached_blocks": 207,
+        "preemptions": 0,
+        "max_candidates_waiting": 25,
+        "candidate_reorders": [],
+        "candidate_cache_scores": {},
+        "candidate_admission_order": [
+          "R001",
+          "R002",
+          "R003",
+          "R004",
+          "R005",
+          "R006",
+          "R007",
+          "R008",
+          "R009",
+          "R010",
+          "R011",
+          "R012",
+          "R013",
+          "R014",
+          "R015",
+          "R016",
+          "R017",
+          "R018",
+          "R019",
+          "R020",
+          "R021",
+          "R022",
+          "R023",
+          "R024",
+          "R025"
+        ],
+        "protected_fcfs_head": [],
+        "waiting_time_safeguard_count": 0
+      },
+      "nonprefix_totals": {},
+      "sha256": "d69bf99656f2964a2674de9a12567a16cd0ae816157a3b88f6c3f287fdc4dd6c",
+      "round": "diagnostic",
+      "trace": {
+        "header": {
+          "scheduler_source": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/vllm-src/vllm/v1/core/sched/scheduler.py",
+          "eviction_policy": "vllm",
+          "skip_continue": false,
+          "chunked_prefill": false,
+          "block_size": 16,
+          "token_budget_limit": 512
+        },
+        "counts": {
+          "skip": 0,
+          "budget_stops": 6,
+          "cached_evictions": 207,
+          "preemptions": 0
+        },
+        "events": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/targeted/baseline/server-trace-eKbB9T/events-60058-1792600156106679000.jsonl"
+      }
+    },
+    {
+      "label": "diagnostic",
+      "probe": null,
+      "variant": "combined",
+      "mode": "trace",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/scaled-combined/Qwen--Qwen3-1.7B/candidates-25/batches-20261021-215904/diagnostic-combined-trace.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/lfu/controlled-20261021-220019-165780.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/scaled-combined/Qwen--Qwen3-1.7B/candidates-25/batches-20261021-215904/diagnostic-combined-trace-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/scaled-combined/Qwen--Qwen3-1.7B/candidates-25/batches-20261021-215904/diagnostic-combined-trace-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/targeted/combined/server-trace-Gu8D0n",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 32434.59,
+        "output_tokens_per_second": 49.33,
+        "requests_per_second": 0.771,
+        "first_text_ms": {
+          "median": 17075.88,
+          "p95_nearest_rank": 24537.34
+        },
+        "total_ms": {
+          "median": 22837.86,
+          "p95_nearest_rank": 29582.68
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 33,
+        "failed_requests": 0,
+        "successful_output_tokens": 2624,
+        "duration_ms": 32606.2,
+        "output_tokens_per_second": 80.48,
+        "requests_per_second": 1.012,
+        "first_text_ms": {
+          "median": 16778.35,
+          "p95_nearest_rank": 24537.34
+        },
+        "total_ms": {
+          "median": 22681.47,
+          "p95_nearest_rank": 29582.68
+        }
+      },
+      "trace_analysis": {
+        "server_policy": "fcfs",
+        "eviction_policy": "lfu",
+        "evicted_cached_blocks": 208,
+        "preemptions": 0,
+        "max_candidates_waiting": 25,
+        "candidate_reorders": [],
+        "candidate_cache_scores": {},
+        "candidate_admission_order": [
+          "R001",
+          "R002",
+          "R014",
+          "R015",
+          "R016",
+          "R017",
+          "R018",
+          "R003",
+          "R004",
+          "R005",
+          "R019",
+          "R020",
+          "R021",
+          "R022",
+          "R023",
+          "R006",
+          "R007",
+          "R008",
+          "R024",
+          "R025",
+          "R009",
+          "R010",
+          "R011",
+          "R012",
+          "R013"
+        ],
+        "protected_fcfs_head": [],
+        "waiting_time_safeguard_count": 0
+      },
+      "nonprefix_totals": {},
+      "sha256": "b6dab288ff31ba0bfdf7aea918e0c4466a5fffaa4db4440a1fce9555919d3fae",
+      "round": "diagnostic",
+      "trace": {
+        "header": {
+          "scheduler_source": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/vllm-src/vllm/v1/core/sched/scheduler.py",
+          "eviction_policy": "lfu",
+          "skip_continue": true,
+          "chunked_prefill": false,
+          "block_size": 16,
+          "token_budget_limit": 512
+        },
+        "counts": {
+          "skip": 28,
+          "budget_stops": 2,
+          "cached_evictions": 208,
+          "preemptions": 0
+        },
+        "events": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/targeted/combined/server-trace-Gu8D0n/events-60118-1792600213126383000.jsonl"
+      }
+    }
+  ],
+  "runs": [
+    {
+      "label": 1,
+      "probe": null,
+      "variant": "baseline",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/scaled-combined/Qwen--Qwen3-1.7B/candidates-25/batches-20261021-215904/1-baseline-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261021-220116-924209.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/scaled-combined/Qwen--Qwen3-1.7B/candidates-25/batches-20261021-215904/1-baseline-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/scaled-combined/Qwen--Qwen3-1.7B/candidates-25/batches-20261021-215904/1-baseline-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/targeted/baseline/server-bench-SVKF2U",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 28766.74,
+        "output_tokens_per_second": 55.62,
+        "requests_per_second": 0.869,
+        "first_text_ms": {
+          "median": 16916.69,
+          "p95_nearest_rank": 21919.84
+        },
+        "total_ms": {
+          "median": 21700.9,
+          "p95_nearest_rank": 26010.04
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 33,
+        "failed_requests": 0,
+        "successful_output_tokens": 2624,
+        "duration_ms": 28956.12,
+        "output_tokens_per_second": 90.62,
+        "requests_per_second": 1.14,
+        "first_text_ms": {
+          "median": 15773.23,
+          "p95_nearest_rank": 21919.84
+        },
+        "total_ms": {
+          "median": 21322.71,
+          "p95_nearest_rank": 26010.04
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "d6e5beb7240b7b4463ef30c2c71cf0084deb51272ddb67f72c4604b18c7857e2",
+      "round": 1
+    },
+    {
+      "label": 1,
+      "probe": null,
+      "variant": "combined",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/scaled-combined/Qwen--Qwen3-1.7B/candidates-25/batches-20261021-215904/1-combined-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/lfu/controlled-20261021-220214-575155.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/scaled-combined/Qwen--Qwen3-1.7B/candidates-25/batches-20261021-215904/1-combined-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/scaled-combined/Qwen--Qwen3-1.7B/candidates-25/batches-20261021-215904/1-combined-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/targeted/combined/server-bench-n23ecA",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 28106.31,
+        "output_tokens_per_second": 56.93,
+        "requests_per_second": 0.889,
+        "first_text_ms": {
+          "median": 14681.22,
+          "p95_nearest_rank": 20966.76
+        },
+        "total_ms": {
+          "median": 19640.57,
+          "p95_nearest_rank": 25412.16
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 33,
+        "failed_requests": 0,
+        "successful_output_tokens": 2624,
+        "duration_ms": 28287.96,
+        "output_tokens_per_second": 92.76,
+        "requests_per_second": 1.167,
+        "first_text_ms": {
+          "median": 14399.11,
+          "p95_nearest_rank": 20966.76
+        },
+        "total_ms": {
+          "median": 19430.21,
+          "p95_nearest_rank": 25412.16
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "3b7fa8d56d2a608e8624b13448660cfd9cb8976c2b9732498ede3dc7de3a7b21",
+      "round": 1
+    },
+    {
+      "label": 2,
+      "probe": null,
+      "variant": "combined",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/scaled-combined/Qwen--Qwen3-1.7B/candidates-25/batches-20261021-215904/2-combined-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/lfu/controlled-20261021-220304-377697.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/scaled-combined/Qwen--Qwen3-1.7B/candidates-25/batches-20261021-215904/2-combined-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/scaled-combined/Qwen--Qwen3-1.7B/candidates-25/batches-20261021-215904/2-combined-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/targeted/combined/server-bench-RkywYW",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 23781.35,
+        "output_tokens_per_second": 67.28,
+        "requests_per_second": 1.051,
+        "first_text_ms": {
+          "median": 12690.88,
+          "p95_nearest_rank": 17741.37
+        },
+        "total_ms": {
+          "median": 16479.62,
+          "p95_nearest_rank": 21699.61
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 33,
+        "failed_requests": 0,
+        "successful_output_tokens": 2624,
+        "duration_ms": 23942.07,
+        "output_tokens_per_second": 109.6,
+        "requests_per_second": 1.378,
+        "first_text_ms": {
+          "median": 12518.31,
+          "p95_nearest_rank": 17741.37
+        },
+        "total_ms": {
+          "median": 16388.85,
+          "p95_nearest_rank": 21699.61
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "02f3d0e1f7d284335a5e7670304eacf860dfaeddc998eb7e53a6684f67e842da",
+      "round": 2
+    },
+    {
+      "label": 2,
+      "probe": null,
+      "variant": "baseline",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/scaled-combined/Qwen--Qwen3-1.7B/candidates-25/batches-20261021-215904/2-baseline-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261021-220347-063002.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/scaled-combined/Qwen--Qwen3-1.7B/candidates-25/batches-20261021-215904/2-baseline-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/scaled-combined/Qwen--Qwen3-1.7B/candidates-25/batches-20261021-215904/2-baseline-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/targeted/baseline/server-bench-TWXtqy",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 21468.51,
+        "output_tokens_per_second": 74.53,
+        "requests_per_second": 1.164,
+        "first_text_ms": {
+          "median": 12433.65,
+          "p95_nearest_rank": 16034.1
+        },
+        "total_ms": {
+          "median": 15868.29,
+          "p95_nearest_rank": 19274.92
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 33,
+        "failed_requests": 0,
+        "successful_output_tokens": 2624,
+        "duration_ms": 21644.35,
+        "output_tokens_per_second": 121.23,
+        "requests_per_second": 1.525,
+        "first_text_ms": {
+          "median": 11660.36,
+          "p95_nearest_rank": 16034.1
+        },
+        "total_ms": {
+          "median": 15597.84,
+          "p95_nearest_rank": 19274.92
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "b297a2021e06b9eccbf83de15a2b6520246bb8b20324d6b4554f2c44d4d2d735",
+      "round": 2
+    },
+    {
+      "label": 3,
+      "probe": null,
+      "variant": "baseline",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/scaled-combined/Qwen--Qwen3-1.7B/candidates-25/batches-20261021-215904/3-baseline-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261021-220428-437191.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/scaled-combined/Qwen--Qwen3-1.7B/candidates-25/batches-20261021-215904/3-baseline-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/scaled-combined/Qwen--Qwen3-1.7B/candidates-25/batches-20261021-215904/3-baseline-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/targeted/baseline/server-bench-rCVqXF",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 22018.91,
+        "output_tokens_per_second": 72.66,
+        "requests_per_second": 1.135,
+        "first_text_ms": {
+          "median": 12689.52,
+          "p95_nearest_rank": 16570.35
+        },
+        "total_ms": {
+          "median": 16415.7,
+          "p95_nearest_rank": 19730.3
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 33,
+        "failed_requests": 0,
+        "successful_output_tokens": 2624,
+        "duration_ms": 22187.72,
+        "output_tokens_per_second": 118.26,
+        "requests_per_second": 1.487,
+        "first_text_ms": {
+          "median": 11883.53,
+          "p95_nearest_rank": 16570.35
+        },
+        "total_ms": {
+          "median": 16148.33,
+          "p95_nearest_rank": 19730.3
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "5801c08ef14d1aacafce495e47c7974f56146ef629c7483cba309a715b75d452",
+      "round": 3
+    },
+    {
+      "label": 3,
+      "probe": null,
+      "variant": "combined",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/scaled-combined/Qwen--Qwen3-1.7B/candidates-25/batches-20261021-215904/3-combined-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/lfu/controlled-20261021-220509-103841.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/scaled-combined/Qwen--Qwen3-1.7B/candidates-25/batches-20261021-215904/3-combined-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/scaled-combined/Qwen--Qwen3-1.7B/candidates-25/batches-20261021-215904/3-combined-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/targeted/combined/server-bench-eJWtTd",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 21812.64,
+        "output_tokens_per_second": 73.35,
+        "requests_per_second": 1.146,
+        "first_text_ms": {
+          "median": 11001.19,
+          "p95_nearest_rank": 16004.65
+        },
+        "total_ms": {
+          "median": 14871.2,
+          "p95_nearest_rank": 19579.88
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 33,
+        "failed_requests": 0,
+        "successful_output_tokens": 2624,
+        "duration_ms": 21969.9,
+        "output_tokens_per_second": 119.44,
+        "requests_per_second": 1.502,
+        "first_text_ms": {
+          "median": 10824.64,
+          "p95_nearest_rank": 16004.65
+        },
+        "total_ms": {
+          "median": 14797.54,
+          "p95_nearest_rank": 19579.88
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "3837c0c7e7c536f8c364ce257db8085bda2ec5da91c9cad4f628bf42355f600c",
+      "round": 3
+    }
+  ],
+  "complete": true,
+  "aggregate": {
+    "baseline": {
+      "duration_median_ms": 22018.91,
+      "duration_ms": [
+        28766.74,
+        21468.51,
+        22018.91
+      ],
+      "throughput_median_tokens_s": 72.66,
+      "first_text_median_ms": 12689.52,
+      "latency_median_ms": 16415.7,
+      "cached_tokens": [
+        400,
+        400,
+        400
+      ],
+      "output_tokens": [
+        2624,
+        2624,
+        2624
+      ],
+      "groups": {
+        "long": {
+          "first_text_median_ms": 8598.16,
+          "latency_median_ms": 12820.65,
+          "first_text_max_ms": 12689.52
+        },
+        "short": {
+          "first_text_median_ms": 16314.15,
+          "latency_median_ms": 19565.695,
+          "first_text_max_ms": 19439.99
+        }
+      }
+    },
+    "combined": {
+      "duration_median_ms": 23781.35,
+      "duration_ms": [
+        28106.31,
+        23781.35,
+        21812.64
+      ],
+      "throughput_median_tokens_s": 67.28,
+      "first_text_median_ms": 12690.88,
+      "latency_median_ms": 16479.62,
+      "cached_tokens": [
+        612,
+        612,
+        612
+      ],
+      "output_tokens": [
+        2624,
+        2624,
+        2624
+      ],
+      "groups": {
+        "long": {
+          "first_text_median_ms": 16611.26,
+          "latency_median_ms": 21255.62,
+          "first_text_max_ms": 21502.54
+        },
+        "short": {
+          "first_text_median_ms": 12666.075,
+          "latency_median_ms": 16455.57,
+          "first_text_max_ms": 16745.13
+        }
+      }
+    }
+  },
+  "paired_duration_changes_pct": [
+    -2.296,
+    10.773,
+    -0.937
+  ],
+  "answer_match": [
+    19,
+    20,
+    19
+  ],
+  "manifest": {
+    "model": "Qwen/Qwen3-1.7B",
+    "system": "You are a helpful assistant. Explain clearly and concisely.",
+    "warmup": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. \nSummarize this.",
+    "blockers": {
+      "H1": "For workshop number 1, write a detailed numbered list of forty different household objects. For each object explain its purpose and how it is made. Continue the list without an introduction.",
+      "H2": "For workshop number 2, write a detailed numbered list of forty different household objects. For each object explain its purpose and how it is made. Continue the list without an introduction.",
+      "H3": "For workshop number 3, write a detailed numbered list of forty different household objects. For each object explain its purpose and how it is made. Continue the list without an introduction.",
+      "H4": "For workshop number 4, write a detailed numbered list of forty different household objects. For each object explain its purpose and how it is made. Continue the list without an introduction.",
+      "H5": "For workshop number 5, write a detailed numbered list of forty different household objects. For each object explain its purpose and how it is made. Continue the list without an introduction.",
+      "H6": "For workshop number 6, write a detailed numbered list of forty different household objects. For each object explain its purpose and how it is made. Continue the list without an introduction.",
+      "H7": "For workshop number 7, write a detailed numbered list of forty different household objects. For each object explain its purpose and how it is made. Continue the list without an introduction.",
+      "H8": "For workshop number 8, write a detailed numbered list of forty different household objects. For each object explain its purpose and how it is made. Continue the list without an introduction."
+    },
+    "candidates": {
+      "R001": "Case R001: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+      "R002": "Case R002: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+      "R003": "Case R003: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+      "R004": "Case R004: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+      "R005": "Case R005: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+      "R006": "Case R006: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+      "R007": "Case R007: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+      "R008": "Case R008: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+      "R009": "Case R009: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+      "R010": "Case R010: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+      "R011": "Case R011: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+      "R012": "Case R012: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+      "R013": "Case R013: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+      "R014": "Case R014: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail",
+      "R015": "Case R015: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail",
+      "R016": "Case R016: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail",
+      "R017": "Case R017: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail",
+      "R018": "Case R018: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail",
+      "R019": "Case R019: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail",
+      "R020": "Case R020: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail",
+      "R021": "Case R021: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail",
+      "R022": "Case R022: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail",
+      "R023": "Case R023: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail",
+      "R024": "Case R024: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail",
+      "R025": "Case R025: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail"
+    },
+    "candidate_order": [
+      "R001",
+      "R002",
+      "R003",
+      "R004",
+      "R005",
+      "R006",
+      "R007",
+      "R008",
+      "R009",
+      "R010",
+      "R011",
+      "R012",
+      "R013",
+      "R014",
+      "R015",
+      "R016",
+      "R017",
+      "R018",
+      "R019",
+      "R020",
+      "R021",
+      "R022",
+      "R023",
+      "R024",
+      "R025"
+    ],
+    "candidate_interval_ms": 10.0,
+    "candidate_output_tokens": 64,
+    "blocker_output_tokens": 128,
+    "ignore_eos": true,
+    "maximum_client_concurrency": 33,
+    "prompt_groups": {
+      "long": [
+        "R001",
+        "R002",
+        "R003",
+        "R004",
+        "R005",
+        "R006",
+        "R007",
+        "R008",
+        "R009",
+        "R010",
+        "R011",
+        "R012",
+        "R013"
+      ],
+      "short": [
+        "R014",
+        "R015",
+        "R016",
+        "R017",
+        "R018",
+        "R019",
+        "R020",
+        "R021",
+        "R022",
+        "R023",
+        "R024",
+        "R025"
+      ]
+    }
+  }
+}

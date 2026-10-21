@@ -1,0 +1,40 @@
+Experiment 07 reproducible procedure
+====================================
+
+From the vllm-exp folder, with the existing .venv and editable source:
+  .venv/bin/python src/run_scaled_combined.py --model Qwen/Qwen3-0.6B --candidates 25 --rounds 3
+  .venv/bin/python src/run_scaled_combined.py --model Qwen/Qwen3-0.6B --candidates 50 --rounds 3
+  .venv/bin/python src/run_scaled_combined.py --model Qwen/Qwen3-0.6B --candidates 100 --rounds 3
+  .venv/bin/python src/run_scaled_combined.py --model Qwen/Qwen3-1.7B --revision 70d244cc86ccca08cf5af4e1e306ecf908b1ad5e --candidates 25 --rounds 3
+  .venv/bin/python src/run_scaled_combined.py --model Qwen/Qwen3-1.7B --revision 70d244cc86ccca08cf5af4e1e306ecf908b1ad5e --candidates 50 --rounds 3
+  .venv/bin/python src/run_scaled_combined.py --model Qwen/Qwen3-1.7B --revision 70d244cc86ccca08cf5af4e1e306ecf908b1ad5e --candidates 100 --rounds 3
+
+Download the1.7B checkpoint before its first run if it is not cached:
+  .venv/bin/python -c 'from huggingface_hub import snapshot_download; print(snapshot_download("Qwen/Qwen3-1.7B", revision="70d244cc86ccca08cf5af4e1e306ecf908b1ad5e"))'
+
+The runner then works offline. It resolves the cached snapshot and passes its
+path to the server and tokenizer, while preserving the model name exposed by
+the API. This fixes weights and tokenizer within each point. Each diagnostic
+and timed variant gets a fresh server. Diagnostics verify source path, policy
+switches, full waiting queue and cache/preemption events. Timing runs disable
+the trace and alternate baseline/combined launch order. The client sends8
+blockers and25,50 or100 candidate requests; all candidates generate64 tokens.
+The preparation step builds320/64-token chat prompts and checks actual usage.
+
+The workload is a synthetic scheduling stress test, not representative user
+traffic. Memory limits, arrival gap, block size, token budgets and output limits
+are fixed across counts and models. The pre-existing experiment06 original
+25-request results must not be mixed into this scale series because its client
+arrival pattern and blocker outputs differ. Compare only matched variants in
+the same experiment07 point. Startup is excluded from candidate completion.
+
+Primary metrics: candidate batch completion and output throughput, median and
+p95 first text, median request latency, long/short group latency, cached tokens,
+full waiting-queue verification, skip events, preemptions and exact answer
+agreement. Three pairs are exploratory. More repetitions under controlled
+machine conditions are needed before claiming a small performance advantage.
+
+Source checkout commit:e04a615e70e411b08125f3b13f7dd5db88d98642.
+The combined algorithms themselves are unchanged from experiment06. This
+experiment only makes client count and model configurable and adds the scale
+runner and evidence archive.

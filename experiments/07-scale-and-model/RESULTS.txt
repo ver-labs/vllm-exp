@@ -1,0 +1,96 @@
+Experiment 07: request-count and model-size scaling
+===================================================
+
+Completed on 2026-10-21 on the Mac Metal GPU. The combined variant enables
+experiments02 (frequency-aware cache eviction),04 (exact partial-prefix reuse),
+and05 (bounded unchunked skip/continue) at once. The baseline uses FCFS,
+upstream vLLM eviction and coarse 16-token prefix matching. Both variants run
+the same editable vLLM source, model checkpoint and workload in each pair.
+
+Two pinned models: Qwen/Qwen3-0.6B at c1899de289a04d12100db370d81485cdf75e47ca;
+Qwen/Qwen3-1.7B at 70d244cc86ccca08cf5af4e1e306ecf908b1ad5e. Six scale
+points were tested:25,50,100 candidate requests on each model. Every point has
+one baseline/combined traced diagnostic and three fresh-server untraced matched
+pairs with alternating launch order. All48 serving runs completed successfully.
+
+Each count has half long prompts (rounding up), then half short prompts. Prompt
+lengths are exactly320 and64 chat-template tokens in each model. Every candidate
+generates64 tokens; eight blockers generate128 tokens each. Candidate arrivals
+are10ms apart. The same eight running slots,256 physical16-token KV pages,
+512-token context/batch budget, FCFS, seed0, synchronous unchunked prefill,
+native Metal worker and system prompt apply at every point. This new25-request
+point replaces historical25-request timing in scale comparisons: those older
+studies had different blockers and arrival gaps.
+
+Median of3 timed runs       Baseline       Combined    Median change    Cache hits/run
+Qwen3-0.6B,25              11.517 s      11.804 s          +2.49%         400 -> 612
+Qwen3-0.6B,50              10.070 s       9.876 s          -1.93%         800 ->1241
+Qwen3-0.6B,100             29.673 s      27.942 s          -5.84%        1600 ->2485
+Qwen3-1.7B,25              22.019 s      23.781 s          +8.00%         400 -> 612
+Qwen3-1.7B,50              45.879 s      40.177 s         -12.43%         800 ->1241
+Qwen3-1.7B,100             78.188 s      80.822 s          +3.37%        1600 ->2485
+
+Negative change means combined finished sooner. Completion time is measured
+from candidate release until the last candidate finishes; server startup and
+the one-token warmup are excluded. Cache hits are sums of candidate cached
+prompt tokens from the API; each value was identical across all diagnostic and
+timed runs for its respective variant and scale point.
+
+Paired completion-time changes reveal the instability of median-only ranking:
+  0.6B/25:  +7.17%, +7.48%, -6.26%.
+  0.6B/50:  -1.93%, +3.67%,+20.76%.
+  0.6B/100: -9.43%, +3.49%,-19.13%.
+  1.7B/25:  -2.30%,+10.77%, -0.94%.
+  1.7B/50: +22.10%,-16.86%, +0.60%.
+  1.7B/100: -1.47%, +5.33%,+16.65%.
+The combined variant was faster in exactly8 of18 pairs. These exploratory
+runs establish cache and scheduling behavior, not a reliable overall speedup.
+Absolute 0.6B batch time was even lower at50 requests than at25 despite twice
+the candidates. Machine or run variability is large enough that these medians
+must not be treated as a clean performance scaling curve.
+
+Median output throughput (candidate tokens/second), baseline -> combined:
+  0.6B/25:138.93 ->135.55; /50:317.77 ->324.02; /100:215.68 ->229.05.
+  1.7B/25:72.66 ->67.28; /50:69.75 ->79.65; /100:81.85 ->79.19.
+This follows the candidate completion results; all candidates have identical
+64-token output limits. Total successful outputs per run were2624,4224,7424
+tokens at25,50,100 including blockers, with no failed requests.
+
+First-text latency median and p95, baseline -> combined:
+  0.6B/25:  median6.89 ->6.17 s; p95 8.71 ->8.67 s.
+  0.6B/50:  median5.82 ->5.62 s; p95 7.89 ->7.65 s.
+  0.6B/100: median17.23->16.18 s; p9525.99->24.22 s.
+  1.7B/25:  median12.69->12.69 s; p9516.57->17.74 s.
+  1.7B/50:  median28.26->25.59 s; p9538.16->33.61 s.
+  1.7B/100: median45.18->51.58 s; p9568.89->71.97 s.
+Each number is the median of the three per-run medians or nearest-rank p95s.
+
+The fairness tradeoff is clearest at25 requests. Median first text for long
+prompts worsened4.58->8.21s on0.6B and8.60->16.61s on1.7B, while short
+prompts improved8.59->6.14s and16.31->12.67s. At50 and100, group medians
+changed in the same direction as the overall runtime for each point; no
+universal long/short latency benefit can be claimed.
+
+Diagnostics confirmed all candidate requests waiting together at every point.
+The baseline logged6 unchunked budget stops at every point. Combined logged
+28 skip events at25 requests and64 at50 and100, plus2 budget stops at every
+point. There were zero preemptions. Combined
+candidate cache hits increased by212 at25,441 at50 and885 at100 for both
+models. These exact results show the mechanisms operate with both model sizes,
+but do not isolate the individual contribution of each policy.
+
+Exact candidate-answer agreement across the three pairs:
+  0.6B/25:20/25 in each; /50:50/50 in each; /100:100/100 in each.
+  1.7B/25:13/25 in each; /50:50/50 in each; /100:100/100,99/100,95/100.
+The benchmark fixes token counts, not semantic quality. Answer differences can
+arise from batching or prefill changes under low-precision execution; no
+quality-parity claim is made.
+
+Conclusion: this is a reproducible six-point baseline for further scheduler
+experiments. More requests and a larger model did not turn the combined policy
+into a consistent throughput improvement. Retain per-group latency, cache hits,
+paired times and answer comparison whenever changing the algorithm.
+
+Frozen evidence and source revisions: evidence/ and manifest.json. Raw data:
+results/scaled-combined/ (paths listed in evidence/matrix.json). Full procedure:
+PLAN.txt. All experimental servers were stopped.

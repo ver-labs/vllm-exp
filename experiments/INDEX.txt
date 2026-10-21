@@ -29,7 +29,12 @@ Experiment registry
                inconsistent across pairs, with a long-prompt latency penalty.
                See RESULTS.txt, PLAN.txt and evidence/.
 
-Current experiment branch: study/experiment-06-combined in vllm-exp.
+07-scale-and-model/ : matched25/50/100 request counts on pinned Qwen3-0.6B
+                      and Qwen3-1.7B, baseline versus all three policies.
+                      Cache gains repeated; overall speed mixed across pairs.
+                      See RESULTS.txt, PLAN.txt and evidence/.
+
+Current experiment branch: study/experiment-07-scale-and-model in vllm-exp.
 Nested vLLM source remains at e04a615 on study/experiment-05-skip-continue.
 vLLM defaults remain FCFS scheduling and upstream eviction. Its implementation
 was not changed for experiment03; the optional Metal worker is separate. No server or pretrained benchmark remains running.
