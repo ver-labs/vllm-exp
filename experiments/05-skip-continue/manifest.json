@@ -1,0 +1,30 @@
+{
+  "experiment_id": "05-skip-continue",
+  "status": "completed",
+  "branch": "study/experiment-05-skip-continue",
+  "source_base_commit": "f2fcd5e",
+  "source_commit": "e04a615e70e411b08125f3b13f7dd5db88d98642",
+  "variants": [
+    "baseline",
+    "skip"
+  ],
+  "chunked_prefill": false,
+  "batch_tokens": 512,
+  "max_context": 512,
+  "lookahead": 16,
+  "max_skip_attempts": 4,
+  "max_wait_s": 30,
+  "targeted_rounds": 3,
+  "original_control_diagnostics_per_variant": 1,
+  "raw_summary": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261021-190907/summary.json",
+  "frozen_summary": "experiments/05-skip-continue/evidence/summary.json",
+  "source_patch_sha256": "3af4baf84226ee8d7e85e20ad8b01522c6df72679a1229c060f1e76ffb46ec99",
+  "code_sha256": {
+    "src/run_skip_continue_batches.py": "278f606e43583e2ab7ad96d570b598bcfd963063311d38f324ee6d2de66424d3",
+    "src/run_nonprefix_vllm_batches.py": "751e351907d6b7b0dc3b265996373ddf78bd003f8ffd0e78db9eb0b5ec3e61d9",
+    "src/serve_skip_continue.sh": "b73e38e4378db93a87dd003a9cf6237e2c5b1af716e727885bf7da3413abfe0d",
+    "workloads/compare_skip_continue.py": "7f3fcd66e548cf6ab37e8e491fcfb6e87da824c8539b8bbbc39a2cd2a8fe3109",
+    "tests/test_skip_continue.py": "7ca3d16e67d5424d7e371ab6f25c238e99e1ca43653f7bb493d0a021dfa0e518"
+  },
+  "conclusion": "Observed ~3% median targeted throughput gain and much lower short-prompt latency, with a large long-prompt latency penalty. Original A-Y control does not activate this policy."
+}

@@ -23,6 +23,8 @@ def run_one(
     *,
     launcher="src/serve_nonprefix_comparison.sh",
     probe=None,
+    launcher_args=(),
+    client_script="workloads/compare_prefix_policies.py",
 ):
     if port_open():
         raise RuntimeError("Port 8001 is occupied")
@@ -31,7 +33,7 @@ def run_one(
     print(f"START {label}: {variant} ({mode})", flush=True)
     with server_log.open("w") as stream:
         server = subprocess.Popen(
-            ["bash", launcher, variant, mode],
+            ["bash", launcher, variant, mode, *launcher_args],
             cwd=ROOT,
             stdout=stream,
             stderr=subprocess.STDOUT,
@@ -61,7 +63,7 @@ def run_one(
             probe_result = probe(variant) if probe else None
             cmd = [
                 sys.executable,
-                "workloads/compare_prefix_policies.py",
+                client_script,
                 "--policy",
                 "fcfs",
                 "--candidates",

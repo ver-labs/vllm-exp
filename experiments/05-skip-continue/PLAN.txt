@@ -1,0 +1,67 @@
+Experiment05: skip-and-continue for unchunked prefill
+==================================================
+
+Only change waiting admission when a whole unchunked prompt exceeds the remaining
+token/input budget. Temporarily remove the oversized request, inspect later
+requests, run the first eligible ones that fit, then restore every skipped request
+in its original relative order. Existing KV-allocation failure still stops
+admission. Running/preempted/KV-holding/blocked requests keep upstream treatment.
+Experiments01-04 are disabled in both serving variants; native Metal worker.
+
+Bounds: inspect at most16 requests from the first oversized request onward in
+one scheduler pass; stop bypassing a request after4 skip attempts or30 seconds
+since arrival. Admission clears its counter; weak keys avoid retaining finished
+requests. A protected head stops further backfill until ordinary scheduling can
+admit it. Request counts, KV checks, token budgets and status updates remain native.
+The existing deferred waiting queues restore order even across multiple skips.
+
+Unchunked vLLM requires max_num_batched_tokens >= max_model_len. Both variants
+therefore use512 context and512 batch tokens, not the earlier chunked128 budget.
+Other common settings: Qwen3-0.6B, seed0, fixed16-token pages, upstream eviction,
+coarse prefix matching, prefix caching, synchronous execution, output64 tokens
+per candidate, same input/arrival pattern and model weights within each profile.
+
+Profiles:
+  Original A-Y control: exact previous prompts,3 running slots,96 KV pages,
+  3 blockers x128 output tokens,28 client workers. One traced run per variant
+  checks whether this workload actually encounters budget head blocking. These
+  traced timings are diagnostic, not a repeated performance comparison.
+
+  Targeted A-Y:13 long prompts (A-M, exactly320 chat-template tokens), then12
+  short prompts (N-Y, exactly64 chat-template tokens), all generating64 tokens.
+  Each prompt starts with its case label to prevent matching the long padded
+  body across requests. Same system prompt; native cached-prefix reuse remains.
+  8 running slots,256 KV pages,8 blockers x64 output tokens,33 client workers,
+  20ms candidate arrivals. Padding with the word 'detail' deliberately creates
+  controlled lengths; this is a synthetic packing/latency experiment.
+  More running slots let several short requests fit behind a blocked long one;
+  additional KV capacity avoids turning this into a memory-allocation experiment.
+  Both baseline and skip use exactly these settings and the same manifest.
+
+Targeted comparison: one traced diagnostic per variant, then3 fresh-server timed
+pairs alternating launch order. All25 candidates generate1600 tokens;8 blockers
+produce512 tokens,2112 total. Original control uses1984 tokens, as previously.
+No prompt is chunked. No model weights, attention kernels or KV contents change.
+Different batching may still alter low-precision outputs; record text agreement
+without treating it as a semantic correctness score.
+
+Measure budget-blocked steps and their unused budget, actual admission order,
+first-text latency and completion latency by long/short group, throughput, tail
+latency, maximum waiting, bypass/scan limits and preemptions. Faster short requests
+can come at the cost of long-request latency; do not report only overall medians.
+All indexing, scanning and scheduling overhead is included in timings; startup
+excluded. Three pairs are exploratory, not a significance test or production claim.
+
+Tests use the real Scheduler.schedule(), not just a simulation: A400,C400,D80
+under512 schedules A only in baseline and A+D in skip, leaving C/E ordered and
+uncomputed. Other checks exercise scan bounds, protected heads, age/count limits,
+and exclusion of preempted/KV-holding requests. No GPU needed for these tests.
+
+Reproduce from experiment folder:
+  .venv/bin/python -m unittest discover -s tests -p test_skip_continue.py -v
+  .venv/bin/python src/run_skip_continue_batches.py --rounds 3
+
+Launch only:
+  bash src/serve_skip_continue.sh baseline bench targeted
+  bash src/serve_skip_continue.sh skip bench targeted
+  bash src/serve_skip_continue.sh baseline trace original

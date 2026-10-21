@@ -1,0 +1,99 @@
+Experiment05: bounded skip-and-continue, chunked prefill disabled
+===============================================================
+
+Implemented and evaluated2026-10-21. This changes only unchunked waiting admission
+when the head needs more tokens than the remaining budget. Later fitting requests
+can run; skipped requests are restored in their original order. Limits:16 scanned
+requests,4 skip attempts per request,30-second age protection. Native KV allocation
+and running/preempted/KV-holding request treatment are preserved. All earlier
+experimental policies are disabled. Native Metal worker and model weights unchanged.
+
+Original A-Y control
+--------------------
+The original prompts,3 running slots and96 KV pages produced no budget head
+blocking in either diagnostic. No skip events and no change to A-Y admission order.
+Thus this original workload does not exercise this policy. Traced durations are
+not used to claim performance improvement on it. Unchunked mode requires a512-token
+batch budget for512 context; the earlier chunked128-token budget is invalid here.
+
+Targeted comparison
+--------------------
+25 candidates:13 long prompts A-M (320 actual chat tokens) followed by12 short
+prompts N-Y (64 actual chat tokens). Every candidate generates64 tokens. Eight
+blockers generate64 tokens each.33 client workers,8 running slots,256 physical
+16-token KV pages,512 context and512 batch tokens. Prefix caching is enabled with
+normal16-token matching, FCFS/upstream eviction, synchronous execution, seed0,
+Qwen3-0.6B on the same Apple GPU. Same manifest and settings in both variants.
+The padded prompts deliberately test packing; this is not production traffic.
+One traced diagnostic per variant, followed by3 fresh-server timed matched pairs.
+
+Median across3 timed runs                 Unchunked FCFS       Skip/continue
+A-Y completion time                             10.846 s           10.516 s
+A-Y output throughput                            147.52/s           152.15/s
+All-candidate median first text                   4.979 s            4.069 s
+All-candidate median request latency              7.249 s            6.287 s
+Long-prompt group median first text               2.490 s            6.512 s
+Short-prompt group median first text              7.094 s            3.982 s
+Long-prompt group median request latency          5.125 s            9.003 s
+Short-prompt group median request latency         9.100 s            6.222 s
+
+Group metrics are medians of per-run group medians (13 long/12 short), not
+independent observations of75 different tasks. All repeats use the same25 inputs.
+Targeted output counts are identical:1600 candidate tokens,2112 including blockers.
+
+Matched A-Y completion times:
+  Pair1:10.864 ->10.686s (-1.64%)
+  Pair2:10.846 ->10.516s (-3.04%)
+  Pair3: 9.847 -> 9.483s (-3.69%)
+
+Observed median batch time fell3.04%; throughput rose3.14%. Short-prompt median
+first text fell43.9%, but long-prompt median first text rose161.5% (2.62x).
+N's first text moved4.986 ->1.865s; M's moved4.979 ->7.048s.
+This is a substantial latency tradeoff, not an overall latency improvement for
+all users. Bounds limit further bypasses; they do not reclaim occupied running
+slots or guarantee an admission deadline. Three pairs are exploratory and do not
+establish a general performance advantage. Timing ranges overlap.
+
+Actual scheduler behavior
+--------------------------
+Targeted baseline:6 budget-head stops. Skip diagnostic:41 skip events,1 scan-limit
+stop and6 stops at the4-attempt protection threshold. No request exceeded4 skip
+attempts. Later short requests such as N/O were admitted before older long ones.
+All25 candidates were observed waiting in every diagnostic. No preemptions occurred.
+All10 serving runs were valid; all requests succeeded. Earlier policies were off.
+
+On diagnostic schedule steps ending with spare running slots AND waiting work:
+  FCFS:6 steps,1227 unused token positions total,204.5 per such step.
+  Skip:7 steps,1240 unused token positions total,177.1 per such step.
+The number and composition of these steps differ. Average unused budget per such
+step fell, but total unused budget in this conditioned sample did not. Do not
+claim a universal reduction in wasted token budget from a single packing example.
+Max traced queue wait across candidates was10.585s vs10.459s for the targeted
+batch; these are diagnostic single-run values, separate from timed group results.
+
+Output comparison:20/25 candidate answers match baseline in every timed pair;
+5 differ. Each variant's answers were stable across its3 repeats. This scheduler
+changes batching/order but does not alter attention or KV contents. Different
+batching can change low-precision generation; semantic quality was not scored.
+No accuracy or quality-preservation claim is made.
+
+Validation and saved state
+---------------------------
+Five tests pass, including real Scheduler.schedule() checks for A400,C400,D80
+under512 tokens (A only vs A+D), original waiting-order restoration, computed
+counter preservation, scan bounds, protected heads, and preempted/KV exclusions.
+Ruff, compilation and launcher syntax checks passed. Original A-Y manifest matches
+the previous experiments. Source checkpoint:e04a615 (full hash in manifest.json).
+Source patch, frozen test code, test log, raw checksums, per-request CSV, full
+summary and reproduction procedure are saved beside this report.
+
+Raw results:results/skip-continue/batches-20261021-190907/.
+Frozen evidence:evidence/summary.json, evidence/per-request.csv, evidence/raw-sha256.json.
+Reproduction:PLAN.txt. All experimental servers stopped; earlier results retained.
+The initial workload preview hit a tokenizer return-type mismatch; it was corrected
+before targeted requests were sent. Prompt generation is bounded and the timed
+requests' actual token counts were audited as320/64.
+
+Conclusion: backfill works and improved throughput and short-prompt latency in
+this targeted batch, at a large cost to long-prompt latency. The original A-Y
+control did not trigger it. Keep the feature opt-in and retain both group results.

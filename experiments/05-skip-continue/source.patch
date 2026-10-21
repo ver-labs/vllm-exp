@@ -1,0 +1,191 @@
+diff --git a/vllm/v1/core/sched/scheduler.py b/vllm/v1/core/sched/scheduler.py
+index b1dd2f8..9e87ec8 100644
+--- a/vllm/v1/core/sched/scheduler.py
++++ b/vllm/v1/core/sched/scheduler.py
+@@ -53,6 +53,7 @@ from vllm.v1.core.sched.request_queue import (
+     create_request_queue,
+ )
+ from vllm.v1.core.sched.study_prefix_policy import PrefixAwareWaitingPolicy
++from vllm.v1.core.sched.study_skip_continue import StudySkipContinue
+ from vllm.v1.core.sched.study_trace import install_if_enabled
+ from vllm.v1.core.sched.utils import check_stop, remove_all
+ from vllm.v1.engine import EngineCoreEventType, EngineCoreOutput, EngineCoreOutputs
+@@ -414,6 +415,7 @@ class Scheduler(SchedulerInterface):
+         self._inflight_prefills: set[Request] = set()
+ 
+         self._study_prefix_policy = PrefixAwareWaitingPolicy.from_environment(self)
++        self._study_skip_continue = StudySkipContinue.from_environment(self)
+         self._study_trace = install_if_enabled(self)
+ 
+     def _mamba_block_aligned_split(
+@@ -911,7 +913,18 @@ class Scheduler(SchedulerInterface):
+                         "SKIP_WAITING", request_to_skip, remaining=token_budget
+                     )
+ 
++            if self._study_skip_continue is not None:
++                self._study_skip_continue.begin_step()
+             while token_budget > 0:
++                if (
++                    self._study_skip_continue is not None
++                    and not self._study_skip_continue.scan_allowed()
++                ):
++                    if self._study_trace is not None:
++                        self._study_trace.emit(
++                            "BACKFILL_SCAN_LIMIT", remaining=token_budget
++                        )
++                    break
+                 # Requests holding KV blocks are always drained first.
+                 request_queue = self.kv_holding_waiting or self.waiting
+                 if not request_queue or input_budget <= draft_slots:
+@@ -932,6 +945,8 @@ class Scheduler(SchedulerInterface):
+                     self._study_prefix_policy.promote(self, request_queue)
+                 request = request_queue.peek_request()
+                 request_id = request.request_id
++                if self._study_skip_continue is not None:
++                    self._study_skip_continue.considered()
+                 if self._study_trace is not None:
+                     self._study_trace.emit(
+                         "CONSIDER_WAITING",
+@@ -1160,8 +1175,24 @@ class Scheduler(SchedulerInterface):
+                         not self.scheduler_config.enable_chunked_prefill
+                         and num_new_tokens > request_token_budget
+                     ):
+-                        # If chunked_prefill is disabled,
+-                        # we can stop the scheduling here.
++                        if (
++                            self._study_skip_continue is not None
++                            and self._study_skip_continue.can_skip(
++                                request, ordinary_waiting=request_queue is self.waiting
++                            )
++                        ):
++                            if self._study_trace is not None:
++                                self._study_trace.emit(
++                                    "BUDGET_BACKFILL_SKIP",
++                                    request,
++                                    needed=num_new_tokens,
++                                    remaining=request_token_budget,
++                                    bypasses=self._study_skip_continue.bypasses[
++                                        request
++                                    ],
++                                )
++                            skip_request(request_queue)
++                            continue
+                         if self._study_trace is not None:
+                             self._study_trace.emit(
+                                 "STOP_WAITING_ADMISSION",
+@@ -1350,6 +1381,8 @@ class Scheduler(SchedulerInterface):
+                 request = request_queue.pop_request()
+                 self.deferred_waiting.discard(request)
+                 self.running.append(request)
++                if self._study_skip_continue is not None:
++                    self._study_skip_continue.admitted(request)
+                 if num_external_computed_tokens > 0:
+                     # load_kv_async is False here
+                     has_sync_kv_loads = True
+diff --git a/vllm/v1/core/sched/study_skip_continue.py b/vllm/v1/core/sched/study_skip_continue.py
+new file mode 100644
+index 0000000..ba2fb67
+--- /dev/null
++++ b/vllm/v1/core/sched/study_skip_continue.py
+@@ -0,0 +1,88 @@
++# SPDX-License-Identifier: Apache-2.0
++"""Bounded, opt-in backfill around an oversized unchunked waiting prompt."""
++
++import math
++import os
++import time
++from weakref import WeakKeyDictionary
++
++from vllm.v1.core.sched.request_queue import SchedulingPolicy
++from vllm.v1.request import RequestStatus
++
++
++class StudySkipContinue:
++    @classmethod
++    def from_environment(cls, scheduler):
++        if os.environ.get("STUDY_SKIP_CONTINUE", "0") != "1":
++            return None
++        if (
++            scheduler.policy != SchedulingPolicy.FCFS
++            or scheduler.scheduler_config.enable_chunked_prefill
++            or scheduler.scheduler_config.async_scheduling
++            or scheduler.scheduler_config.long_prefill_token_threshold
++            or scheduler.connector is not None
++            or scheduler.lora_config is not None
++            or scheduler.vllm_config.speculative_config is not None
++            or scheduler.is_encoder_decoder
++            or scheduler._study_prefix_policy is not None
++        ):
++            raise ValueError(
++                "Study skip/continue requires plain synchronous unchunked FCFS"
++            )
++        return cls(
++            int(os.environ.get("STUDY_SKIP_LOOKAHEAD", "16")),
++            int(os.environ.get("STUDY_SKIP_MAX_BYPASSES", "4")),
++            float(os.environ.get("STUDY_SKIP_MAX_WAIT_S", "30")),
++        )
++
++    def __init__(self, lookahead=16, max_bypasses=4, max_wait_s=30):
++        if (
++            lookahead < 1
++            or max_bypasses < 1
++            or not math.isfinite(max_wait_s)
++            or max_wait_s <= 0
++        ):
++            raise ValueError("Study skip limits must be finite and positive")
++        self.lookahead, self.max_bypasses, self.max_wait_s = (
++            lookahead,
++            max_bypasses,
++            max_wait_s,
++        )
++        self.bypasses = WeakKeyDictionary()
++        self.begin_step()
++
++    def begin_step(self):
++        self.scanning = False
++        self.examined = 0
++
++    def scan_allowed(self):
++        return not self.scanning or self.examined < self.lookahead
++
++    def considered(self):
++        if self.scanning:
++            self.examined += 1
++
++    def can_skip(self, request, *, ordinary_waiting, now=None):
++        now = time.time() if now is None else now
++        eligible = (
++            ordinary_waiting
++            and request.status == RequestStatus.WAITING
++            and request.num_computed_tokens == 0
++            and request.num_preemptions == 0
++            and request.num_output_tokens == 0
++            and request.num_stale_output_tokens == 0
++            and not request.has_encoder_inputs
++        )
++        if (
++            not eligible
++            or self.bypasses.get(request, 0) >= self.max_bypasses
++            or now - request.arrival_time >= self.max_wait_s
++        ):
++            return False
++        if not self.scanning:
++            self.scanning, self.examined = True, 1
++        self.bypasses[request] = self.bypasses.get(request, 0) + 1
++        return True
++
++    def admitted(self, request):
++        self.bypasses.pop(request, None)
+diff --git a/vllm/v1/core/sched/study_trace.py b/vllm/v1/core/sched/study_trace.py
+index eaa26f1..64256d9 100644
+--- a/vllm/v1/core/sched/study_trace.py
++++ b/vllm/v1/core/sched/study_trace.py
+@@ -50,6 +50,8 @@ class SchedulerTrace:
+                 if getattr(self.pool, "_study_eviction", None) is not None
+                 else "vllm"
+             ),
++            skip_continue=getattr(scheduler, "_study_skip_continue", None) is not None,
++            chunked_prefill=scheduler.scheduler_config.enable_chunked_prefill,
+             prefix_caching=scheduler.cache_config.enable_prefix_caching,
+             block_size=scheduler.block_size,
+             status_names=[status.name for status in self._statuses()],

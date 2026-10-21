@@ -17,8 +17,14 @@ Experiment registry
                     Nine candidate answers differ; semantic quality unscored.
                     See RESULTS.txt, PLAN.txt and evidence/.
 
+05-skip-continue/ : unchunked bounded backfill implemented and benchmarked.
+                     Targeted A-Y: observed3% faster completion; short-prompt
+                     first text improved, long-prompt first text substantially
+                     worse. Original A-Y did not activate the policy.
+                     See RESULTS.txt, PLAN.txt and evidence/.
 
-Current branch in both repos: study/experiment-04-partial-prefix.
+
+Current branch in both repos: study/experiment-05-skip-continue.
 vLLM defaults remain FCFS scheduling and upstream eviction. Its implementation
 was not changed for experiment03; the optional Metal worker is separate. No server or pretrained benchmark remains running.
 Completed code and evidence remain on the earlier experiment branches.

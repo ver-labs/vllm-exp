@@ -1,0 +1,1888 @@
+{
+  "experiment": "05-skip-continue",
+  "diagnostics": [
+    {
+      "label": "original-diagnostic",
+      "probe": null,
+      "variant": "baseline",
+      "mode": "trace",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261021-190907/original-diagnostic-baseline-trace.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261021-190930-606938.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261021-190907/original-diagnostic-baseline-trace-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261021-190907/original-diagnostic-baseline-trace-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/original/baseline/server-trace-cr9yMo",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 22294.43,
+        "output_tokens_per_second": 71.77,
+        "requests_per_second": 1.121,
+        "first_text_ms": {
+          "median": 12099.44,
+          "p95_nearest_rank": 18400.69
+        },
+        "total_ms": {
+          "median": 14137.42,
+          "p95_nearest_rank": 20253.58
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 22356.5,
+        "output_tokens_per_second": 88.74,
+        "requests_per_second": 1.252,
+        "first_text_ms": {
+          "median": 10002.65,
+          "p95_nearest_rank": 18400.69
+        },
+        "total_ms": {
+          "median": 12128.42,
+          "p95_nearest_rank": 20253.58
+        }
+      },
+      "trace_analysis": {
+        "server_policy": "fcfs",
+        "eviction_policy": "vllm",
+        "evicted_cached_blocks": 107,
+        "preemptions": 0,
+        "max_candidates_waiting": 25,
+        "candidate_reorders": [],
+        "candidate_cache_scores": {},
+        "candidate_admission_order": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y"
+        ],
+        "protected_fcfs_head": [],
+        "waiting_time_safeguard_count": 0
+      },
+      "nonprefix_totals": {},
+      "sha256": "7db9152e805b182f99e1e60a1c7f9a500414704999964b3956466d71769b2a23",
+      "profile": "original",
+      "round": "diagnostic",
+      "backfill_trace": {
+        "budget_skips": 0,
+        "budget_stops": 0,
+        "scan_limits": 0,
+        "admission_order": [
+          "chatcmpl-prefix-study-1792589970606878000-WARMUP-aeab84b8",
+          "chatcmpl-prefix-study-1792589970606878000-H3-bc1aebfe",
+          "chatcmpl-prefix-study-1792589970606878000-H1-a7c0abc1",
+          "chatcmpl-prefix-study-1792589970606878000-H2-b8941c9a",
+          "chatcmpl-prefix-study-1792589970606878000-A-8133a868",
+          "chatcmpl-prefix-study-1792589970606878000-B-b927f013",
+          "chatcmpl-prefix-study-1792589970606878000-C-b026cbc4",
+          "chatcmpl-prefix-study-1792589970606878000-D-a702a195",
+          "chatcmpl-prefix-study-1792589970606878000-E-adfb0dcf",
+          "chatcmpl-prefix-study-1792589970606878000-F-ae8d0f62",
+          "chatcmpl-prefix-study-1792589970606878000-G-a4347940",
+          "chatcmpl-prefix-study-1792589970606878000-H-8d19e3b5",
+          "chatcmpl-prefix-study-1792589970606878000-I-90ab80c1",
+          "chatcmpl-prefix-study-1792589970606878000-J-a3154b5c",
+          "chatcmpl-prefix-study-1792589970606878000-K-a1cb74e0",
+          "chatcmpl-prefix-study-1792589970606878000-L-8080ab0f",
+          "chatcmpl-prefix-study-1792589970606878000-M-b4324413",
+          "chatcmpl-prefix-study-1792589970606878000-N-af35df77",
+          "chatcmpl-prefix-study-1792589970606878000-O-95a34c25",
+          "chatcmpl-prefix-study-1792589970606878000-P-b26cf493",
+          "chatcmpl-prefix-study-1792589970606878000-Q-8d1afb81",
+          "chatcmpl-prefix-study-1792589970606878000-R-9e9c3b02",
+          "chatcmpl-prefix-study-1792589970606878000-S-888cdca4",
+          "chatcmpl-prefix-study-1792589970606878000-T-bbfb4973",
+          "chatcmpl-prefix-study-1792589970606878000-U-8c6d3725",
+          "chatcmpl-prefix-study-1792589970606878000-V-bb734741",
+          "chatcmpl-prefix-study-1792589970606878000-W-96c63b31",
+          "chatcmpl-prefix-study-1792589970606878000-X-abe9f256",
+          "chatcmpl-prefix-study-1792589970606878000-Y-a52336ea"
+        ],
+        "steps": []
+      }
+    },
+    {
+      "label": "original-diagnostic",
+      "probe": null,
+      "variant": "skip",
+      "mode": "trace",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261021-190907/original-diagnostic-skip-trace.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261021-191021-052963.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261021-190907/original-diagnostic-skip-trace-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261021-190907/original-diagnostic-skip-trace-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/original/skip/server-trace-Ngoot1",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 20095.02,
+        "output_tokens_per_second": 79.62,
+        "requests_per_second": 1.244,
+        "first_text_ms": {
+          "median": 11394.12,
+          "p95_nearest_rank": 16634.7
+        },
+        "total_ms": {
+          "median": 13308.14,
+          "p95_nearest_rank": 18295.13
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 20151.42,
+        "output_tokens_per_second": 98.45,
+        "requests_per_second": 1.389,
+        "first_text_ms": {
+          "median": 9627.97,
+          "p95_nearest_rank": 16634.7
+        },
+        "total_ms": {
+          "median": 11422.95,
+          "p95_nearest_rank": 18295.13
+        }
+      },
+      "trace_analysis": {
+        "server_policy": "fcfs",
+        "eviction_policy": "vllm",
+        "evicted_cached_blocks": 107,
+        "preemptions": 0,
+        "max_candidates_waiting": 25,
+        "candidate_reorders": [],
+        "candidate_cache_scores": {},
+        "candidate_admission_order": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y"
+        ],
+        "protected_fcfs_head": [],
+        "waiting_time_safeguard_count": 0
+      },
+      "nonprefix_totals": {},
+      "sha256": "68621e63bf8afbd1aad92ffd1a0b6e0737ad0922771a9516d797d8f07c831f48",
+      "profile": "original",
+      "round": "diagnostic",
+      "backfill_trace": {
+        "budget_skips": 0,
+        "budget_stops": 0,
+        "scan_limits": 0,
+        "admission_order": [
+          "chatcmpl-prefix-study-1792590021052912000-WARMUP-92a0a342",
+          "chatcmpl-prefix-study-1792590021052912000-H1-b2ca6a3d",
+          "chatcmpl-prefix-study-1792590021052912000-H2-b37f35a0",
+          "chatcmpl-prefix-study-1792590021052912000-H3-9f3eaed6",
+          "chatcmpl-prefix-study-1792590021052912000-A-97e6a464",
+          "chatcmpl-prefix-study-1792590021052912000-B-aa83e5bd",
+          "chatcmpl-prefix-study-1792590021052912000-C-bd567f40",
+          "chatcmpl-prefix-study-1792590021052912000-D-819ab9aa",
+          "chatcmpl-prefix-study-1792590021052912000-E-afdda8b2",
+          "chatcmpl-prefix-study-1792590021052912000-F-b3c84001",
+          "chatcmpl-prefix-study-1792590021052912000-G-8c15413d",
+          "chatcmpl-prefix-study-1792590021052912000-H-9eb4dc04",
+          "chatcmpl-prefix-study-1792590021052912000-I-b64c7577",
+          "chatcmpl-prefix-study-1792590021052912000-J-b0775849",
+          "chatcmpl-prefix-study-1792590021052912000-K-b8bc07bb",
+          "chatcmpl-prefix-study-1792590021052912000-L-9d70944f",
+          "chatcmpl-prefix-study-1792590021052912000-M-9b8d576d",
+          "chatcmpl-prefix-study-1792590021052912000-N-a1c406f6",
+          "chatcmpl-prefix-study-1792590021052912000-O-97dc01cc",
+          "chatcmpl-prefix-study-1792590021052912000-P-bd4a7dc2",
+          "chatcmpl-prefix-study-1792590021052912000-Q-b9619085",
+          "chatcmpl-prefix-study-1792590021052912000-R-9a18a386",
+          "chatcmpl-prefix-study-1792590021052912000-S-8d94ebf7",
+          "chatcmpl-prefix-study-1792590021052912000-T-a2392a05",
+          "chatcmpl-prefix-study-1792590021052912000-U-9925faff",
+          "chatcmpl-prefix-study-1792590021052912000-V-be400630",
+          "chatcmpl-prefix-study-1792590021052912000-W-ae2a817b",
+          "chatcmpl-prefix-study-1792590021052912000-X-88869c51",
+          "chatcmpl-prefix-study-1792590021052912000-Y-bacc9ef1"
+        ],
+        "steps": []
+      }
+    },
+    {
+      "label": "targeted-diagnostic",
+      "probe": null,
+      "variant": "baseline",
+      "mode": "trace",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261021-190907/targeted-diagnostic-baseline-trace.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261021-191112-198733.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261021-190907/targeted-diagnostic-baseline-trace-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261021-190907/targeted-diagnostic-baseline-trace-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/targeted/baseline/server-trace-cWdHeV",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 12599.5,
+        "output_tokens_per_second": 126.99,
+        "requests_per_second": 1.984,
+        "first_text_ms": {
+          "median": 5820.88,
+          "p95_nearest_rank": 8614.66
+        },
+        "total_ms": {
+          "median": 8644.83,
+          "p95_nearest_rank": 10836.48
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 33,
+        "failed_requests": 0,
+        "successful_output_tokens": 2112,
+        "duration_ms": 12700.3,
+        "output_tokens_per_second": 166.3,
+        "requests_per_second": 2.598,
+        "first_text_ms": {
+          "median": 5361.02,
+          "p95_nearest_rank": 8614.66
+        },
+        "total_ms": {
+          "median": 8499.34,
+          "p95_nearest_rank": 10836.48
+        }
+      },
+      "trace_analysis": {
+        "server_policy": "fcfs",
+        "eviction_policy": "vllm",
+        "evicted_cached_blocks": 175,
+        "preemptions": 0,
+        "max_candidates_waiting": 25,
+        "candidate_reorders": [],
+        "candidate_cache_scores": {},
+        "candidate_admission_order": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y"
+        ],
+        "protected_fcfs_head": [],
+        "waiting_time_safeguard_count": 0
+      },
+      "nonprefix_totals": {},
+      "sha256": "ee960e908295277da84ec0d9f99cae41c00d8521e86a39c69d343404e6716bca",
+      "profile": "targeted",
+      "round": "diagnostic",
+      "backfill_trace": {
+        "budget_skips": 0,
+        "budget_stops": 6,
+        "scan_limits": 0,
+        "admission_order": [
+          "chatcmpl-prefix-study-1792590072198634000-WARMUP-aa3c3bd3",
+          "chatcmpl-prefix-study-1792590072198634000-H4-a6ecd6c9",
+          "chatcmpl-prefix-study-1792590072198634000-H3-a98a677c",
+          "chatcmpl-prefix-study-1792590072198634000-H2-9d65cdb3",
+          "chatcmpl-prefix-study-1792590072198634000-H1-bdd99c05",
+          "chatcmpl-prefix-study-1792590072198634000-H6-93ac39fe",
+          "chatcmpl-prefix-study-1792590072198634000-H5-95f79b11",
+          "chatcmpl-prefix-study-1792590072198634000-H7-ad5f4952",
+          "chatcmpl-prefix-study-1792590072198634000-H8-98577fc7",
+          "chatcmpl-prefix-study-1792590072198634000-A-b1aa9c51",
+          "chatcmpl-prefix-study-1792590072198634000-B-9f7e1b2e",
+          "chatcmpl-prefix-study-1792590072198634000-C-96d683bc",
+          "chatcmpl-prefix-study-1792590072198634000-D-860bdef4",
+          "chatcmpl-prefix-study-1792590072198634000-E-ac07fbe8",
+          "chatcmpl-prefix-study-1792590072198634000-F-afc91a60",
+          "chatcmpl-prefix-study-1792590072198634000-G-89bc6852",
+          "chatcmpl-prefix-study-1792590072198634000-H-8bef2926",
+          "chatcmpl-prefix-study-1792590072198634000-I-9efba13e",
+          "chatcmpl-prefix-study-1792590072198634000-J-8ad4f8c5",
+          "chatcmpl-prefix-study-1792590072198634000-K-b1c5df25",
+          "chatcmpl-prefix-study-1792590072198634000-L-b6523951",
+          "chatcmpl-prefix-study-1792590072198634000-M-b970c061",
+          "chatcmpl-prefix-study-1792590072198634000-N-8bd8f510",
+          "chatcmpl-prefix-study-1792590072198634000-O-945eae18",
+          "chatcmpl-prefix-study-1792590072198634000-P-820afcc4",
+          "chatcmpl-prefix-study-1792590072198634000-Q-b5b157bf",
+          "chatcmpl-prefix-study-1792590072198634000-R-b4adca90",
+          "chatcmpl-prefix-study-1792590072198634000-S-a400f234",
+          "chatcmpl-prefix-study-1792590072198634000-T-97da72fa",
+          "chatcmpl-prefix-study-1792590072198634000-U-8e134489",
+          "chatcmpl-prefix-study-1792590072198634000-V-948ca4b4",
+          "chatcmpl-prefix-study-1792590072198634000-W-a85fd105",
+          "chatcmpl-prefix-study-1792590072198634000-X-81350586",
+          "chatcmpl-prefix-study-1792590072198634000-Y-a5e9c4b1"
+        ],
+        "steps": [
+          {
+            "step": 68,
+            "assigned": 305,
+            "unused": 207
+          },
+          {
+            "step": 69,
+            "assigned": 306,
+            "unused": 206
+          },
+          {
+            "step": 70,
+            "assigned": 307,
+            "unused": 205
+          },
+          {
+            "step": 71,
+            "assigned": 308,
+            "unused": 204
+          },
+          {
+            "step": 72,
+            "assigned": 309,
+            "unused": 203
+          },
+          {
+            "step": 73,
+            "assigned": 310,
+            "unused": 202
+          }
+        ]
+      }
+    },
+    {
+      "label": "targeted-diagnostic",
+      "probe": null,
+      "variant": "skip",
+      "mode": "trace",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261021-190907/targeted-diagnostic-skip-trace.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261021-191155-831131.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261021-190907/targeted-diagnostic-skip-trace-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261021-190907/targeted-diagnostic-skip-trace-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/targeted/skip/server-trace-ZUbkHv",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 12521.7,
+        "output_tokens_per_second": 127.78,
+        "requests_per_second": 1.997,
+        "first_text_ms": {
+          "median": 5123.87,
+          "p95_nearest_rank": 8530.31
+        },
+        "total_ms": {
+          "median": 7723.33,
+          "p95_nearest_rank": 10992.96
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 33,
+        "failed_requests": 0,
+        "successful_output_tokens": 2112,
+        "duration_ms": 12646.55,
+        "output_tokens_per_second": 167.0,
+        "requests_per_second": 2.609,
+        "first_text_ms": {
+          "median": 4952.74,
+          "p95_nearest_rank": 8530.31
+        },
+        "total_ms": {
+          "median": 7638.08,
+          "p95_nearest_rank": 10992.96
+        }
+      },
+      "trace_analysis": {
+        "server_policy": "fcfs",
+        "eviction_policy": "vllm",
+        "evicted_cached_blocks": 175,
+        "preemptions": 0,
+        "max_candidates_waiting": 25,
+        "candidate_reorders": [],
+        "candidate_cache_scores": {},
+        "candidate_admission_order": [
+          "A",
+          "N",
+          "B",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "C",
+          "D",
+          "S",
+          "E",
+          "T",
+          "U",
+          "V",
+          "W",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "X",
+          "Y"
+        ],
+        "protected_fcfs_head": [],
+        "waiting_time_safeguard_count": 0
+      },
+      "nonprefix_totals": {},
+      "sha256": "db4c0f8a5adc089bb9fa3ea9273ea03a97f290b0b50bc31adf6b034e716cd3d6",
+      "profile": "targeted",
+      "round": "diagnostic",
+      "backfill_trace": {
+        "budget_skips": 41,
+        "budget_stops": 6,
+        "scan_limits": 1,
+        "admission_order": [
+          "chatcmpl-prefix-study-1792590115831035000-WARMUP-b37d2bce",
+          "chatcmpl-prefix-study-1792590115831035000-H3-ae31cd9d",
+          "chatcmpl-prefix-study-1792590115831035000-H2-93d957ec",
+          "chatcmpl-prefix-study-1792590115831035000-H5-a6feea7b",
+          "chatcmpl-prefix-study-1792590115831035000-H4-91ccb9c1",
+          "chatcmpl-prefix-study-1792590115831035000-H1-ba0722df",
+          "chatcmpl-prefix-study-1792590115831035000-H6-b295b865",
+          "chatcmpl-prefix-study-1792590115831035000-H7-8175cdb9",
+          "chatcmpl-prefix-study-1792590115831035000-H8-9489b6af",
+          "chatcmpl-prefix-study-1792590115831035000-A-93ad0cd2",
+          "chatcmpl-prefix-study-1792590115831035000-N-90f5eaeb",
+          "chatcmpl-prefix-study-1792590115831035000-B-b62207e9",
+          "chatcmpl-prefix-study-1792590115831035000-O-90623057",
+          "chatcmpl-prefix-study-1792590115831035000-P-861bb979",
+          "chatcmpl-prefix-study-1792590115831035000-Q-a7da39b6",
+          "chatcmpl-prefix-study-1792590115831035000-R-8333755b",
+          "chatcmpl-prefix-study-1792590115831035000-C-ba07f569",
+          "chatcmpl-prefix-study-1792590115831035000-D-bc07889c",
+          "chatcmpl-prefix-study-1792590115831035000-S-be613a3a",
+          "chatcmpl-prefix-study-1792590115831035000-E-bfe5094b",
+          "chatcmpl-prefix-study-1792590115831035000-T-ae85a9d4",
+          "chatcmpl-prefix-study-1792590115831035000-U-8769b08b",
+          "chatcmpl-prefix-study-1792590115831035000-V-84a5d0ee",
+          "chatcmpl-prefix-study-1792590115831035000-W-8cca5aed",
+          "chatcmpl-prefix-study-1792590115831035000-F-bcfb3ef9",
+          "chatcmpl-prefix-study-1792590115831035000-G-8a5aa663",
+          "chatcmpl-prefix-study-1792590115831035000-H-914b4022",
+          "chatcmpl-prefix-study-1792590115831035000-I-a28c3a96",
+          "chatcmpl-prefix-study-1792590115831035000-J-9d37a4ec",
+          "chatcmpl-prefix-study-1792590115831035000-K-b9b5a776",
+          "chatcmpl-prefix-study-1792590115831035000-L-a3cc91e9",
+          "chatcmpl-prefix-study-1792590115831035000-M-99d19c57",
+          "chatcmpl-prefix-study-1792590115831035000-X-bd7a73ff",
+          "chatcmpl-prefix-study-1792590115831035000-Y-8d718d13"
+        ],
+        "steps": [
+          {
+            "step": 67,
+            "assigned": 358,
+            "unused": 154
+          },
+          {
+            "step": 68,
+            "assigned": 498,
+            "unused": 14
+          },
+          {
+            "step": 131,
+            "assigned": 358,
+            "unused": 154
+          },
+          {
+            "step": 132,
+            "assigned": 499,
+            "unused": 13
+          },
+          {
+            "step": 195,
+            "assigned": 310,
+            "unused": 202
+          },
+          {
+            "step": 196,
+            "assigned": 306,
+            "unused": 206
+          },
+          {
+            "step": 197,
+            "assigned": 306,
+            "unused": 206
+          },
+          {
+            "step": 198,
+            "assigned": 307,
+            "unused": 205
+          },
+          {
+            "step": 199,
+            "assigned": 308,
+            "unused": 204
+          },
+          {
+            "step": 200,
+            "assigned": 309,
+            "unused": 203
+          }
+        ]
+      }
+    }
+  ],
+  "runs": [
+    {
+      "label": "targeted-1",
+      "probe": null,
+      "variant": "baseline",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261021-190907/targeted-1-baseline-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261021-191240-731915.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261021-190907/targeted-1-baseline-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261021-190907/targeted-1-baseline-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/targeted/baseline/server-bench-WHVI6w",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 10864.43,
+        "output_tokens_per_second": 147.27,
+        "requests_per_second": 2.301,
+        "first_text_ms": {
+          "median": 5084.27,
+          "p95_nearest_rank": 7200.49
+        },
+        "total_ms": {
+          "median": 7249.41,
+          "p95_nearest_rank": 9131.38
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 33,
+        "failed_requests": 0,
+        "successful_output_tokens": 2112,
+        "duration_ms": 10969.56,
+        "output_tokens_per_second": 192.53,
+        "requests_per_second": 3.008,
+        "first_text_ms": {
+          "median": 4704.05,
+          "p95_nearest_rank": 7200.49
+        },
+        "total_ms": {
+          "median": 7129.97,
+          "p95_nearest_rank": 9131.38
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "accfb4149abe8f664f7d7bb3fd153e38d0e38b7d0e752127c76f2e7e15d531c9",
+      "profile": "targeted",
+      "round": 1
+    },
+    {
+      "label": "targeted-1",
+      "probe": null,
+      "variant": "skip",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261021-190907/targeted-1-skip-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261021-191320-416241.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261021-190907/targeted-1-skip-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261021-190907/targeted-1-skip-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/targeted/skip/server-bench-8wuM4n",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 10685.98,
+        "output_tokens_per_second": 149.73,
+        "requests_per_second": 2.34,
+        "first_text_ms": {
+          "median": 4068.9,
+          "p95_nearest_rank": 7062.22
+        },
+        "total_ms": {
+          "median": 6316.1,
+          "p95_nearest_rank": 9193.91
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 33,
+        "failed_requests": 0,
+        "successful_output_tokens": 2112,
+        "duration_ms": 10771.52,
+        "output_tokens_per_second": 196.07,
+        "requests_per_second": 3.064,
+        "first_text_ms": {
+          "median": 3972.64,
+          "p95_nearest_rank": 7062.22
+        },
+        "total_ms": {
+          "median": 6234.79,
+          "p95_nearest_rank": 9193.91
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "28ee7de9ff25310fcf339cd735fdb6dd3469953786d88a02ddb600eba7d30972",
+      "profile": "targeted",
+      "round": 1
+    },
+    {
+      "label": "targeted-2",
+      "probe": null,
+      "variant": "skip",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261021-190907/targeted-2-skip-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261021-191401-028577.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261021-190907/targeted-2-skip-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261021-190907/targeted-2-skip-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/targeted/skip/server-bench-T0cQj9",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 10515.75,
+        "output_tokens_per_second": 152.15,
+        "requests_per_second": 2.377,
+        "first_text_ms": {
+          "median": 4213.61,
+          "p95_nearest_rank": 7016.29
+        },
+        "total_ms": {
+          "median": 6287.2,
+          "p95_nearest_rank": 9076.68
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 33,
+        "failed_requests": 0,
+        "successful_output_tokens": 2112,
+        "duration_ms": 10607.8,
+        "output_tokens_per_second": 199.1,
+        "requests_per_second": 3.111,
+        "first_text_ms": {
+          "median": 4122.85,
+          "p95_nearest_rank": 7016.29
+        },
+        "total_ms": {
+          "median": 6210.57,
+          "p95_nearest_rank": 9076.68
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "209dacb92f8d6716c29a307bf9e75f6b40ce8d5e7a488469388cb91603b8821b",
+      "profile": "targeted",
+      "round": 2
+    },
+    {
+      "label": "targeted-2",
+      "probe": null,
+      "variant": "baseline",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261021-190907/targeted-2-baseline-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261021-191440-430210.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261021-190907/targeted-2-baseline-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261021-190907/targeted-2-baseline-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/targeted/baseline/server-bench-v7YEHj",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 10845.75,
+        "output_tokens_per_second": 147.52,
+        "requests_per_second": 2.305,
+        "first_text_ms": {
+          "median": 4772.12,
+          "p95_nearest_rank": 8861.45
+        },
+        "total_ms": {
+          "median": 8310.93,
+          "p95_nearest_rank": 9365.29
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 33,
+        "failed_requests": 0,
+        "successful_output_tokens": 2112,
+        "duration_ms": 10933.04,
+        "output_tokens_per_second": 193.18,
+        "requests_per_second": 3.018,
+        "first_text_ms": {
+          "median": 4420.13,
+          "p95_nearest_rank": 8861.45
+        },
+        "total_ms": {
+          "median": 8211.6,
+          "p95_nearest_rank": 9365.29
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "0b33fc18b05867107766c4ab5050ad0ba1b4d2d47d20d2545510046f42d189ce",
+      "profile": "targeted",
+      "round": 2
+    },
+    {
+      "label": "targeted-3",
+      "probe": null,
+      "variant": "baseline",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261021-190907/targeted-3-baseline-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261021-191607-800309.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261021-190907/targeted-3-baseline-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261021-190907/targeted-3-baseline-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/targeted/baseline/server-bench-3PX1rS",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 9846.65,
+        "output_tokens_per_second": 162.49,
+        "requests_per_second": 2.539,
+        "first_text_ms": {
+          "median": 4978.53,
+          "p95_nearest_rank": 5933.5
+        },
+        "total_ms": {
+          "median": 5984.13,
+          "p95_nearest_rank": 7724.62
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 33,
+        "failed_requests": 0,
+        "successful_output_tokens": 2112,
+        "duration_ms": 9938.45,
+        "output_tokens_per_second": 212.51,
+        "requests_per_second": 3.32,
+        "first_text_ms": {
+          "median": 4779.49,
+          "p95_nearest_rank": 5933.5
+        },
+        "total_ms": {
+          "median": 5948.19,
+          "p95_nearest_rank": 7724.62
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "25b1e9ba6b60fc8aefa2e7e6cf577cd53d9fdd18afc1d19fe5b2addb7062ab6d",
+      "profile": "targeted",
+      "round": 3
+    },
+    {
+      "label": "targeted-3",
+      "probe": null,
+      "variant": "skip",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261021-190907/targeted-3-skip-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261021-191737-097545.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261021-190907/targeted-3-skip-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261021-190907/targeted-3-skip-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/targeted/skip/server-bench-p10Xmp",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 9483.21,
+        "output_tokens_per_second": 168.72,
+        "requests_per_second": 2.636,
+        "first_text_ms": {
+          "median": 4001.11,
+          "p95_nearest_rank": 7047.78
+        },
+        "total_ms": {
+          "median": 6246.81,
+          "p95_nearest_rank": 8639.49
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 33,
+        "failed_requests": 0,
+        "successful_output_tokens": 2112,
+        "duration_ms": 9551.8,
+        "output_tokens_per_second": 221.11,
+        "requests_per_second": 3.455,
+        "first_text_ms": {
+          "median": 3915.66,
+          "p95_nearest_rank": 7047.78
+        },
+        "total_ms": {
+          "median": 6012.87,
+          "p95_nearest_rank": 8639.49
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "07420ca98efc1a106e00e234bace0c8bbe9217db7f1765106a1f9ec73f89c544",
+      "profile": "targeted",
+      "round": 3
+    }
+  ],
+  "complete": true,
+  "aggregate": {
+    "baseline": {
+      "duration_median_ms": 10845.75,
+      "throughput_median_tokens_s": 147.52,
+      "first_text_median_ms": 4978.53,
+      "latency_median_ms": 7249.41
+    },
+    "skip": {
+      "duration_median_ms": 10515.75,
+      "throughput_median_tokens_s": 152.15,
+      "first_text_median_ms": 4068.9,
+      "latency_median_ms": 6287.2
+    }
+  },
+  "per_request": {
+    "baseline": {
+      "A": {
+        "first_text_median_ms": 2001.89,
+        "latency_median_ms": 4745.32,
+        "answers": [
+          "Here are three useful steps for planning a community project, considering cost, practical work, and progress measurement:\n\n1. **Define Objectives and Goals**  \n   Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Identify Stakeholders",
+          "Here are three useful steps for planning a community project, considering cost, practical work, and progress measurement:\n\n1. **Define Objectives and Goals**  \n   Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Identify Stakeholders",
+          "Here are three useful steps for planning a community project, considering cost, practical work, and progress measurement:\n\n1. **Define Objectives and Goals**  \n   Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Identify Stakeholders"
+        ]
+      },
+      "B": {
+        "first_text_median_ms": 2072.86,
+        "latency_median_ms": 4839.35,
+        "answers": [
+          "**Case B: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Plan Budget and Resources**  \n   - Estimate costs",
+          "**Case B: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Plan Budget and Resources**  \n   - Estimate costs",
+          "**Case B: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Plan Budget and Resources**  \n   - Estimate costs"
+        ]
+      },
+      "C": {
+        "first_text_median_ms": 2156.84,
+        "latency_median_ms": 4941.92,
+        "answers": [
+          "**Case C: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Conduct a Cost-Benefit Analysis**  \n  ",
+          "**Case C: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Conduct a Cost-Benefit Analysis**  \n  ",
+          "**Case C: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Conduct a Cost-Benefit Analysis**  \n  "
+        ]
+      },
+      "D": {
+        "first_text_median_ms": 2231.1,
+        "latency_median_ms": 5034.23,
+        "answers": [
+          "**Case D: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Conduct a Cost-Benefit Analysis**  \n  ",
+          "**Case D: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Conduct a Cost-Benefit Analysis**  \n  ",
+          "**Case D: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Conduct a Cost-Benefit Analysis**  \n  "
+        ]
+      },
+      "E": {
+        "first_text_median_ms": 2316.67,
+        "latency_median_ms": 5095.08,
+        "answers": [
+          "**Case E: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Plan Budget and Resources**  \n   - Estimate costs",
+          "**Case E: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Plan Budget and Resources**  \n   - Estimate costs",
+          "**Case E: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Plan Budget and Resources**  \n   - Estimate costs"
+        ]
+      },
+      "F": {
+        "first_text_median_ms": 2404.07,
+        "latency_median_ms": 5117.64,
+        "answers": [
+          "**Case F: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Conduct a Cost-Benefit Analysis**  \n  ",
+          "**Case F: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Conduct a Cost-Benefit Analysis**  \n  ",
+          "**Case F: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Conduct a Cost-Benefit Analysis**  \n  "
+        ]
+      },
+      "G": {
+        "first_text_median_ms": 2490.14,
+        "latency_median_ms": 5124.91,
+        "answers": [
+          "**Case G: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Conduct a Cost-Benefit Analysis**  \n  ",
+          "**Case G: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Conduct a Cost-Benefit Analysis**  \n  ",
+          "**Case G: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Conduct a Cost-Benefit Analysis**  \n  "
+        ]
+      },
+      "H": {
+        "first_text_median_ms": 2590.62,
+        "latency_median_ms": 5130.99,
+        "answers": [
+          "**Case H: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Conduct a Cost-Benefit Analysis**  \n  ",
+          "**Case H: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Conduct a Cost-Benefit Analysis**  \n  ",
+          "**Case H: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Conduct a Cost-Benefit Analysis**  \n  "
+        ]
+      },
+      "I": {
+        "first_text_median_ms": 4704.05,
+        "latency_median_ms": 7129.97,
+        "answers": [
+          "**Case I: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps ensure alignment and focus.  \n   - Example: \"Increase access to clean water in underserved neighborhoods.\"\n\n2.",
+          "**Case I: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps ensure alignment and focus.  \n   - Example: \"Increase access to clean water in underserved neighborhoods.\"\n\n2.",
+          "**Case I: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps ensure alignment and focus.  \n   - Example: \"Increase access to clean water in underserved neighborhoods.\"\n\n2."
+        ]
+      },
+      "J": {
+        "first_text_median_ms": 4802.05,
+        "latency_median_ms": 7168.49,
+        "answers": [
+          "**Case J: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Plan Budget and Resources**  \n   - Estimate costs",
+          "**Case J: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Plan Budget and Resources**  \n   - Estimate costs",
+          "**Case J: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Plan Budget and Resources**  \n   - Estimate costs"
+        ]
+      },
+      "K": {
+        "first_text_median_ms": 4897.32,
+        "latency_median_ms": 7197.08,
+        "answers": [
+          "Here are three useful steps for planning a community project, considering cost, practical work, and progress measurement:\n\n1. **Define Objectives and Goals**  \n   Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Estimate Costs and",
+          "Here are three useful steps for planning a community project, considering cost, practical work, and progress measurement:\n\n1. **Define Objectives and Goals**  \n   Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Estimate Costs and",
+          "Here are three useful steps for planning a community project, considering cost, practical work, and progress measurement:\n\n1. **Define Objectives and Goals**  \n   Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Estimate Costs and"
+        ]
+      },
+      "L": {
+        "first_text_median_ms": 4955.94,
+        "latency_median_ms": 7219.11,
+        "answers": [
+          "Here are three useful steps for planning a community project, considering cost, practical work, and progress measurement:\n\n1. **Define Objectives and Goals**  \n   Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Estimate Costs and",
+          "Here are three useful steps for planning a community project, considering cost, practical work, and progress measurement:\n\n1. **Define Objectives and Goals**  \n   Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Estimate Costs and",
+          "Here are three useful steps for planning a community project, considering cost, practical work, and progress measurement:\n\n1. **Define Objectives and Goals**  \n   Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Estimate Costs and"
+        ]
+      },
+      "M": {
+        "first_text_median_ms": 4978.53,
+        "latency_median_ms": 7249.41,
+        "answers": [
+          "**Case M: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Conduct a Cost-Benefit Analysis**  \n  ",
+          "**Case M: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Conduct a Cost-Benefit Analysis**  \n  ",
+          "**Case M: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Conduct a Cost-Benefit Analysis**  \n  "
+        ]
+      },
+      "N": {
+        "first_text_median_ms": 4985.9,
+        "latency_median_ms": 7270.48,
+        "answers": [
+          "**Case N: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case N: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case N: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders"
+        ]
+      },
+      "O": {
+        "first_text_median_ms": 4983.16,
+        "latency_median_ms": 7296.53,
+        "answers": [
+          "**Case O: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case O: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case O: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders"
+        ]
+      },
+      "P": {
+        "first_text_median_ms": 4988.53,
+        "latency_median_ms": 7313.88,
+        "answers": [
+          "**Case P: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case P: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case P: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders"
+        ]
+      },
+      "Q": {
+        "first_text_median_ms": 7028.41,
+        "latency_median_ms": 9053.31,
+        "answers": [
+          "Certainly! Here are three useful steps for planning a community project, considering cost, practical work, and progress measurement:\n\n1. **Define Clear Objectives and Goals**  \n   - Set specific, measurable, achievable, relevant, and time-bound (SMART) objectives for the project.  \n   - Align these goals with the",
+          "Certainly! Here are three useful steps for planning a community project, considering cost, practical work, and progress measurement:\n\n1. **Define Clear Objectives and Goals**  \n   - Set specific, measurable, achievable, relevant, and time-bound (SMART) objectives for the project.  \n   - Align these goals with the",
+          "Certainly! Here are three useful steps for planning a community project, considering cost, practical work, and progress measurement:\n\n1. **Define Clear Objectives and Goals**  \n   - Set specific, measurable, achievable, relevant, and time-bound (SMART) objectives for the project.  \n   - Align these goals with the"
+        ]
+      },
+      "R": {
+        "first_text_median_ms": 7054.57,
+        "latency_median_ms": 9087.92,
+        "answers": [
+          "**Case R: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case R: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case R: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders"
+        ]
+      },
+      "S": {
+        "first_text_median_ms": 7080.28,
+        "latency_median_ms": 9094.76,
+        "answers": [
+          "**Case S: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case S: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case S: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders"
+        ]
+      },
+      "T": {
+        "first_text_median_ms": 7106.76,
+        "latency_median_ms": 9105.98,
+        "answers": [
+          "**Case T: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case T: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case T: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders"
+        ]
+      },
+      "U": {
+        "first_text_median_ms": 7132.02,
+        "latency_median_ms": 9112.4,
+        "answers": [
+          "**Case U: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case U: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case U: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders"
+        ]
+      },
+      "V": {
+        "first_text_median_ms": 7154.02,
+        "latency_median_ms": 9120.11,
+        "answers": [
+          "**Case V: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case V: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case V: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders"
+        ]
+      },
+      "W": {
+        "first_text_median_ms": 7178.8,
+        "latency_median_ms": 9129.3,
+        "answers": [
+          "**Case W: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case W: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case W: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders"
+        ]
+      },
+      "X": {
+        "first_text_median_ms": 7200.49,
+        "latency_median_ms": 9131.38,
+        "answers": [
+          "**Case X: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case X: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case X: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders"
+        ]
+      },
+      "Y": {
+        "first_text_median_ms": 8953.27,
+        "latency_median_ms": 10361.6,
+        "answers": [
+          "**Case Y: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case Y: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case Y: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders"
+        ]
+      }
+    },
+    "skip": {
+      "A": {
+        "first_text_median_ms": 1976.69,
+        "latency_median_ms": 4121.0,
+        "answers": [
+          "Here are three useful steps for planning a community project, considering cost, practical work, and progress measurement:\n\n1. **Define Objectives and Goals**  \n   Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Identify Stakeholders",
+          "Here are three useful steps for planning a community project, considering cost, practical work, and progress measurement:\n\n1. **Define Objectives and Goals**  \n   Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Identify Stakeholders",
+          "Here are three useful steps for planning a community project, considering cost, practical work, and progress measurement:\n\n1. **Define Objectives and Goals**  \n   Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Identify Stakeholders"
+        ]
+      },
+      "B": {
+        "first_text_median_ms": 2102.76,
+        "latency_median_ms": 4207.41,
+        "answers": [
+          "**Case B: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps ensure alignment and focus.  \n   - Example: \"Increase access to clean water in underserved neighborhoods.\"\n\n2.",
+          "**Case B: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps ensure alignment and focus.  \n   - Example: \"Increase access to clean water in underserved neighborhoods.\"\n\n2.",
+          "**Case B: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps ensure alignment and focus.  \n   - Example: \"Increase access to clean water in underserved neighborhoods.\"\n\n2."
+        ]
+      },
+      "C": {
+        "first_text_median_ms": 2191.21,
+        "latency_median_ms": 4348.48,
+        "answers": [
+          "**Case C: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case C: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case C: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders"
+        ]
+      },
+      "D": {
+        "first_text_median_ms": 4171.24,
+        "latency_median_ms": 6456.45,
+        "answers": [
+          "**Case D: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Conduct a Cost-Benefit Analysis**  \n  ",
+          "**Case D: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Conduct a Cost-Benefit Analysis**  \n  ",
+          "**Case D: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Conduct a Cost-Benefit Analysis**  \n  "
+        ]
+      },
+      "E": {
+        "first_text_median_ms": 4310.59,
+        "latency_median_ms": 6553.73,
+        "answers": [
+          "**Case E: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Conduct a Cost-Benefit Analysis**  \n  ",
+          "**Case E: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Conduct a Cost-Benefit Analysis**  \n  ",
+          "**Case E: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Conduct a Cost-Benefit Analysis**  \n  "
+        ]
+      },
+      "F": {
+        "first_text_median_ms": 4408.98,
+        "latency_median_ms": 6656.0,
+        "answers": [
+          "**Case F: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Conduct a Cost-Benefit Analysis**  \n  ",
+          "**Case F: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Conduct a Cost-Benefit Analysis**  \n  ",
+          "**Case F: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Conduct a Cost-Benefit Analysis**  \n  "
+        ]
+      },
+      "G": {
+        "first_text_median_ms": 6511.93,
+        "latency_median_ms": 9003.12,
+        "answers": [
+          "**Case G: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Conduct a Cost-Benefit Analysis**  \n  ",
+          "**Case G: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Conduct a Cost-Benefit Analysis**  \n  ",
+          "**Case G: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Conduct a Cost-Benefit Analysis**  \n  "
+        ]
+      },
+      "H": {
+        "first_text_median_ms": 6618.34,
+        "latency_median_ms": 9036.62,
+        "answers": [
+          "**Case H: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Conduct a Cost-Benefit Analysis**  \n  ",
+          "**Case H: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Conduct a Cost-Benefit Analysis**  \n  ",
+          "**Case H: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Conduct a Cost-Benefit Analysis**  \n  "
+        ]
+      },
+      "I": {
+        "first_text_median_ms": 6703.4,
+        "latency_median_ms": 9043.1,
+        "answers": [
+          "**Case I: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps in aligning efforts and ensuring all stakeholders understand the mission.\n\n2. **Conduct a Cost-Benefit Analysis**",
+          "**Case I: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps in aligning efforts and ensuring all stakeholders understand the mission.\n\n2. **Conduct a Cost-Benefit Analysis**",
+          "**Case I: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps in aligning efforts and ensuring all stakeholders understand the mission.\n\n2. **Conduct a Cost-Benefit Analysis**"
+        ]
+      },
+      "J": {
+        "first_text_median_ms": 6781.62,
+        "latency_median_ms": 9053.35,
+        "answers": [
+          "**Case J: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Plan Budget and Resources**  \n   - Estimate costs",
+          "**Case J: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Plan Budget and Resources**  \n   - Estimate costs",
+          "**Case J: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Plan Budget and Resources**  \n   - Estimate costs"
+        ]
+      },
+      "K": {
+        "first_text_median_ms": 6877.04,
+        "latency_median_ms": 9063.18,
+        "answers": [
+          "Here are three useful steps for planning a community project, considering cost, practical work, and progress measurement:\n\n1. **Define Objectives and Scope**:  \n   Clearly outline the project\u2019s goals and identify the community members or stakeholders involved. This helps in setting a clear focus and aligning efforts.\n\n2. **Estimate",
+          "Here are three useful steps for planning a community project, considering cost, practical work, and progress measurement:\n\n1. **Define Objectives and Scope**:  \n   Clearly outline the project\u2019s goals and identify the community members or stakeholders involved. This helps in setting a clear focus and aligning efforts.\n\n2. **Estimate",
+          "Here are three useful steps for planning a community project, considering cost, practical work, and progress measurement:\n\n1. **Define Objectives and Scope**:  \n   Clearly outline the project\u2019s goals and identify the community members or stakeholders involved. This helps in setting a clear focus and aligning efforts.\n\n2. **Estimate"
+        ]
+      },
+      "L": {
+        "first_text_median_ms": 6962.24,
+        "latency_median_ms": 9067.47,
+        "answers": [
+          "Here are three useful steps for planning a community project, considering cost, practical work, and progress measurement:\n\n1. **Define Objectives and Goals**  \n   Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Estimate Costs and",
+          "Here are three useful steps for planning a community project, considering cost, practical work, and progress measurement:\n\n1. **Define Objectives and Goals**  \n   Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Estimate Costs and",
+          "Here are three useful steps for planning a community project, considering cost, practical work, and progress measurement:\n\n1. **Define Objectives and Goals**  \n   Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Estimate Costs and"
+        ]
+      },
+      "M": {
+        "first_text_median_ms": 7047.78,
+        "latency_median_ms": 9076.68,
+        "answers": [
+          "**Case M: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Conduct a Cost-Benefit Analysis**  \n  ",
+          "**Case M: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Conduct a Cost-Benefit Analysis**  \n  ",
+          "**Case M: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.\n\n2. **Conduct a Cost-Benefit Analysis**  \n  "
+        ]
+      },
+      "N": {
+        "first_text_median_ms": 1864.52,
+        "latency_median_ms": 3969.5,
+        "answers": [
+          "**Case N: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case N: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case N: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders"
+        ]
+      },
+      "O": {
+        "first_text_median_ms": 1843.42,
+        "latency_median_ms": 3948.63,
+        "answers": [
+          "**Case O: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case O: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case O: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders"
+        ]
+      },
+      "P": {
+        "first_text_median_ms": 1825.23,
+        "latency_median_ms": 3930.62,
+        "answers": [
+          "**Case P: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case P: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case P: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders"
+        ]
+      },
+      "Q": {
+        "first_text_median_ms": 1805.52,
+        "latency_median_ms": 3911.18,
+        "answers": [
+          "Certainly! Here are three useful steps for planning a community project, considering cost, practical work, and progress measurement:\n\n1. **Define Clear Objectives and Goals**  \n   - Set specific, measurable, achievable, relevant, and time-bound (SMART) objectives for the project.  \n   - Align these goals with the",
+          "Certainly! Here are three useful steps for planning a community project, considering cost, practical work, and progress measurement:\n\n1. **Define Clear Objectives and Goals**  \n   - Set specific, measurable, achievable, relevant, and time-bound (SMART) objectives for the project.  \n   - Align these goals with the",
+          "Certainly! Here are three useful steps for planning a community project, considering cost, practical work, and progress measurement:\n\n1. **Define Clear Objectives and Goals**  \n   - Set specific, measurable, achievable, relevant, and time-bound (SMART) objectives for the project.  \n   - Align these goals with the"
+        ]
+      },
+      "R": {
+        "first_text_median_ms": 1894.72,
+        "latency_median_ms": 4052.12,
+        "answers": [
+          "**Case R: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case R: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case R: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders"
+        ]
+      },
+      "S": {
+        "first_text_median_ms": 4028.03,
+        "latency_median_ms": 6269.88,
+        "answers": [
+          "**Case S: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case S: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case S: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders"
+        ]
+      },
+      "T": {
+        "first_text_median_ms": 4011.86,
+        "latency_median_ms": 6251.49,
+        "answers": [
+          "**Case T: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case T: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case T: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders"
+        ]
+      },
+      "U": {
+        "first_text_median_ms": 3990.9,
+        "latency_median_ms": 6233.97,
+        "answers": [
+          "**Case U: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case U: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case U: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders"
+        ]
+      },
+      "V": {
+        "first_text_median_ms": 3972.64,
+        "latency_median_ms": 6210.57,
+        "answers": [
+          "**Case V: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case V: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case V: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders"
+        ]
+      },
+      "W": {
+        "first_text_median_ms": 4068.9,
+        "latency_median_ms": 6316.1,
+        "answers": [
+          "**Case W: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case W: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case W: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders"
+        ]
+      },
+      "X": {
+        "first_text_median_ms": 6832.76,
+        "latency_median_ms": 8856.88,
+        "answers": [
+          "**Case X: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case X: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case X: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders"
+        ]
+      },
+      "Y": {
+        "first_text_median_ms": 8697.09,
+        "latency_median_ms": 10031.18,
+        "answers": [
+          "**Case Y: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case Y: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders",
+          "**Case Y: Three Useful Steps for Planning a Community Project**\n\n1. **Define Clear Objectives and Goals**  \n   - Clearly outline the project\u2019s purpose, goals, and desired outcomes. This helps align everyone involved and ensures the project stays focused.  \n   - Example: \"Increase access to clean water in unders"
+        ]
+      }
+    }
+  },
+  "manifests": {
+    "original": {
+      "model": "Qwen/Qwen3-0.6B",
+      "system": "You are a helpful assistant. Explain clearly and concisely.",
+      "warmup": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. \nSummarize this.",
+      "blockers": {
+        "H1": "For workshop number 1, write a detailed numbered list of forty different household objects. For each object explain its purpose and how it is made. Continue the list without an introduction.",
+        "H2": "For workshop number 2, write a detailed numbered list of forty different household objects. For each object explain its purpose and how it is made. Continue the list without an introduction.",
+        "H3": "For workshop number 3, write a detailed numbered list of forty different household objects. For each object explain its purpose and how it is made. Continue the list without an introduction."
+      },
+      "candidates": {
+        "A": "A coastal research team is studying damage to coral reefs. They record water temperature, rainfall, salinity, and the number of fish at several sites. Volunteers photograph the same reef sections every month. Some sites are close to busy harbours, while others are protected from boats and fishing. The team has a limited budget and wants reliable comparisons across locations. Explain how they should organize the observations and avoid misleading conclusions.",
+        "B": "A city transport team is reviewing bus reliability. Drivers report delays at crowded junctions and passengers report missed connections. The team has arrival records from stops, traffic counts, and anonymous passenger surveys. Some routes serve schools, others serve hospitals, and several share a congested bridge. The city can adjust schedules and stop locations but cannot purchase new buses this year. Explain how the team should choose improvements and measure their effects.",
+        "C": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. \nSuggest three improvements to the reservation process.",
+        "D": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. \nSuggest three ways to reduce uncollected reservations.",
+        "E": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. A separate branch instead uses paper cards and telephone calls. It has two volunteers each afternoon and no online member accounts. Suggest three practical improvements for this branch.",
+        "F": "A beekeeper is tracking how bees pollinate flowering plants. The team has limited funding and wants a practical plan. It can collect observations weekly but cannot hire more staff. Explain three useful steps, how to compare the results, and one common mistake to avoid when interpreting the observations.",
+        "G": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. \nSuggest three improvements to reservation reminder emails.",
+        "H": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. A separate branch uses paper cards and telephone calls. It has two volunteers each afternoon and no online accounts. Explain how volunteers could organize the paper waiting list.",
+        "I": "Astronomers are observing gas clouds where new stars are forming. The team has limited funding and wants a practical plan. It can collect observations weekly but cannot hire more staff. Explain three useful steps, how to compare the results, and one common mistake to avoid when interpreting the observations.",
+        "J": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. \nExplain how staff should handle cancelled reservations.",
+        "K": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. A separate branch uses paper cards and telephone calls. It has two volunteers each afternoon and no online accounts. Suggest three ways to improve telephone reminders.",
+        "L": "An apartment building wants to turn kitchen scraps into compost. The team has limited funding and wants a practical plan. It can collect observations weekly but cannot hire more staff. Explain three useful steps, how to compare the results, and one common mistake to avoid when interpreting the observations.",
+        "M": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. \nSuggest three useful weekly measurements for the library.",
+        "N": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. A separate branch uses paper cards and telephone calls. It has two volunteers each afternoon and no online accounts. Explain how volunteers should record cancellations.",
+        "O": "Geologists are studying earthquakes along an active fault line. The team has limited funding and wants a practical plan. It can collect observations weekly but cannot hire more staff. Explain three useful steps, how to compare the results, and one common mistake to avoid when interpreting the observations.",
+        "P": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. \nExplain how the library can support members without internet access.",
+        "Q": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. A separate branch uses paper cards and telephone calls. It has two volunteers each afternoon and no online accounts. Suggest three ways to make collection times convenient.",
+        "R": "A school science club is comparing rechargeable battery designs. The team has limited funding and wants a practical plan. It can collect observations weekly but cannot hire more staff. Explain three useful steps, how to compare the results, and one common mistake to avoid when interpreting the observations.",
+        "S": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. \nSuggest three ways to make collection deadlines clearer.",
+        "T": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. A separate branch uses paper cards and telephone calls. It has two volunteers each afternoon and no online accounts. Explain how staff can prevent duplicate paper reservations.",
+        "U": "A village is choosing water filters for its community buildings. The team has limited funding and wants a practical plan. It can collect observations weekly but cannot hire more staff. Explain three useful steps, how to compare the results, and one common mistake to avoid when interpreting the observations.",
+        "V": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. \nExplain how staff can investigate repeated collection delays.",
+        "W": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. A separate branch uses paper cards and telephone calls. It has two volunteers each afternoon and no online accounts. Suggest simple measurements for the branch to review weekly.",
+        "X": "Traffic planners are investigating congestion at a busy crossroads. The team has limited funding and wants a practical plan. It can collect observations weekly but cannot hire more staff. Explain three useful steps, how to compare the results, and one common mistake to avoid when interpreting the observations.",
+        "Y": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. \nSuggest a simple plan to evaluate changes to the service."
+      },
+      "candidate_order": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H",
+        "I",
+        "J",
+        "K",
+        "L",
+        "M",
+        "N",
+        "O",
+        "P",
+        "Q",
+        "R",
+        "S",
+        "T",
+        "U",
+        "V",
+        "W",
+        "X",
+        "Y"
+      ],
+      "candidate_interval_ms": 20,
+      "candidate_output_tokens": 64,
+      "blocker_output_tokens": 128,
+      "ignore_eos": true,
+      "maximum_client_concurrency": 28
+    },
+    "targeted": {
+      "model": "Qwen/Qwen3-0.6B",
+      "system": "You are a helpful assistant. Explain clearly and concisely.",
+      "warmup": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. \nSummarize this.",
+      "blockers": {
+        "H1": "For workshop number 1, write a detailed numbered list of forty different household objects. For each object explain its purpose and how it is made. Continue the list without an introduction.",
+        "H2": "For workshop number 2, write a detailed numbered list of forty different household objects. For each object explain its purpose and how it is made. Continue the list without an introduction.",
+        "H3": "For workshop number 3, write a detailed numbered list of forty different household objects. For each object explain its purpose and how it is made. Continue the list without an introduction.",
+        "H4": "For workshop number 4, write a detailed numbered list of forty different household objects. For each object explain its purpose and how it is made. Continue the list without an introduction.",
+        "H5": "For workshop number 5, write a detailed numbered list of forty different household objects. For each object explain its purpose and how it is made. Continue the list without an introduction.",
+        "H6": "For workshop number 6, write a detailed numbered list of forty different household objects. For each object explain its purpose and how it is made. Continue the list without an introduction.",
+        "H7": "For workshop number 7, write a detailed numbered list of forty different household objects. For each object explain its purpose and how it is made. Continue the list without an introduction.",
+        "H8": "For workshop number 8, write a detailed numbered list of forty different household objects. For each object explain its purpose and how it is made. Continue the list without an introduction."
+      },
+      "candidates": {
+        "A": "Case A: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+        "B": "Case B: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+        "C": "Case C: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+        "D": "Case D: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+        "E": "Case E: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+        "F": "Case F: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+        "G": "Case G: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+        "H": "Case H: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+        "I": "Case I: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+        "J": "Case J: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+        "K": "Case K: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+        "L": "Case L: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+        "M": "Case M: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+        "N": "Case N: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail",
+        "O": "Case O: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail",
+        "P": "Case P: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail",
+        "Q": "Case Q: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail",
+        "R": "Case R: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail",
+        "S": "Case S: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail",
+        "T": "Case T: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail",
+        "U": "Case U: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail",
+        "V": "Case V: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail",
+        "W": "Case W: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail",
+        "X": "Case X: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail",
+        "Y": "Case Y: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail"
+      },
+      "candidate_order": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H",
+        "I",
+        "J",
+        "K",
+        "L",
+        "M",
+        "N",
+        "O",
+        "P",
+        "Q",
+        "R",
+        "S",
+        "T",
+        "U",
+        "V",
+        "W",
+        "X",
+        "Y"
+      ],
+      "candidate_interval_ms": 20,
+      "candidate_output_tokens": 64,
+      "blocker_output_tokens": 64,
+      "ignore_eos": true,
+      "maximum_client_concurrency": 33
+    }
+  },
+  "validation": {
+    "all_ten_serving_runs_valid": true,
+    "earlier_experiments_disabled": true,
+    "original_manifest_identical": true,
+    "chunked_prefill_disabled": true,
+    "real_scheduler_tests_passed": 5
+  },
+  "group_latency": {
+    "baseline": {
+      "long": {
+        "first_text_ms": {
+          "median_of_run_medians": 2490.14,
+          "median_of_run_maxima": 4978.53,
+          "run_medians": [
+            2490.14,
+            2406.73,
+            2521.09
+          ]
+        },
+        "total_ms": {
+          "median_of_run_medians": 5124.91,
+          "median_of_run_maxima": 7249.41,
+          "run_medians": [
+            5256.32,
+            4947.59,
+            5124.91
+          ]
+        }
+      },
+      "short": {
+        "first_text_ms": {
+          "median_of_run_medians": 7093.52,
+          "median_of_run_maxima": 8953.27,
+          "run_medians": [
+            7093.52,
+            8394.045,
+            5839.43
+          ]
+        },
+        "total_ms": {
+          "median_of_run_medians": 9100.369999999999,
+          "median_of_run_maxima": 10361.6,
+          "run_medians": [
+            9100.369999999999,
+            9305.295,
+            7667.405
+          ]
+        }
+      }
+    },
+    "skip": {
+      "long": {
+        "first_text_ms": {
+          "median_of_run_medians": 6511.93,
+          "median_of_run_maxima": 7047.78,
+          "run_medians": [
+            6531.22,
+            6511.93,
+            6311.78
+          ]
+        },
+        "total_ms": {
+          "median_of_run_medians": 9003.12,
+          "median_of_run_maxima": 9076.68,
+          "run_medians": [
+            9110.63,
+            9003.12,
+            8594.94
+          ]
+        }
+      },
+      "short": {
+        "first_text_ms": {
+          "median_of_run_medians": 3981.77,
+          "median_of_run_maxima": 8697.09,
+          "run_medians": [
+            3981.77,
+            4134.635,
+            3924.0649999999996
+          ]
+        },
+        "total_ms": {
+          "median_of_run_medians": 6222.27,
+          "median_of_run_maxima": 10031.18,
+          "run_medians": [
+            6243.74,
+            6222.27,
+            6021.17
+          ]
+        }
+      }
+    }
+  },
+  "paired_changes": [
+    {
+      "round": 1,
+      "baseline_ms": 10864.43,
+      "skip_ms": 10685.98,
+      "change_percent": -1.642515990254445
+    },
+    {
+      "round": 2,
+      "baseline_ms": 10845.75,
+      "skip_ms": 10515.75,
+      "change_percent": -3.042666482262635
+    },
+    {
+      "round": 3,
+      "baseline_ms": 9846.65,
+      "skip_ms": 9483.21,
+      "change_percent": -3.691001508127134
+    }
+  ],
+  "diagnostic_details": [
+    {
+      "profile": "original",
+      "variant": "baseline",
+      "admission_order": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H",
+        "I",
+        "J",
+        "K",
+        "L",
+        "M",
+        "N",
+        "O",
+        "P",
+        "Q",
+        "R",
+        "S",
+        "T",
+        "U",
+        "V",
+        "W",
+        "X",
+        "Y"
+      ],
+      "max_queue_wait_ms": 20152.209833,
+      "queue_wait_ms": {
+        "A": 3863.20575,
+        "B": 3896.492375,
+        "C": 3880.02425,
+        "D": 5821.047958,
+        "E": 5840.92375,
+        "F": 5815.233667,
+        "G": 7834.158416,
+        "H": 7845.241916,
+        "I": 7814.563833,
+        "J": 9917.350417,
+        "K": 9922.965458,
+        "L": 9884.63225,
+        "M": 12013.952459,
+        "N": 12058.826208,
+        "O": 12027.083042,
+        "P": 14060.195292,
+        "Q": 14069.468375,
+        "R": 14039.745333,
+        "S": 16249.045417,
+        "T": 16292.465041,
+        "U": 16266.799458,
+        "V": 18275.253208,
+        "W": 18320.036417,
+        "X": 18296.499833,
+        "Y": 20152.209833
+      },
+      "max_skip_attempts_observed": 0,
+      "protected_stops_at_limit": 0,
+      "unfilled_admission_steps": 0,
+      "unused_positions_sum": 0,
+      "unused_positions_mean": 0,
+      "budget_skips": 0,
+      "budget_stops": 0,
+      "scan_limits": 0
+    },
+    {
+      "profile": "original",
+      "variant": "skip",
+      "admission_order": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H",
+        "I",
+        "J",
+        "K",
+        "L",
+        "M",
+        "N",
+        "O",
+        "P",
+        "Q",
+        "R",
+        "S",
+        "T",
+        "U",
+        "V",
+        "W",
+        "X",
+        "Y"
+      ],
+      "max_queue_wait_ms": 18186.820084,
+      "queue_wait_ms": {
+        "A": 3532.527042,
+        "B": 3562.436792,
+        "C": 3543.365916,
+        "D": 5295.918917,
+        "E": 5309.05625,
+        "F": 5279.604583,
+        "G": 7532.955792,
+        "H": 7553.6445,
+        "I": 7557.947625,
+        "J": 9537.768584,
+        "K": 9580.954917,
+        "L": 9551.16375,
+        "M": 11306.0285,
+        "N": 11358.385291,
+        "O": 11336.265708,
+        "P": 13227.128209,
+        "Q": 13243.010167,
+        "R": 13244.686375,
+        "S": 14910.531167,
+        "T": 14923.358875,
+        "U": 14897.648292,
+        "V": 16545.79025,
+        "W": 16579.438208,
+        "X": 16552.734084,
+        "Y": 18186.820084
+      },
+      "max_skip_attempts_observed": 0,
+      "protected_stops_at_limit": 0,
+      "unfilled_admission_steps": 0,
+      "unused_positions_sum": 0,
+      "unused_positions_mean": 0,
+      "budget_skips": 0,
+      "budget_stops": 0,
+      "scan_limits": 0
+    },
+    {
+      "profile": "targeted",
+      "variant": "baseline",
+      "admission_order": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H",
+        "I",
+        "J",
+        "K",
+        "L",
+        "M",
+        "N",
+        "O",
+        "P",
+        "Q",
+        "R",
+        "S",
+        "T",
+        "U",
+        "V",
+        "W",
+        "X",
+        "Y"
+      ],
+      "max_queue_wait_ms": 10585.094667,
+      "queue_wait_ms": {
+        "A": 2150.534791,
+        "B": 2233.272958,
+        "C": 2327.365084,
+        "D": 2401.464959,
+        "E": 2468.911458,
+        "F": 2580.446958,
+        "G": 2638.019709,
+        "H": 2744.328959,
+        "I": 5172.271916,
+        "J": 5328.6385,
+        "K": 5462.731708,
+        "L": 5548.522542,
+        "M": 5682.696125,
+        "N": 5805.808834,
+        "O": 5842.144667,
+        "P": 5871.174792,
+        "Q": 8332.532,
+        "R": 8359.40475,
+        "S": 8416.408792,
+        "T": 8439.052583,
+        "U": 8460.434333,
+        "V": 8505.96,
+        "W": 8523.816625,
+        "X": 8545.317583,
+        "Y": 10585.094667
+      },
+      "max_skip_attempts_observed": 0,
+      "protected_stops_at_limit": 0,
+      "unfilled_admission_steps": 6,
+      "unused_positions_sum": 1227,
+      "unused_positions_mean": 204.5,
+      "budget_skips": 0,
+      "budget_stops": 6,
+      "scan_limits": 0
+    },
+    {
+      "profile": "targeted",
+      "variant": "skip",
+      "admission_order": [
+        "A",
+        "N",
+        "B",
+        "O",
+        "P",
+        "Q",
+        "R",
+        "C",
+        "D",
+        "S",
+        "E",
+        "T",
+        "U",
+        "V",
+        "W",
+        "F",
+        "G",
+        "H",
+        "I",
+        "J",
+        "K",
+        "L",
+        "M",
+        "X",
+        "Y"
+      ],
+      "max_queue_wait_ms": 10458.636084,
+      "queue_wait_ms": {
+        "A": 2341.181375,
+        "N": 2076.339041,
+        "B": 2441.002375,
+        "O": 2203.873708,
+        "P": 2208.912125,
+        "Q": 2178.101375,
+        "R": 2182.935917,
+        "C": 2649.037959,
+        "D": 5101.920583,
+        "S": 4824.135209,
+        "E": 5231.61125,
+        "T": 4915.936916,
+        "U": 4917.692583,
+        "V": 4883.939375,
+        "W": 4886.042833,
+        "F": 5402.832375,
+        "G": 7872.097334,
+        "H": 7939.960625,
+        "I": 8048.429875,
+        "J": 8109.600875,
+        "K": 8217.275292,
+        "L": 8282.696375,
+        "M": 8400.887167,
+        "X": 8169.65825,
+        "Y": 10458.636084
+      },
+      "max_skip_attempts_observed": 4,
+      "protected_stops_at_limit": 6,
+      "unfilled_admission_steps": 7,
+      "unused_positions_sum": 1240,
+      "unused_positions_mean": 177.14285714285714,
+      "budget_skips": 41,
+      "budget_stops": 6,
+      "scan_limits": 1
+    }
+  ],
+  "quality": {
+    "exact_answer_agreements_per_pair": [
+      20,
+      20,
+      20
+    ],
+    "candidate_count": 25,
+    "semantic_quality_scored": false,
+    "stable_answers_across_repeats": {
+      "baseline": true,
+      "skip": true
+    }
+  },
+  "conclusion": "Observed ~3% median targeted throughput gain and much lower short-prompt latency, with a large long-prompt latency penalty. Original A-Y control does not activate this policy."
+}
