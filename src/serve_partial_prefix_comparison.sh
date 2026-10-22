@@ -2,6 +2,8 @@
 set -euo pipefail
 experiment_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$experiment_root"
+model="${STUDY_MODEL:-Qwen/Qwen3-0.6B}"
+model_source="${STUDY_MODEL_PATH:-$model}"
 variant="${1:?baseline, fine_hash or partial}"
 mode="${2:-bench}"
 unit=16
@@ -29,9 +31,9 @@ if [ "$mode" = trace ]; then
   export VLLM_STUDY_TRACE=1
   export VLLM_SERVER_DEV_MODE=1
 fi
-"$experiment_root/.venv/bin/vllm" serve Qwen/Qwen3-0.6B \
+"$experiment_root/.venv/bin/vllm" serve "$model_source" \
   --host 127.0.0.1 --port 8001 --seed 0 --worker-cls auto \
-  --served-model-name Qwen/Qwen3-0.6B \
+  --served-model-name "$model" \
   --max-model-len 512 --max-num-seqs 3 --max-num-batched-tokens 128 \
   --block-size 16 --num-gpu-blocks-override 96 --prefix-match-unit "$unit" \
   --enable-prefix-caching --enable-chunked-prefill --no-async-scheduling \

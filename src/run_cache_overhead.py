@@ -33,10 +33,13 @@ def load(record):
 
 
 def main():
-    os.environ["STUDY_MODEL"] = "Qwen/Qwen3-0.6B"
+    os.environ.setdefault("STUDY_MODEL", "Qwen/Qwen3-0.6B")
     os.environ["STUDY_MODEL_PATH"] = snapshot_download(
         os.environ["STUDY_MODEL"],
-        revision="c1899de289a04d12100db370d81485cdf75e47ca",
+        revision={
+            "Qwen/Qwen3-0.6B": "c1899de289a04d12100db370d81485cdf75e47ca",
+            "Qwen/Qwen3-1.7B": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e",
+        }[os.environ["STUDY_MODEL"]],
         local_files_only=True,
     )
     folder = ROOT / "results/cache-overhead" / f"batches-{datetime.now():%Y%m%d-%H%M%S}"

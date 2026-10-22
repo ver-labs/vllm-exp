@@ -3,6 +3,7 @@
 import argparse
 import csv
 import json
+import os
 import statistics
 import time
 from datetime import datetime
@@ -17,14 +18,16 @@ from transformers import AutoTokenizer
 
 def probe(variant):
     tokenizer = AutoTokenizer.from_pretrained(
-        snapshot_download("Qwen/Qwen3-0.6B", local_files_only=True),
+        os.environ.get("STUDY_MODEL_PATH")
+        or snapshot_download(
+            os.environ.get("STUDY_MODEL", "Qwen/Qwen3-0.6B"), local_files_only=True
+        ),
         local_files_only=True,
     )
     prefix = tokenizer.encode(
         (
             "The library records book reservations and reminds members "
-            "to collect them. "
-            * 8
+            "to collect them. " * 8
         ),
         add_special_tokens=False,
     )[:31]
@@ -44,7 +47,7 @@ def probe(variant):
     def send(tokens, limit):
         data = json.dumps(
             dict(
-                model="Qwen/Qwen3-0.6B",
+                model=os.environ.get("STUDY_MODEL", "Qwen/Qwen3-0.6B"),
                 prompt=tokens,
                 max_tokens=limit,
                 temperature=0,

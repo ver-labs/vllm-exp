@@ -2,6 +2,8 @@
 set -euo pipefail
 experiment_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$experiment_root"
+model="${STUDY_MODEL:-Qwen/Qwen3-0.6B}"
+model_source="${STUDY_MODEL_PATH:-$model}"
 policy="${1:-}"
 mode="${2:-trace}"
 case "$policy" in fcfs|prefix_first|fcfs_head_prefix) ;; *) echo "Usage: bash src/serve_prefix_comparison.sh fcfs|prefix_first|fcfs_head_prefix [trace|bench]"; exit 2 ;; esac
@@ -18,8 +20,8 @@ export VLLM_STUDY_TRACE_DIR="$run_dir"
 export VLLM_STUDY_TRACE_STDOUT=0
 export VLLM_STUDY_TRACE=0
 if [ "$mode" = trace ]; then export VLLM_STUDY_TRACE=1; fi
-"$experiment_root/.venv/bin/vllm" serve Qwen/Qwen3-0.6B \
-  --host 127.0.0.1 --port 8001 --seed 0 \
+"$experiment_root/.venv/bin/vllm" serve "$model_source" \
+  --served-model-name "$model" --host 127.0.0.1 --port 8001 --seed 0 \
   --max-model-len 512 --max-num-seqs 3 --max-num-batched-tokens 128 \
   --block-size 16 --num-gpu-blocks-override 96 \
   --enable-prefix-caching --enable-chunked-prefill --no-async-scheduling \

@@ -143,9 +143,13 @@ def main():
     }
     destination = folder / "summary.json"
     try:
-        summary["diagnostic"] = run_one(
-            folder, "fcfs_head_prefix", "trace", "diagnostic", args.candidates
-        )
+        summary["diagnostics"] = []
+        for policy in POLICIES:
+            record = run_one(folder, policy, "trace", "diagnostic", args.candidates)
+            summary["diagnostics"].append(record)
+            if policy == "fcfs_head_prefix":
+                summary["diagnostic"] = record
+            destination.write_text(json.dumps(summary, indent=2) + "\n")
         for index in range(args.rounds):
             # Rotate order to reduce a consistent first/last-policy timing bias.
             order = POLICIES[index % 3 :] + POLICIES[: index % 3]

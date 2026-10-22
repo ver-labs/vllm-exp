@@ -1,5 +1,7 @@
 """Twenty-five queued requests: thirteen long prompts followed by twelve short ones."""
 
+import os
+
 import compare_prefix_policies as base
 from huggingface_hub import snapshot_download
 from transformers import AutoTokenizer
@@ -8,7 +10,9 @@ from transformers import AutoTokenizer
 def build_prompts(count):
     assert count == 25
     tokenizer = AutoTokenizer.from_pretrained(
-        snapshot_download(base.MODEL, local_files_only=True), local_files_only=True
+        os.environ.get("STUDY_MODEL_PATH")
+        or snapshot_download(base.MODEL, local_files_only=True),
+        local_files_only=True,
     )
     prompts = {}
     for index, label in enumerate("ABCDEFGHIJKLMNOPQRSTUVWXY"):
