@@ -72,7 +72,8 @@ def workload(profile):
         for index in range(4):
             text = padded(
                 f"Independent scan {cycle}.{index}: A community project needs "
-                "observations, a plan and practical measurements. Explain its first steps."
+                "observations, a plan and practical measurements. "
+                "Explain its first steps."
             )
             rows.append(
                 dict(
