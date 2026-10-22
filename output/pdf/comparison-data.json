@@ -4,11 +4,12 @@
       "number": 1,
       "title": "Prefix-aware request scheduling",
       "change": "Rank waiting requests by reusable cached prefix; break ties by FCFS. A hybrid protects the first three requests in FCFS order and applies prefix ranking to the rest, with a waiting-time safeguard.",
-      "protocol": "Original concurrent A-Y workload | 25 candidates x 64 outputs | 3 running slots | 3 timing rounds per policy",
-      "finding": "Prefix-first: batch 18.89s versus 18.77s FCFS. A/B first text rose from about 3.4s to 10.8s. Hybrid restored A/B to about 3.3s, but batch time was 19.01s.",
-      "caution": "No established batch-speed improvement. Early-request protection improves fairness relative to prefix-first, not overall speed. Qwen3-1.7B was not measured for this experiment.",
+      "protocol": "Original concurrent A-Y workload | 25 candidates x 64 outputs | 3 running slots | 3 timing rounds per policy | matching 1.7B replication completed",
+      "finding": "Batch seconds (FCFS / prefix-first / hybrid): 0.6B 18.77 / 18.89 / 19.01; 1.7B 41.86 / 41.26 / 41.45. On 1.7B, A first text was 7.74s / 11.46s / 7.42s.",
+      "caution": "Prefix-first delayed A/B on both models; the hybrid protected their early position. Close group medians and three timing rounds do not establish a general batch-speed advantage. The same ten-second wait safeguard applies on both models.",
       "sources": [
-        "01-prefix-scheduling/RESULTS.txt"
+        "01-prefix-scheduling/RESULTS.txt",
+        "01-prefix-scheduling/qwen3-1.7B/RESULTS.txt"
       ],
       "models": {
         "0.6B": {
@@ -42,6 +43,38 @@
           ],
           "unit": "seconds",
           "control": "Stock vLLM"
+        },
+        "1.7B": {
+          "labels": [
+            "A-Y batch",
+            "A first text",
+            "B first text"
+          ],
+          "baseline": [
+            41.85509,
+            7.73728,
+            7.835229999999999
+          ],
+          "changed": [
+            {
+              "name": "Prefix-first",
+              "values": [
+                41.26461,
+                11.457049999999999,
+                11.55166
+              ]
+            },
+            {
+              "name": "Hybrid",
+              "values": [
+                41.45063,
+                7.41666,
+                7.5039
+              ]
+            }
+          ],
+          "unit": "seconds",
+          "control": "Stock vLLM"
         }
       }
     },
@@ -49,12 +82,13 @@
       "number": 2,
       "title": "Frequency-based cache retention",
       "change": "Prefer evicting less frequently reused, zero-reference cached blocks. Keep actively referenced blocks ineligible for eviction and preserve FCFS request order.",
-      "protocol": "Two profiles: 42 sequential hot/cold requests and original concurrent A-Y | 3 timing rounds per policy/profile",
-      "finding": "Hot-return cache reuse increased from 16 to 272 tokens; probe first text fell from 119.50ms to 52.54ms. On concurrent A-Y, reuse stayed at 2,432 tokens and LFU was 2.5% slower.",
-      "caution": "The hot/cold batch median fell 8.6%, but a no-reuse control also varied. Retention is demonstrated; the full timing difference is not isolated to eviction. Only 0.6B was tested.",
+      "protocol": "Two profiles: 42 sequential hot/cold requests and original concurrent A-Y | 3 timing rounds per policy/profile | matching 1.7B replication completed",
+      "finding": "Hot-return reuse increased from 16 to 272 tokens on both models. Probe first text: 0.6B 119.50 to 52.54ms; 1.7B 291.08 to 88.32ms. A-Y batch-median changes: +2.5% on 0.6B, -2.25% on 1.7B.",
+      "caution": "A-Y reused the same 2,432 candidate tokens under both policies on both models; its timing differences are not evidence of extra reuse. The no-reuse control also varied, particularly on 0.6B. Strong retention/probe results do not establish a universal full-batch gain.",
       "sources": [
         "02-frequency-eviction/RESULTS.txt",
-        "02-frequency-eviction/RESULTS-AY.txt"
+        "02-frequency-eviction/RESULTS-AY.txt",
+        "02-frequency-eviction/qwen3-1.7B/RESULTS.txt"
       ],
       "models": {
         "0.6B": {
@@ -77,6 +111,27 @@
           ],
           "unit": "seconds",
           "control": "Stock vLLM"
+        },
+        "1.7B": {
+          "labels": [
+            "Hot/cold batch",
+            "A-Y batch"
+          ],
+          "baseline": [
+            21.28267,
+            41.801
+          ],
+          "changed": [
+            {
+              "name": "LFU",
+              "values": [
+                20.77078,
+                40.858419999999995
+              ]
+            }
+          ],
+          "unit": "seconds",
+          "control": "Stock vLLM"
         }
       }
     },
@@ -84,11 +139,12 @@
       "number": 3,
       "title": "Middle-block reuse with partial repair",
       "change": "Match token pages even when earlier context differs, reuse their KV approximately, and recompute a boundary subset. The Metal worker skips selected rows using an alternate attention path; this is not exact causal-prefix caching.",
-      "protocol": "Original A-Y | 25 candidates + 3 blockers | 96 KV pages | 3 slots | 3 matched timing pairs",
-      "finding": "Reused 352 matching non-prefix tokens and skipped 308 rows/layer/run. Group-median batch time was 1.85% lower, but repair was slower in two of three paired rounds.",
-      "caution": "No reliable speedup or quality preservation established. Only 10/25 candidate answers matched stock exactly; semantic quality was not scored. No 1.7B serving comparison exists.",
+      "protocol": "Original A-Y | 25 candidates + 3 blockers | 96 KV pages | 3 slots | 3 matched timing pairs | matching 1.7B replication completed",
+      "finding": "Actual reuse skipped 308 rows/layer/run on both models. 0.6B repair lost 2/3 time pairs despite a 1.85% lower group median. On 1.7B, batch median changed +1.25%; candidate exact matches were [14, 14, 14]/25 across the three pairs (0.6B: 10/25 each).",
+      "caution": "No reliable performance or quality advantage is established. Matching middle-page tokens with different preceding context is approximate. Changed answers can also reflect the alternate attention path; exact agreement is not a semantic quality score.",
       "sources": [
-        "03-nonprefix-repair/RESULTS-VLLM-AY.txt"
+        "03-nonprefix-repair/RESULTS-VLLM-AY.txt",
+        "03-nonprefix-repair/qwen3-1.7B/RESULTS.txt"
       ],
       "models": {
         "0.6B": {
@@ -114,6 +170,30 @@
           ],
           "unit": "seconds",
           "control": "Stock vLLM"
+        },
+        "1.7B": {
+          "labels": [
+            "A-Y batch",
+            "Median first text",
+            "Median request"
+          ],
+          "baseline": [
+            40.88447,
+            22.40097,
+            26.14543
+          ],
+          "changed": [
+            {
+              "name": "Approx. repair",
+              "values": [
+                41.39464,
+                22.50654,
+                26.264580000000002
+              ]
+            }
+          ],
+          "unit": "seconds",
+          "control": "Stock vLLM"
         }
       }
     },
@@ -121,11 +201,12 @@
       "number": 4,
       "title": "Exact partial-prefix caching",
       "change": "Index matching prefixes inside a 16-token physical page. Reuse the exact causal prefix and copy the partial page before continuing, preserving page ownership and invalidation. Physical pages remain 16 tokens.",
-      "protocol": "Original A-Y | same native Metal worker | baseline, fine-hash control and partial reuse | 3 rotated rounds",
-      "finding": "Candidate cached tokens rose from 2,432 to 2,563; the 32-token probe reused 31 instead of 16. Batch median fell 0.64%, with small improvements in all three baseline pairs.",
-      "caution": "The timing gain is small and exploratory. Partial reuse matched 16/25 candidate answers; fine hashes alone matched 25/25. Exact cache identity does not guarantee bitwise generation equality.",
+      "protocol": "Original A-Y | same native Metal worker | baseline, fine-hash control and partial reuse | 3 rotated rounds | matching 1.7B replication completed",
+      "finding": "Candidate reuse increased 2,432 to 2,563 tokens on both models. Batch-median change: -0.64% on 0.6B; +0.70% on 1.7B. Partial won 3/3 and 2/3 paired rounds respectively. The 31-of-32-token probe matched cold generation on both models.",
+      "caution": "The 1.7B partial answers matched stock in [18, 18, 18]/25 candidates by round; 0.6B matched 16/25 each. Exact causal caching can change low-precision prefill shapes and generation. Small, overlapping timing ranges and three repeats do not establish a general speedup or semantic quality parity.",
       "sources": [
-        "04-partial-prefix/RESULTS.txt"
+        "04-partial-prefix/RESULTS.txt",
+        "04-partial-prefix/qwen3-1.7B/RESULTS.txt"
       ],
       "models": {
         "0.6B": {
@@ -159,6 +240,38 @@
           ],
           "unit": "seconds",
           "control": "Stock vLLM"
+        },
+        "1.7B": {
+          "labels": [
+            "A-Y batch",
+            "Median first text",
+            "Median request"
+          ],
+          "baseline": [
+            44.314080000000004,
+            24.445880000000002,
+            28.35982
+          ],
+          "changed": [
+            {
+              "name": "Partial reuse",
+              "values": [
+                44.624480000000005,
+                23.75907,
+                27.76182
+              ]
+            },
+            {
+              "name": "Fine hashes only",
+              "values": [
+                43.34881,
+                23.80141,
+                27.76326
+              ]
+            }
+          ],
+          "unit": "seconds",
+          "control": "Stock vLLM"
         }
       }
     },
@@ -166,11 +279,12 @@
       "number": 5,
       "title": "Bounded skip-and-continue scheduling",
       "change": "With chunked prefill disabled, bypass a waiting head that cannot fit the remaining token budget and admit a later fitting request. Restore skipped order; bound the scan to 16 requests, four bypasses/request and 30-second age protection.",
-      "protocol": "Targeted A-Y: 13 long then 12 short prompts | 8 blockers/slots | 512-token batch | 3 matched pairs",
-      "finding": "Batch median fell 3.04% and throughput rose 3.14%. Short-prompt first text fell 43.9%, while long-prompt first text rose 161.5%. All three targeted batch pairs were faster.",
-      "caution": "Original A-Y did not activate skipping. The targeted packing workload demonstrates a fairness tradeoff; the bypass bounds do not guarantee an admission deadline. Only 0.6B was tested.",
+      "protocol": "Targeted A-Y: 13 long then 12 short prompts | 8 blockers/slots | 512-token batch | 3 matched pairs | matching 1.7B replication completed",
+      "finding": "Batch-median change: -3.04% on 0.6B; -0.33% on 1.7B. On 1.7B, long first text rose 6.21s to 15.48s; short first text fell 16.76s to 10.14s. The long/short tradeoff repeated on both models.",
+      "caution": "Original A-Y did not activate skipping on either model; targeted packing did. The 1.7B batch gain is tiny and its pairs were mixed. Four-bypass and age bounds limit bypassing, but do not free occupied slots or guarantee an admission deadline. Semantic quality was not scored.",
       "sources": [
-        "05-skip-continue/RESULTS.txt"
+        "05-skip-continue/RESULTS.txt",
+        "05-skip-continue/qwen3-1.7B/RESULTS.txt"
       ],
       "models": {
         "0.6B": {
@@ -196,6 +310,30 @@
           ],
           "unit": "seconds",
           "control": "Unchunked FCFS"
+        },
+        "1.7B": {
+          "labels": [
+            "Targeted batch",
+            "Long first text",
+            "Short first text"
+          ],
+          "baseline": [
+            24.74542,
+            6.2120299999999995,
+            16.756355
+          ],
+          "changed": [
+            {
+              "name": "Skip/continue",
+              "values": [
+                24.664189999999998,
+                15.47558,
+                10.144515
+              ]
+            }
+          ],
+          "unit": "seconds",
+          "control": "Unchunked FCFS"
         }
       }
     },
@@ -203,11 +341,12 @@
       "number": 6,
       "title": "Combined cache and scheduling policies",
       "change": "Enable experiment 02 frequency retention, experiment 04 exact partial-prefix reuse, and experiment 05 bounded skip/continue together. Keep approximate middle-block repair disabled; both controls use unchunked prefill.",
-      "protocol": "A-Y, targeted packing and sequential temporal profiles | 24 fresh-server runs including diagnostics | 3 pairs/profile",
-      "finding": "Cache gains activated consistently: A-Y +131 cached tokens, targeted +149, and hot-return reuse 16 to 277. Group-median batch times improved, but paired completion changes swung widely.",
-      "caution": "No stable overall speedup established. Targeted long-prompt first text rose 2.580s to 6.194s; short prompts improved. The later two-model scaling study is experiment 07, not a replication of these exact profiles.",
+      "protocol": "A-Y, targeted and temporal profiles | both models | 24 fresh-server runs/model | 3 timing pairs/profile",
+      "finding": "Batch-median changes (A-Y / targeted / temporal): 0.6B -0.55% / -22.21% / -2.79%; 1.7B -1.37% / -0.53% / -5.78%. Combined won 5/9 paired rounds on 0.6B and 7/9 on 1.7B. Extra prefix reuse activated in all three profiles.",
+      "caution": "A ratio of group medians is not the median paired effect; retain the paired evidence. Targeted scheduling shifts latency toward long prompts. Combining policies does not isolate each contribution, and these small synthetic comparisons do not establish a generally faster scheduler.",
       "sources": [
-        "06-combined/RESULTS.txt"
+        "06-combined/RESULTS.txt",
+        "06-combined/qwen3-1.7B/RESULTS.txt"
       ],
       "models": {
         "0.6B": {
@@ -228,6 +367,30 @@
                 18.40979,
                 10.06008,
                 12.60303
+              ]
+            }
+          ],
+          "unit": "seconds",
+          "control": "Stock vLLM"
+        },
+        "1.7B": {
+          "labels": [
+            "A-Y batch",
+            "Targeted batch",
+            "Temporal batch"
+          ],
+          "baseline": [
+            41.304050000000004,
+            24.61784,
+            20.371
+          ],
+          "changed": [
+            {
+              "name": "Combined",
+              "values": [
+                40.73713,
+                24.48839,
+                19.192880000000002
               ]
             }
           ],
@@ -441,12 +604,12 @@
       "number": 10,
       "title": "Reduce cache implementation overhead",
       "change": "Publish only newly computed or invalidated prompt ranges instead of rescanning prompt blocks after every step. Replace repeated free-list sorting with a lazy-invalidated LFU heap, preserving selection ties, copies and lifecycle updates.",
-      "protocol": "Matched reference vs incremental LFU + partial reuse | 0.6B only | shift/stable profiles | 16 GPU runs | 3 pairs/profile",
-      "finding": "Publisher visits fell about 87%; selector host time fell 29-37%. Batch medians improved 0.56% on shift and 1.46% on stable, but stable won only one of three matched pairs. Decisions, hits and answers matched.",
-      "caution": "Control is the earlier study implementation, not stock vLLM. The 1.7B follow-up reran stock/LFU/aging, not a matched reference/incremental A/B; historical timing changes do not isolate overhead. Its shift/stable aging batches were 41.194s/22.843s vs current stock 43.729s/24.753s.",
+      "protocol": "Matched reference vs incremental LFU + partial reuse | both models | shift/stable | 16 GPU runs/model | 3 pairs/profile",
+      "finding": "Batch-median changes (shift / stable): 0.6B -0.56% / -1.46%; 1.7B +4.68% / -4.97%. On 1.7B, selector host time changed 7.53 to 5.65ms (shift) and 2.67 to 1.55ms (stable).",
+      "caution": "The control is the prior study LFU + partial-prefix implementation, not stock vLLM. Decisions, per-request cached counts and answers matched in both models. Less bookkeeping need not produce a large wall-time gain. Host timers include warmup/drains; the 4,096-page CPU replay is separate from GPU throughput.",
       "sources": [
         "10-cache-overhead/RESULTS.txt",
-        "10-cache-overhead/aging-replication/RESULTS.txt"
+        "10-cache-overhead/qwen3-1.7B/RESULTS.txt"
       ],
       "models": {
         "0.6B": {
@@ -464,6 +627,27 @@
               "values": [
                 19.675849999999997,
                 8.80697
+              ]
+            }
+          ],
+          "unit": "seconds",
+          "control": "Study reference"
+        },
+        "1.7B": {
+          "labels": [
+            "Shift batch",
+            "Stable batch"
+          ],
+          "baseline": [
+            41.94228,
+            20.18459
+          ],
+          "changed": [
+            {
+              "name": "Incremental",
+              "values": [
+                43.90614,
+                19.18165
               ]
             }
           ],
@@ -701,7 +885,24 @@
     "experiments/12-concurrent-partial/evidence/aggregate.json": "52a6c683200ca73718b6a43c467f6c3ef9217ad796c573f7ce11088d8bdebe47",
     "experiments/12-concurrent-partial/RESULTS.txt": "cbf3927c8c7c4f8ecba208b4f875f07c36fc67c473f7d8a8f351ea6aa4c00eb0",
     "experiments/13-adaptive-prefill/evidence/aggregate.json": "f7888de5f830b474ec82936dd6515c40e8b18258b957a2f187a2e2afee810c57",
-    "experiments/13-adaptive-prefill/RESULTS.txt": "81e72ea1e4f240a8c89b83193a75a28066db62b2d9664831d2aaa9614ff52350"
+    "experiments/13-adaptive-prefill/RESULTS.txt": "81e72ea1e4f240a8c89b83193a75a28066db62b2d9664831d2aaa9614ff52350",
+    "experiments/01-prefix-scheduling/qwen3-1.7B/evidence/summary.json": "8833a537c231a9add7e27adc3d69c7d9c782adf156f8b08d838ad910b3264018",
+    "experiments/01-prefix-scheduling/qwen3-1.7B/RESULTS.txt": "44a881cb4b13a6d16b2132fb3b264cfff7c7888bb5b0ddb2877398053a9538e8",
+    "experiments/02-frequency-eviction/qwen3-1.7B/evidence/summary.json": "c1891ce73bbe9c11745a9b83d42d5df4778f31f0ec64bd3d4b7e8255377fc03b",
+    "experiments/02-frequency-eviction/qwen3-1.7B/evidence-ay/summary.json": "dbbd881826ceb790b132ebba104e0f32a4e03c7d970ce6d615fafc8a87c47844",
+    "experiments/02-frequency-eviction/qwen3-1.7B/RESULTS.txt": "63cad8c7ceb7e1107965d3625902c64a23963f16a5a13d09b2789d40a111b6eb",
+    "experiments/03-nonprefix-repair/qwen3-1.7B/evidence-vllm-ay/summary.json": "9afb9bfe06c76d24b31b1262bbfb5eaecc4072e2b52d54dc3587e346e454b420",
+    "experiments/03-nonprefix-repair/qwen3-1.7B/RESULTS.txt": "eadb4fbdf301392b5b98eda7a8fe5911164f486d4a2f4b388c501dfc9c96a04d",
+    "experiments/04-partial-prefix/qwen3-1.7B/evidence/summary.json": "0cc012adceebff32a5ccffeaa814f3d5924fc1fb5bdf538f0afb66735ec58b1f",
+    "experiments/04-partial-prefix/qwen3-1.7B/RESULTS.txt": "0485006808f3953fb0f9e867d19b79ec2d78cd44dbab9ef2dc493ee4762eec08",
+    "experiments/05-skip-continue/qwen3-1.7B/evidence/summary.json": "65daef12f93b901d34045a9928955fe4d93cb21f70471f6311fee6650e94a2e0",
+    "experiments/05-skip-continue/qwen3-1.7B/evidence/replication-metrics.json": "fb05ba6b6f5cfa5484a53fa309632b133851bc10d45386a5e08528657d4d719e",
+    "experiments/05-skip-continue/qwen3-1.7B/RESULTS.txt": "edbc22c896512ade601bbb824752d88a05a8f309f9efdc77952e96e35b5124cf",
+    "experiments/06-combined/qwen3-1.7B/evidence/summary.json": "8160929a978298b390e8a767b9570a272baf71b3113e34182ed2b8f2aa1d22cd",
+    "experiments/06-combined/qwen3-1.7B/evidence/replication-metrics.json": "01813390339d7299c5f84bfb5669f3a9322fe58fc0f38bab55e850d7cdb75174",
+    "experiments/06-combined/qwen3-1.7B/RESULTS.txt": "70ea9c05fa49de81568e24783d408af166663dd34875c32d706288042ce1779e",
+    "experiments/10-cache-overhead/qwen3-1.7B/evidence/summary.json": "4fa63adfdd269e9032f8aae5f6d3b8a29fbc8f1e682e57b3a2cc4d22dce3b9d5",
+    "experiments/10-cache-overhead/qwen3-1.7B/RESULTS.txt": "bc17ba7519fdf45a8aa767566f966245bbdae0bd0a097bb6f8bee961c710440c"
   },
   "notes": "No new model runs. Missing model/control comparisons remain explicitly unmeasured."
 }

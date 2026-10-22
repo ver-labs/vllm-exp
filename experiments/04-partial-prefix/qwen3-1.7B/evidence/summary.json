@@ -1,0 +1,2052 @@
+{
+  "experiment": "04-partial-prefix",
+  "diagnostics": [
+    {
+      "label": "diagnostic",
+      "probe": {
+        "source_token_ids": [
+          785,
+          6733,
+          7424,
+          2311,
+          40062,
+          323,
+          34610,
+          3613,
+          311,
+          6530,
+          1105,
+          13,
+          576,
+          6733,
+          7424,
+          2311,
+          40062,
+          323,
+          34610,
+          3613,
+          311,
+          6530,
+          1105,
+          13,
+          576,
+          6733,
+          7424,
+          2311,
+          40062,
+          323,
+          34610,
+          7414
+        ],
+        "target_token_ids": [
+          785,
+          6733,
+          7424,
+          2311,
+          40062,
+          323,
+          34610,
+          3613,
+          311,
+          6530,
+          1105,
+          13,
+          576,
+          6733,
+          7424,
+          2311,
+          40062,
+          323,
+          34610,
+          3613,
+          311,
+          6530,
+          1105,
+          13,
+          576,
+          6733,
+          7424,
+          2311,
+          40062,
+          323,
+          34610,
+          2308
+        ],
+        "source": {
+          "usage": {
+            "prompt_tokens": 32,
+            "total_tokens": 33,
+            "completion_tokens": 1,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "created_cache_tokens": null,
+              "multimodal_tokens": null
+            },
+            "completion_tokens_details": null
+          },
+          "text": ",",
+          "total_ms": 207.89129100739956
+        },
+        "reused": {
+          "usage": {
+            "prompt_tokens": 32,
+            "total_tokens": 40,
+            "completion_tokens": 8,
+            "prompt_tokens_details": {
+              "cached_tokens": 31,
+              "created_cache_tokens": null,
+              "multimodal_tokens": null
+            },
+            "completion_tokens_details": null
+          },
+          "text": ", the library records book reservations and reminds",
+          "total_ms": 280.3919999860227
+        },
+        "cold": {
+          "usage": {
+            "prompt_tokens": 32,
+            "total_tokens": 40,
+            "completion_tokens": 8,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "created_cache_tokens": null,
+              "multimodal_tokens": null
+            },
+            "completion_tokens_details": null
+          },
+          "text": ", the library records book reservations and reminds",
+          "total_ms": 401.9690412096679
+        },
+        "expected_reused_tokens": 31,
+        "answers_identical": true
+      },
+      "variant": "partial",
+      "mode": "trace",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/batches-20261022-220520/diagnostic-partial-trace.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261022-220541-880539.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/batches-20261022-220520/diagnostic-partial-trace-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/batches-20261022-220520/diagnostic-partial-trace-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/partial/server-trace-wjKxLW",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 43343.8,
+        "output_tokens_per_second": 36.91,
+        "requests_per_second": 0.577,
+        "first_text_ms": {
+          "median": 23795.76,
+          "p95_nearest_rank": 35844.94
+        },
+        "total_ms": {
+          "median": 27855.82,
+          "p95_nearest_rank": 39655.82
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 43503.88,
+        "output_tokens_per_second": 45.61,
+        "requests_per_second": 0.644,
+        "first_text_ms": {
+          "median": 19893.04,
+          "p95_nearest_rank": 35844.94
+        },
+        "total_ms": {
+          "median": 23841.76,
+          "p95_nearest_rank": 39655.82
+        }
+      },
+      "trace_analysis": {
+        "server_policy": "fcfs",
+        "eviction_policy": "vllm",
+        "evicted_cached_blocks": 108,
+        "preemptions": 0,
+        "max_candidates_waiting": 25,
+        "candidate_reorders": [],
+        "candidate_cache_scores": {},
+        "candidate_admission_order": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "O",
+          "N",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y"
+        ],
+        "protected_fcfs_head": [],
+        "waiting_time_safeguard_count": 0
+      },
+      "nonprefix_totals": {},
+      "sha256": "91b245e452ea9bd4f938e992bc7117a721350cad6eede3ab9b83fbd1e3306b69"
+    },
+    {
+      "label": "diagnostic",
+      "probe": {
+        "source_token_ids": [
+          785,
+          6733,
+          7424,
+          2311,
+          40062,
+          323,
+          34610,
+          3613,
+          311,
+          6530,
+          1105,
+          13,
+          576,
+          6733,
+          7424,
+          2311,
+          40062,
+          323,
+          34610,
+          3613,
+          311,
+          6530,
+          1105,
+          13,
+          576,
+          6733,
+          7424,
+          2311,
+          40062,
+          323,
+          34610,
+          7414
+        ],
+        "target_token_ids": [
+          785,
+          6733,
+          7424,
+          2311,
+          40062,
+          323,
+          34610,
+          3613,
+          311,
+          6530,
+          1105,
+          13,
+          576,
+          6733,
+          7424,
+          2311,
+          40062,
+          323,
+          34610,
+          3613,
+          311,
+          6530,
+          1105,
+          13,
+          576,
+          6733,
+          7424,
+          2311,
+          40062,
+          323,
+          34610,
+          2308
+        ],
+        "source": {
+          "usage": {
+            "prompt_tokens": 32,
+            "total_tokens": 33,
+            "completion_tokens": 1,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "created_cache_tokens": null,
+              "multimodal_tokens": null
+            },
+            "completion_tokens_details": null
+          },
+          "text": ",",
+          "total_ms": 64.26166696473956
+        },
+        "reused": {
+          "usage": {
+            "prompt_tokens": 32,
+            "total_tokens": 40,
+            "completion_tokens": 8,
+            "prompt_tokens_details": {
+              "cached_tokens": 16,
+              "created_cache_tokens": null,
+              "multimodal_tokens": null
+            },
+            "completion_tokens_details": null
+          },
+          "text": ", the library records book reservations and reminds",
+          "total_ms": 354.37508299946785
+        },
+        "cold": {
+          "usage": {
+            "prompt_tokens": 32,
+            "total_tokens": 40,
+            "completion_tokens": 8,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "created_cache_tokens": null,
+              "multimodal_tokens": null
+            },
+            "completion_tokens_details": null
+          },
+          "text": ", the library records book reservations and reminds",
+          "total_ms": 421.71845817938447
+        },
+        "expected_reused_tokens": 16,
+        "answers_identical": true
+      },
+      "variant": "baseline",
+      "mode": "trace",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/batches-20261022-220520/diagnostic-baseline-trace.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261022-220652-973201.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/batches-20261022-220520/diagnostic-baseline-trace-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/batches-20261022-220520/diagnostic-baseline-trace-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/baseline/server-trace-uM8PrB",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 43171.11,
+        "output_tokens_per_second": 37.06,
+        "requests_per_second": 0.579,
+        "first_text_ms": {
+          "median": 22855.53,
+          "p95_nearest_rank": 35253.29
+        },
+        "total_ms": {
+          "median": 26820.73,
+          "p95_nearest_rank": 39352.94
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 43358.3,
+        "output_tokens_per_second": 45.76,
+        "requests_per_second": 0.646,
+        "first_text_ms": {
+          "median": 19151.4,
+          "p95_nearest_rank": 35253.29
+        },
+        "total_ms": {
+          "median": 22921.07,
+          "p95_nearest_rank": 39352.94
+        }
+      },
+      "trace_analysis": {
+        "server_policy": "fcfs",
+        "eviction_policy": "vllm",
+        "evicted_cached_blocks": 107,
+        "preemptions": 0,
+        "max_candidates_waiting": 25,
+        "candidate_reorders": [],
+        "candidate_cache_scores": {},
+        "candidate_admission_order": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y"
+        ],
+        "protected_fcfs_head": [],
+        "waiting_time_safeguard_count": 0
+      },
+      "nonprefix_totals": {},
+      "sha256": "eb69781b5d1d8e45d4a38f56b8d051b3be856f58f032c8eb1debc05c7a46db02"
+    },
+    {
+      "label": "diagnostic",
+      "probe": {
+        "source_token_ids": [
+          785,
+          6733,
+          7424,
+          2311,
+          40062,
+          323,
+          34610,
+          3613,
+          311,
+          6530,
+          1105,
+          13,
+          576,
+          6733,
+          7424,
+          2311,
+          40062,
+          323,
+          34610,
+          3613,
+          311,
+          6530,
+          1105,
+          13,
+          576,
+          6733,
+          7424,
+          2311,
+          40062,
+          323,
+          34610,
+          7414
+        ],
+        "target_token_ids": [
+          785,
+          6733,
+          7424,
+          2311,
+          40062,
+          323,
+          34610,
+          3613,
+          311,
+          6530,
+          1105,
+          13,
+          576,
+          6733,
+          7424,
+          2311,
+          40062,
+          323,
+          34610,
+          3613,
+          311,
+          6530,
+          1105,
+          13,
+          576,
+          6733,
+          7424,
+          2311,
+          40062,
+          323,
+          34610,
+          2308
+        ],
+        "source": {
+          "usage": {
+            "prompt_tokens": 32,
+            "total_tokens": 33,
+            "completion_tokens": 1,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "created_cache_tokens": null,
+              "multimodal_tokens": null
+            },
+            "completion_tokens_details": null
+          },
+          "text": ",",
+          "total_ms": 1521.656499709934
+        },
+        "reused": {
+          "usage": {
+            "prompt_tokens": 32,
+            "total_tokens": 40,
+            "completion_tokens": 8,
+            "prompt_tokens_details": {
+              "cached_tokens": 16,
+              "created_cache_tokens": null,
+              "multimodal_tokens": null
+            },
+            "completion_tokens_details": null
+          },
+          "text": ", the library records book reservations and reminds",
+          "total_ms": 293.1834999471903
+        },
+        "cold": {
+          "usage": {
+            "prompt_tokens": 32,
+            "total_tokens": 40,
+            "completion_tokens": 8,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "created_cache_tokens": null,
+              "multimodal_tokens": null
+            },
+            "completion_tokens_details": null
+          },
+          "text": ", the library records book reservations and reminds",
+          "total_ms": 442.66016595065594
+        },
+        "expected_reused_tokens": 16,
+        "answers_identical": true
+      },
+      "variant": "fine_hash",
+      "mode": "trace",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/batches-20261022-220520/diagnostic-fine_hash-trace.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261022-220819-691609.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/batches-20261022-220520/diagnostic-fine_hash-trace-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/batches-20261022-220520/diagnostic-fine_hash-trace-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/fine_hash/server-trace-52sC0k",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 46445.53,
+        "output_tokens_per_second": 34.45,
+        "requests_per_second": 0.538,
+        "first_text_ms": {
+          "median": 26254.94,
+          "p95_nearest_rank": 38642.82
+        },
+        "total_ms": {
+          "median": 30215.45,
+          "p95_nearest_rank": 42656.81
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 46712.3,
+        "output_tokens_per_second": 42.47,
+        "requests_per_second": 0.599,
+        "first_text_ms": {
+          "median": 21807.83,
+          "p95_nearest_rank": 38642.82
+        },
+        "total_ms": {
+          "median": 26327.24,
+          "p95_nearest_rank": 42656.81
+        }
+      },
+      "trace_analysis": {
+        "server_policy": "fcfs",
+        "eviction_policy": "vllm",
+        "evicted_cached_blocks": 107,
+        "preemptions": 0,
+        "max_candidates_waiting": 25,
+        "candidate_reorders": [],
+        "candidate_cache_scores": {},
+        "candidate_admission_order": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y"
+        ],
+        "protected_fcfs_head": [],
+        "waiting_time_safeguard_count": 0
+      },
+      "nonprefix_totals": {},
+      "sha256": "4aedf405084ada0b04f09da97e5ee11ca03b5296d03bcffe939f3e11591134b0"
+    }
+  ],
+  "runs": [
+    {
+      "label": 1,
+      "probe": null,
+      "variant": "baseline",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/batches-20261022-220520/1-baseline-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261022-220933-765370.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/batches-20261022-220520/1-baseline-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/batches-20261022-220520/1-baseline-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/baseline/server-bench-CMUvWs",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 44314.08,
+        "output_tokens_per_second": 36.11,
+        "requests_per_second": 0.564,
+        "first_text_ms": {
+          "median": 24445.88,
+          "p95_nearest_rank": 37059.49
+        },
+        "total_ms": {
+          "median": 28359.82,
+          "p95_nearest_rank": 40794.2
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 44580.36,
+        "output_tokens_per_second": 44.5,
+        "requests_per_second": 0.628,
+        "first_text_ms": {
+          "median": 20612.51,
+          "p95_nearest_rank": 37059.49
+        },
+        "total_ms": {
+          "median": 24514.17,
+          "p95_nearest_rank": 40794.2
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "6eb57cde98ea70c17b72f1d8fb018a6d7ff243b49432ad0bade81ff03f74f6a4"
+    },
+    {
+      "label": 1,
+      "probe": null,
+      "variant": "fine_hash",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/batches-20261022-220520/1-fine_hash-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261022-221043-391211.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/batches-20261022-220520/1-fine_hash-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/batches-20261022-220520/1-fine_hash-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/fine_hash/server-bench-ciK228",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 43348.81,
+        "output_tokens_per_second": 36.91,
+        "requests_per_second": 0.577,
+        "first_text_ms": {
+          "median": 23828.09,
+          "p95_nearest_rank": 35735.34
+        },
+        "total_ms": {
+          "median": 27763.26,
+          "p95_nearest_rank": 39620.8
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 43594.43,
+        "output_tokens_per_second": 45.51,
+        "requests_per_second": 0.642,
+        "first_text_ms": {
+          "median": 19828.96,
+          "p95_nearest_rank": 35735.34
+        },
+        "total_ms": {
+          "median": 23894.74,
+          "p95_nearest_rank": 39620.8
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "f024270341b44db451d11933168ec30fb178e05fe374aa1e752080c0207bea28"
+    },
+    {
+      "label": 1,
+      "probe": null,
+      "variant": "partial",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/batches-20261022-220520/1-partial-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261022-221151-966259.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/batches-20261022-220520/1-partial-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/batches-20261022-220520/1-partial-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/partial/server-bench-Q6b516",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 44686.26,
+        "output_tokens_per_second": 35.81,
+        "requests_per_second": 0.559,
+        "first_text_ms": {
+          "median": 23759.07,
+          "p95_nearest_rank": 36652.77
+        },
+        "total_ms": {
+          "median": 27880.75,
+          "p95_nearest_rank": 40957.57
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 44937.45,
+        "output_tokens_per_second": 44.15,
+        "requests_per_second": 0.623,
+        "first_text_ms": {
+          "median": 19832.28,
+          "p95_nearest_rank": 36652.77
+        },
+        "total_ms": {
+          "median": 23790.22,
+          "p95_nearest_rank": 40957.57
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "5428c72e6246e4ea1681443b7fc58427c85b4c581effc5ac66025487eedd0250"
+    },
+    {
+      "label": 2,
+      "probe": null,
+      "variant": "fine_hash",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/batches-20261022-220520/2-fine_hash-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261022-221302-011102.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/batches-20261022-220520/2-fine_hash-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/batches-20261022-220520/2-fine_hash-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/fine_hash/server-bench-oRz7ry",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 43596.53,
+        "output_tokens_per_second": 36.7,
+        "requests_per_second": 0.573,
+        "first_text_ms": {
+          "median": 23801.41,
+          "p95_nearest_rank": 35979.29
+        },
+        "total_ms": {
+          "median": 27774.41,
+          "p95_nearest_rank": 39884.46
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 43706.0,
+        "output_tokens_per_second": 45.39,
+        "requests_per_second": 0.641,
+        "first_text_ms": {
+          "median": 19951.59,
+          "p95_nearest_rank": 35979.29
+        },
+        "total_ms": {
+          "median": 23866.98,
+          "p95_nearest_rank": 39884.46
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "f2666655aa11f2f70be964e700f9a26492c1837679fb519a59dd0a150774abea"
+    },
+    {
+      "label": 2,
+      "probe": null,
+      "variant": "partial",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/batches-20261022-220520/2-partial-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261022-221411-354688.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/batches-20261022-220520/2-partial-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/batches-20261022-220520/2-partial-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/partial/server-bench-fPAAAT",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 43649.54,
+        "output_tokens_per_second": 36.66,
+        "requests_per_second": 0.573,
+        "first_text_ms": {
+          "median": 23841.7,
+          "p95_nearest_rank": 35705.86
+        },
+        "total_ms": {
+          "median": 27761.82,
+          "p95_nearest_rank": 39754.41
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 43908.03,
+        "output_tokens_per_second": 45.19,
+        "requests_per_second": 0.638,
+        "first_text_ms": {
+          "median": 20041.89,
+          "p95_nearest_rank": 35705.86
+        },
+        "total_ms": {
+          "median": 23874.58,
+          "p95_nearest_rank": 39754.41
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "e01d1ae8d45994c09ae10365e234f8c37e57b82e5ac86ae0c7495d3fa325d0a1"
+    },
+    {
+      "label": 2,
+      "probe": null,
+      "variant": "baseline",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/batches-20261022-220520/2-baseline-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261022-221520-710594.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/batches-20261022-220520/2-baseline-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/batches-20261022-220520/2-baseline-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/baseline/server-bench-ekk5X3",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 44142.48,
+        "output_tokens_per_second": 36.25,
+        "requests_per_second": 0.566,
+        "first_text_ms": {
+          "median": 24241.14,
+          "p95_nearest_rank": 36378.35
+        },
+        "total_ms": {
+          "median": 28083.59,
+          "p95_nearest_rank": 40319.0
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 44361.27,
+        "output_tokens_per_second": 44.72,
+        "requests_per_second": 0.631,
+        "first_text_ms": {
+          "median": 20393.1,
+          "p95_nearest_rank": 36378.35
+        },
+        "total_ms": {
+          "median": 24308.43,
+          "p95_nearest_rank": 40319.0
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "09436230d9ffb4f48931f616b59da2bdece4e313ce201d74f66dd98588bb501f"
+    },
+    {
+      "label": 3,
+      "probe": null,
+      "variant": "partial",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/batches-20261022-220520/3-partial-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261022-221630-601453.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/batches-20261022-220520/3-partial-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/batches-20261022-220520/3-partial-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/partial/server-bench-fr8TRF",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 44624.48,
+        "output_tokens_per_second": 35.85,
+        "requests_per_second": 0.56,
+        "first_text_ms": {
+          "median": 23688.01,
+          "p95_nearest_rank": 36511.04
+        },
+        "total_ms": {
+          "median": 27751.46,
+          "p95_nearest_rank": 40743.7
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 44825.8,
+        "output_tokens_per_second": 44.26,
+        "requests_per_second": 0.625,
+        "first_text_ms": {
+          "median": 19878.32,
+          "p95_nearest_rank": 36511.04
+        },
+        "total_ms": {
+          "median": 23715.32,
+          "p95_nearest_rank": 40743.7
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "137e79b20d512fad82f9c1850ce79f4c779cb1fbfc5653aed33a39c6b09c4ff3"
+    },
+    {
+      "label": 3,
+      "probe": null,
+      "variant": "baseline",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/batches-20261022-220520/3-baseline-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261022-221741-031700.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/batches-20261022-220520/3-baseline-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/batches-20261022-220520/3-baseline-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/baseline/server-bench-sh3WMy",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 46579.76,
+        "output_tokens_per_second": 34.35,
+        "requests_per_second": 0.537,
+        "first_text_ms": {
+          "median": 25357.23,
+          "p95_nearest_rank": 38594.57
+        },
+        "total_ms": {
+          "median": 29868.86,
+          "p95_nearest_rank": 42628.76
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 46832.12,
+        "output_tokens_per_second": 42.36,
+        "requests_per_second": 0.598,
+        "first_text_ms": {
+          "median": 21059.81,
+          "p95_nearest_rank": 38594.57
+        },
+        "total_ms": {
+          "median": 25434.17,
+          "p95_nearest_rank": 42628.76
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "3120b184674fae52147d06cf9582e572a85f9208d212101e8663081dfec49159"
+    },
+    {
+      "label": 3,
+      "probe": null,
+      "variant": "fine_hash",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/batches-20261022-220520/3-fine_hash-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261022-221853-495496.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/batches-20261022-220520/3-fine_hash-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/batches-20261022-220520/3-fine_hash-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/fine_hash/server-bench-fxSPLP",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 42210.72,
+        "output_tokens_per_second": 37.91,
+        "requests_per_second": 0.592,
+        "first_text_ms": {
+          "median": 23349.47,
+          "p95_nearest_rank": 34953.25
+        },
+        "total_ms": {
+          "median": 27204.48,
+          "p95_nearest_rank": 38615.96
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 42475.68,
+        "output_tokens_per_second": 46.71,
+        "requests_per_second": 0.659,
+        "first_text_ms": {
+          "median": 19362.94,
+          "p95_nearest_rank": 34953.25
+        },
+        "total_ms": {
+          "median": 23419.49,
+          "p95_nearest_rank": 38615.96
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "f9f1a30ec2c6ed66c0775e2f94c98fe0149a71b37dbf4f8355af8541b8b07b0e"
+    }
+  ],
+  "complete": true,
+  "manifest": {
+    "model": "Qwen/Qwen3-1.7B",
+    "system": "You are a helpful assistant. Explain clearly and concisely.",
+    "warmup": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. \nSummarize this.",
+    "blockers": {
+      "H1": "For workshop number 1, write a detailed numbered list of forty different household objects. For each object explain its purpose and how it is made. Continue the list without an introduction.",
+      "H2": "For workshop number 2, write a detailed numbered list of forty different household objects. For each object explain its purpose and how it is made. Continue the list without an introduction.",
+      "H3": "For workshop number 3, write a detailed numbered list of forty different household objects. For each object explain its purpose and how it is made. Continue the list without an introduction."
+    },
+    "candidates": {
+      "A": "A coastal research team is studying damage to coral reefs. They record water temperature, rainfall, salinity, and the number of fish at several sites. Volunteers photograph the same reef sections every month. Some sites are close to busy harbours, while others are protected from boats and fishing. The team has a limited budget and wants reliable comparisons across locations. Explain how they should organize the observations and avoid misleading conclusions.",
+      "B": "A city transport team is reviewing bus reliability. Drivers report delays at crowded junctions and passengers report missed connections. The team has arrival records from stops, traffic counts, and anonymous passenger surveys. Some routes serve schools, others serve hospitals, and several share a congested bridge. The city can adjust schedules and stop locations but cannot purchase new buses this year. Explain how the team should choose improvements and measure their effects.",
+      "C": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. \nSuggest three improvements to the reservation process.",
+      "D": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. \nSuggest three ways to reduce uncollected reservations.",
+      "E": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. A separate branch instead uses paper cards and telephone calls. It has two volunteers each afternoon and no online member accounts. Suggest three practical improvements for this branch.",
+      "F": "A beekeeper is tracking how bees pollinate flowering plants. The team has limited funding and wants a practical plan. It can collect observations weekly but cannot hire more staff. Explain three useful steps, how to compare the results, and one common mistake to avoid when interpreting the observations.",
+      "G": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. \nSuggest three improvements to reservation reminder emails.",
+      "H": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. A separate branch uses paper cards and telephone calls. It has two volunteers each afternoon and no online accounts. Explain how volunteers could organize the paper waiting list.",
+      "I": "Astronomers are observing gas clouds where new stars are forming. The team has limited funding and wants a practical plan. It can collect observations weekly but cannot hire more staff. Explain three useful steps, how to compare the results, and one common mistake to avoid when interpreting the observations.",
+      "J": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. \nExplain how staff should handle cancelled reservations.",
+      "K": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. A separate branch uses paper cards and telephone calls. It has two volunteers each afternoon and no online accounts. Suggest three ways to improve telephone reminders.",
+      "L": "An apartment building wants to turn kitchen scraps into compost. The team has limited funding and wants a practical plan. It can collect observations weekly but cannot hire more staff. Explain three useful steps, how to compare the results, and one common mistake to avoid when interpreting the observations.",
+      "M": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. \nSuggest three useful weekly measurements for the library.",
+      "N": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. A separate branch uses paper cards and telephone calls. It has two volunteers each afternoon and no online accounts. Explain how volunteers should record cancellations.",
+      "O": "Geologists are studying earthquakes along an active fault line. The team has limited funding and wants a practical plan. It can collect observations weekly but cannot hire more staff. Explain three useful steps, how to compare the results, and one common mistake to avoid when interpreting the observations.",
+      "P": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. \nExplain how the library can support members without internet access.",
+      "Q": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. A separate branch uses paper cards and telephone calls. It has two volunteers each afternoon and no online accounts. Suggest three ways to make collection times convenient.",
+      "R": "A school science club is comparing rechargeable battery designs. The team has limited funding and wants a practical plan. It can collect observations weekly but cannot hire more staff. Explain three useful steps, how to compare the results, and one common mistake to avoid when interpreting the observations.",
+      "S": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. \nSuggest three ways to make collection deadlines clearer.",
+      "T": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. A separate branch uses paper cards and telephone calls. It has two volunteers each afternoon and no online accounts. Explain how staff can prevent duplicate paper reservations.",
+      "U": "A village is choosing water filters for its community buildings. The team has limited funding and wants a practical plan. It can collect observations weekly but cannot hire more staff. Explain three useful steps, how to compare the results, and one common mistake to avoid when interpreting the observations.",
+      "V": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. \nExplain how staff can investigate repeated collection delays.",
+      "W": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. A separate branch uses paper cards and telephone calls. It has two volunteers each afternoon and no online accounts. Suggest simple measurements for the branch to review weekly.",
+      "X": "Traffic planners are investigating congestion at a busy crossroads. The team has limited funding and wants a practical plan. It can collect observations weekly but cannot hire more staff. Explain three useful steps, how to compare the results, and one common mistake to avoid when interpreting the observations.",
+      "Y": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. \nSuggest a simple plan to evaluate changes to the service."
+    },
+    "candidate_order": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J",
+      "K",
+      "L",
+      "M",
+      "N",
+      "O",
+      "P",
+      "Q",
+      "R",
+      "S",
+      "T",
+      "U",
+      "V",
+      "W",
+      "X",
+      "Y"
+    ],
+    "candidate_interval_ms": 20.0,
+    "candidate_output_tokens": 64,
+    "blocker_output_tokens": 128,
+    "ignore_eos": true,
+    "maximum_client_concurrency": 28
+  },
+  "aggregate": {
+    "baseline": {
+      "candidate_duration_median_ms": 44314.08,
+      "candidate_duration_range_ms": [
+        44142.48,
+        46579.76
+      ],
+      "throughput_median_tokens_s": 36.11,
+      "median_first_text_ms": 24445.88,
+      "median_request_latency_ms": 28359.82,
+      "cached_tokens_per_run": [
+        2432,
+        2432,
+        2432
+      ]
+    },
+    "fine_hash": {
+      "candidate_duration_median_ms": 43348.81,
+      "candidate_duration_range_ms": [
+        42210.72,
+        43596.53
+      ],
+      "throughput_median_tokens_s": 36.91,
+      "median_first_text_ms": 23801.41,
+      "median_request_latency_ms": 27763.26,
+      "cached_tokens_per_run": [
+        2432,
+        2432,
+        2432
+      ]
+    },
+    "partial": {
+      "candidate_duration_median_ms": 44624.48,
+      "candidate_duration_range_ms": [
+        43649.54,
+        44686.26
+      ],
+      "throughput_median_tokens_s": 35.85,
+      "median_first_text_ms": 23759.07,
+      "median_request_latency_ms": 27761.82,
+      "cached_tokens_per_run": [
+        2563,
+        2563,
+        2563
+      ]
+    }
+  },
+  "per_request": {
+    "baseline": {
+      "A": {
+        "answers": [
+          "To ensure reliable comparisons and avoid misleading conclusions, the coastal research team should organize their observations in a structured and systematic way. Here's how they can do it:\n\n### 1. **Use a Consistent Sampling Protocol**\n   - **Standardize the timing and frequency of observations**: Photograph the same reef sections **every month",
+          "To ensure reliable comparisons and avoid misleading conclusions, the coastal research team should organize their observations in a structured and systematic way. Here's how they can do it:\n\n### 1. **Use a Consistent Sampling Protocol**\n   - **Standardize the timing and frequency of observations**: Photograph the same reef sections **every month",
+          "To ensure reliable comparisons and avoid misleading conclusions, the coastal research team should organize their observations in a structured and systematic way. Here's how they can do it:\n\n### 1. **Use a Consistent Sampling Protocol**\n   - **Standardize the timing and frequency of observations**: Photograph the same reef sections **every month"
+        ],
+        "cached_tokens": [
+          16,
+          16,
+          16
+        ]
+      },
+      "B": {
+        "answers": [
+          "To effectively evaluate and improve bus reliability in the city, the transport team should follow a structured approach that combines data analysis with strategic decision-making. Here's how they can choose improvements and measure their effects:\n\n---\n\n### **1. Identify Key Performance Indicators (KPIs)**\nFirst, define the metrics that will measure",
+          "To effectively evaluate and improve bus reliability in the city, the transport team should follow a structured approach that combines data analysis with strategic decision-making. Here's how they can choose improvements and measure their effects:\n\n---\n\n### **1. Identify Key Performance Indicators (KPIs)**\nFirst, define the metrics that will measure",
+          "To effectively evaluate and improve bus reliability in the city, the transport team should follow a structured approach that combines data analysis with strategic decision-making. Here's how they can choose improvements and measure their effects:\n\n---\n\n### **1. Identify Key Performance Indicators (KPIs)**\nFirst, define the metrics that will measure"
+        ],
+        "cached_tokens": [
+          16,
+          16,
+          16
+        ]
+      },
+      "C": {
+        "answers": [
+          "Here are three improvements to the reservation process that align with the library's goals of reducing waiting times and uncollected books, while staying within budget:\n\n1. **Implement a Real-Time Reservation Status Update System**  \n   Introduce a real-time dashboard or notification system that updates members on the status of their reservations (e",
+          "Here are three improvements to the reservation process that align with the library's goals of reducing waiting times and uncollected books, while staying within budget:\n\n1. **Implement a Real-Time Reservation Status Update System**  \n   Introduce a real-time dashboard or notification system that updates members on the status of their reservations (e",
+          "Here are three improvements to the reservation process that align with the library's goals of reducing waiting times and uncollected books, while staying within budget:\n\n1. **Implement a Real-Time Reservation Status Update System**  \n   Introduce a real-time dashboard or notification system that updates members on the status of their reservations (e"
+        ],
+        "cached_tokens": [
+          176,
+          176,
+          176
+        ]
+      },
+      "D": {
+        "answers": [
+          "Here are three ways to reduce uncollected reservations, based on the library's current system and budget constraints:\n\n1. **Improve Communication and Reminder Frequency**  \n   - Increase the frequency of email reminders for expiring reservations. This can help members cancel or update their reservations before they become uncollected.\n\n2.",
+          "Here are three ways to reduce uncollected reservations, based on the library's current system and budget constraints:\n\n1. **Improve Communication and Reminder Frequency**  \n   - Increase the frequency of email reminders for expiring reservations. This can help members cancel or update their reservations before they become uncollected.\n\n2.",
+          "Here are three ways to reduce uncollected reservations, based on the library's current system and budget constraints:\n\n1. **Improve Communication and Reminder Frequency**  \n   - Increase the frequency of email reminders for expiring reservations. This can help members cancel or update their reservations before they become uncollected.\n\n2."
+        ],
+        "cached_tokens": [
+          192,
+          192,
+          192
+        ]
+      },
+      "E": {
+        "answers": [
+          "Here are three practical improvements for the library's reservation service:\n\n1. **Implement an Online Reservation System**:  \n   Introduce a user-friendly online platform where members can check availability, place reservations, and manage their waiting lists. This would improve accessibility and reduce the need for in-person interactions.\n\n2. **Introduce a",
+          "Here are three practical improvements for the library's reservation service:\n\n1. **Implement an Online Reservation System**:  \n   Introduce a user-friendly online platform where members can check availability, place reservations, and manage their waiting lists. This would improve accessibility and reduce the need for in-person interactions.\n\n2. **Introduce a",
+          "Here are three practical improvements for the library's reservation service:\n\n1. **Implement an Online Reservation System**:  \n   Introduce a user-friendly online platform where members can check availability, place reservations, and manage their waiting lists. This would improve accessibility and reduce the need for in-person interactions.\n\n2. **Introduce a"
+        ],
+        "cached_tokens": [
+          64,
+          64,
+          64
+        ]
+      },
+      "F": {
+        "answers": [
+          "Here's a practical plan for the beekeeper to track pollination using limited resources:\n\n---\n\n### **Step 1: Set Up Observation Sites**\n- **Choose 5-10 flowering plant species** that are commonly pollinated by bees.\n- **Mark each site with a unique identifier** (e.g., number",
+          "Here's a practical plan for the beekeeper to track pollination using limited resources:\n\n---\n\n### **Step 1: Set Up Observation Sites**\n- **Choose 5-10 flowering plant species** that are commonly pollinated by bees.\n- **Mark each site with a unique identifier** (e.g., number",
+          "Here's a practical plan for the beekeeper to track pollination using limited resources:\n\n---\n\n### **Step 1: Set Up Observation Sites**\n- **Choose 5-10 flowering plant species** that are commonly pollinated by bees.\n- **Mark each site with a unique identifier** (e.g., number"
+        ],
+        "cached_tokens": [
+          16,
+          16,
+          16
+        ]
+      },
+      "G": {
+        "answers": [
+          "Here are three improvements to reservation reminder emails that can help reduce waiting times and uncollected books while staying within the budget:\n\n1. **Personalized Subject Lines and Greetings**  \n   Use a personalized subject line and greeting (e.g., \"Hi [Name],\") to increase open rates and make the email feel",
+          "Here are three improvements to reservation reminder emails that can help reduce waiting times and uncollected books while staying within the budget:\n\n1. **Personalized Subject Lines and Greetings**  \n   Use a personalized subject line and greeting (e.g., \"Hi [Name],\") to increase open rates and make the email feel",
+          "Here are three improvements to reservation reminder emails that can help reduce waiting times and uncollected books while staying within the budget:\n\n1. **Personalized Subject Lines and Greetings**  \n   Use a personalized subject line and greeting (e.g., \"Hi [Name],\") to increase open rates and make the email feel"
+        ],
+        "cached_tokens": [
+          192,
+          192,
+          192
+        ]
+      },
+      "H": {
+        "answers": [
+          "Volunteers could organize the paper waiting list in the following way:\n\n1. **Create a Waiting List Sheet**:  \n   - Use a physical or digital sheet to record each member's name, contact information, and the title of the book they are waiting for.  \n   - Include a column for the expected return date (",
+          "Volunteers could organize the paper waiting list in the following way:\n\n1. **Create a Waiting List Sheet**:  \n   - Use a physical or digital sheet to record each member's name, contact information, and the title of the book they are waiting for.  \n   - Include a column for the expected return date (",
+          "Volunteers could organize the paper waiting list in the following way:\n\n1. **Create a Waiting List Sheet**:  \n   - Use a physical or digital sheet to record each member's name, contact information, and the title of the book they are waiting for.  \n   - Include a column for the expected return date ("
+        ],
+        "cached_tokens": [
+          64,
+          64,
+          64
+        ]
+      },
+      "I": {
+        "answers": [
+          "Here's a practical plan for astronomers observing gas clouds where new stars are forming, with limited funding and weekly observations:\n\n---\n\n### **Step 1: Plan Weekly Observations with a Fixed Schedule**\n- **Action:** Schedule observations every week on the same day and time to ensure consistency.\n- **Why:** This helps track",
+          "Here's a practical plan for astronomers observing gas clouds where new stars are forming, with limited funding and weekly observations:\n\n---\n\n### **Step 1: Plan Weekly Observations with a Fixed Schedule**\n- **Action:** Schedule observations every week on the same day and time to ensure consistency.\n- **Why:** This helps track",
+          "Here's a practical plan for astronomers observing gas clouds where new stars are forming, with limited funding and weekly observations:\n\n---\n\n### **Step 1: Plan Weekly Observations with a Fixed Schedule**\n- **Action:** Schedule observations every week on the same day and time to ensure consistency.\n- **Why:** This helps track"
+        ],
+        "cached_tokens": [
+          16,
+          16,
+          16
+        ]
+      },
+      "J": {
+        "answers": [
+          "Staff should handle cancelled reservations in the following way:\n\n1. **Acknowledge the cancellation**: Inform the member that their reservation has been cancelled and that their contact details have been updated in the system.\n\n2. **Update the waiting list**: If the member has a waiting list, remove their name from the list (or keep",
+          "Staff should handle cancelled reservations in the following way:\n\n1. **Acknowledge the cancellation**: Inform the member that their reservation has been cancelled and that their contact details have been updated in the system.\n\n2. **Update the waiting list**: If the member has a waiting list, remove their name from the list (or keep",
+          "Staff should handle cancelled reservations in the following way:\n\n1. **Acknowledge the cancellation**: Inform the member that their reservation has been cancelled and that their contact details have been updated in the system.\n\n2. **Update the waiting list**: If the member has a waiting list, remove their name from the list (or keep"
+        ],
+        "cached_tokens": [
+          176,
+          176,
+          176
+        ]
+      },
+      "K": {
+        "answers": [
+          "Here are three ways to improve telephone reminders for the library's reservation service:\n\n1. **Implement a Dedicated Phone Line**: Assign a specific phone line for library reservations to ensure consistent and reliable calls, reducing the risk of missed calls or call quality issues.\n\n2. **Use a Call Center or Dedicated Staff**: Hire a call",
+          "Here are three ways to improve telephone reminders for the library's reservation service:\n\n1. **Implement a Dedicated Phone Line**: Assign a specific phone line for library reservations to ensure consistent and reliable calls, reducing the risk of missed calls or call quality issues.\n\n2. **Use a Call Center or Dedicated Staff**: Hire a call",
+          "Here are three ways to improve telephone reminders for the library's reservation service:\n\n1. **Implement a Dedicated Phone Line**: Assign a specific phone line for library reservations to ensure consistent and reliable calls, reducing the risk of missed calls or call quality issues.\n\n2. **Use a Call Center or Dedicated Staff**: Hire a call"
+        ],
+        "cached_tokens": [
+          96,
+          96,
+          96
+        ]
+      },
+      "L": {
+        "answers": [
+          "Here's a practical plan for turning kitchen scraps into compost with limited funding and weekly observations:\n\n---\n\n### **Step 1: Set Up a Composting System**\n- **Choose a method**: Use a **compost bin** or **heap**. A bin is easier to manage and monitor.\n- **Collect kitchen scraps",
+          "Here's a practical plan for turning kitchen scraps into compost with limited funding and weekly observations:\n\n---\n\n### **Step 1: Set Up a Composting System**\n- **Choose a method**: Use a **compost bin** or **heap**. A bin is easier to manage and monitor.\n- **Collect kitchen scraps",
+          "Here's a practical plan for turning kitchen scraps into compost with limited funding and weekly observations:\n\n---\n\n### **Step 1: Set Up a Composting System**\n- **Choose a method**: Use a **compost bin** or **heap**. A bin is easier to manage and monitor.\n- **Collect kitchen scraps"
+        ],
+        "cached_tokens": [
+          16,
+          16,
+          16
+        ]
+      },
+      "M": {
+        "answers": [
+          "Here are three useful weekly measurements that the library can track to improve its reservation service and reduce waiting times and uncollected books:\n\n1. **Number of Reservations Canceled Weekly**  \n   - This helps assess how well the library is managing cancellations and whether the process is efficient. A high cancellation rate may indicate",
+          "Here are three useful weekly measurements that the library can track to improve its reservation service and reduce waiting times and uncollected books:\n\n1. **Number of Reservations Canceled Weekly**  \n   - This helps assess how well the library is managing cancellations and whether the process is efficient. A high cancellation rate may indicate",
+          "Here are three useful weekly measurements that the library can track to improve its reservation service and reduce waiting times and uncollected books:\n\n1. **Number of Reservations Canceled Weekly**  \n   - This helps assess how well the library is managing cancellations and whether the process is efficient. A high cancellation rate may indicate"
+        ],
+        "cached_tokens": [
+          192,
+          192,
+          192
+        ]
+      },
+      "N": {
+        "answers": [
+          "Volunteers should record cancellations in a clear and organized manner to ensure the reservation system remains accurate and efficient. Here's how they can do it:\n\n1. **Use a Cancellation Log**: Maintain a separate log or spreadsheet to record each cancellation. This log should include:\n   - **Date of cancellation**\n   -",
+          "Volunteers should record cancellations in a clear and organized manner to ensure the reservation system remains accurate and efficient. Here's how they can do it:\n\n1. **Use a Cancellation Log**: Maintain a separate log or spreadsheet to record each cancellation. This log should include:\n   - **Date of cancellation**\n   -",
+          "Volunteers should record cancellations in a clear and organized manner to ensure the reservation system remains accurate and efficient. Here's how they can do it:\n\n1. **Use a Cancellation Log**: Maintain a separate log or spreadsheet to record each cancellation. This log should include:\n   - **Date of cancellation**\n   -"
+        ],
+        "cached_tokens": [
+          96,
+          96,
+          96
+        ]
+      },
+      "O": {
+        "answers": [
+          "Here's a practical plan for geologists studying earthquakes along an active fault line with limited funding:\n\n---\n\n### **Step 1: Set Up a Weekly Observation Log**\n- **Action:** Use a simple, portable device or paper form to record daily observations of the fault line.\n- **What to Record:** \n  -",
+          "Here's a practical plan for geologists studying earthquakes along an active fault line with limited funding:\n\n---\n\n### **Step 1: Set Up a Weekly Observation Log**\n- **Action:** Use a simple, portable device or paper form to record daily observations of the fault line.\n- **What to Record:** \n  -",
+          "Here's a practical plan for geologists studying earthquakes along an active fault line with limited funding:\n\n---\n\n### **Step 1: Set Up a Weekly Observation Log**\n- **Action:** Use a simple, portable device or paper form to record daily observations of the fault line.\n- **What to Record:** \n  -"
+        ],
+        "cached_tokens": [
+          16,
+          16,
+          16
+        ]
+      },
+      "P": {
+        "answers": [
+          "To support members without internet access, the library can implement the following strategies:\n\n1. **Provide Offline Access**: Offer a downloadable version of the library\u2019s catalogue or reservation system that can be used on devices without internet, such as tablets or smartphones.\n\n2. **Offline Reservation System**: Allow members to make reservations using a physical",
+          "To support members without internet access, the library can implement the following strategies:\n\n1. **Provide Offline Access**: Offer a downloadable version of the library\u2019s catalogue or reservation system that can be used on devices without internet, such as tablets or smartphones.\n\n2. **Offline Reservation System**: Allow members to make reservations using a physical",
+          "To support members without internet access, the library can implement the following strategies:\n\n1. **Provide Offline Access**: Offer a downloadable version of the library\u2019s catalogue or reservation system that can be used on devices without internet, such as tablets or smartphones.\n\n2. **Offline Reservation System**: Allow members to make reservations using a physical"
+        ],
+        "cached_tokens": [
+          192,
+          192,
+          192
+        ]
+      },
+      "Q": {
+        "answers": [
+          "Here are three ways to make collection times more convenient for library users:\n\n1. **Implement an Online Reservation System**:  \n   Provide a user-friendly online platform where members can reserve books, check availability, and manage their waiting lists. This reduces the need for in-person visits and allows members to track their reservations from home.\n\n",
+          "Here are three ways to make collection times more convenient for library users:\n\n1. **Implement an Online Reservation System**:  \n   Provide a user-friendly online platform where members can reserve books, check availability, and manage their waiting lists. This reduces the need for in-person visits and allows members to track their reservations from home.\n\n",
+          "Here are three ways to make collection times more convenient for library users:\n\n1. **Implement an Online Reservation System**:  \n   Provide a user-friendly online platform where members can reserve books, check availability, and manage their waiting lists. This reduces the need for in-person visits and allows members to track their reservations from home.\n\n"
+        ],
+        "cached_tokens": [
+          96,
+          96,
+          96
+        ]
+      },
+      "R": {
+        "answers": [
+          "Here's a practical plan for the science club to compare rechargeable battery designs with limited funding and staff:\n\n### **Step 1: Design and Prepare the Batteries**\n- **Create two groups** of batteries: one with design A and one with design B.\n- Ensure both groups are identical in all aspects except for",
+          "Here's a practical plan for the science club to compare rechargeable battery designs with limited funding and staff:\n\n### **Step 1: Design and Prepare the Batteries**\n- **Create two groups** of batteries: one with design A and one with design B.\n- Ensure both groups are identical in all aspects except for",
+          "Here's a practical plan for the science club to compare rechargeable battery designs with limited funding and staff:\n\n### **Step 1: Design and Prepare the Batteries**\n- **Create two groups** of batteries: one with design A and one with design B.\n- Ensure both groups are identical in all aspects except for"
+        ],
+        "cached_tokens": [
+          16,
+          16,
+          16
+        ]
+      },
+      "S": {
+        "answers": [
+          "Here are three ways to make collection deadlines clearer for the library's reservation service:\n\n1. **Implement a Clear, Visual Deadline Indicator**: Add a prominent, easily visible deadline (e.g., a clock or calendar icon) next to each reservation in the online system. This helps members quickly understand when their book is due to",
+          "Here are three ways to make collection deadlines clearer for the library's reservation service:\n\n1. **Implement a Clear, Visual Deadline Indicator**: Add a prominent, easily visible deadline (e.g., a clock or calendar icon) next to each reservation in the online system. This helps members quickly understand when their book is due to",
+          "Here are three ways to make collection deadlines clearer for the library's reservation service:\n\n1. **Implement a Clear, Visual Deadline Indicator**: Add a prominent, easily visible deadline (e.g., a clock or calendar icon) next to each reservation in the online system. This helps members quickly understand when their book is due to"
+        ],
+        "cached_tokens": [
+          192,
+          192,
+          192
+        ]
+      },
+      "T": {
+        "answers": [
+          "To prevent duplicate paper reservations in the town library, staff can follow these steps:\n\n1. **Require a Signature or ID**: When a member requests a reservation, staff should ask for a signature or ID to confirm the member's identity. This helps ensure that only authorized individuals can make reservations.\n\n2. **Use a Reservation",
+          "To prevent duplicate paper reservations in the town library, staff can follow these steps:\n\n1. **Require a Signature or ID**: When a member requests a reservation, staff should ask for a signature or ID to confirm the member's identity. This helps ensure that only authorized individuals can make reservations.\n\n2. **Use a Reservation",
+          "To prevent duplicate paper reservations in the town library, staff can follow these steps:\n\n1. **Require a Signature or ID**: When a member requests a reservation, staff should ask for a signature or ID to confirm the member's identity. This helps ensure that only authorized individuals can make reservations.\n\n2. **Use a Reservation"
+        ],
+        "cached_tokens": [
+          96,
+          96,
+          96
+        ]
+      },
+      "U": {
+        "answers": [
+          "Here's a practical plan for the village to choose water filters with limited funding and weekly observations:\n\n---\n\n### **Step 1: Define Objectives and Criteria**\n- **Goal:** Select a water filter that provides safe drinking water at the lowest cost.\n- **Criteria:** \n  - Cost (initial purchase + maintenance)\n",
+          "Here's a practical plan for the village to choose water filters with limited funding and weekly observations:\n\n---\n\n### **Step 1: Define Objectives and Criteria**\n- **Goal:** Select a water filter that provides safe drinking water at the lowest cost.\n- **Criteria:** \n  - Cost (initial purchase + maintenance)\n",
+          "Here's a practical plan for the village to choose water filters with limited funding and weekly observations:\n\n---\n\n### **Step 1: Define Objectives and Criteria**\n- **Goal:** Select a water filter that provides safe drinking water at the lowest cost.\n- **Criteria:** \n  - Cost (initial purchase + maintenance)\n"
+        ],
+        "cached_tokens": [
+          16,
+          16,
+          16
+        ]
+      },
+      "V": {
+        "answers": [
+          "To investigate repeated collection delays, staff can follow these steps:\n\n1. **Review Reservation Counts**: Check how many reservations are being placed and how many are being canceled. If there are more reservations than available copies, this could contribute to delays.\n\n2. **Analyze Waiting List Orders**: Ensure that waiting lists are ordered by",
+          "To investigate repeated collection delays, staff can follow these steps:\n\n1. **Review Reservation Counts**: Check how many reservations are being placed and how many are being canceled. If there are more reservations than available copies, this could contribute to delays.\n\n2. **Analyze Waiting List Orders**: Ensure that waiting lists are ordered by",
+          "To investigate repeated collection delays, staff can follow these steps:\n\n1. **Review Reservation Counts**: Check how many reservations are being placed and how many are being canceled. If there are more reservations than available copies, this could contribute to delays.\n\n2. **Analyze Waiting List Orders**: Ensure that waiting lists are ordered by"
+        ],
+        "cached_tokens": [
+          192,
+          192,
+          192
+        ]
+      },
+      "W": {
+        "answers": [
+          "Here are some simple, weekly measurements the library can track to evaluate the performance and effectiveness of its reservation service:\n\n### 1. **Number of Reservations Made**\n   - Track how many times members request a reservation.\n   - This helps assess demand and usage patterns.\n\n### 2. **Number of Reservations C",
+          "Here are some simple, weekly measurements the library can track to evaluate the performance and effectiveness of its reservation service:\n\n### 1. **Number of Reservations Made**\n   - Track how many times members request a reservation.\n   - This helps assess demand and usage patterns.\n\n### 2. **Number of Reservations C",
+          "Here are some simple, weekly measurements the library can track to evaluate the performance and effectiveness of its reservation service:\n\n### 1. **Number of Reservations Made**\n   - Track how many times members request a reservation.\n   - This helps assess demand and usage patterns.\n\n### 2. **Number of Reservations C"
+        ],
+        "cached_tokens": [
+          96,
+          96,
+          96
+        ]
+      },
+      "X": {
+        "answers": [
+          "Here are three useful steps for traffic planners to investigate congestion at a busy crossroads with limited funding and weekly observations:\n\n1. **Set Up a Weekly Observation Schedule**:  \n   - Assign specific days and times for data collection to ensure consistency.  \n   - Use sensors, cameras, or manual counts to record traffic flow,",
+          "Here are three useful steps for traffic planners to investigate congestion at a busy crossroads with limited funding and weekly observations:\n\n1. **Set Up a Weekly Observation Schedule**:  \n   - Assign specific days and times for data collection to ensure consistency.  \n   - Use sensors, cameras, or manual counts to record traffic flow,",
+          "Here are three useful steps for traffic planners to investigate congestion at a busy crossroads with limited funding and weekly observations:\n\n1. **Set Up a Weekly Observation Schedule**:  \n   - Assign specific days and times for data collection to ensure consistency.  \n   - Use sensors, cameras, or manual counts to record traffic flow,"
+        ],
+        "cached_tokens": [
+          16,
+          16,
+          16
+        ]
+      },
+      "Y": {
+        "answers": [
+          "Here's a simple and effective plan to evaluate changes to the library's reservation service:\n\n### **Evaluation Plan: Weekly Review of Service Performance**\n\n1. **Track Key Metrics:**\n   - **Reservation Counts:** Number of reservations made, cancellations, and successful renewals.\n   - **Waiting List Length:** Average number",
+          "Here's a simple and effective plan to evaluate changes to the library's reservation service:\n\n### **Evaluation Plan: Weekly Review of Service Performance**\n\n1. **Track Key Metrics:**\n   - **Reservation Counts:** Number of reservations made, cancellations, and successful renewals.\n   - **Waiting List Length:** Average number",
+          "Here's a simple and effective plan to evaluate changes to the library's reservation service:\n\n### **Evaluation Plan: Weekly Review of Service Performance**\n\n1. **Track Key Metrics:**\n   - **Reservation Counts:** Number of reservations made, cancellations, and successful renewals.\n   - **Waiting List Length:** Average number"
+        ],
+        "cached_tokens": [
+          176,
+          176,
+          176
+        ]
+      }
+    },
+    "fine_hash": {
+      "A": {
+        "answers": [
+          "To ensure reliable comparisons and avoid misleading conclusions, the coastal research team should organize their observations in a structured and systematic way. Here's how they can do it:\n\n### 1. **Use a Consistent Sampling Protocol**\n   - **Standardize the timing and frequency of observations**: Photograph the same reef sections **every month",
+          "To ensure reliable comparisons and avoid misleading conclusions, the coastal research team should organize their observations in a structured and systematic way. Here's how they can do it:\n\n### 1. **Use a Consistent Sampling Protocol**\n   - **Standardize the timing and frequency of observations**: Photograph the same reef sections **every month",
+          "To ensure reliable comparisons and avoid misleading conclusions, the coastal research team should organize their observations in a structured and systematic way. Here's how they can do it:\n\n### 1. **Use a Consistent Sampling Protocol**\n   - **Standardize the timing and frequency of observations**: Photograph the same reef sections **every month"
+        ],
+        "cached_tokens": [
+          16,
+          16,
+          16
+        ]
+      },
+      "B": {
+        "answers": [
+          "To effectively evaluate and improve bus reliability in the city, the transport team should follow a structured approach that combines data analysis with strategic decision-making. Here's how they can choose improvements and measure their effects:\n\n---\n\n### **1. Identify Key Performance Indicators (KPIs)**\nFirst, define the metrics that will measure",
+          "To effectively evaluate and improve bus reliability in the city, the transport team should follow a structured approach that combines data analysis with strategic decision-making. Here's how they can choose improvements and measure their effects:\n\n---\n\n### **1. Identify Key Performance Indicators (KPIs)**\nFirst, define the metrics that will measure",
+          "To effectively evaluate and improve bus reliability in the city, the transport team should follow a structured approach that combines data analysis with strategic decision-making. Here's how they can choose improvements and measure their effects:\n\n---\n\n### **1. Identify Key Performance Indicators (KPIs)**\nFirst, define the metrics that will measure"
+        ],
+        "cached_tokens": [
+          16,
+          16,
+          16
+        ]
+      },
+      "C": {
+        "answers": [
+          "Here are three improvements to the reservation process that align with the library's goals of reducing waiting times and uncollected books, while staying within budget:\n\n1. **Implement a Real-Time Reservation Status Update System**  \n   Introduce a real-time dashboard or notification system that updates members on the status of their reservations (e",
+          "Here are three improvements to the reservation process that align with the library's goals of reducing waiting times and uncollected books, while staying within budget:\n\n1. **Implement a Real-Time Reservation Status Update System**  \n   Introduce a real-time dashboard or notification system that updates members on the status of their reservations (e",
+          "Here are three improvements to the reservation process that align with the library's goals of reducing waiting times and uncollected books, while staying within budget:\n\n1. **Implement a Real-Time Reservation Status Update System**  \n   Introduce a real-time dashboard or notification system that updates members on the status of their reservations (e"
+        ],
+        "cached_tokens": [
+          176,
+          176,
+          176
+        ]
+      },
+      "D": {
+        "answers": [
+          "Here are three ways to reduce uncollected reservations, based on the library's current system and budget constraints:\n\n1. **Improve Communication and Reminder Frequency**  \n   - Increase the frequency of email reminders for expiring reservations. This can help members cancel or update their reservations before they become uncollected.\n\n2.",
+          "Here are three ways to reduce uncollected reservations, based on the library's current system and budget constraints:\n\n1. **Improve Communication and Reminder Frequency**  \n   - Increase the frequency of email reminders for expiring reservations. This can help members cancel or update their reservations before they become uncollected.\n\n2.",
+          "Here are three ways to reduce uncollected reservations, based on the library's current system and budget constraints:\n\n1. **Improve Communication and Reminder Frequency**  \n   - Increase the frequency of email reminders for expiring reservations. This can help members cancel or update their reservations before they become uncollected.\n\n2."
+        ],
+        "cached_tokens": [
+          192,
+          192,
+          192
+        ]
+      },
+      "E": {
+        "answers": [
+          "Here are three practical improvements for the library's reservation service:\n\n1. **Implement an Online Reservation System**:  \n   Introduce a user-friendly online platform where members can check availability, place reservations, and manage their waiting lists. This would improve accessibility and reduce the need for in-person interactions.\n\n2. **Introduce a",
+          "Here are three practical improvements for the library's reservation service:\n\n1. **Implement an Online Reservation System**:  \n   Introduce a user-friendly online platform where members can check availability, place reservations, and manage their waiting lists. This would improve accessibility and reduce the need for in-person interactions.\n\n2. **Introduce a",
+          "Here are three practical improvements for the library's reservation service:\n\n1. **Implement an Online Reservation System**:  \n   Introduce a user-friendly online platform where members can check availability, place reservations, and manage their waiting lists. This would improve accessibility and reduce the need for in-person interactions.\n\n2. **Introduce a"
+        ],
+        "cached_tokens": [
+          64,
+          64,
+          64
+        ]
+      },
+      "F": {
+        "answers": [
+          "Here's a practical plan for the beekeeper to track pollination using limited resources:\n\n---\n\n### **Step 1: Set Up Observation Sites**\n- **Choose 5-10 flowering plant species** that are commonly pollinated by bees.\n- **Mark each site with a unique identifier** (e.g., number",
+          "Here's a practical plan for the beekeeper to track pollination using limited resources:\n\n---\n\n### **Step 1: Set Up Observation Sites**\n- **Choose 5-10 flowering plant species** that are commonly pollinated by bees.\n- **Mark each site with a unique identifier** (e.g., number",
+          "Here's a practical plan for the beekeeper to track pollination using limited resources:\n\n---\n\n### **Step 1: Set Up Observation Sites**\n- **Choose 5-10 flowering plant species** that are commonly pollinated by bees.\n- **Mark each site with a unique identifier** (e.g., number"
+        ],
+        "cached_tokens": [
+          16,
+          16,
+          16
+        ]
+      },
+      "G": {
+        "answers": [
+          "Here are three improvements to reservation reminder emails that can help reduce waiting times and uncollected books while staying within the budget:\n\n1. **Personalized Subject Lines and Greetings**  \n   Use a personalized subject line and greeting (e.g., \"Hi [Name],\") to increase open rates and make the email feel",
+          "Here are three improvements to reservation reminder emails that can help reduce waiting times and uncollected books while staying within the budget:\n\n1. **Personalized Subject Lines and Greetings**  \n   Use a personalized subject line and greeting (e.g., \"Hi [Name],\") to increase open rates and make the email feel",
+          "Here are three improvements to reservation reminder emails that can help reduce waiting times and uncollected books while staying within the budget:\n\n1. **Personalized Subject Lines and Greetings**  \n   Use a personalized subject line and greeting (e.g., \"Hi [Name],\") to increase open rates and make the email feel"
+        ],
+        "cached_tokens": [
+          192,
+          192,
+          192
+        ]
+      },
+      "H": {
+        "answers": [
+          "Volunteers could organize the paper waiting list in the following way:\n\n1. **Create a Waiting List Sheet**:  \n   - Use a physical or digital sheet to record each member's name, contact information, and the title of the book they are waiting for.  \n   - Include a column for the expected return date (",
+          "Volunteers could organize the paper waiting list in the following way:\n\n1. **Create a Waiting List Sheet**:  \n   - Use a physical or digital sheet to record each member's name, contact information, and the title of the book they are waiting for.  \n   - Include a column for the expected return date (",
+          "Volunteers could organize the paper waiting list in the following way:\n\n1. **Create a Waiting List Sheet**:  \n   - Use a physical or digital sheet to record each member's name, contact information, and the title of the book they are waiting for.  \n   - Include a column for the expected return date ("
+        ],
+        "cached_tokens": [
+          64,
+          64,
+          64
+        ]
+      },
+      "I": {
+        "answers": [
+          "Here's a practical plan for astronomers observing gas clouds where new stars are forming, with limited funding and weekly observations:\n\n---\n\n### **Step 1: Plan Weekly Observations with a Fixed Schedule**\n- **Action:** Schedule observations every week on the same day and time to ensure consistency.\n- **Why:** This helps track",
+          "Here's a practical plan for astronomers observing gas clouds where new stars are forming, with limited funding and weekly observations:\n\n---\n\n### **Step 1: Plan Weekly Observations with a Fixed Schedule**\n- **Action:** Schedule observations every week on the same day and time to ensure consistency.\n- **Why:** This helps track",
+          "Here's a practical plan for astronomers observing gas clouds where new stars are forming, with limited funding and weekly observations:\n\n---\n\n### **Step 1: Plan Weekly Observations with a Fixed Schedule**\n- **Action:** Schedule observations every week on the same day and time to ensure consistency.\n- **Why:** This helps track"
+        ],
+        "cached_tokens": [
+          16,
+          16,
+          16
+        ]
+      },
+      "J": {
+        "answers": [
+          "Staff should handle cancelled reservations in the following way:\n\n1. **Acknowledge the cancellation**: Inform the member that their reservation has been cancelled and that their contact details have been updated in the system.\n\n2. **Update the waiting list**: If the member has a waiting list, remove their name from the list (or keep",
+          "Staff should handle cancelled reservations in the following way:\n\n1. **Acknowledge the cancellation**: Inform the member that their reservation has been cancelled and that their contact details have been updated in the system.\n\n2. **Update the waiting list**: If the member has a waiting list, remove their name from the list (or keep",
+          "Staff should handle cancelled reservations in the following way:\n\n1. **Acknowledge the cancellation**: Inform the member that their reservation has been cancelled and that their contact details have been updated in the system.\n\n2. **Update the waiting list**: If the member has a waiting list, remove their name from the list (or keep"
+        ],
+        "cached_tokens": [
+          176,
+          176,
+          176
+        ]
+      },
+      "K": {
+        "answers": [
+          "Here are three ways to improve telephone reminders for the library's reservation service:\n\n1. **Implement a Dedicated Phone Line**: Assign a specific phone line for library reservations to ensure consistent and reliable calls, reducing the risk of missed calls or call quality issues.\n\n2. **Use a Call Center or Dedicated Staff**: Hire a call",
+          "Here are three ways to improve telephone reminders for the library's reservation service:\n\n1. **Implement a Dedicated Phone Line**: Assign a specific phone line for library reservations to ensure consistent and reliable calls, reducing the risk of missed calls or call quality issues.\n\n2. **Use a Call Center or Dedicated Staff**: Hire a call",
+          "Here are three ways to improve telephone reminders for the library's reservation service:\n\n1. **Implement a Dedicated Phone Line**: Assign a specific phone line for library reservations to ensure consistent and reliable calls, reducing the risk of missed calls or call quality issues.\n\n2. **Use a Call Center or Dedicated Staff**: Hire a call"
+        ],
+        "cached_tokens": [
+          96,
+          96,
+          96
+        ]
+      },
+      "L": {
+        "answers": [
+          "Here's a practical plan for turning kitchen scraps into compost with limited funding and weekly observations:\n\n---\n\n### **Step 1: Set Up a Composting System**\n- **Choose a method**: Use a **compost bin** or **heap**. A bin is easier to manage and monitor.\n- **Collect kitchen scraps",
+          "Here's a practical plan for turning kitchen scraps into compost with limited funding and weekly observations:\n\n---\n\n### **Step 1: Set Up a Composting System**\n- **Choose a method**: Use a **compost bin** or **heap**. A bin is easier to manage and monitor.\n- **Collect kitchen scraps",
+          "Here's a practical plan for turning kitchen scraps into compost with limited funding and weekly observations:\n\n---\n\n### **Step 1: Set Up a Composting System**\n- **Choose a method**: Use a **compost bin** or **heap**. A bin is easier to manage and monitor.\n- **Collect kitchen scraps"
+        ],
+        "cached_tokens": [
+          16,
+          16,
+          16
+        ]
+      },
+      "M": {
+        "answers": [
+          "Here are three useful weekly measurements that the library can track to improve its reservation service and reduce waiting times and uncollected books:\n\n1. **Number of Reservations Canceled Weekly**  \n   - This helps assess how well the library is managing cancellations and whether the process is efficient. A high cancellation rate may indicate",
+          "Here are three useful weekly measurements that the library can track to improve its reservation service and reduce waiting times and uncollected books:\n\n1. **Number of Reservations Canceled Weekly**  \n   - This helps assess how well the library is managing cancellations and whether the process is efficient. A high cancellation rate may indicate",
+          "Here are three useful weekly measurements that the library can track to improve its reservation service and reduce waiting times and uncollected books:\n\n1. **Number of Reservations Canceled Weekly**  \n   - This helps assess how well the library is managing cancellations and whether the process is efficient. A high cancellation rate may indicate"
+        ],
+        "cached_tokens": [
+          192,
+          192,
+          192
+        ]
+      },
+      "N": {
+        "answers": [
+          "Volunteers should record cancellations in a clear and organized manner to ensure the reservation system remains accurate and efficient. Here's how they can do it:\n\n1. **Use a Cancellation Log**: Maintain a separate log or spreadsheet to record each cancellation. This log should include:\n   - **Date of cancellation**\n   -",
+          "Volunteers should record cancellations in a clear and organized manner to ensure the reservation system remains accurate and efficient. Here's how they can do it:\n\n1. **Use a Cancellation Log**: Maintain a separate log or spreadsheet to record each cancellation. This log should include:\n   - **Date of cancellation**\n   -",
+          "Volunteers should record cancellations in a clear and organized manner to ensure the reservation system remains accurate and efficient. Here's how they can do it:\n\n1. **Use a Cancellation Log**: Maintain a separate log or spreadsheet to record each cancellation. This log should include:\n   - **Date of cancellation**\n   -"
+        ],
+        "cached_tokens": [
+          96,
+          96,
+          96
+        ]
+      },
+      "O": {
+        "answers": [
+          "Here's a practical plan for geologists studying earthquakes along an active fault line with limited funding:\n\n---\n\n### **Step 1: Set Up a Weekly Observation Log**\n- **Action:** Use a simple, portable device or paper form to record daily observations of the fault line.\n- **What to Record:** \n  -",
+          "Here's a practical plan for geologists studying earthquakes along an active fault line with limited funding:\n\n---\n\n### **Step 1: Set Up a Weekly Observation Log**\n- **Action:** Use a simple, portable device or paper form to record daily observations of the fault line.\n- **What to Record:** \n  -",
+          "Here's a practical plan for geologists studying earthquakes along an active fault line with limited funding:\n\n---\n\n### **Step 1: Set Up a Weekly Observation Log**\n- **Action:** Use a simple, portable device or paper form to record daily observations of the fault line.\n- **What to Record:** \n  -"
+        ],
+        "cached_tokens": [
+          16,
+          16,
+          16
+        ]
+      },
+      "P": {
+        "answers": [
+          "To support members without internet access, the library can implement the following strategies:\n\n1. **Provide Offline Access**: Offer a downloadable version of the library\u2019s catalogue or reservation system that can be used on devices without internet, such as tablets or smartphones.\n\n2. **Offline Reservation System**: Allow members to make reservations using a physical",
+          "To support members without internet access, the library can implement the following strategies:\n\n1. **Provide Offline Access**: Offer a downloadable version of the library\u2019s catalogue or reservation system that can be used on devices without internet, such as tablets or smartphones.\n\n2. **Offline Reservation System**: Allow members to make reservations using a physical",
+          "To support members without internet access, the library can implement the following strategies:\n\n1. **Provide Offline Access**: Offer a downloadable version of the library\u2019s catalogue or reservation system that can be used on devices without internet, such as tablets or smartphones.\n\n2. **Offline Reservation System**: Allow members to make reservations using a physical"
+        ],
+        "cached_tokens": [
+          192,
+          192,
+          192
+        ]
+      },
+      "Q": {
+        "answers": [
+          "Here are three ways to make collection times more convenient for library users:\n\n1. **Implement an Online Reservation System**:  \n   Provide a user-friendly online platform where members can reserve books, check availability, and manage their waiting lists. This reduces the need for in-person visits and allows members to track their reservations from home.\n\n",
+          "Here are three ways to make collection times more convenient for library users:\n\n1. **Implement an Online Reservation System**:  \n   Provide a user-friendly online platform where members can reserve books, check availability, and manage their waiting lists. This reduces the need for in-person visits and allows members to track their reservations from home.\n\n",
+          "Here are three ways to make collection times more convenient for library users:\n\n1. **Implement an Online Reservation System**:  \n   Provide a user-friendly online platform where members can reserve books, check availability, and manage their waiting lists. This reduces the need for in-person visits and allows members to track their reservations from home.\n\n"
+        ],
+        "cached_tokens": [
+          96,
+          96,
+          96
+        ]
+      },
+      "R": {
+        "answers": [
+          "Here's a practical plan for the science club to compare rechargeable battery designs with limited funding and staff:\n\n### **Step 1: Design and Prepare the Batteries**\n- **Create two groups** of batteries: one with design A and one with design B.\n- Ensure both groups are identical in all aspects except for",
+          "Here's a practical plan for the science club to compare rechargeable battery designs with limited funding and staff:\n\n### **Step 1: Design and Prepare the Batteries**\n- **Create two groups** of batteries: one with design A and one with design B.\n- Ensure both groups are identical in all aspects except for",
+          "Here's a practical plan for the science club to compare rechargeable battery designs with limited funding and staff:\n\n### **Step 1: Design and Prepare the Batteries**\n- **Create two groups** of batteries: one with design A and one with design B.\n- Ensure both groups are identical in all aspects except for"
+        ],
+        "cached_tokens": [
+          16,
+          16,
+          16
+        ]
+      },
+      "S": {
+        "answers": [
+          "Here are three ways to make collection deadlines clearer for the library's reservation service:\n\n1. **Implement a Clear, Visual Deadline Indicator**: Add a prominent, easily visible deadline (e.g., a clock or calendar icon) next to each reservation in the online system. This helps members quickly understand when their book is due to",
+          "Here are three ways to make collection deadlines clearer for the library's reservation service:\n\n1. **Implement a Clear, Visual Deadline Indicator**: Add a prominent, easily visible deadline (e.g., a clock or calendar icon) next to each reservation in the online system. This helps members quickly understand when their book is due to",
+          "Here are three ways to make collection deadlines clearer for the library's reservation service:\n\n1. **Implement a Clear, Visual Deadline Indicator**: Add a prominent, easily visible deadline (e.g., a clock or calendar icon) next to each reservation in the online system. This helps members quickly understand when their book is due to"
+        ],
+        "cached_tokens": [
+          192,
+          192,
+          192
+        ]
+      },
+      "T": {
+        "answers": [
+          "To prevent duplicate paper reservations in the town library, staff can follow these steps:\n\n1. **Require a Signature or ID**: When a member requests a reservation, staff should ask for a signature or ID to confirm the member's identity. This helps ensure that only authorized individuals can make reservations.\n\n2. **Use a Reservation",
+          "To prevent duplicate paper reservations in the town library, staff can follow these steps:\n\n1. **Require a Signature or ID**: When a member requests a reservation, staff should ask for a signature or ID to confirm the member's identity. This helps ensure that only authorized individuals can make reservations.\n\n2. **Use a Reservation",
+          "To prevent duplicate paper reservations in the town library, staff can follow these steps:\n\n1. **Require a Signature or ID**: When a member requests a reservation, staff should ask for a signature or ID to confirm the member's identity. This helps ensure that only authorized individuals can make reservations.\n\n2. **Use a Reservation"
+        ],
+        "cached_tokens": [
+          96,
+          96,
+          96
+        ]
+      },
+      "U": {
+        "answers": [
+          "Here's a practical plan for the village to choose water filters with limited funding and weekly observations:\n\n---\n\n### **Step 1: Define Objectives and Criteria**\n- **Goal:** Select a water filter that provides safe drinking water at the lowest cost.\n- **Criteria:** \n  - Cost (initial purchase + maintenance)\n",
+          "Here's a practical plan for the village to choose water filters with limited funding and weekly observations:\n\n---\n\n### **Step 1: Define Objectives and Criteria**\n- **Goal:** Select a water filter that provides safe drinking water at the lowest cost.\n- **Criteria:** \n  - Cost (initial purchase + maintenance)\n",
+          "Here's a practical plan for the village to choose water filters with limited funding and weekly observations:\n\n---\n\n### **Step 1: Define Objectives and Criteria**\n- **Goal:** Select a water filter that provides safe drinking water at the lowest cost.\n- **Criteria:** \n  - Cost (initial purchase + maintenance)\n"
+        ],
+        "cached_tokens": [
+          16,
+          16,
+          16
+        ]
+      },
+      "V": {
+        "answers": [
+          "To investigate repeated collection delays, staff can follow these steps:\n\n1. **Review Reservation Counts**: Check how many reservations are being placed and how many are being canceled. If there are more reservations than available copies, this could contribute to delays.\n\n2. **Analyze Waiting List Orders**: Ensure that waiting lists are ordered by",
+          "To investigate repeated collection delays, staff can follow these steps:\n\n1. **Review Reservation Counts**: Check how many reservations are being placed and how many are being canceled. If there are more reservations than available copies, this could contribute to delays.\n\n2. **Analyze Waiting List Orders**: Ensure that waiting lists are ordered by",
+          "To investigate repeated collection delays, staff can follow these steps:\n\n1. **Review Reservation Counts**: Check how many reservations are being placed and how many are being canceled. If there are more reservations than available copies, this could contribute to delays.\n\n2. **Analyze Waiting List Orders**: Ensure that waiting lists are ordered by"
+        ],
+        "cached_tokens": [
+          192,
+          192,
+          192
+        ]
+      },
+      "W": {
+        "answers": [
+          "Here are some simple, weekly measurements the library can track to evaluate the performance and effectiveness of its reservation service:\n\n### 1. **Number of Reservations Made**\n   - Track how many times members request a reservation.\n   - This helps assess demand and usage patterns.\n\n### 2. **Number of Reservations C",
+          "Here are some simple, weekly measurements the library can track to evaluate the performance and effectiveness of its reservation service:\n\n### 1. **Number of Reservations Made**\n   - Track how many times members request a reservation.\n   - This helps assess demand and usage patterns.\n\n### 2. **Number of Reservations C",
+          "Here are some simple, weekly measurements the library can track to evaluate the performance and effectiveness of its reservation service:\n\n### 1. **Number of Reservations Made**\n   - Track how many times members request a reservation.\n   - This helps assess demand and usage patterns.\n\n### 2. **Number of Reservations C"
+        ],
+        "cached_tokens": [
+          96,
+          96,
+          96
+        ]
+      },
+      "X": {
+        "answers": [
+          "Here are three useful steps for traffic planners to investigate congestion at a busy crossroads with limited funding and weekly observations:\n\n1. **Set Up a Weekly Observation Schedule**:  \n   - Assign specific days and times for data collection to ensure consistency.  \n   - Use sensors, cameras, or manual counts to record traffic flow,",
+          "Here are three useful steps for traffic planners to investigate congestion at a busy crossroads with limited funding and weekly observations:\n\n1. **Set Up a Weekly Observation Schedule**:  \n   - Assign specific days and times for data collection to ensure consistency.  \n   - Use sensors, cameras, or manual counts to record traffic flow,",
+          "Here are three useful steps for traffic planners to investigate congestion at a busy crossroads with limited funding and weekly observations:\n\n1. **Set Up a Weekly Observation Schedule**:  \n   - Assign specific days and times for data collection to ensure consistency.  \n   - Use sensors, cameras, or manual counts to record traffic flow,"
+        ],
+        "cached_tokens": [
+          16,
+          16,
+          16
+        ]
+      },
+      "Y": {
+        "answers": [
+          "Here's a simple and effective plan to evaluate changes to the library's reservation service:\n\n### **Evaluation Plan: Weekly Review of Service Performance**\n\n1. **Track Key Metrics:**\n   - **Reservation Counts:** Number of reservations made, cancellations, and successful renewals.\n   - **Waiting List Length:** Average number",
+          "Here's a simple and effective plan to evaluate changes to the library's reservation service:\n\n### **Evaluation Plan: Weekly Review of Service Performance**\n\n1. **Track Key Metrics:**\n   - **Reservation Counts:** Number of reservations made, cancellations, and successful renewals.\n   - **Waiting List Length:** Average number",
+          "Here's a simple and effective plan to evaluate changes to the library's reservation service:\n\n### **Evaluation Plan: Weekly Review of Service Performance**\n\n1. **Track Key Metrics:**\n   - **Reservation Counts:** Number of reservations made, cancellations, and successful renewals.\n   - **Waiting List Length:** Average number"
+        ],
+        "cached_tokens": [
+          176,
+          176,
+          176
+        ]
+      }
+    },
+    "partial": {
+      "A": {
+        "answers": [
+          "To ensure reliable comparisons and avoid misleading conclusions, the coastal research team should organize their observations in a structured and systematic way. Here's how they can do it:\n\n### 1. **Use a Consistent Sampling Protocol**\n   - **Standardize the timing and frequency of observations**: Photograph the same reef sections **every month",
+          "To ensure reliable comparisons and avoid misleading conclusions, the coastal research team should organize their observations in a structured and systematic way. Here's how they can do it:\n\n### 1. **Use a Consistent Sampling Protocol**\n   - **Standardize the timing and frequency of observations**: Photograph the same reef sections **every month",
+          "To ensure reliable comparisons and avoid misleading conclusions, the coastal research team should organize their observations in a structured and systematic way. Here's how they can do it:\n\n### 1. **Use a Consistent Sampling Protocol**\n   - **Standardize the timing and frequency of observations**: Photograph the same reef sections **every month"
+        ],
+        "cached_tokens": [
+          21,
+          21,
+          21
+        ]
+      },
+      "B": {
+        "answers": [
+          "To effectively evaluate and improve bus reliability in the city, the transport team should follow a structured approach that combines data analysis with strategic decision-making. Here's how they can choose improvements and measure their effects:\n\n---\n\n### **1. Identify Key Performance Indicators (KPIs)**\nFirst, define the metrics that will measure",
+          "To effectively evaluate and improve bus reliability in the city, the transport team should follow a structured approach that combines data analysis with strategic decision-making. Here's how they can choose improvements and measure their effects:\n\n---\n\n### **1. Identify Key Performance Indicators (KPIs)**\nFirst, define the metrics that will measure",
+          "To effectively evaluate and improve bus reliability in the city, the transport team should follow a structured approach that combines data analysis with strategic decision-making. Here's how they can choose improvements and measure their effects:\n\n---\n\n### **1. Identify Key Performance Indicators (KPIs)**\nFirst, define the metrics that will measure"
+        ],
+        "cached_tokens": [
+          22,
+          22,
+          22
+        ]
+      },
+      "C": {
+        "answers": [
+          "Here are three improvements to the reservation process that align with the library's goals of reducing waiting times and uncollected books, while staying within budget:\n\n1. **Implement a Real-Time Reservation Status Update System**  \n   Introduce a real-time dashboard or notification system that updates members on the status of their reservations (e",
+          "Here are three improvements to the reservation process that align with the library's goals of reducing waiting times and uncollected books, while staying within budget:\n\n1. **Implement a Real-Time Reservation Status Update System**  \n   Introduce a real-time dashboard or notification system that updates members on the status of their reservations (e",
+          "Here are three improvements to the reservation process that align with the library's goals of reducing waiting times and uncollected books, while staying within budget:\n\n1. **Implement a Real-Time Reservation Status Update System**  \n   Introduce a real-time dashboard or notification system that updates members on the status of their reservations (e"
+        ],
+        "cached_tokens": [
+          189,
+          189,
+          189
+        ]
+      },
+      "D": {
+        "answers": [
+          "Here are three ways to reduce uncollected reservations, based on the library's current system and budget constraints:\n\n1. **Improve Communication and Reminder Frequency**  \n   - Increase the frequency of email reminders for expiring reservations. This can help members cancel or update their reservations before they become uncollected.\n\n2.",
+          "Here are three ways to reduce uncollected reservations, based on the library's current system and budget constraints:\n\n1. **Improve Communication and Reminder Frequency**  \n   - Increase the frequency of email reminders for expiring reservations. This can help members cancel or update their reservations before they become uncollected.\n\n2.",
+          "Here are three ways to reduce uncollected reservations, based on the library's current system and budget constraints:\n\n1. **Improve Communication and Reminder Frequency**  \n   - Increase the frequency of email reminders for expiring reservations. This can help members cancel or update their reservations before they become uncollected.\n\n2."
+        ],
+        "cached_tokens": [
+          192,
+          192,
+          192
+        ]
+      },
+      "E": {
+        "answers": [
+          "Here are three practical improvements for the library's reservation service:\n\n1. **Implement an Online Reservation System**:  \n   Introduce a user-friendly online platform where members can check availability, place reservations, and manage their waiting lists. This would increase convenience and reduce the need for in-person interactions.\n\n2. **Introduce a",
+          "Here are three practical improvements for the library's reservation service:\n\n1. **Implement an Online Reservation System**:  \n   Introduce a user-friendly online platform where members can check availability, place reservations, and manage their waiting lists. This would increase convenience and reduce the need for in-person interactions.\n\n2. **Introduce a",
+          "Here are three practical improvements for the library's reservation service:\n\n1. **Implement an Online Reservation System**:  \n   Introduce a user-friendly online platform where members can check availability, place reservations, and manage their waiting lists. This would increase convenience and reduce the need for in-person interactions.\n\n2. **Introduce a"
+        ],
+        "cached_tokens": [
+          75,
+          75,
+          75
+        ]
+      },
+      "F": {
+        "answers": [
+          "Here's a practical plan for the beekeeper to track pollination using limited resources:\n\n---\n\n### **Step 1: Set Up Observation Sites**\n- **Choose 5-10 flowering plant species** that are commonly pollinated by bees.\n- **Mark each site with a unique identifier** (e.g., number",
+          "Here's a practical plan for the beekeeper to track pollination using limited resources:\n\n---\n\n### **Step 1: Set Up Observation Sites**\n- **Choose 5-10 flowering plant species** that are commonly pollinated by bees.\n- **Mark each site with a unique identifier** (e.g., number",
+          "Here's a practical plan for the beekeeper to track pollination using limited resources:\n\n---\n\n### **Step 1: Set Up Observation Sites**\n- **Choose 5-10 flowering plant species** that are commonly pollinated by bees.\n- **Mark each site with a unique identifier** (e.g., number"
+        ],
+        "cached_tokens": [
+          22,
+          22,
+          22
+        ]
+      },
+      "G": {
+        "answers": [
+          "Here are three improvements to reservation reminder emails that can help reduce waiting times and uncollected books while staying within the budget:\n\n1. **Personalized Subject Lines and Greetings**  \n   Use a personalized subject line and greeting (e.g., \"Hi [Name],\") to increase open rates and make the email feel",
+          "Here are three improvements to reservation reminder emails that can help reduce waiting times and uncollected books while staying within the budget:\n\n1. **Personalized Subject Lines and Greetings**  \n   Use a personalized subject line and greeting (e.g., \"Hi [Name],\") to increase open rates and make the email feel",
+          "Here are three improvements to reservation reminder emails that can help reduce waiting times and uncollected books while staying within the budget:\n\n1. **Personalized Subject Lines and Greetings**  \n   Use a personalized subject line and greeting (e.g., \"Hi [Name],\") to increase open rates and make the email feel"
+        ],
+        "cached_tokens": [
+          194,
+          194,
+          194
+        ]
+      },
+      "H": {
+        "answers": [
+          "Volunteers could organize the paper waiting list in the following way:\n\n1. **Create a Waiting List Sheet**:  \n   - Use a physical or digital sheet to record each member's name, contact information, and the title of the book they are waiting for.  \n   - Include a column for the expected return date (",
+          "Volunteers could organize the paper waiting list in the following way:\n\n1. **Create a Waiting List Sheet**:  \n   - Use a physical or digital sheet to record each member's name, contact information, and the title of the book they are waiting for.  \n   - Include a column for the expected return date (",
+          "Volunteers could organize the paper waiting list in the following way:\n\n1. **Create a Waiting List Sheet**:  \n   - Use a physical or digital sheet to record each member's name, contact information, and the title of the book they are waiting for.  \n   - Include a column for the expected return date ("
+        ],
+        "cached_tokens": [
+          78,
+          78,
+          78
+        ]
+      },
+      "I": {
+        "answers": [
+          "Here's a practical plan for astronomers observing gas clouds where new stars are forming, with limited funding and weekly observations:\n\n---\n\n### **Step 1: Plan Weekly Observations with a Fixed Schedule**\n- **Action:** Schedule observations every week on the same day and time to ensure consistency.\n- **Why:** This helps track",
+          "Here's a practical plan for astronomers observing gas clouds where new stars are forming, with limited funding and weekly observations:\n\n---\n\n### **Step 1: Plan Weekly Observations with a Fixed Schedule**\n- **Action:** Schedule observations every week on the same day and time to ensure consistency.\n- **Why:** This helps track",
+          "Here's a practical plan for astronomers observing gas clouds where new stars are forming, with limited funding and weekly observations:\n\n---\n\n### **Step 1: Plan Weekly Observations with a Fixed Schedule**\n- **Action:** Schedule observations every week on the same day and time to ensure consistency.\n- **Why:** This helps track"
+        ],
+        "cached_tokens": [
+          22,
+          22,
+          22
+        ]
+      },
+      "J": {
+        "answers": [
+          "Staff should handle cancelled reservations as follows:\n\n1. **Acknowledge the cancellation**: Inform the member that their reservation has been cancelled and confirm the date and time it was cancelled.\n\n2. **Update the waiting list**: Remove the cancelled reservation from the waiting list, ensuring the order remains correct (by reservation time).\n\n3.",
+          "Staff should handle cancelled reservations as follows:\n\n1. **Acknowledge the cancellation**: Inform the member that their reservation has been cancelled and confirm the date and time it was cancelled.\n\n2. **Update the waiting list**: Remove the cancelled reservation from the waiting list, ensuring the order remains correct (by reservation time).\n\n3.",
+          "Staff should handle cancelled reservations as follows:\n\n1. **Acknowledge the cancellation**: Inform the member that their reservation has been cancelled and confirm the date and time it was cancelled.\n\n2. **Update the waiting list**: Remove the cancelled reservation from the waiting list, ensuring the order remains correct (by reservation time).\n\n3."
+        ],
+        "cached_tokens": [
+          189,
+          189,
+          189
+        ]
+      },
+      "K": {
+        "answers": [
+          "Here are three ways to improve telephone reminders for the library's reservation service:\n\n1. **Implement a Dedicated Phone Line**: Assign a specific phone line for library reservations to ensure consistent and reliable calls, reducing the risk of missed calls or call quality issues.\n\n2. **Use a Call Center or Dedicated Staff**: Hire a dedicated",
+          "Here are three ways to improve telephone reminders for the library's reservation service:\n\n1. **Implement a Dedicated Phone Line**: Assign a specific phone line for library reservations to ensure consistent and reliable calls, reducing the risk of missed calls or call quality issues.\n\n2. **Use a Call Center or Dedicated Staff**: Hire a dedicated",
+          "Here are three ways to improve telephone reminders for the library's reservation service:\n\n1. **Implement a Dedicated Phone Line**: Assign a specific phone line for library reservations to ensure consistent and reliable calls, reducing the risk of missed calls or call quality issues.\n\n2. **Use a Call Center or Dedicated Staff**: Hire a dedicated"
+        ],
+        "cached_tokens": [
+          96,
+          96,
+          96
+        ]
+      },
+      "L": {
+        "answers": [
+          "Here's a practical plan for turning kitchen scraps into compost with limited funding and weekly observations:\n\n---\n\n### **Step 1: Set Up a Composting System**\n- **Choose a method**: Use a **compost bin** or **heap**. A bin is easier to manage and monitor.\n- **Collect kitchen scraps",
+          "Here's a practical plan for turning kitchen scraps into compost with limited funding and weekly observations:\n\n---\n\n### **Step 1: Set Up a Composting System**\n- **Choose a method**: Use a **compost bin** or **heap**. A bin is easier to manage and monitor.\n- **Collect kitchen scraps",
+          "Here's a practical plan for turning kitchen scraps into compost with limited funding and weekly observations:\n\n---\n\n### **Step 1: Set Up a Composting System**\n- **Choose a method**: Use a **compost bin** or **heap**. A bin is easier to manage and monitor.\n- **Collect kitchen scraps"
+        ],
+        "cached_tokens": [
+          21,
+          21,
+          21
+        ]
+      },
+      "M": {
+        "answers": [
+          "Here are three useful weekly measurements that the library can track to improve its reservation service and reduce waiting times and uncollected books:\n\n1. **Number of Reservations Canceled Weekly**  \n   - This helps assess how well the library is managing cancellations and whether the process is efficient. A high cancellation rate may indicate",
+          "Here are three useful weekly measurements that the library can track to improve its reservation service and reduce waiting times and uncollected books:\n\n1. **Number of Reservations Canceled Weekly**  \n   - This helps assess how well the library is managing cancellations and whether the process is efficient. A high cancellation rate may indicate",
+          "Here are three useful weekly measurements that the library can track to improve its reservation service and reduce waiting times and uncollected books:\n\n1. **Number of Reservations Canceled Weekly**  \n   - This helps assess how well the library is managing cancellations and whether the process is efficient. A high cancellation rate may indicate"
+        ],
+        "cached_tokens": [
+          192,
+          192,
+          192
+        ]
+      },
+      "N": {
+        "answers": [
+          "Volunteers should record cancellations in a clear and organized manner to ensure the reservation system remains accurate and efficient. Here's how they can do it:\n\n1. **Use a Dedicated Record-Keeping System**:  \n   - Maintain a separate log or spreadsheet to track cancellations. This could be a physical notebook, a digital",
+          "Volunteers should record cancellations in a clear and organized manner to ensure the reservation system remains accurate and efficient. Here's how they can do it:\n\n1. **Use a Dedicated Record-Keeping System**:  \n   - Maintain a separate log or spreadsheet to track cancellations. This could be a physical notebook, a digital",
+          "Volunteers should record cancellations in a clear and organized manner to ensure the reservation system remains accurate and efficient. Here's how they can do it:\n\n1. **Use a Dedicated Record-Keeping System**:  \n   - Maintain a separate log or spreadsheet to track cancellations. This could be a physical notebook, a digital"
+        ],
+        "cached_tokens": [
+          99,
+          99,
+          99
+        ]
+      },
+      "O": {
+        "answers": [
+          "Here's a practical plan for geologists studying earthquakes along an active fault line with limited funding:\n\n---\n\n### **Step 1: Set Up a Weekly Observation Log**\n- **Action:** Use a simple, portable device or paper form to record daily observations of the fault line.\n- **What to Record:** \n  -",
+          "Here's a practical plan for geologists studying earthquakes along an active fault line with limited funding:\n\n---\n\n### **Step 1: Set Up a Weekly Observation Log**\n- **Action:** Use a simple, portable device or paper form to record daily observations of the fault line.\n- **What to Record:** \n  -",
+          "Here's a practical plan for geologists studying earthquakes along an active fault line with limited funding:\n\n---\n\n### **Step 1: Set Up a Weekly Observation Log**\n- **Action:** Use a simple, portable device or paper form to record daily observations of the fault line.\n- **What to Record:** \n  -"
+        ],
+        "cached_tokens": [
+          21,
+          21,
+          21
+        ]
+      },
+      "P": {
+        "answers": [
+          "To support members without internet access, the library can implement the following strategies:\n\n1. **Provide Offline Access**: Offer a downloadable version of the library\u2019s catalogue or reservation system that can be used on devices without internet, such as tablets or smartphones.\n\n2. **Offline Reservation System**: Allow members to make reservations using a physical",
+          "To support members without internet access, the library can implement the following strategies:\n\n1. **Provide Offline Access**: Offer a downloadable version of the library\u2019s catalogue or reservation system that can be used on devices without internet, such as tablets or smartphones.\n\n2. **Offline Reservation System**: Allow members to make reservations using a physical",
+          "To support members without internet access, the library can implement the following strategies:\n\n1. **Provide Offline Access**: Offer a downloadable version of the library\u2019s catalogue or reservation system that can be used on devices without internet, such as tablets or smartphones.\n\n2. **Offline Reservation System**: Allow members to make reservations using a physical"
+        ],
+        "cached_tokens": [
+          192,
+          192,
+          192
+        ]
+      },
+      "Q": {
+        "answers": [
+          "Here are three ways to make collection times more convenient for the library's reservation service:\n\n1. **Implement an Online Reservation System**:  \n   Introduce a user-friendly online platform where members can check availability, place reservations, and manage their waiting lists. This would reduce the need for in-person visits and provide real-time updates",
+          "Here are three ways to make collection times more convenient for the library's reservation service:\n\n1. **Implement an Online Reservation System**:  \n   Introduce a user-friendly online platform where members can check availability, place reservations, and manage their waiting lists. This would reduce the need for in-person visits and provide real-time updates",
+          "Here are three ways to make collection times more convenient for the library's reservation service:\n\n1. **Implement an Online Reservation System**:  \n   Introduce a user-friendly online platform where members can check availability, place reservations, and manage their waiting lists. This would reduce the need for in-person visits and provide real-time updates"
+        ],
+        "cached_tokens": [
+          101,
+          101,
+          101
+        ]
+      },
+      "R": {
+        "answers": [
+          "Here's a practical plan for the science club to compare rechargeable battery designs with limited funding and staff:\n\n### **Step 1: Design and Prepare the Batteries**\n- **Create two groups** of batteries: one with design A and one with design B.\n- Ensure both groups are identical in all aspects except for",
+          "Here's a practical plan for the science club to compare rechargeable battery designs with limited funding and staff:\n\n### **Step 1: Design and Prepare the Batteries**\n- **Create two groups** of batteries: one with design A and one with design B.\n- Ensure both groups are identical in all aspects except for",
+          "Here's a practical plan for the science club to compare rechargeable battery designs with limited funding and staff:\n\n### **Step 1: Design and Prepare the Batteries**\n- **Create two groups** of batteries: one with design A and one with design B.\n- Ensure both groups are identical in all aspects except for"
+        ],
+        "cached_tokens": [
+          22,
+          22,
+          22
+        ]
+      },
+      "S": {
+        "answers": [
+          "Here are three ways to make collection deadlines clearer for the library's reservation service:\n\n1. **Implement a Clear, Visual Deadline Indicator**:  \n   Add a prominent, easy-to-read deadline display at the collection desk, such as a digital clock or a sign with the remaining days. This helps members know when a book is",
+          "Here are three ways to make collection deadlines clearer for the library's reservation service:\n\n1. **Implement a Clear, Visual Deadline Indicator**:  \n   Add a prominent, easy-to-read deadline display at the collection desk, such as a digital clock or a sign with the remaining days. This helps members know when a book is",
+          "Here are three ways to make collection deadlines clearer for the library's reservation service:\n\n1. **Implement a Clear, Visual Deadline Indicator**:  \n   Add a prominent, easy-to-read deadline display at the collection desk, such as a digital clock or a sign with the remaining days. This helps members know when a book is"
+        ],
+        "cached_tokens": [
+          192,
+          192,
+          192
+        ]
+      },
+      "T": {
+        "answers": [
+          "To prevent duplicate paper reservations in the town library, staff can follow these steps:\n\n1. **Require a Signature or ID**: When a member requests a reservation, staff should ask for a signature or ID to confirm the member's identity. This helps ensure that only authorized individuals can make reservations.\n\n2. **Use a Reservation",
+          "To prevent duplicate paper reservations in the town library, staff can follow these steps:\n\n1. **Require a Signature or ID**: When a member requests a reservation, staff should ask for a signature or ID to confirm the member's identity. This helps ensure that only authorized individuals can make reservations.\n\n2. **Use a Reservation",
+          "To prevent duplicate paper reservations in the town library, staff can follow these steps:\n\n1. **Require a Signature or ID**: When a member requests a reservation, staff should ask for a signature or ID to confirm the member's identity. This helps ensure that only authorized individuals can make reservations.\n\n2. **Use a Reservation"
+        ],
+        "cached_tokens": [
+          98,
+          98,
+          98
+        ]
+      },
+      "U": {
+        "answers": [
+          "Here's a practical plan for the village to choose water filters with limited funding and weekly observations:\n\n---\n\n### **Step 1: Define Objectives and Criteria**\n- **Goal:** Select a water filter that provides safe drinking water at the lowest cost.\n- **Criteria:** \n  - Cost (initial purchase + maintenance)\n",
+          "Here's a practical plan for the village to choose water filters with limited funding and weekly observations:\n\n---\n\n### **Step 1: Define Objectives and Criteria**\n- **Goal:** Select a water filter that provides safe drinking water at the lowest cost.\n- **Criteria:** \n  - Cost (initial purchase + maintenance)\n",
+          "Here's a practical plan for the village to choose water filters with limited funding and weekly observations:\n\n---\n\n### **Step 1: Define Objectives and Criteria**\n- **Goal:** Select a water filter that provides safe drinking water at the lowest cost.\n- **Criteria:** \n  - Cost (initial purchase + maintenance)\n"
+        ],
+        "cached_tokens": [
+          22,
+          22,
+          22
+        ]
+      },
+      "V": {
+        "answers": [
+          "To investigate repeated collection delays, staff can follow these steps:\n\n1. **Review Reservation Counts**: Check how many reservations are being placed and how many are being canceled. If there are more reservations than available copies, this could contribute to delays.\n\n2. **Analyze Waiting List Orders**: Ensure that waiting lists are ordered by",
+          "To investigate repeated collection delays, staff can follow these steps:\n\n1. **Review Reservation Counts**: Check how many reservations are being placed and how many are being canceled. If there are more reservations than available copies, this could contribute to delays.\n\n2. **Analyze Waiting List Orders**: Ensure that waiting lists are ordered by",
+          "To investigate repeated collection delays, staff can follow these steps:\n\n1. **Review Reservation Counts**: Check how many reservations are being placed and how many are being canceled. If there are more reservations than available copies, this could contribute to delays.\n\n2. **Analyze Waiting List Orders**: Ensure that waiting lists are ordered by"
+        ],
+        "cached_tokens": [
+          193,
+          193,
+          193
+        ]
+      },
+      "W": {
+        "answers": [
+          "Here are some simple, weekly measurements the library can track to assess the performance and satisfaction of its reservation service:\n\n### 1. **Number of Reservations Made**\n   - Track how many members reserve books each week.\n   - Helps identify trends in usage and popularity of titles.\n\n### 2. **Number of Books",
+          "Here are some simple, weekly measurements the library can track to assess the performance and satisfaction of its reservation service:\n\n### 1. **Number of Reservations Made**\n   - Track how many members reserve books each week.\n   - Helps identify trends in usage and popularity of titles.\n\n### 2. **Number of Books",
+          "Here are some simple, weekly measurements the library can track to assess the performance and satisfaction of its reservation service:\n\n### 1. **Number of Reservations Made**\n   - Track how many members reserve books each week.\n   - Helps identify trends in usage and popularity of titles.\n\n### 2. **Number of Books"
+        ],
+        "cached_tokens": [
+          98,
+          98,
+          98
+        ]
+      },
+      "X": {
+        "answers": [
+          "Here are three useful steps for traffic planners to investigate congestion at a busy crossroads with limited funding and weekly observations:\n\n1. **Set Up a Weekly Observation Schedule**:  \n   - Assign specific days and times for data collection to ensure consistency.  \n   - Use sensors, cameras, or manual counts to record traffic flow,",
+          "Here are three useful steps for traffic planners to investigate congestion at a busy crossroads with limited funding and weekly observations:\n\n1. **Set Up a Weekly Observation Schedule**:  \n   - Assign specific days and times for data collection to ensure consistency.  \n   - Use sensors, cameras, or manual counts to record traffic flow,",
+          "Here are three useful steps for traffic planners to investigate congestion at a busy crossroads with limited funding and weekly observations:\n\n1. **Set Up a Weekly Observation Schedule**:  \n   - Assign specific days and times for data collection to ensure consistency.  \n   - Use sensors, cameras, or manual counts to record traffic flow,"
+        ],
+        "cached_tokens": [
+          21,
+          21,
+          21
+        ]
+      },
+      "Y": {
+        "answers": [
+          "Here's a simple and effective plan to evaluate changes to the library's reservation service:\n\n### **Evaluation Plan: Weekly Review of Service Performance**\n\n1. **Track Key Metrics:**\n   - **Reservation Counts:** Number of reservations made, cancellations, and successful renewals.\n   - **Waiting List Length:** Average number",
+          "Here's a simple and effective plan to evaluate changes to the library's reservation service:\n\n### **Evaluation Plan: Weekly Review of Service Performance**\n\n1. **Track Key Metrics:**\n   - **Reservation Counts:** Number of reservations made, cancellations, and successful renewals.\n   - **Waiting List Length:** Average number",
+          "Here's a simple and effective plan to evaluate changes to the library's reservation service:\n\n### **Evaluation Plan: Weekly Review of Service Performance**\n\n1. **Track Key Metrics:**\n   - **Reservation Counts:** Number of reservations made, cancellations, and successful renewals.\n   - **Waiting List Length:** Average number"
+        ],
+        "cached_tokens": [
+          191,
+          191,
+          191
+        ]
+      }
+    }
+  },
+  "replication_provenance": {
+    "model": "Qwen/Qwen3-1.7B",
+    "model_revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e",
+    "started": "2026-10-22T21:25:47.037534",
+    "source_checkpoint": "e997aba05543a127cb09d8a4c3b917f307357807",
+    "implementation_mode": "reference for experiments01-06; reference/incremental in10",
+    "complete": false
+  },
+  "original_summary": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/batches-20261022-220520/summary.json"
+}

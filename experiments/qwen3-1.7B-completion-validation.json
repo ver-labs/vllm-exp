@@ -1,0 +1,448 @@
+{
+  "complete": true,
+  "model": "Qwen/Qwen3-1.7B",
+  "model_revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e",
+  "gpu_runs": 98,
+  "timed_runs": 72,
+  "diagnostic_runs": 26,
+  "stages": [
+    {
+      "stage": "01",
+      "gpu_runs": 12,
+      "timed_runs": 9,
+      "successful_output_tokens": 23808
+    },
+    {
+      "stage": "02-temporal",
+      "gpu_runs": 8,
+      "timed_runs": 6,
+      "successful_output_tokens": 2688
+    },
+    {
+      "stage": "02-ay",
+      "gpu_runs": 8,
+      "timed_runs": 6,
+      "successful_output_tokens": 15872
+    },
+    {
+      "stage": "03",
+      "gpu_runs": 8,
+      "timed_runs": 6,
+      "successful_output_tokens": 15872
+    },
+    {
+      "stage": "04",
+      "gpu_runs": 12,
+      "timed_runs": 9,
+      "successful_output_tokens": 23808
+    },
+    {
+      "stage": "05",
+      "gpu_runs": 10,
+      "timed_runs": 6,
+      "successful_output_tokens": 20864
+    },
+    {
+      "stage": "06",
+      "gpu_runs": 24,
+      "timed_runs": 18,
+      "successful_output_tokens": 35456
+    },
+    {
+      "stage": "10",
+      "gpu_runs": 16,
+      "timed_runs": 12,
+      "successful_output_tokens": 8064
+    }
+  ],
+  "verified_raw_files": 520,
+  "successful_output_tokens": 146432,
+  "trace_validation": [
+    {
+      "path": "results/cache-eviction-ay/lfu/server-trace-stSCmg/events-55617-1792685929081705000.jsonl",
+      "events": 17559,
+      "budget": 128,
+      "preemptions": 0,
+      "zero_reference_evictions": 107,
+      "skip_events": 0,
+      "max_bypasses": 0,
+      "native_source_verified": true,
+      "token_budget_verified": true
+    },
+    {
+      "path": "results/cache-eviction-ay/vllm/server-trace-VIpzRk/events-55518-1792685858959057000.jsonl",
+      "events": 17559,
+      "budget": 128,
+      "preemptions": 0,
+      "zero_reference_evictions": 107,
+      "skip_events": 0,
+      "max_bypasses": 0,
+      "native_source_verified": true,
+      "token_budget_verified": true
+    },
+    {
+      "path": "results/cache-eviction/lfu/server-trace-NqOz4F/events-54993-1792685538004301000.jsonl",
+      "events": 5621,
+      "budget": 128,
+      "preemptions": 0,
+      "zero_reference_evictions": 249,
+      "skip_events": 0,
+      "max_bypasses": 0,
+      "native_source_verified": true,
+      "token_budget_verified": true
+    },
+    {
+      "path": "results/cache-eviction/vllm/server-trace-stbHzg/events-54932-1792685491907482000.jsonl",
+      "events": 5741,
+      "budget": 128,
+      "preemptions": 0,
+      "zero_reference_evictions": 297,
+      "skip_events": 0,
+      "max_bypasses": 0,
+      "native_source_verified": true,
+      "token_budget_verified": true
+    },
+    {
+      "path": "results/cache-overhead/incremental/shift/lfu/server-trace-73OAg2/events-60061-1792689822624150000.jsonl",
+      "events": 11341,
+      "budget": 128,
+      "preemptions": 0,
+      "zero_reference_evictions": 689,
+      "skip_events": 0,
+      "max_bypasses": 0,
+      "native_source_verified": true,
+      "token_budget_verified": true
+    },
+    {
+      "path": "results/cache-overhead/incremental/stable/lfu/server-trace-Vgm3wa/events-60604-1792690401036073000.jsonl",
+      "events": 5356,
+      "budget": 128,
+      "preemptions": 0,
+      "zero_reference_evictions": 282,
+      "skip_events": 0,
+      "max_bypasses": 0,
+      "native_source_verified": true,
+      "token_budget_verified": true
+    },
+    {
+      "path": "results/cache-overhead/reference/shift/lfu/server-trace-gauCKW/events-60014-1792689748064467000.jsonl",
+      "events": 11341,
+      "budget": 128,
+      "preemptions": 0,
+      "zero_reference_evictions": 689,
+      "skip_events": 0,
+      "max_bypasses": 0,
+      "native_source_verified": true,
+      "token_budget_verified": true
+    },
+    {
+      "path": "results/cache-overhead/reference/stable/lfu/server-trace-dz12rB/events-60574-1792690352466377000.jsonl",
+      "events": 5356,
+      "budget": 128,
+      "preemptions": 0,
+      "zero_reference_evictions": 282,
+      "skip_events": 0,
+      "max_bypasses": 0,
+      "native_source_verified": true,
+      "token_budget_verified": true
+    },
+    {
+      "path": "results/combined/ay/baseline/server-trace-RUuS4r/events-58870-1792688407164491000.jsonl",
+      "events": 17544,
+      "budget": 512,
+      "preemptions": 0,
+      "zero_reference_evictions": 107,
+      "skip_events": 0,
+      "max_bypasses": 0,
+      "native_source_verified": true,
+      "token_budget_verified": true
+    },
+    {
+      "path": "results/combined/ay/combined/server-trace-PfYqmg/events-58919-1792688475336736000.jsonl",
+      "events": 17602,
+      "budget": 512,
+      "preemptions": 0,
+      "zero_reference_evictions": 108,
+      "skip_events": 0,
+      "max_bypasses": 0,
+      "native_source_verified": true,
+      "token_budget_verified": true
+    },
+    {
+      "path": "results/combined/targeted/baseline/server-trace-bL1jnM/events-59423-1792688944498526000.jsonl",
+      "events": 15814,
+      "budget": 512,
+      "preemptions": 0,
+      "zero_reference_evictions": 175,
+      "skip_events": 0,
+      "max_bypasses": 0,
+      "native_source_verified": true,
+      "token_budget_verified": true
+    },
+    {
+      "path": "results/combined/targeted/combined/server-trace-QrPxjH/events-59459-1792689003961552000.jsonl",
+      "events": 16070,
+      "budget": 512,
+      "preemptions": 0,
+      "zero_reference_evictions": 176,
+      "skip_events": 28,
+      "max_bypasses": 4,
+      "native_source_verified": true,
+      "token_budget_verified": true
+    },
+    {
+      "path": "results/combined/temporal/baseline/server-trace-dk55Hz/events-59782-1792689397620770000.jsonl",
+      "events": 5285,
+      "budget": 384,
+      "preemptions": 0,
+      "zero_reference_evictions": 297,
+      "skip_events": 0,
+      "max_bypasses": 0,
+      "native_source_verified": true,
+      "token_budget_verified": true
+    },
+    {
+      "path": "results/combined/temporal/combined/server-trace-fTdSs9/events-59810-1792689442365409000.jsonl",
+      "events": 5396,
+      "budget": 384,
+      "preemptions": 0,
+      "zero_reference_evictions": 282,
+      "skip_events": 0,
+      "max_bypasses": 0,
+      "native_source_verified": true,
+      "token_budget_verified": true
+    },
+    {
+      "path": "results/nonprefix-vllm/baseline/server-trace-kuGyrW/events-56385-1792686470951856000.jsonl",
+      "events": 17559,
+      "budget": 128,
+      "preemptions": 0,
+      "zero_reference_evictions": 107,
+      "skip_events": 0,
+      "max_bypasses": 0,
+      "native_source_verified": true,
+      "token_budget_verified": true
+    },
+    {
+      "path": "results/nonprefix-vllm/repair/server-trace-V69ydy/events-56268-1792686398195036000.jsonl",
+      "events": 17559,
+      "budget": 128,
+      "preemptions": 0,
+      "zero_reference_evictions": 107,
+      "skip_events": 0,
+      "max_bypasses": 0,
+      "native_source_verified": true,
+      "token_budget_verified": true
+    },
+    {
+      "path": "results/partial-prefix/baseline/server-trace-uM8PrB/events-57116-1792687010524589000.jsonl",
+      "events": 17825,
+      "budget": 128,
+      "preemptions": 0,
+      "zero_reference_evictions": 107,
+      "skip_events": 0,
+      "max_bypasses": 0,
+      "native_source_verified": true,
+      "token_budget_verified": true
+    },
+    {
+      "path": "results/partial-prefix/fine_hash/server-trace-52sC0k/events-57379-1792687094764898000.jsonl",
+      "events": 17825,
+      "budget": 128,
+      "preemptions": 0,
+      "zero_reference_evictions": 107,
+      "skip_events": 0,
+      "max_bypasses": 0,
+      "native_source_verified": true,
+      "token_budget_verified": true
+    },
+    {
+      "path": "results/partial-prefix/partial/server-trace-wjKxLW/events-57015-1792686938877813000.jsonl",
+      "events": 17881,
+      "budget": 128,
+      "preemptions": 0,
+      "zero_reference_evictions": 108,
+      "skip_events": 0,
+      "max_bypasses": 0,
+      "native_source_verified": true,
+      "token_budget_verified": true
+    },
+    {
+      "path": "results/prefix-comparison/fcfs/server-trace-fGLY9x/events-53461-1792684576866109000.jsonl",
+      "events": 17559,
+      "budget": 128,
+      "preemptions": 0,
+      "zero_reference_evictions": 107,
+      "skip_events": 0,
+      "max_bypasses": 0,
+      "native_source_verified": true,
+      "token_budget_verified": true
+    },
+    {
+      "path": "results/prefix-comparison/fcfs_head_prefix/server-trace-pJpuaU/events-53763-1792684752370647000.jsonl",
+      "events": 17588,
+      "budget": 128,
+      "preemptions": 0,
+      "zero_reference_evictions": 107,
+      "skip_events": 0,
+      "max_bypasses": 0,
+      "native_source_verified": true,
+      "token_budget_verified": true
+    },
+    {
+      "path": "results/prefix-comparison/prefix_first/server-trace-k2guvJ/events-53550-1792684659834231000.jsonl",
+      "events": 17643,
+      "budget": 128,
+      "preemptions": 0,
+      "zero_reference_evictions": 107,
+      "skip_events": 0,
+      "max_bypasses": 0,
+      "native_source_verified": true,
+      "token_budget_verified": true
+    },
+    {
+      "path": "results/skip-continue/original/baseline/server-trace-4jrxNL/events-58284-1792687800999124000.jsonl",
+      "events": 17544,
+      "budget": 512,
+      "preemptions": 0,
+      "zero_reference_evictions": 107,
+      "skip_events": 0,
+      "max_bypasses": 0,
+      "native_source_verified": true,
+      "token_budget_verified": true
+    },
+    {
+      "path": "results/skip-continue/original/skip/server-trace-ue6OHy/events-58414-1792687874162182000.jsonl",
+      "events": 17544,
+      "budget": 512,
+      "preemptions": 0,
+      "zero_reference_evictions": 107,
+      "skip_events": 0,
+      "max_bypasses": 0,
+      "native_source_verified": true,
+      "token_budget_verified": true
+    },
+    {
+      "path": "results/skip-continue/targeted/baseline/server-trace-fOE27Q/events-58484-1792687945971522000.jsonl",
+      "events": 15814,
+      "budget": 512,
+      "preemptions": 0,
+      "zero_reference_evictions": 175,
+      "skip_events": 0,
+      "max_bypasses": 0,
+      "native_source_verified": true,
+      "token_budget_verified": true
+    },
+    {
+      "path": "results/skip-continue/targeted/skip/server-trace-88KGy1/events-58549-1792688008059973000.jsonl",
+      "events": 16068,
+      "budget": 512,
+      "preemptions": 0,
+      "zero_reference_evictions": 175,
+      "skip_events": 37,
+      "max_bypasses": 4,
+      "native_source_verified": true,
+      "token_budget_verified": true
+    }
+  ],
+  "manifest_comparison": [
+    {
+      "stage": "01",
+      "profile": "default",
+      "differing_manifest_fields": [
+        ".model"
+      ],
+      "unchanged_except_model": true
+    },
+    {
+      "stage": "02-temporal",
+      "profile": "default",
+      "differing_manifest_fields": [
+        ".model"
+      ],
+      "unchanged_except_model": true
+    },
+    {
+      "stage": "02-ay",
+      "profile": "default",
+      "differing_manifest_fields": [
+        ".model"
+      ],
+      "unchanged_except_model": true
+    },
+    {
+      "stage": "03",
+      "profile": "default",
+      "differing_manifest_fields": [
+        ".model"
+      ],
+      "unchanged_except_model": true
+    },
+    {
+      "stage": "04",
+      "profile": "default",
+      "differing_manifest_fields": [
+        ".model"
+      ],
+      "unchanged_except_model": true
+    },
+    {
+      "stage": "05",
+      "profile": "original",
+      "differing_manifest_fields": [
+        ".model"
+      ],
+      "unchanged_except_model": true
+    },
+    {
+      "stage": "05",
+      "profile": "targeted",
+      "differing_manifest_fields": [
+        ".model"
+      ],
+      "unchanged_except_model": true
+    },
+    {
+      "stage": "06",
+      "profile": "ay",
+      "differing_manifest_fields": [
+        ".model"
+      ],
+      "unchanged_except_model": true
+    },
+    {
+      "stage": "06",
+      "profile": "targeted",
+      "differing_manifest_fields": [
+        ".model"
+      ],
+      "unchanged_except_model": true
+    },
+    {
+      "stage": "06",
+      "profile": "temporal",
+      "differing_manifest_fields": [
+        ".model"
+      ],
+      "unchanged_except_model": true
+    },
+    {
+      "stage": "10",
+      "profile": "shift",
+      "differing_manifest_fields": [
+        ".model"
+      ],
+      "unchanged_except_model": true
+    },
+    {
+      "stage": "10",
+      "profile": "stable",
+      "differing_manifest_fields": [
+        ".model"
+      ],
+      "unchanged_except_model": true
+    }
+  ],
+  "all_requests_successful": true,
+  "all_servers_verified_native_gpu": true
+}

@@ -1,0 +1,86 @@
+Qwen3-1.7B completion of missing model comparisons
+=================================================
+Scope: experiments01-06 and the matched implementation-overhead A/B in10.
+Existing1.7B evidence for07-09 and11-13 is preserved, not rerun or replaced.
+These are replications inside the original experiment numbers, not experiment14.
+
+Model:Qwen/Qwen3-1.7B pinned70d244cc86ccca08cf5af4e1e306ecf908b1ad5e.
+Current editable source:e997aba05543a127cb09d8a4c3b917f307357807.
+Same installed environment/Metal worker; no package/model/source-policy changes.
+Original request strings, fixed outputs, arrival patterns, physical page budgets,
+token budgets, slot limits, prefill settings, temperatures and seeds preserved.
+Dedicated approximate worker remains enabled only for experiment03 repair.
+Experiments01-06 select reference cache implementation;10 compares reference
+against incremental explicitly with identical policies and instrumentation.
+The reference mode preserves the earlier scan/sort decisions, but replication
+uses the current source checkpoint and a new measurement session. Cross-model
+timing differences are descriptive, not isolated model-size causal estimates.
+
+Planned98 fresh-server GPU runs:
+01:12 (three policies x diagnostic+three timing rounds).
+02:16 (temporal/A-Y x two policies x diagnostic+three rounds).
+03:8 (stock/approximate repair x diagnostic+three rounds).
+04:12 (stock/fine hashes/partial x diagnostic+three rounds), with GPU probes.
+05:10 (original+targeted diagnostics, then three targeted timing pairs).
+06:24 (A-Y/targeted/temporal x two variants x diagnostic+three rounds).
+10:16 (shift/stable x reference/incremental x diagnostic+three rounds).
+Fresh sequential server each time, upstream process-group cleanup, no concurrent
+benchmark servers. Diagnostics excluded from performance rankings.
+No timing outliers silently dropped. Failures remain in the progress record/logs.
+
+After each completed stage, frozen summaries/checksums are saved under each
+experiment's qwen3-1.7B directory. Original0.6B files remain untouched.
+Progress:results/missing-qwen17/progress.json; reproduction:
+  .venv/bin/python src/run_missing_qwen17.py
+Runner resumes completed stages without repeating them. A failed incomplete
+stage requires inspection before retrying; its accepted raw runs remain saved.
+After completion: compare medians and paired rounds, throughput/latency/cache
+effects, exact answer agreement and trace activation; update the13-page PDF.
+
+
+COMPLETED
+=========
+98 successful fresh-server native GPU runs:72 timed,26 diagnostic.
+146432 successful measured output tokens, excluding warmups/extra probes.
+520 raw files verified by SHA256. All diagnostic token budgets respected;
+no preemptions and no referenced cached blocks evicted in these diagnostics.
+All larger-model manifests match originals except model identity; tokenizer
+and chat-template files are byte-identical across0.6B and1.7B.
+Both overhead profiles preserve exact reference/incremental diagnostic
+decisions, timed per-request cache counts and answers.
+
+Qwen3-1.7B now has measurements for all13 numbered experiments.
+This completed seven missing model comparisons, not a new experiment14.
+Per-experiment reports are under01-06 and10/qwen3-1.7B/RESULTS.txt.
+Frozen summaries, per-request files, metrics and raw inventories are beside them.
+Overall audit: qwen3-1.7B-completion-validation.json and
+qwen3-1.7B-completion-manifest.json in this directory.
+Readable-report/audit tools are saved under qwen17-completion-tools/.
+The batch runner src/run_missing_qwen17.py resumes completed stages; use
+individual original runners with the recorded model/environment for fresh reruns.
+
+Observed larger-model outcomes
+------------------------------
+01:FCFS41.855s, prefix-first41.265s, hybrid41.451s; early-request latency tradeoff.
+02:hot-probe first text291.08->88.32ms, retention16->272tokens;
+   temporal batch21.283->20.771s, A-Y41.801->40.858s with unchanged A-Y reuse.
+03:repair40.884->41.395s; slower in all3 pairs;14/25 exact candidate matches.
+04:partial44.314->44.624s group medians, but faster in2/3 pairs;
+   reuse2432->2563tokens/run,31-of32-token exact GPU probe succeeds.
+05:batch24.745->24.664s; long first text6.212->15.476s,
+   short16.756->10.145s. Strong fairness cost, tiny batch-median gain.
+06:combined batch-median changes A-Y-1.37%, targeted-0.53%, temporal-5.78%;
+   faster in7/9 pairs. Temporal hot-prefix retention16->277tokens.
+10:incremental shift41.942->43.906s(+4.68%, slower in3/3 pairs),
+   stable20.185->19.182s(-4.97%, faster in3/3 pairs).
+   Publisher visits11855->1527shift,4275->584stable; selector host time
+   improved7.529->5.654ms and2.675->1.554ms respectively. Full host CPU
+   and wall time remain workload-dependent, despite fewer visited blocks.
+These are exploratory three-round results; quality is not semantically scored.
+Group-median ratios differ from median paired changes; neither is significance.
+Prior0.6B and existing1.7B results remain unchanged.
+
+Updated13-page PDF:../output/pdf/vllm-experiment-comparison.pdf.
+48 measured panels; remaining4 blank panels are0.6B in12/13, not missing1.7B.
+All experimental port8001 servers stopped. No package changes, upstream PR,
+push, deployment or default scheduler-policy adoption occurred.

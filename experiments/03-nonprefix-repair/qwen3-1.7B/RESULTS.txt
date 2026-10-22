@@ -1,0 +1,37 @@
+Experiment03: pinned Qwen3-1.7B replication
+=================================================================
+COMPLETED
+
+Change: Approximate reuse of matching middle pages despite different preceding context, with boundary-row recomputation and a custom Metal attention path. This is NOT exact prefix reuse; semantic quality is not established.
+
+Model:Qwen/Qwen3-1.7B, revision70d244cc86ccca08cf5af4e1e306ecf908b1ad5e.
+Native MLX GPU verified in every physical server log.
+Same request/tokenizer files and original per-profile serving settings.
+New model measurement session on source e997aba05543a127cb09d8a4c3b917f307357807.
+Experiments01-06 use reference cache mode;10 compares both modes explicitly.
+Original0.6B evidence remains unchanged. No historical cross-session causal timing claim.
+
+Three fresh-server untraced timing rounds per policy/profile.
+Separate mechanism diagnostics are excluded from the timing numbers.
+Negative time change means faster; group-median and paired changes both reported.
+Answer agreement is exact text, not a semantic quality score.
+
+Stage:03; 8 GPU runs; 6 timed.
+Raw summary:/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/nonprefix-vllm/batches-20261022-215618/summary.json
+Profile | Variant | Batch seconds | Output tokens/s | First text ms | Request ms | p95 request ms | Change%
+ay | baseline | 40.884 | 39.130 | 22400.970 | 26145.430 | 37424.080 | +0.000
+  Batch samples ms:[41101.0, 40884.47, 40723.01]
+  Paired duration changes%:[0.0, 0.0, 0.0]
+  Cached prompt tokens, all requests:[2480, 2480, 2480]
+  Exact answer agreement, all requests:[{'matches': 28, 'total': 28}, {'matches': 28, 'total': 28}, {'matches': 28, 'total': 28}]
+ay | repair | 41.395 | 38.650 | 22506.540 | 26264.580 | 37965.710 | +1.248
+  Batch samples ms:[41394.64, 41226.86, 41693.32]
+  Paired duration changes%:[0.7144351718936237, 0.8374573523883155, 2.3827069757368147]
+  Cached prompt tokens, all requests:[2480, 2480, 2480]
+  Exact answer agreement, all requests:[{'matches': 14, 'total': 28}, {'matches': 14, 'total': 28}, {'matches': 15, 'total': 28}]
+
+Controls, raw logs, per-request data and trace/probe outcomes are frozen in evidence.
+SHA256 inventories index original raw artifacts without deleting failed attempts.
+Three repeats are exploratory; do not equate more cache hits with overall speed.
+All request-time measurements include scheduler waiting; startup/warmup excluded.
+Reproduce the missing-model suite:.venv/bin/python src/run_missing_qwen17.py

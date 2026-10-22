@@ -1,0 +1,1321 @@
+{
+  "experiment": "06-combined",
+  "rounds": 3,
+  "diagnostics": [
+    {
+      "label": "diagnostic",
+      "probe": null,
+      "variant": "baseline",
+      "mode": "trace",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/ay-diagnostic-baseline-trace.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261022-223008-331260.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/ay-diagnostic-baseline-trace-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/ay-diagnostic-baseline-trace-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/ay/baseline/server-trace-RUuS4r",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 41387.4,
+        "output_tokens_per_second": 38.66,
+        "requests_per_second": 0.604,
+        "first_text_ms": {
+          "median": 22726.8,
+          "p95_nearest_rank": 34168.73
+        },
+        "total_ms": {
+          "median": 26517.37,
+          "p95_nearest_rank": 37846.32
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 41609.18,
+        "output_tokens_per_second": 47.68,
+        "requests_per_second": 0.673,
+        "first_text_ms": {
+          "median": 19054.32,
+          "p95_nearest_rank": 34168.73
+        },
+        "total_ms": {
+          "median": 22757.92,
+          "p95_nearest_rank": 37846.32
+        }
+      },
+      "trace_analysis": {
+        "server_policy": "fcfs",
+        "eviction_policy": "vllm",
+        "evicted_cached_blocks": 107,
+        "preemptions": 0,
+        "max_candidates_waiting": 25,
+        "candidate_reorders": [],
+        "candidate_cache_scores": {},
+        "candidate_admission_order": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y"
+        ],
+        "protected_fcfs_head": [],
+        "waiting_time_safeguard_count": 0
+      },
+      "nonprefix_totals": {},
+      "sha256": "9e125663060ae20591eb2cc762a72e9eb9909693d0ce3594443f817da24dccbb",
+      "profile": "ay",
+      "trace": {
+        "header": {
+          "scheduler_source": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/vllm-src/vllm/v1/core/sched/scheduler.py",
+          "eviction_policy": "vllm",
+          "skip_continue": false,
+          "chunked_prefill": false,
+          "block_size": 16,
+          "token_budget_limit": 512
+        },
+        "counts": {
+          "skip": 0,
+          "budget_stops": 0,
+          "cached_evictions": 107,
+          "preemptions": 0
+        },
+        "events": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/ay/baseline/server-trace-RUuS4r/events-58870-1792688407164491000.jsonl"
+      }
+    },
+    {
+      "label": "diagnostic",
+      "probe": null,
+      "variant": "combined",
+      "mode": "trace",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/ay-diagnostic-combined-trace.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/lfu/controlled-20261022-223117-023410.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/ay-diagnostic-combined-trace-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/ay-diagnostic-combined-trace-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/ay/combined/server-trace-PfYqmg",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 42478.06,
+        "output_tokens_per_second": 37.67,
+        "requests_per_second": 0.589,
+        "first_text_ms": {
+          "median": 22780.74,
+          "p95_nearest_rank": 34356.04
+        },
+        "total_ms": {
+          "median": 26549.83,
+          "p95_nearest_rank": 38553.82
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 42682.57,
+        "output_tokens_per_second": 46.48,
+        "requests_per_second": 0.656,
+        "first_text_ms": {
+          "median": 19102.44,
+          "p95_nearest_rank": 34356.04
+        },
+        "total_ms": {
+          "median": 22808.14,
+          "p95_nearest_rank": 38553.82
+        }
+      },
+      "trace_analysis": {
+        "server_policy": "fcfs",
+        "eviction_policy": "lfu",
+        "evicted_cached_blocks": 108,
+        "preemptions": 0,
+        "max_candidates_waiting": 25,
+        "candidate_reorders": [],
+        "candidate_cache_scores": {},
+        "candidate_admission_order": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y"
+        ],
+        "protected_fcfs_head": [],
+        "waiting_time_safeguard_count": 0
+      },
+      "nonprefix_totals": {},
+      "sha256": "5ab4d5b0cbd8812b9b954c2b259e30b835299a9ea7317c447b78c2e2969c38bd",
+      "profile": "ay",
+      "trace": {
+        "header": {
+          "scheduler_source": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/vllm-src/vllm/v1/core/sched/scheduler.py",
+          "eviction_policy": "lfu",
+          "skip_continue": true,
+          "chunked_prefill": false,
+          "block_size": 16,
+          "token_budget_limit": 512
+        },
+        "counts": {
+          "skip": 0,
+          "budget_stops": 0,
+          "cached_evictions": 108,
+          "preemptions": 0
+        },
+        "events": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/ay/combined/server-trace-PfYqmg/events-58919-1792688475336736000.jsonl"
+      }
+    },
+    {
+      "label": "diagnostic",
+      "probe": null,
+      "variant": "baseline",
+      "mode": "trace",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/targeted-diagnostic-baseline-trace.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261022-223910-559323.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/targeted-diagnostic-baseline-trace-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/targeted-diagnostic-baseline-trace-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/targeted/baseline/server-trace-bL1jnM",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 25807.2,
+        "output_tokens_per_second": 62.0,
+        "requests_per_second": 0.969,
+        "first_text_ms": {
+          "median": 12303.83,
+          "p95_nearest_rank": 17828.17
+        },
+        "total_ms": {
+          "median": 17655.25,
+          "p95_nearest_rank": 22525.15
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 33,
+        "failed_requests": 0,
+        "successful_output_tokens": 2112,
+        "duration_ms": 26197.56,
+        "output_tokens_per_second": 80.62,
+        "requests_per_second": 1.26,
+        "first_text_ms": {
+          "median": 11351.15,
+          "p95_nearest_rank": 17828.17
+        },
+        "total_ms": {
+          "median": 17327.84,
+          "p95_nearest_rank": 22525.15
+        }
+      },
+      "trace_analysis": {
+        "server_policy": "fcfs",
+        "eviction_policy": "vllm",
+        "evicted_cached_blocks": 175,
+        "preemptions": 0,
+        "max_candidates_waiting": 25,
+        "candidate_reorders": [],
+        "candidate_cache_scores": {},
+        "candidate_admission_order": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y"
+        ],
+        "protected_fcfs_head": [],
+        "waiting_time_safeguard_count": 0
+      },
+      "nonprefix_totals": {},
+      "sha256": "35ea3014ccf5577d9a32a108ac091229bd68f25483798602f64335013f889ac5",
+      "profile": "targeted",
+      "trace": {
+        "header": {
+          "scheduler_source": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/vllm-src/vllm/v1/core/sched/scheduler.py",
+          "eviction_policy": "vllm",
+          "skip_continue": false,
+          "chunked_prefill": false,
+          "block_size": 16,
+          "token_budget_limit": 512
+        },
+        "counts": {
+          "skip": 0,
+          "budget_stops": 6,
+          "cached_evictions": 175,
+          "preemptions": 0
+        },
+        "events": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/targeted/baseline/server-trace-bL1jnM/events-59423-1792688944498526000.jsonl"
+      }
+    },
+    {
+      "label": "diagnostic",
+      "probe": null,
+      "variant": "combined",
+      "mode": "trace",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/targeted-diagnostic-combined-trace.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/lfu/controlled-20261022-224009-859710.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/targeted-diagnostic-combined-trace-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/targeted-diagnostic-combined-trace-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/targeted/combined/server-trace-QrPxjH",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 25795.4,
+        "output_tokens_per_second": 62.03,
+        "requests_per_second": 0.969,
+        "first_text_ms": {
+          "median": 10682.79,
+          "p95_nearest_rank": 17287.06
+        },
+        "total_ms": {
+          "median": 15841.67,
+          "p95_nearest_rank": 22588.22
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 33,
+        "failed_requests": 0,
+        "successful_output_tokens": 2112,
+        "duration_ms": 26172.47,
+        "output_tokens_per_second": 80.7,
+        "requests_per_second": 1.261,
+        "first_text_ms": {
+          "median": 10622.95,
+          "p95_nearest_rank": 17287.06
+        },
+        "total_ms": {
+          "median": 15758.59,
+          "p95_nearest_rank": 22588.22
+        }
+      },
+      "trace_analysis": {
+        "server_policy": "fcfs",
+        "eviction_policy": "lfu",
+        "evicted_cached_blocks": 176,
+        "preemptions": 0,
+        "max_candidates_waiting": 25,
+        "candidate_reorders": [],
+        "candidate_cache_scores": {},
+        "candidate_admission_order": [
+          "A",
+          "B",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "C",
+          "D",
+          "E",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "F",
+          "G",
+          "H",
+          "X",
+          "Y",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M"
+        ],
+        "protected_fcfs_head": [],
+        "waiting_time_safeguard_count": 0
+      },
+      "nonprefix_totals": {},
+      "sha256": "6a104652a4c8f14347464df4d2fa5f0362a6d1add396290d22c56c14ec3aca56",
+      "profile": "targeted",
+      "trace": {
+        "header": {
+          "scheduler_source": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/vllm-src/vllm/v1/core/sched/scheduler.py",
+          "eviction_policy": "lfu",
+          "skip_continue": true,
+          "chunked_prefill": false,
+          "block_size": 16,
+          "token_budget_limit": 512
+        },
+        "counts": {
+          "skip": 28,
+          "budget_stops": 2,
+          "cached_evictions": 176,
+          "preemptions": 0
+        },
+        "events": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/targeted/combined/server-trace-QrPxjH/events-59459-1792689003961552000.jsonl"
+      }
+    },
+    {
+      "profile": "temporal",
+      "label": "diagnostic",
+      "variant": "baseline",
+      "mode": "trace",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/temporal-diagnostic-baseline-trace.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction/vllm/temporal-20261022-224638-966279.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/temporal-diagnostic-baseline-trace-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/temporal-diagnostic-baseline-trace-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/temporal/baseline/server-trace-dk55Hz",
+      "sha256": "da39b0c2527fe8fc5ae9fbecd098ebf3e244a1907a1a40c6eb77ba3f439587f6",
+      "trace": {
+        "header": {
+          "scheduler_source": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/vllm-src/vllm/v1/core/sched/scheduler.py",
+          "eviction_policy": "vllm",
+          "skip_continue": false,
+          "chunked_prefill": false,
+          "block_size": 16,
+          "token_budget_limit": 384
+        },
+        "counts": {
+          "skip": 0,
+          "budget_stops": 0,
+          "cached_evictions": 297,
+          "preemptions": 0
+        },
+        "events": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/temporal/baseline/server-trace-dk55Hz/events-59782-1792689397620770000.jsonl"
+      }
+    },
+    {
+      "profile": "temporal",
+      "label": "diagnostic",
+      "variant": "combined",
+      "mode": "trace",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/temporal-diagnostic-combined-trace.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction/lfu/temporal-20261022-224723-630293.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/temporal-diagnostic-combined-trace-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/temporal-diagnostic-combined-trace-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/temporal/combined/server-trace-fTdSs9",
+      "sha256": "2346e66d4f2bb56b0b1d541aedb7cc61c2dcf66442340b06416697d5b73f9089",
+      "trace": {
+        "header": {
+          "scheduler_source": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/vllm-src/vllm/v1/core/sched/scheduler.py",
+          "eviction_policy": "lfu",
+          "skip_continue": true,
+          "chunked_prefill": false,
+          "block_size": 16,
+          "token_budget_limit": 384
+        },
+        "counts": {
+          "skip": 0,
+          "budget_stops": 0,
+          "cached_evictions": 282,
+          "preemptions": 0
+        },
+        "events": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/temporal/combined/server-trace-fTdSs9/events-59810-1792689442365409000.jsonl"
+      }
+    }
+  ],
+  "runs": [
+    {
+      "label": 1,
+      "probe": null,
+      "variant": "baseline",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/ay-1-baseline-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261022-223227-605960.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/ay-1-baseline-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/ay-1-baseline-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/ay/baseline/server-bench-3xPVKT",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 41304.05,
+        "output_tokens_per_second": 38.74,
+        "requests_per_second": 0.605,
+        "first_text_ms": {
+          "median": 22283.58,
+          "p95_nearest_rank": 33848.42
+        },
+        "total_ms": {
+          "median": 25902.61,
+          "p95_nearest_rank": 37785.27
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 41534.49,
+        "output_tokens_per_second": 47.77,
+        "requests_per_second": 0.674,
+        "first_text_ms": {
+          "median": 18706.38,
+          "p95_nearest_rank": 33848.42
+        },
+        "total_ms": {
+          "median": 22310.22,
+          "p95_nearest_rank": 37785.27
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "9527a9713595d14faee3dda0fa66736ba9834908c7a85b860dbb3dd997f32012",
+      "profile": "ay"
+    },
+    {
+      "label": 1,
+      "probe": null,
+      "variant": "combined",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/ay-1-combined-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/lfu/controlled-20261022-223333-694644.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/ay-1-combined-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/ay-1-combined-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/ay/combined/server-bench-z3FEYI",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 40447.12,
+        "output_tokens_per_second": 39.56,
+        "requests_per_second": 0.618,
+        "first_text_ms": {
+          "median": 22352.29,
+          "p95_nearest_rank": 33399.63
+        },
+        "total_ms": {
+          "median": 26030.2,
+          "p95_nearest_rank": 36979.82
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 40685.9,
+        "output_tokens_per_second": 48.76,
+        "requests_per_second": 0.688,
+        "first_text_ms": {
+          "median": 18788.53,
+          "p95_nearest_rank": 33399.63
+        },
+        "total_ms": {
+          "median": 22379.71,
+          "p95_nearest_rank": 36979.82
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "f830fd405a01967d9072439ee1dbb7d24549c942bd527e7cb6b4ef60e7fd0ce9",
+      "profile": "ay"
+    },
+    {
+      "label": 2,
+      "probe": null,
+      "variant": "combined",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/ay-2-combined-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/lfu/controlled-20261022-223439-300251.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/ay-2-combined-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/ay-2-combined-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/ay/combined/server-bench-CiXGPR",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 40737.13,
+        "output_tokens_per_second": 39.28,
+        "requests_per_second": 0.614,
+        "first_text_ms": {
+          "median": 22652.99,
+          "p95_nearest_rank": 33617.0
+        },
+        "total_ms": {
+          "median": 26235.85,
+          "p95_nearest_rank": 37220.08
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 40923.49,
+        "output_tokens_per_second": 48.48,
+        "requests_per_second": 0.684,
+        "first_text_ms": {
+          "median": 19020.68,
+          "p95_nearest_rank": 33617.0
+        },
+        "total_ms": {
+          "median": 22681.69,
+          "p95_nearest_rank": 37220.08
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "357a78ac8ebdc4b26d72ad93ad2ccb75c0ca7c7d7c7a2025ad6e5ec992f32d75",
+      "profile": "ay"
+    },
+    {
+      "label": 2,
+      "probe": null,
+      "variant": "baseline",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/ay-2-baseline-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261022-223545-422316.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/ay-2-baseline-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/ay-2-baseline-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/ay/baseline/server-bench-vaiNAf",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 41508.37,
+        "output_tokens_per_second": 38.55,
+        "requests_per_second": 0.602,
+        "first_text_ms": {
+          "median": 22203.45,
+          "p95_nearest_rank": 34207.47
+        },
+        "total_ms": {
+          "median": 26102.17,
+          "p95_nearest_rank": 37940.57
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 41719.78,
+        "output_tokens_per_second": 47.56,
+        "requests_per_second": 0.671,
+        "first_text_ms": {
+          "median": 18592.39,
+          "p95_nearest_rank": 34207.47
+        },
+        "total_ms": {
+          "median": 22232.19,
+          "p95_nearest_rank": 37940.57
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "83a0e2cda02552ea59819253376a59a67fb88dc9321ab78dd5d56974103136f8",
+      "profile": "ay"
+    },
+    {
+      "label": 3,
+      "probe": null,
+      "variant": "baseline",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/ay-3-baseline-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261022-223652-062818.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/ay-3-baseline-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/ay-3-baseline-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/ay/baseline/server-bench-pZJrYt",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 41025.92,
+        "output_tokens_per_second": 39.0,
+        "requests_per_second": 0.609,
+        "first_text_ms": {
+          "median": 22761.62,
+          "p95_nearest_rank": 33797.76
+        },
+        "total_ms": {
+          "median": 26385.41,
+          "p95_nearest_rank": 37533.37
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 41226.84,
+        "output_tokens_per_second": 48.12,
+        "requests_per_second": 0.679,
+        "first_text_ms": {
+          "median": 19135.79,
+          "p95_nearest_rank": 33797.76
+        },
+        "total_ms": {
+          "median": 22790.57,
+          "p95_nearest_rank": 37533.37
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "c0f94b469225934f2a9b5503dc66daf83ab96d6a7462a4724acc5eefa070824e",
+      "profile": "ay"
+    },
+    {
+      "label": 3,
+      "probe": null,
+      "variant": "combined",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/ay-3-combined-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/lfu/controlled-20261022-223759-399363.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/ay-3-combined-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/ay-3-combined-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/ay/combined/server-bench-7mvVTX",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 41803.4,
+        "output_tokens_per_second": 38.27,
+        "requests_per_second": 0.598,
+        "first_text_ms": {
+          "median": 23143.69,
+          "p95_nearest_rank": 34738.77
+        },
+        "total_ms": {
+          "median": 27267.95,
+          "p95_nearest_rank": 38326.55
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 42071.9,
+        "output_tokens_per_second": 47.16,
+        "requests_per_second": 0.666,
+        "first_text_ms": {
+          "median": 19144.38,
+          "p95_nearest_rank": 34738.77
+        },
+        "total_ms": {
+          "median": 23172.05,
+          "p95_nearest_rank": 38326.55
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "2b5a3f3999a185602362b7b115497299a965b91c29505fabfbcdac7ba25dcc09",
+      "profile": "ay"
+    },
+    {
+      "label": 1,
+      "probe": null,
+      "variant": "baseline",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/targeted-1-baseline-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261022-224109-729624.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/targeted-1-baseline-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/targeted-1-baseline-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/targeted/baseline/server-bench-KHSe71",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 24617.84,
+        "output_tokens_per_second": 64.99,
+        "requests_per_second": 1.016,
+        "first_text_ms": {
+          "median": 11757.86,
+          "p95_nearest_rank": 16804.63
+        },
+        "total_ms": {
+          "median": 16645.18,
+          "p95_nearest_rank": 21388.48
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 33,
+        "failed_requests": 0,
+        "successful_output_tokens": 2112,
+        "duration_ms": 25002.95,
+        "output_tokens_per_second": 84.47,
+        "requests_per_second": 1.32,
+        "first_text_ms": {
+          "median": 10794.91,
+          "p95_nearest_rank": 16804.63
+        },
+        "total_ms": {
+          "median": 16329.58,
+          "p95_nearest_rank": 21388.48
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "1d1be3104f291f4d70ddfb131d6277af85b75bc5ea35f242bdbf211e162f8a20",
+      "profile": "targeted"
+    },
+    {
+      "label": 1,
+      "probe": null,
+      "variant": "combined",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/targeted-1-combined-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/lfu/controlled-20261022-224204-911479.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/targeted-1-combined-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/targeted-1-combined-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/targeted/combined/server-bench-1LGl4f",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 24393.68,
+        "output_tokens_per_second": 65.59,
+        "requests_per_second": 1.025,
+        "first_text_ms": {
+          "median": 10006.69,
+          "p95_nearest_rank": 16396.81
+        },
+        "total_ms": {
+          "median": 14993.23,
+          "p95_nearest_rank": 21199.95
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 33,
+        "failed_requests": 0,
+        "successful_output_tokens": 2112,
+        "duration_ms": 24749.8,
+        "output_tokens_per_second": 85.33,
+        "requests_per_second": 1.333,
+        "first_text_ms": {
+          "median": 9944.71,
+          "p95_nearest_rank": 16396.81
+        },
+        "total_ms": {
+          "median": 14910.35,
+          "p95_nearest_rank": 21199.95
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "bee446476eae4765a741cd81db38caf40ab8e0db01c735b1d99ea06b46eb0bd6",
+      "profile": "targeted"
+    },
+    {
+      "label": 2,
+      "probe": null,
+      "variant": "combined",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/targeted-2-combined-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/lfu/controlled-20261022-224259-677020.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/targeted-2-combined-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/targeted-2-combined-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/targeted/combined/server-bench-ODJZUy",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 25115.36,
+        "output_tokens_per_second": 63.71,
+        "requests_per_second": 0.995,
+        "first_text_ms": {
+          "median": 10057.85,
+          "p95_nearest_rank": 16767.43
+        },
+        "total_ms": {
+          "median": 15343.29,
+          "p95_nearest_rank": 21972.15
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 33,
+        "failed_requests": 0,
+        "successful_output_tokens": 2112,
+        "duration_ms": 25470.98,
+        "output_tokens_per_second": 82.92,
+        "requests_per_second": 1.296,
+        "first_text_ms": {
+          "median": 10003.09,
+          "p95_nearest_rank": 16767.43
+        },
+        "total_ms": {
+          "median": 15288.72,
+          "p95_nearest_rank": 21972.15
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "5968a76627e076b760ef077ea95c284d5c449e17fcac426355c72974e8ca82ed",
+      "profile": "targeted"
+    },
+    {
+      "label": 2,
+      "probe": null,
+      "variant": "baseline",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/targeted-2-baseline-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261022-224356-879774.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/targeted-2-baseline-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/targeted-2-baseline-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/targeted/baseline/server-bench-XZB6o9",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 24546.62,
+        "output_tokens_per_second": 65.18,
+        "requests_per_second": 1.018,
+        "first_text_ms": {
+          "median": 11874.64,
+          "p95_nearest_rank": 16874.39
+        },
+        "total_ms": {
+          "median": 16726.61,
+          "p95_nearest_rank": 21344.33
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 33,
+        "failed_requests": 0,
+        "successful_output_tokens": 2112,
+        "duration_ms": 24967.34,
+        "output_tokens_per_second": 84.59,
+        "requests_per_second": 1.322,
+        "first_text_ms": {
+          "median": 10906.3,
+          "p95_nearest_rank": 16874.39
+        },
+        "total_ms": {
+          "median": 16408.54,
+          "p95_nearest_rank": 21344.33
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "16f9cf249f2fc106803450378792a3ae03c31765acc62862476b9bc8af94579e",
+      "profile": "targeted"
+    },
+    {
+      "label": 3,
+      "probe": null,
+      "variant": "baseline",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/targeted-3-baseline-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261022-224451-670186.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/targeted-3-baseline-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/targeted-3-baseline-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/targeted/baseline/server-bench-gd6Fwn",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 26275.21,
+        "output_tokens_per_second": 60.89,
+        "requests_per_second": 0.951,
+        "first_text_ms": {
+          "median": 12309.06,
+          "p95_nearest_rank": 17769.17
+        },
+        "total_ms": {
+          "median": 17584.82,
+          "p95_nearest_rank": 22697.24
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 33,
+        "failed_requests": 0,
+        "successful_output_tokens": 2112,
+        "duration_ms": 26679.61,
+        "output_tokens_per_second": 79.16,
+        "requests_per_second": 1.237,
+        "first_text_ms": {
+          "median": 11265.79,
+          "p95_nearest_rank": 17769.17
+        },
+        "total_ms": {
+          "median": 17249.23,
+          "p95_nearest_rank": 22697.24
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "720361f8c856b77c9d7d7651ff9692ff20dbe6c245e3d73b371d7da8f28ceeab",
+      "profile": "targeted"
+    },
+    {
+      "label": 3,
+      "probe": null,
+      "variant": "combined",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/targeted-3-combined-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/lfu/controlled-20261022-224549-199616.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/targeted-3-combined-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/targeted-3-combined-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/targeted/combined/server-bench-8O6XxK",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 24488.39,
+        "output_tokens_per_second": 65.34,
+        "requests_per_second": 1.021,
+        "first_text_ms": {
+          "median": 9971.26,
+          "p95_nearest_rank": 16460.04
+        },
+        "total_ms": {
+          "median": 15052.4,
+          "p95_nearest_rank": 21393.64
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 33,
+        "failed_requests": 0,
+        "successful_output_tokens": 2112,
+        "duration_ms": 24661.83,
+        "output_tokens_per_second": 85.64,
+        "requests_per_second": 1.338,
+        "first_text_ms": {
+          "median": 9907.46,
+          "p95_nearest_rank": 16460.04
+        },
+        "total_ms": {
+          "median": 14968.01,
+          "p95_nearest_rank": 21393.64
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "36521aac783f30cf11b30e51120cc3ff2f39f6a5df3218c6f413919246529dd7",
+      "profile": "targeted"
+    },
+    {
+      "profile": "temporal",
+      "label": 1,
+      "variant": "baseline",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/temporal-1-baseline-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction/vllm/temporal-20261022-224807-144167.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/temporal-1-baseline-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/temporal-1-baseline-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/temporal/baseline/server-bench-hpoAKz",
+      "sha256": "78f514b9c7296d1cd3d53c8757a77b9fd060d39b30a862b969fe392212c42640"
+    },
+    {
+      "profile": "temporal",
+      "label": 1,
+      "variant": "combined",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/temporal-1-combined-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction/lfu/temporal-20261022-224851-207935.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/temporal-1-combined-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/temporal-1-combined-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/temporal/combined/server-bench-GCZgpQ",
+      "sha256": "cc50f02ce16d54332aa8ee1ef735f004cb9483f0fdecb8eeca89464321845737"
+    },
+    {
+      "profile": "temporal",
+      "label": 2,
+      "variant": "combined",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/temporal-2-combined-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction/lfu/temporal-20261022-224934-050757.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/temporal-2-combined-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/temporal-2-combined-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/temporal/combined/server-bench-cCzlyW",
+      "sha256": "3987be8385354afa30aca380ad57608ae4e06396883248e8c6b9ddf59ca82863"
+    },
+    {
+      "profile": "temporal",
+      "label": 2,
+      "variant": "baseline",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/temporal-2-baseline-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction/vllm/temporal-20261022-225016-727296.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/temporal-2-baseline-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/temporal-2-baseline-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/temporal/baseline/server-bench-nH8Sd6",
+      "sha256": "836655c248332eb358e94e1ba59517e1f2b022810ee16d418e03832af160f527"
+    },
+    {
+      "profile": "temporal",
+      "label": 3,
+      "variant": "baseline",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/temporal-3-baseline-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction/vllm/temporal-20261022-225100-604360.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/temporal-3-baseline-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/temporal-3-baseline-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/temporal/baseline/server-bench-pWGfzY",
+      "sha256": "45584e561c60fa63277944c41f560e3fd294a3d0cfc778760cf5d495ba1d89d3"
+    },
+    {
+      "profile": "temporal",
+      "label": 3,
+      "variant": "combined",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/temporal-3-combined-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction/lfu/temporal-20261022-225145-209639.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/temporal-3-combined-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/temporal-3-combined-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/temporal/combined/server-bench-fPgGvS",
+      "sha256": "12c8c1085a441a3b795a2afc789435f6a3eb678dc926ab2066c7489f154518aa"
+    }
+  ],
+  "complete": true,
+  "aggregate": {
+    "ay": {
+      "baseline": {
+        "batch_median_ms": 41304.05,
+        "throughput_median_tokens_s": 38.74,
+        "first_text_median_ms": 22283.58,
+        "request_latency_median_ms": 26102.17,
+        "cached_tokens": [
+          2432,
+          2432,
+          2432
+        ],
+        "output_tokens": [
+          1984,
+          1984,
+          1984
+        ],
+        "durations_ms": [
+          41304.05,
+          41508.37,
+          41025.92
+        ]
+      },
+      "combined": {
+        "batch_median_ms": 40737.13,
+        "throughput_median_tokens_s": 39.28,
+        "first_text_median_ms": 22652.99,
+        "request_latency_median_ms": 26235.85,
+        "cached_tokens": [
+          2563,
+          2563,
+          2563
+        ],
+        "output_tokens": [
+          1984,
+          1984,
+          1984
+        ],
+        "durations_ms": [
+          40447.12,
+          40737.13,
+          41803.4
+        ]
+      }
+    },
+    "targeted": {
+      "baseline": {
+        "batch_median_ms": 24617.84,
+        "throughput_median_tokens_s": 64.99,
+        "first_text_median_ms": 11874.64,
+        "request_latency_median_ms": 16726.61,
+        "cached_tokens": [
+          400,
+          400,
+          400
+        ],
+        "output_tokens": [
+          2112,
+          2112,
+          2112
+        ],
+        "durations_ms": [
+          24617.84,
+          24546.62,
+          26275.21
+        ],
+        "groups": {
+          "long": {
+            "first_text_median_ms": 6097.74,
+            "latency_median_ms": 12082.84
+          },
+          "short": {
+            "first_text_median_ms": 16546.245000000003,
+            "latency_median_ms": 21203.045
+          }
+        }
+      },
+      "combined": {
+        "batch_median_ms": 24488.39,
+        "throughput_median_tokens_s": 65.34,
+        "first_text_median_ms": 10006.69,
+        "request_latency_median_ms": 15052.4,
+        "cached_tokens": [
+          549,
+          549,
+          549
+        ],
+        "output_tokens": [
+          2112,
+          2112,
+          2112
+        ],
+        "durations_ms": [
+          24393.68,
+          25115.36,
+          24488.39
+        ],
+        "groups": {
+          "long": {
+            "first_text_median_ms": 15293.53,
+            "latency_median_ms": 20998.9
+          },
+          "short": {
+            "first_text_median_ms": 9953.724999999999,
+            "latency_median_ms": 14976.625
+          }
+        }
+      }
+    },
+    "temporal": {
+      "baseline": {
+        "batch_median_ms": 20371.0,
+        "probe_first_text_median_ms": 244.05,
+        "probe_cached_tokens": [
+          [
+            16,
+            16,
+            16
+          ],
+          [
+            16,
+            16,
+            16
+          ],
+          [
+            16,
+            16,
+            16
+          ]
+        ],
+        "output_tokens": [
+          336,
+          336,
+          336
+        ],
+        "durations_ms": [
+          20371.0,
+          20294.93,
+          20443.02
+        ]
+      },
+      "combined": {
+        "batch_median_ms": 19192.88,
+        "probe_first_text_median_ms": 83.38,
+        "probe_cached_tokens": [
+          [
+            277,
+            277,
+            277
+          ],
+          [
+            277,
+            277,
+            277
+          ],
+          [
+            277,
+            277,
+            277
+          ]
+        ],
+        "output_tokens": [
+          336,
+          336,
+          336
+        ],
+        "durations_ms": [
+          19192.88,
+          19173.32,
+          19470.93
+        ]
+      }
+    }
+  },
+  "manifests_match": {
+    "ay": true,
+    "targeted": true,
+    "temporal": true
+  },
+  "answer_match": {
+    "ay": {
+      "exact_matches_per_round": [
+        27,
+        27,
+        27
+      ],
+      "requests_per_round": 28
+    },
+    "targeted": {
+      "exact_matches_per_round": [
+        23,
+        25,
+        23
+      ],
+      "requests_per_round": 33
+    },
+    "temporal": {
+      "exact_matches_per_round": [
+        41,
+        41,
+        41
+      ],
+      "requests_per_round": 42
+    }
+  },
+  "replication_provenance": {
+    "model": "Qwen/Qwen3-1.7B",
+    "model_revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e",
+    "started": "2026-10-22T21:25:47.037534",
+    "source_checkpoint": "e997aba05543a127cb09d8a4c3b917f307357807",
+    "implementation_mode": "reference for experiments01-06; reference/incremental in10",
+    "complete": false
+  },
+  "original_summary": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/summary.json"
+}

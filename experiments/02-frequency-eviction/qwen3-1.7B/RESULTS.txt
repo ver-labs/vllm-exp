@@ -1,0 +1,55 @@
+Experiment02: pinned Qwen3-1.7B replication
+=================================================================
+COMPLETED
+
+Change: Prefer retaining frequently reused zero-reference cached pages. Active pages cannot be evicted. FCFS order unchanged. Temporal and concurrent A-Y profiles measured separately.
+
+Model:Qwen/Qwen3-1.7B, revision70d244cc86ccca08cf5af4e1e306ecf908b1ad5e.
+Native MLX GPU verified in every physical server log.
+Same request/tokenizer files and original per-profile serving settings.
+New model measurement session on source e997aba05543a127cb09d8a4c3b917f307357807.
+Experiments01-06 use reference cache mode;10 compares both modes explicitly.
+Original0.6B evidence remains unchanged. No historical cross-session causal timing claim.
+
+Three fresh-server untraced timing rounds per policy/profile.
+Separate mechanism diagnostics are excluded from the timing numbers.
+Negative time change means faster; group-median and paired changes both reported.
+Answer agreement is exact text, not a semantic quality score.
+
+Stage:02-temporal; 8 GPU runs; 6 timed.
+Raw summary:/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction/batches-20261022-214111/summary.json
+Profile | Variant | Batch seconds | Output tokens/s | First text ms | Request ms | p95 request ms | Change%
+temporal | vllm | 21.283 | 15.790 | 175.110 | 502.270 | 619.870 | +0.000
+  Batch samples ms:[21754.06, 21282.67, 21129.75]
+  Paired duration changes%:[0.0, 0.0, 0.0]
+  Cached prompt tokens, all requests:[2720, 2720, 2720]
+  Exact answer agreement, all requests:[{'matches': 42, 'total': 42}, {'matches': 42, 'total': 42}, {'matches': 42, 'total': 42}]
+  median_probe_first_text_ms:291.08
+  probe_cached_tokens:[[16, 16, 16], [16, 16, 16], [16, 16, 16]]
+temporal | lfu | 20.771 | 16.180 | 172.250 | 502.570 | 550.120 | -2.405
+  Batch samples ms:[20770.78, 21408.68, 20510.8]
+  Paired duration changes%:[-4.519983855887144, 0.592077967661031, -2.929282173239156]
+  Cached prompt tokens, all requests:[3488, 3488, 3488]
+  Exact answer agreement, all requests:[{'matches': 42, 'total': 42}, {'matches': 42, 'total': 42}, {'matches': 42, 'total': 42}]
+  median_probe_first_text_ms:88.32
+  probe_cached_tokens:[[272, 272, 272], [272, 272, 272], [272, 272, 272]]
+
+Stage:02-ay; 8 GPU runs; 6 timed.
+Raw summary:/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/batches-20261022-214719/summary.json
+Profile | Variant | Batch seconds | Output tokens/s | First text ms | Request ms | p95 request ms | Change%
+ay | vllm | 41.801 | 38.280 | 23202.860 | 26854.120 | 38283.300 | +0.000
+  Batch samples ms:[41071.28, 41801.0, 43452.68]
+  Paired duration changes%:[0.0, 0.0, 0.0]
+  Cached prompt tokens, all requests:[2480, 2480, 2480]
+  Exact answer agreement, all requests:[{'matches': 28, 'total': 28}, {'matches': 28, 'total': 28}, {'matches': 28, 'total': 28}]
+ay | lfu | 40.858 | 39.160 | 22307.310 | 25963.610 | 37314.130 | -2.255
+  Batch samples ms:[41943.32, 40858.42, 40835.84]
+  Paired duration changes%:[2.1232355066606257, -2.254922131049497, -6.022275265875443]
+  Cached prompt tokens, all requests:[2480, 2480, 2480]
+  Exact answer agreement, all requests:[{'matches': 26, 'total': 28}, {'matches': 28, 'total': 28}, {'matches': 26, 'total': 28}]
+
+Controls, raw logs, per-request data and trace/probe outcomes are frozen in evidence.
+SHA256 inventories index original raw artifacts without deleting failed attempts.
+Three repeats are exploratory; do not equate more cache hits with overall speed.
+All request-time measurements include scheduler waiting; startup/warmup excluded.
+Reproduce the missing-model suite:.venv/bin/python src/run_missing_qwen17.py

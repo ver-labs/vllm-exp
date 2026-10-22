@@ -1,0 +1,1502 @@
+{
+  "rounds_requested": 3,
+  "candidate_count": 25,
+  "diagnostic": {
+    "round": "diagnostic",
+    "policy": "fcfs_head_prefix",
+    "mode": "trace",
+    "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/fcfs_head_prefix/controlled-20261022-212914-516808.json",
+    "launcher_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261022-212547/diagnostic-fcfs_head_prefix-trace-launcher.log",
+    "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261022-212547/diagnostic-fcfs_head_prefix-trace-client.log",
+    "candidate_summary": {
+      "successful_requests": 25,
+      "failed_requests": 0,
+      "successful_output_tokens": 1600,
+      "duration_ms": 56461.8,
+      "output_tokens_per_second": 28.34,
+      "requests_per_second": 0.443,
+      "first_text_ms": {
+        "median": 52221.07,
+        "p95_nearest_rank": 52422.79
+      },
+      "total_ms": {
+        "median": 52324.89,
+        "p95_nearest_rank": 54084.85
+      }
+    },
+    "batch_summary": {
+      "successful_requests": 28,
+      "failed_requests": 0,
+      "successful_output_tokens": 1984,
+      "duration_ms": 56610.08,
+      "output_tokens_per_second": 35.05,
+      "requests_per_second": 0.495,
+      "first_text_ms": {
+        "median": 30548.94,
+        "p95_nearest_rank": 52422.79
+      },
+      "total_ms": {
+        "median": 52283.71,
+        "p95_nearest_rank": 54084.85
+      }
+    },
+    "trace_analysis": {
+      "server_policy": "fcfs_head_prefix",
+      "eviction_policy": "vllm",
+      "evicted_cached_blocks": 107,
+      "preemptions": 0,
+      "max_candidates_waiting": 25,
+      "candidate_reorders": [],
+      "candidate_cache_scores": {},
+      "candidate_admission_order": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H",
+        "I",
+        "J",
+        "K",
+        "L",
+        "M",
+        "N",
+        "O",
+        "P",
+        "Q",
+        "R",
+        "S",
+        "T",
+        "U",
+        "V",
+        "W",
+        "X",
+        "Y"
+      ],
+      "protected_fcfs_head": [
+        "A",
+        "B",
+        "C"
+      ],
+      "waiting_time_safeguard_count": 22
+    }
+  },
+  "runs": [
+    {
+      "round": 1,
+      "policy": "fcfs",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/fcfs/controlled-20261022-213046-423764.json",
+      "launcher_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261022-212547/1-fcfs-bench-launcher.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261022-212547/1-fcfs-bench-client.log",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 46128.44,
+        "output_tokens_per_second": 34.69,
+        "requests_per_second": 0.542,
+        "first_text_ms": {
+          "median": 25359.92,
+          "p95_nearest_rank": 38177.4
+        },
+        "total_ms": {
+          "median": 29464.76,
+          "p95_nearest_rank": 42266.79
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 46379.05,
+        "output_tokens_per_second": 42.78,
+        "requests_per_second": 0.604,
+        "first_text_ms": {
+          "median": 21350.81,
+          "p95_nearest_rank": 38177.4
+        },
+        "total_ms": {
+          "median": 25429.15,
+          "p95_nearest_rank": 42266.79
+        }
+      },
+      "trace_analysis": null
+    },
+    {
+      "round": 1,
+      "policy": "prefix_first",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/prefix_first/controlled-20261022-213159-920307.json",
+      "launcher_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261022-212547/1-prefix_first-bench-launcher.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261022-212547/1-prefix_first-bench-client.log",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 49769.46,
+        "output_tokens_per_second": 32.15,
+        "requests_per_second": 0.502,
+        "first_text_ms": {
+          "median": 44075.85,
+          "p95_nearest_rank": 44271.58
+        },
+        "total_ms": {
+          "median": 44084.04,
+          "p95_nearest_rank": 45663.26
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 49899.05,
+        "output_tokens_per_second": 39.76,
+        "requests_per_second": 0.561,
+        "first_text_ms": {
+          "median": 21931.28,
+          "p95_nearest_rank": 44271.58
+        },
+        "total_ms": {
+          "median": 44078.71,
+          "p95_nearest_rank": 45663.26
+        }
+      },
+      "trace_analysis": null
+    },
+    {
+      "round": 1,
+      "policy": "fcfs_head_prefix",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/fcfs_head_prefix/controlled-20261022-213342-793719.json",
+      "launcher_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261022-212547/1-fcfs_head_prefix-bench-launcher.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261022-212547/1-fcfs_head_prefix-bench-client.log",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 42834.9,
+        "output_tokens_per_second": 37.35,
+        "requests_per_second": 0.584,
+        "first_text_ms": {
+          "median": 23339.78,
+          "p95_nearest_rank": 35066.27
+        },
+        "total_ms": {
+          "median": 27128.47,
+          "p95_nearest_rank": 38998.97
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 42943.2,
+        "output_tokens_per_second": 46.2,
+        "requests_per_second": 0.652,
+        "first_text_ms": {
+          "median": 19546.5,
+          "p95_nearest_rank": 35066.27
+        },
+        "total_ms": {
+          "median": 23402.39,
+          "p95_nearest_rank": 38998.97
+        }
+      },
+      "trace_analysis": null
+    },
+    {
+      "round": 2,
+      "policy": "prefix_first",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/prefix_first/controlled-20261022-213453-354278.json",
+      "launcher_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261022-212547/2-prefix_first-bench-launcher.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261022-212547/2-prefix_first-bench-client.log",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 41264.61,
+        "output_tokens_per_second": 38.77,
+        "requests_per_second": 0.606,
+        "first_text_ms": {
+          "median": 22648.0,
+          "p95_nearest_rank": 34016.55
+        },
+        "total_ms": {
+          "median": 26332.59,
+          "p95_nearest_rank": 37813.04
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 41503.3,
+        "output_tokens_per_second": 47.8,
+        "requests_per_second": 0.675,
+        "first_text_ms": {
+          "median": 19044.88,
+          "p95_nearest_rank": 34016.55
+        },
+        "total_ms": {
+          "median": 22706.55,
+          "p95_nearest_rank": 37813.04
+        }
+      },
+      "trace_analysis": null
+    },
+    {
+      "round": 2,
+      "policy": "fcfs_head_prefix",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/fcfs_head_prefix/controlled-20261022-213600-809462.json",
+      "launcher_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261022-212547/2-fcfs_head_prefix-bench-launcher.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261022-212547/2-fcfs_head_prefix-bench-client.log",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 41450.63,
+        "output_tokens_per_second": 38.6,
+        "requests_per_second": 0.603,
+        "first_text_ms": {
+          "median": 22222.93,
+          "p95_nearest_rank": 33962.06
+        },
+        "total_ms": {
+          "median": 25944.76,
+          "p95_nearest_rank": 37716.77
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 41660.93,
+        "output_tokens_per_second": 47.62,
+        "requests_per_second": 0.672,
+        "first_text_ms": {
+          "median": 18665.94,
+          "p95_nearest_rank": 33962.06
+        },
+        "total_ms": {
+          "median": 22287.84,
+          "p95_nearest_rank": 37716.77
+        }
+      },
+      "trace_analysis": null
+    },
+    {
+      "round": 2,
+      "policy": "fcfs",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/fcfs/controlled-20261022-213707-800854.json",
+      "launcher_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261022-212547/2-fcfs-bench-launcher.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261022-212547/2-fcfs-bench-client.log",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 41855.09,
+        "output_tokens_per_second": 38.23,
+        "requests_per_second": 0.597,
+        "first_text_ms": {
+          "median": 22684.83,
+          "p95_nearest_rank": 34609.17
+        },
+        "total_ms": {
+          "median": 26534.27,
+          "p95_nearest_rank": 38315.3
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 42093.61,
+        "output_tokens_per_second": 47.13,
+        "requests_per_second": 0.665,
+        "first_text_ms": {
+          "median": 19054.03,
+          "p95_nearest_rank": 34609.17
+        },
+        "total_ms": {
+          "median": 22750.55,
+          "p95_nearest_rank": 38315.3
+        }
+      },
+      "trace_analysis": null
+    },
+    {
+      "round": 3,
+      "policy": "fcfs_head_prefix",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/fcfs_head_prefix/controlled-20261022-213815-080778.json",
+      "launcher_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261022-212547/3-fcfs_head_prefix-bench-launcher.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261022-212547/3-fcfs_head_prefix-bench-client.log",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 41026.66,
+        "output_tokens_per_second": 39.0,
+        "requests_per_second": 0.609,
+        "first_text_ms": {
+          "median": 22287.0,
+          "p95_nearest_rank": 33796.46
+        },
+        "total_ms": {
+          "median": 26103.13,
+          "p95_nearest_rank": 37533.18
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 41276.85,
+        "output_tokens_per_second": 48.07,
+        "requests_per_second": 0.678,
+        "first_text_ms": {
+          "median": 18640.48,
+          "p95_nearest_rank": 33796.46
+        },
+        "total_ms": {
+          "median": 22349.32,
+          "p95_nearest_rank": 37533.18
+        }
+      },
+      "trace_analysis": null
+    },
+    {
+      "round": 3,
+      "policy": "fcfs",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/fcfs/controlled-20261022-213920-529279.json",
+      "launcher_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261022-212547/3-fcfs-bench-launcher.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261022-212547/3-fcfs-bench-client.log",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 41499.59,
+        "output_tokens_per_second": 38.55,
+        "requests_per_second": 0.602,
+        "first_text_ms": {
+          "median": 22997.84,
+          "p95_nearest_rank": 34403.34
+        },
+        "total_ms": {
+          "median": 26846.15,
+          "p95_nearest_rank": 38037.59
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 41774.2,
+        "output_tokens_per_second": 47.49,
+        "requests_per_second": 0.67,
+        "first_text_ms": {
+          "median": 19297.44,
+          "p95_nearest_rank": 34403.34
+        },
+        "total_ms": {
+          "median": 23064.96,
+          "p95_nearest_rank": 38037.59
+        }
+      },
+      "trace_analysis": null
+    },
+    {
+      "round": 3,
+      "policy": "prefix_first",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/prefix_first/controlled-20261022-214026-488605.json",
+      "launcher_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261022-212547/3-prefix_first-bench-launcher.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261022-212547/3-prefix_first-bench-client.log",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 40973.97,
+        "output_tokens_per_second": 39.05,
+        "requests_per_second": 0.61,
+        "first_text_ms": {
+          "median": 22476.56,
+          "p95_nearest_rank": 33849.2
+        },
+        "total_ms": {
+          "median": 26253.43,
+          "p95_nearest_rank": 37452.2
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 41211.19,
+        "output_tokens_per_second": 48.14,
+        "requests_per_second": 0.679,
+        "first_text_ms": {
+          "median": 18784.35,
+          "p95_nearest_rank": 33849.2
+        },
+        "total_ms": {
+          "median": 22535.98,
+          "p95_nearest_rank": 37452.2
+        }
+      },
+      "trace_analysis": null
+    }
+  ],
+  "aggregate": {
+    "fcfs": {
+      "candidate_duration_median_ms": 41855.09,
+      "candidate_duration_range_ms": [
+        41499.59,
+        46128.44
+      ],
+      "candidate_throughput_median_tokens_s": 38.23,
+      "median_first_text_median_ms": 22997.84,
+      "median_request_latency_median_ms": 26846.15
+    },
+    "prefix_first": {
+      "candidate_duration_median_ms": 41264.61,
+      "candidate_duration_range_ms": [
+        40973.97,
+        49769.46
+      ],
+      "candidate_throughput_median_tokens_s": 38.77,
+      "median_first_text_median_ms": 22648.0,
+      "median_request_latency_median_ms": 26332.59
+    },
+    "fcfs_head_prefix": {
+      "candidate_duration_median_ms": 41450.63,
+      "candidate_duration_range_ms": [
+        41026.66,
+        42834.9
+      ],
+      "candidate_throughput_median_tokens_s": 38.6,
+      "median_first_text_median_ms": 22287.0,
+      "median_request_latency_median_ms": 26103.13
+    }
+  },
+  "complete": true,
+  "diagnostics": [
+    {
+      "round": "diagnostic",
+      "policy": "fcfs",
+      "mode": "trace",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/fcfs/controlled-20261022-212618-101413.json",
+      "launcher_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261022-212547/diagnostic-fcfs-trace-launcher.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261022-212547/diagnostic-fcfs-trace-client.log",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 50566.72,
+        "output_tokens_per_second": 31.64,
+        "requests_per_second": 0.494,
+        "first_text_ms": {
+          "median": 27837.91,
+          "p95_nearest_rank": 41192.47
+        },
+        "total_ms": {
+          "median": 31882.19,
+          "p95_nearest_rank": 47051.5
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 50756.44,
+        "output_tokens_per_second": 39.09,
+        "requests_per_second": 0.552,
+        "first_text_ms": {
+          "median": 23733.27,
+          "p95_nearest_rank": 41192.47
+        },
+        "total_ms": {
+          "median": 27929.48,
+          "p95_nearest_rank": 47051.5
+        }
+      },
+      "trace_analysis": {
+        "server_policy": "fcfs",
+        "eviction_policy": "vllm",
+        "evicted_cached_blocks": 107,
+        "preemptions": 0,
+        "max_candidates_waiting": 25,
+        "candidate_reorders": [],
+        "candidate_cache_scores": {},
+        "candidate_admission_order": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "Q",
+          "P",
+          "O",
+          "R",
+          "T",
+          "U",
+          "S",
+          "W",
+          "X",
+          "V",
+          "Y"
+        ],
+        "protected_fcfs_head": [],
+        "waiting_time_safeguard_count": 0
+      }
+    },
+    {
+      "round": "diagnostic",
+      "policy": "prefix_first",
+      "mode": "trace",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/prefix_first/controlled-20261022-212741-606910.json",
+      "launcher_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261022-212547/diagnostic-prefix_first-trace-launcher.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261022-212547/diagnostic-prefix_first-trace-client.log",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 55058.23,
+        "output_tokens_per_second": 29.06,
+        "requests_per_second": 0.454,
+        "first_text_ms": {
+          "median": 28061.48,
+          "p95_nearest_rank": 54704.21
+        },
+        "total_ms": {
+          "median": 54565.13,
+          "p95_nearest_rank": 54749.95
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 55374.96,
+        "output_tokens_per_second": 35.83,
+        "requests_per_second": 0.506,
+        "first_text_ms": {
+          "median": 24085.65,
+          "p95_nearest_rank": 54704.21
+        },
+        "total_ms": {
+          "median": 28135.68,
+          "p95_nearest_rank": 54749.95
+        }
+      },
+      "trace_analysis": {
+        "server_policy": "prefix_first",
+        "eviction_policy": "vllm",
+        "evicted_cached_blocks": 107,
+        "preemptions": 0,
+        "max_candidates_waiting": 25,
+        "candidate_reorders": [
+          {
+            "selected": "chatcmpl-prefix-study-1792684661606861000-C-9180bb59",
+            "previous_head": "chatcmpl-prefix-study-1792684661606861000-A-8ee7106f",
+            "cached_tokens": 176,
+            "reason": "cached_prefix_then_fcfs",
+            "step": 132
+          },
+          {
+            "selected": "chatcmpl-prefix-study-1792684661606861000-D-aeef566e",
+            "previous_head": "chatcmpl-prefix-study-1792684661606861000-A-8ee7106f",
+            "cached_tokens": 192,
+            "reason": "cached_prefix_then_fcfs",
+            "step": 133
+          },
+          {
+            "selected": "chatcmpl-prefix-study-1792684661606861000-G-8ece9313",
+            "previous_head": "chatcmpl-prefix-study-1792684661606861000-A-8ee7106f",
+            "cached_tokens": 192,
+            "reason": "cached_prefix_then_fcfs",
+            "step": 133
+          }
+        ],
+        "candidate_cache_scores": {
+          "chatcmpl-prefix-study-1792684661606861000-A-8ee7106f": [
+            16
+          ],
+          "chatcmpl-prefix-study-1792684661606861000-B-8875d2d9": [
+            16
+          ],
+          "chatcmpl-prefix-study-1792684661606861000-C-9180bb59": [
+            176
+          ],
+          "chatcmpl-prefix-study-1792684661606861000-D-aeef566e": [
+            176,
+            192
+          ],
+          "chatcmpl-prefix-study-1792684661606861000-E-ab3f012b": [
+            64
+          ],
+          "chatcmpl-prefix-study-1792684661606861000-F-97a476b1": [
+            16
+          ],
+          "chatcmpl-prefix-study-1792684661606861000-G-8ece9313": [
+            176,
+            192
+          ],
+          "chatcmpl-prefix-study-1792684661606861000-H-96c437df": [
+            64
+          ],
+          "chatcmpl-prefix-study-1792684661606861000-I-be309b8f": [
+            16
+          ],
+          "chatcmpl-prefix-study-1792684661606861000-J-8bcbd1cf": [
+            176
+          ],
+          "chatcmpl-prefix-study-1792684661606861000-K-a213609a": [
+            64
+          ],
+          "chatcmpl-prefix-study-1792684661606861000-L-87fb776a": [
+            16
+          ],
+          "chatcmpl-prefix-study-1792684661606861000-M-94e48217": [
+            176,
+            192
+          ],
+          "chatcmpl-prefix-study-1792684661606861000-N-b222b64b": [
+            64
+          ],
+          "chatcmpl-prefix-study-1792684661606861000-O-a8ba0ae0": [
+            16
+          ],
+          "chatcmpl-prefix-study-1792684661606861000-P-bc500249": [
+            176
+          ],
+          "chatcmpl-prefix-study-1792684661606861000-Q-9ed187ac": [
+            64
+          ],
+          "chatcmpl-prefix-study-1792684661606861000-R-81c3d246": [
+            16
+          ]
+        },
+        "candidate_admission_order": [
+          "C",
+          "D",
+          "G",
+          "A",
+          "B",
+          "E",
+          "F",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y"
+        ],
+        "protected_fcfs_head": [],
+        "waiting_time_safeguard_count": 22
+      }
+    },
+    {
+      "round": "diagnostic",
+      "policy": "fcfs_head_prefix",
+      "mode": "trace",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/fcfs_head_prefix/controlled-20261022-212914-516808.json",
+      "launcher_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261022-212547/diagnostic-fcfs_head_prefix-trace-launcher.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261022-212547/diagnostic-fcfs_head_prefix-trace-client.log",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 56461.8,
+        "output_tokens_per_second": 28.34,
+        "requests_per_second": 0.443,
+        "first_text_ms": {
+          "median": 52221.07,
+          "p95_nearest_rank": 52422.79
+        },
+        "total_ms": {
+          "median": 52324.89,
+          "p95_nearest_rank": 54084.85
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 56610.08,
+        "output_tokens_per_second": 35.05,
+        "requests_per_second": 0.495,
+        "first_text_ms": {
+          "median": 30548.94,
+          "p95_nearest_rank": 52422.79
+        },
+        "total_ms": {
+          "median": 52283.71,
+          "p95_nearest_rank": 54084.85
+        }
+      },
+      "trace_analysis": {
+        "server_policy": "fcfs_head_prefix",
+        "eviction_policy": "vllm",
+        "evicted_cached_blocks": 107,
+        "preemptions": 0,
+        "max_candidates_waiting": 25,
+        "candidate_reorders": [],
+        "candidate_cache_scores": {},
+        "candidate_admission_order": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y"
+        ],
+        "protected_fcfs_head": [
+          "A",
+          "B",
+          "C"
+        ],
+        "waiting_time_safeguard_count": 22
+      }
+    }
+  ],
+  "per_request": {
+    "fcfs": {
+      "A": {
+        "median_first_text_ms": 7737.28,
+        "median_total_ms": 11472.76,
+        "total_ms_samples": [
+          13058.35,
+          11423.25,
+          11472.76
+        ]
+      },
+      "B": {
+        "median_first_text_ms": 7835.23,
+        "median_total_ms": 11534.9,
+        "total_ms_samples": [
+          13123.96,
+          11482.16,
+          11534.9
+        ]
+      },
+      "C": {
+        "median_first_text_ms": 7866.78,
+        "median_total_ms": 11603.03,
+        "total_ms_samples": [
+          13195.83,
+          11544.75,
+          11603.03
+        ]
+      },
+      "D": {
+        "median_first_text_ms": 11495.48,
+        "median_total_ms": 15363.56,
+        "total_ms_samples": [
+          17112.03,
+          15177.57,
+          15363.56
+        ]
+      },
+      "E": {
+        "median_first_text_ms": 11568.21,
+        "median_total_ms": 15432.08,
+        "total_ms_samples": [
+          17176.51,
+          15236.49,
+          15432.08
+        ]
+      },
+      "F": {
+        "median_first_text_ms": 11670.69,
+        "median_total_ms": 15498.47,
+        "total_ms_samples": [
+          17245.61,
+          15297.68,
+          15498.47
+        ]
+      },
+      "G": {
+        "median_first_text_ms": 15384.78,
+        "median_total_ms": 19165.81,
+        "total_ms_samples": [
+          21209.25,
+          18931.94,
+          19165.81
+        ]
+      },
+      "H": {
+        "median_first_text_ms": 15455.65,
+        "median_total_ms": 19241.58,
+        "total_ms_samples": [
+          21289.56,
+          19007.59,
+          19241.58
+        ]
+      },
+      "I": {
+        "median_first_text_ms": 15546.67,
+        "median_total_ms": 19299.34,
+        "total_ms_samples": [
+          21341.81,
+          19047.68,
+          19299.34
+        ]
+      },
+      "J": {
+        "median_first_text_ms": 19205.87,
+        "median_total_ms": 22972.44,
+        "total_ms_samples": [
+          25333.1,
+          22661.75,
+          22972.44
+        ]
+      },
+      "K": {
+        "median_first_text_ms": 19255.66,
+        "median_total_ms": 23039.62,
+        "total_ms_samples": [
+          25403.3,
+          22724.69,
+          23039.62
+        ]
+      },
+      "L": {
+        "median_first_text_ms": 19339.22,
+        "median_total_ms": 23090.3,
+        "total_ms_samples": [
+          25455.01,
+          22776.41,
+          23090.3
+        ]
+      },
+      "M": {
+        "median_first_text_ms": 22997.84,
+        "median_total_ms": 26846.15,
+        "total_ms_samples": [
+          29464.76,
+          26534.27,
+          26846.15
+        ]
+      },
+      "N": {
+        "median_first_text_ms": 23051.84,
+        "median_total_ms": 26912.05,
+        "total_ms_samples": [
+          29543.8,
+          26606.83,
+          26912.05
+        ]
+      },
+      "O": {
+        "median_first_text_ms": 23140.43,
+        "median_total_ms": 26962.09,
+        "total_ms_samples": [
+          29595.16,
+          26659.19,
+          26962.09
+        ]
+      },
+      "P": {
+        "median_first_text_ms": 26871.88,
+        "median_total_ms": 30591.28,
+        "total_ms_samples": [
+          33639.34,
+          30587.12,
+          30591.28
+        ]
+      },
+      "Q": {
+        "median_first_text_ms": 26922.2,
+        "median_total_ms": 30660.16,
+        "total_ms_samples": [
+          33708.96,
+          30660.16,
+          30651.64
+        ]
+      },
+      "R": {
+        "median_first_text_ms": 27023.46,
+        "median_total_ms": 30717.04,
+        "total_ms_samples": [
+          33766.49,
+          30717.04,
+          30708.38
+        ]
+      },
+      "S": {
+        "median_first_text_ms": 30626.11,
+        "median_total_ms": 34450.72,
+        "total_ms_samples": [
+          37966.53,
+          34450.72,
+          34242.86
+        ]
+      },
+      "T": {
+        "median_first_text_ms": 30679.01,
+        "median_total_ms": 34511.56,
+        "total_ms_samples": [
+          38056.53,
+          34511.56,
+          34306.56
+        ]
+      },
+      "U": {
+        "median_first_text_ms": 30775.57,
+        "median_total_ms": 34551.55,
+        "total_ms_samples": [
+          42134.39,
+          34551.55,
+          34358.83
+        ]
+      },
+      "V": {
+        "median_first_text_ms": 34265.23,
+        "median_total_ms": 38174.53,
+        "total_ms_samples": [
+          38174.53,
+          38204.34,
+          37930.53
+        ]
+      },
+      "W": {
+        "median_first_text_ms": 34513.34,
+        "median_total_ms": 38277.78,
+        "total_ms_samples": [
+          42231.56,
+          38277.78,
+          38002.52
+        ]
+      },
+      "X": {
+        "median_first_text_ms": 34609.17,
+        "median_total_ms": 38315.3,
+        "total_ms_samples": [
+          42266.79,
+          38315.3,
+          38037.59
+        ]
+      },
+      "Y": {
+        "median_first_text_ms": 38236.14,
+        "median_total_ms": 41366.41,
+        "total_ms_samples": [
+          45641.25,
+          41366.41,
+          41014.38
+        ]
+      }
+    },
+    "prefix_first": {
+      "A": {
+        "median_first_text_ms": 11457.05,
+        "median_total_ms": 15167.92,
+        "total_ms_samples": [
+          17023.67,
+          15167.92,
+          14859.55
+        ]
+      },
+      "B": {
+        "median_first_text_ms": 11551.66,
+        "median_total_ms": 15259.43,
+        "total_ms_samples": [
+          17124.32,
+          15259.43,
+          14937.39
+        ]
+      },
+      "C": {
+        "median_first_text_ms": 7616.07,
+        "median_total_ms": 11276.87,
+        "total_ms_samples": [
+          12418.73,
+          11276.87,
+          11063.76
+        ]
+      },
+      "D": {
+        "median_first_text_ms": 7664.09,
+        "median_total_ms": 11388.88,
+        "total_ms_samples": [
+          12537.2,
+          11388.88,
+          11169.64
+        ]
+      },
+      "E": {
+        "median_first_text_ms": 11567.82,
+        "median_total_ms": 15317.12,
+        "total_ms_samples": [
+          17166.79,
+          15317.12,
+          14963.13
+        ]
+      },
+      "F": {
+        "median_first_text_ms": 15177.45,
+        "median_total_ms": 18936.87,
+        "total_ms_samples": [
+          21728.89,
+          18936.87,
+          18683.17
+        ]
+      },
+      "G": {
+        "median_first_text_ms": 7608.59,
+        "median_total_ms": 11334.02,
+        "total_ms_samples": [
+          12482.32,
+          11334.02,
+          11113.2
+        ]
+      },
+      "H": {
+        "median_first_text_ms": 15287.08,
+        "median_total_ms": 18989.88,
+        "total_ms_samples": [
+          21816.38,
+          18989.88,
+          18736.38
+        ]
+      },
+      "I": {
+        "median_first_text_ms": 15329.37,
+        "median_total_ms": 19043.27,
+        "total_ms_samples": [
+          21899.58,
+          19043.27,
+          18779.1
+        ]
+      },
+      "J": {
+        "median_first_text_ms": 18941.26,
+        "median_total_ms": 22616.8,
+        "total_ms_samples": [
+          29872.27,
+          22616.8,
+          22451.66
+        ]
+      },
+      "K": {
+        "median_first_text_ms": 19007.13,
+        "median_total_ms": 22684.69,
+        "total_ms_samples": [
+          44288.12,
+          22684.69,
+          22511.13
+        ]
+      },
+      "L": {
+        "median_first_text_ms": 19082.63,
+        "median_total_ms": 22728.41,
+        "total_ms_samples": [
+          44258.01,
+          22728.41,
+          22560.83
+        ]
+      },
+      "M": {
+        "median_first_text_ms": 22648.0,
+        "median_total_ms": 26332.59,
+        "total_ms_samples": [
+          44271.69,
+          26332.59,
+          26253.43
+        ]
+      },
+      "N": {
+        "median_first_text_ms": 22689.99,
+        "median_total_ms": 26399.17,
+        "total_ms_samples": [
+          44219.46,
+          26399.17,
+          26318.67
+        ]
+      },
+      "O": {
+        "median_first_text_ms": 22792.45,
+        "median_total_ms": 26453.77,
+        "total_ms_samples": [
+          44202.83,
+          26453.77,
+          26359.93
+        ]
+      },
+      "P": {
+        "median_first_text_ms": 26362.09,
+        "median_total_ms": 29995.26,
+        "total_ms_samples": [
+          44208.2,
+          29980.76,
+          29995.26
+        ]
+      },
+      "Q": {
+        "median_first_text_ms": 26413.92,
+        "median_total_ms": 30050.92,
+        "total_ms_samples": [
+          44137.59,
+          30043.81,
+          30050.92
+        ]
+      },
+      "R": {
+        "median_first_text_ms": 26496.01,
+        "median_total_ms": 30102.65,
+        "total_ms_samples": [
+          44149.68,
+          30090.05,
+          30102.65
+        ]
+      },
+      "S": {
+        "median_first_text_ms": 30012.56,
+        "median_total_ms": 33827.64,
+        "total_ms_samples": [
+          44084.04,
+          33827.64,
+          33694.0
+        ]
+      },
+      "T": {
+        "median_first_text_ms": 30061.22,
+        "median_total_ms": 33901.43,
+        "total_ms_samples": [
+          44081.45,
+          33901.43,
+          33752.19
+        ]
+      },
+      "U": {
+        "median_first_text_ms": 30145.69,
+        "median_total_ms": 33953.48,
+        "total_ms_samples": [
+          45663.26,
+          33953.48,
+          33803.51
+        ]
+      },
+      "V": {
+        "median_first_text_ms": 33856.54,
+        "median_total_ms": 37630.67,
+        "total_ms_samples": [
+          44075.96,
+          37630.67,
+          37346.85
+        ]
+      },
+      "W": {
+        "median_first_text_ms": 33912.06,
+        "median_total_ms": 37704.23,
+        "total_ms_samples": [
+          45605.48,
+          37704.23,
+          37417.57
+        ]
+      },
+      "X": {
+        "median_first_text_ms": 34016.55,
+        "median_total_ms": 37813.04,
+        "total_ms_samples": [
+          45491.78,
+          37813.04,
+          37452.2
+        ]
+      },
+      "Y": {
+        "median_first_text_ms": 37659.01,
+        "median_total_ms": 40771.67,
+        "total_ms_samples": [
+          49286.2,
+          40771.67,
+          40491.72
+        ]
+      }
+    },
+    "fcfs_head_prefix": {
+      "A": {
+        "median_first_text_ms": 7416.66,
+        "median_total_ms": 11162.24,
+        "total_ms_samples": [
+          11667.84,
+          11162.24,
+          11096.21
+        ]
+      },
+      "B": {
+        "median_first_text_ms": 7503.9,
+        "median_total_ms": 11223.01,
+        "total_ms_samples": [
+          11728.45,
+          11223.01,
+          11147.73
+        ]
+      },
+      "C": {
+        "median_first_text_ms": 7523.14,
+        "median_total_ms": 11284.32,
+        "total_ms_samples": [
+          11800.45,
+          11284.32,
+          11219.39
+        ]
+      },
+      "D": {
+        "median_first_text_ms": 11177.55,
+        "median_total_ms": 14886.65,
+        "total_ms_samples": [
+          15550.88,
+          14886.65,
+          14822.01
+        ]
+      },
+      "E": {
+        "median_first_text_ms": 11246.91,
+        "median_total_ms": 14945.64,
+        "total_ms_samples": [
+          15622.17,
+          14945.64,
+          14878.25
+        ]
+      },
+      "F": {
+        "median_first_text_ms": 11340.19,
+        "median_total_ms": 15008.87,
+        "total_ms_samples": [
+          15712.41,
+          15008.87,
+          14950.37
+        ]
+      },
+      "G": {
+        "median_first_text_ms": 14908.8,
+        "median_total_ms": 18540.22,
+        "total_ms_samples": [
+          19416.18,
+          18540.22,
+          18515.71
+        ]
+      },
+      "H": {
+        "median_first_text_ms": 14972.27,
+        "median_total_ms": 18612.88,
+        "total_ms_samples": [
+          19488.3,
+          18612.88,
+          18597.06
+        ]
+      },
+      "I": {
+        "median_first_text_ms": 15058.73,
+        "median_total_ms": 18663.39,
+        "total_ms_samples": [
+          19544.22,
+          18663.39,
+          18637.81
+        ]
+      },
+      "J": {
+        "median_first_text_ms": 18566.78,
+        "median_total_ms": 22263.21,
+        "total_ms_samples": [
+          23313.98,
+          22198.26,
+          22263.21
+        ]
+      },
+      "K": {
+        "median_first_text_ms": 18626.6,
+        "median_total_ms": 22326.93,
+        "total_ms_samples": [
+          23376.13,
+          22267.66,
+          22326.93
+        ]
+      },
+      "L": {
+        "median_first_text_ms": 18705.28,
+        "median_total_ms": 22371.7,
+        "total_ms_samples": [
+          23428.64,
+          22308.02,
+          22371.7
+        ]
+      },
+      "M": {
+        "median_first_text_ms": 22287.0,
+        "median_total_ms": 26103.13,
+        "total_ms_samples": [
+          27128.47,
+          25944.76,
+          26103.13
+        ]
+      },
+      "N": {
+        "median_first_text_ms": 22332.55,
+        "median_total_ms": 26168.06,
+        "total_ms_samples": [
+          27189.31,
+          26007.39,
+          26168.06
+        ]
+      },
+      "O": {
+        "median_first_text_ms": 22425.51,
+        "median_total_ms": 26246.09,
+        "total_ms_samples": [
+          27245.7,
+          26069.1,
+          26246.09
+        ]
+      },
+      "P": {
+        "median_first_text_ms": 26129.69,
+        "median_total_ms": 29950.51,
+        "total_ms_samples": [
+          31003.65,
+          29950.51,
+          29914.52
+        ]
+      },
+      "Q": {
+        "median_first_text_ms": 26204.5,
+        "median_total_ms": 30149.63,
+        "total_ms_samples": [
+          31061.47,
+          30149.63,
+          29993.37
+        ]
+      },
+      "R": {
+        "median_first_text_ms": 26272.9,
+        "median_total_ms": 30181.67,
+        "total_ms_samples": [
+          31116.01,
+          30181.67,
+          30040.58
+        ]
+      },
+      "S": {
+        "median_first_text_ms": 30156.56,
+        "median_total_ms": 33788.2,
+        "total_ms_samples": [
+          34883.74,
+          33788.2,
+          33683.67
+        ]
+      },
+      "T": {
+        "median_first_text_ms": 30140.82,
+        "median_total_ms": 33855.33,
+        "total_ms_samples": [
+          34944.27,
+          33855.33,
+          33699.22
+        ]
+      },
+      "U": {
+        "median_first_text_ms": 30142.43,
+        "median_total_ms": 33905.88,
+        "total_ms_samples": [
+          35008.84,
+          33905.88,
+          33751.64
+        ]
+      },
+      "V": {
+        "median_first_text_ms": 33819.89,
+        "median_total_ms": 37618.03,
+        "total_ms_samples": [
+          38889.19,
+          37618.03,
+          37429.95
+        ]
+      },
+      "W": {
+        "median_first_text_ms": 33866.38,
+        "median_total_ms": 37682.45,
+        "total_ms_samples": [
+          38967.17,
+          37682.45,
+          37487.21
+        ]
+      },
+      "X": {
+        "median_first_text_ms": 33962.06,
+        "median_total_ms": 37716.77,
+        "total_ms_samples": [
+          38998.97,
+          37716.77,
+          37533.18
+        ]
+      },
+      "Y": {
+        "median_first_text_ms": 37642.39,
+        "median_total_ms": 40962.28,
+        "total_ms_samples": [
+          42351.82,
+          40962.28,
+          40543.51
+        ]
+      }
+    }
+  },
+  "replication_provenance": {
+    "model": "Qwen/Qwen3-1.7B",
+    "model_revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e",
+    "started": "2026-10-22T21:25:47.037534",
+    "source_checkpoint": "e997aba05543a127cb09d8a4c3b917f307357807",
+    "implementation_mode": "reference for experiments01-06; reference/incremental in10",
+    "complete": false
+  },
+  "original_summary": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261022-212547/summary.json"
+}

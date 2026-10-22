@@ -1,0 +1,39 @@
+Experiment05: pinned Qwen3-1.7B replication
+=================================================================
+COMPLETED
+
+Change: With chunked prefill OFF, bypass a waiting prompt that exceeds the remaining token budget to admit later fitting requests. Bounds:16 scanned,4 bypasses per request,30-second age protection. Restore original skipped order.
+
+Model:Qwen/Qwen3-1.7B, revision70d244cc86ccca08cf5af4e1e306ecf908b1ad5e.
+Native MLX GPU verified in every physical server log.
+Same request/tokenizer files and original per-profile serving settings.
+New model measurement session on source e997aba05543a127cb09d8a4c3b917f307357807.
+Experiments01-06 use reference cache mode;10 compares both modes explicitly.
+Original0.6B evidence remains unchanged. No historical cross-session causal timing claim.
+
+Three fresh-server untraced timing rounds per policy/profile.
+Separate mechanism diagnostics are excluded from the timing numbers.
+Negative time change means faster; group-median and paired changes both reported.
+Answer agreement is exact text, not a semantic quality score.
+
+Stage:05; 10 GPU runs; 6 timed.
+Raw summary:/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261022-221940/summary.json
+Profile | Variant | Batch seconds | Output tokens/s | First text ms | Request ms | p95 request ms | Change%
+targeted | baseline | 24.745 | 64.660 | 11995.740 | 16935.040 | 21543.110 | +0.000
+  Batch samples ms:[24745.42, 25258.74, 24731.83]
+  Paired duration changes%:[0.0, 0.0, 0.0]
+  Cached prompt tokens, all requests:[528, 528, 528]
+  Exact answer agreement, all requests:[{'matches': 33, 'total': 33}, {'matches': 33, 'total': 33}, {'matches': 33, 'total': 33}]
+  groups:{"long": {"first_text_ms": 6212.03, "total_ms": 12202.72}, "short": {"first_text_ms": 16756.355, "total_ms": 21375.95}}
+targeted | skip | 24.664 | 64.870 | 10195.040 | 15271.430 | 21651.160 | -0.328
+  Batch samples ms:[25240.22, 24664.19, 24608.27]
+  Paired duration changes%:[1.9995619391386388, -2.353838710877909, -0.499599099621828]
+  Cached prompt tokens, all requests:[528, 528, 528]
+  Exact answer agreement, all requests:[{'matches': 25, 'total': 33}, {'matches': 23, 'total': 33}, {'matches': 25, 'total': 33}]
+  groups:{"long": {"first_text_ms": 15475.58, "total_ms": 21349.22}, "short": {"first_text_ms": 10144.515, "total_ms": 15187.42}}
+
+Controls, raw logs, per-request data and trace/probe outcomes are frozen in evidence.
+SHA256 inventories index original raw artifacts without deleting failed attempts.
+Three repeats are exploratory; do not equate more cache hits with overall speed.
+All request-time measurements include scheduler waiting; startup/warmup excluded.
+Reproduce the missing-model suite:.venv/bin/python src/run_missing_qwen17.py

@@ -1,0 +1,42 @@
+Experiment01: pinned Qwen3-1.7B replication
+=================================================================
+COMPLETED
+
+Change: Rank waiting requests by cached prefix; hybrid protects the first3 FCFS requests and ranks the remaining tail. FCFS ties and10-second wait safeguard retained.
+
+Model:Qwen/Qwen3-1.7B, revision70d244cc86ccca08cf5af4e1e306ecf908b1ad5e.
+Native MLX GPU verified in every physical server log.
+Same request/tokenizer files and original per-profile serving settings.
+New model measurement session on source e997aba05543a127cb09d8a4c3b917f307357807.
+Experiments01-06 use reference cache mode;10 compares both modes explicitly.
+Original0.6B evidence remains unchanged. No historical cross-session causal timing claim.
+
+Three fresh-server untraced timing rounds per policy/profile.
+Separate mechanism diagnostics are excluded from the timing numbers.
+Negative time change means faster; group-median and paired changes both reported.
+Answer agreement is exact text, not a semantic quality score.
+
+Stage:01; 12 GPU runs; 9 timed.
+Raw summary:/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261022-212547/summary.json
+Profile | Variant | Batch seconds | Output tokens/s | First text ms | Request ms | p95 request ms | Change%
+ay | fcfs | 41.855 | 38.230 | 22997.840 | 26846.150 | 38315.300 | +0.000
+  Batch samples ms:[46128.44, 41855.09, 41499.59]
+  Paired duration changes%:[0.0, 0.0, 0.0]
+  Cached prompt tokens, all requests:[0, 0, 0]
+  Exact answer agreement, all requests:[{'matches': 28, 'total': 28}, {'matches': 28, 'total': 28}, {'matches': 28, 'total': 28}]
+ay | prefix_first | 41.265 | 38.770 | 22648.000 | 26332.590 | 37813.040 | -1.411
+  Batch samples ms:[49769.46, 41264.61, 40973.97]
+  Paired duration changes%:[7.893221622062208, -1.410772262107185, -1.266566729936358]
+  Cached prompt tokens, all requests:[0, 0, 0]
+  Exact answer agreement, all requests:[{'matches': 24, 'total': 28}, {'matches': 23, 'total': 28}, {'matches': 23, 'total': 28}]
+ay | fcfs_head_prefix | 41.451 | 38.600 | 22287.000 | 26103.130 | 37716.770 | -0.966
+  Batch samples ms:[42834.9, 41450.63, 41026.66]
+  Paired duration changes%:[-7.1399336287982, -0.9663340826647326, -1.1396016201605685]
+  Cached prompt tokens, all requests:[0, 0, 0]
+  Exact answer agreement, all requests:[{'matches': 26, 'total': 28}, {'matches': 26, 'total': 28}, {'matches': 28, 'total': 28}]
+
+Controls, raw logs, per-request data and trace/probe outcomes are frozen in evidence.
+SHA256 inventories index original raw artifacts without deleting failed attempts.
+Three repeats are exploratory; do not equate more cache hits with overall speed.
+All request-time measurements include scheduler waiting; startup/warmup excluded.
+Reproduce the missing-model suite:.venv/bin/python src/run_missing_qwen17.py

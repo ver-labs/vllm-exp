@@ -206,6 +206,99 @@ page(13,'Adapt prefill chunks to current traffic',
      ['13-adaptive-prefill/RESULTS.txt'],
      {'1.7B':model(['Full batch','Burst first text','p95 request'],vals('stock'),[series('Decoder + age',vals('decode_adaptive')),series('Built-in adaptive',vals('existing_adaptive'))])})
 
+
+# QWEN17_COMPLETION: preserve original model data; fill only missing 1.7B panels.
+def add_replication(number, folder, chart_data):
+    p=pages[number-1]
+    p['models']['1.7B']=chart_data
+    p['sources'].append(folder+'/qwen3-1.7B/RESULTS.txt')
+    f=ROOT/'experiments'/p['sources'][-1]
+    SOURCES[str(f.relative_to(ROOT))]=hashlib.sha256(f.read_bytes()).hexdigest()
+    return p
+
+
+def candidate_matches(summary, variant, control='baseline'):
+    answer=[]
+    for record in summary['runs']:
+        if record.get('variant',record.get('policy'))!=variant:continue
+        n=record.get('round',record.get('label'))
+        b=next(r for r in summary['runs'] if r.get('variant',r.get('policy'))==control and r.get('round',r.get('label'))==n)
+        x=json.loads(Path(b['result']).read_text())
+        y=json.loads(Path(record['result']).read_text())
+        expected={r['request_id']:r['answer'] for r in x['requests'] if r['request_id'] in 'ABCDEFGHIJKLMNOPQRSTUVWXY'}
+        answer.append(sum(r['answer']==expected[r['request_id']] for r in y['requests'] if r['request_id'] in expected))
+    return answer
+
+
+q1=read('01-prefix-scheduling/qwen3-1.7B/evidence/summary.json')
+def pv(k):
+    return [q1['aggregate'][k]['candidate_duration_median_ms']/1000,
+            q1['per_request'][k]['A']['median_first_text_ms']/1000,
+            q1['per_request'][k]['B']['median_first_text_ms']/1000]
+p=add_replication(1,'01-prefix-scheduling',model(['A-Y batch','A first text','B first text'],pv('fcfs'),[series('Prefix-first',pv('prefix_first')),series('Hybrid',pv('fcfs_head_prefix'))]))
+p['finding']=(f"Batch seconds (FCFS / prefix-first / hybrid): 0.6B 18.77 / 18.89 / 19.01; 1.7B {pv('fcfs')[0]:.2f} / {pv('prefix_first')[0]:.2f} / {pv('fcfs_head_prefix')[0]:.2f}. On 1.7B, A first text was {pv('fcfs')[1]:.2f}s / {pv('prefix_first')[1]:.2f}s / {pv('fcfs_head_prefix')[1]:.2f}s.")
+p['caution']='Prefix-first delayed A/B on both models; the hybrid protected their early position. Close group medians and three timing rounds do not establish a general batch-speed advantage. The same ten-second wait safeguard applies on both models.'
+
+q2=read('02-frequency-eviction/qwen3-1.7B/evidence/summary.json')['aggregate']
+q2ay=read('02-frequency-eviction/qwen3-1.7B/evidence-ay/summary.json')['aggregate']
+vals=lambda k:[q2[k]['median_batch_ms']/1000,q2ay[k]['candidate_duration_median_ms']/1000]
+p=add_replication(2,'02-frequency-eviction',model(['Hot/cold batch','A-Y batch'],vals('vllm'),[series('LFU',vals('lfu'))]))
+ay_change=100*(vals('lfu')[1]/vals('vllm')[1]-1)
+p['finding']=(f"Hot-return reuse increased from 16 to 272 tokens on both models. Probe first text: 0.6B 119.50 to 52.54ms; 1.7B {q2['vllm']['hot_probe']['median_first_text_ms']:.2f} to {q2['lfu']['hot_probe']['median_first_text_ms']:.2f}ms. A-Y batch-median changes: +2.5% on 0.6B, {ay_change:+.2f}% on 1.7B.")
+p['caution']='A-Y reused the same 2,432 candidate tokens under both policies on both models; its timing differences are not evidence of extra reuse. The no-reuse control also varied, particularly on 0.6B. Strong retention/probe results do not establish a universal full-batch gain.'
+
+q3=read('03-nonprefix-repair/qwen3-1.7B/evidence-vllm-ay/summary.json')
+a=q3['aggregate']
+p=add_replication(3,'03-nonprefix-repair',model(['A-Y batch','Median first text','Median request'],serving_values(a['baseline']),[series('Approx. repair',serving_values(a['repair']))]))
+change=100*(a['repair']['candidate_duration_median_ms']/a['baseline']['candidate_duration_median_ms']-1)
+matches=candidate_matches(q3,'repair')
+p['finding']=(f"Actual reuse skipped 308 rows/layer/run on both models. 0.6B repair lost 2/3 time pairs despite a 1.85% lower group median. On 1.7B, batch median changed {change:+.2f}%; candidate exact matches were {matches}/25 across the three pairs (0.6B: 10/25 each).")
+p['caution']='No reliable performance or quality advantage is established. Matching middle-page tokens with different preceding context is approximate. Changed answers can also reflect the alternate attention path; exact agreement is not a semantic quality score.'
+
+q4=read('04-partial-prefix/qwen3-1.7B/evidence/summary.json')
+a=q4['aggregate']
+p=add_replication(4,'04-partial-prefix',model(['A-Y batch','Median first text','Median request'],serving_values(a['baseline']),[series('Partial reuse',serving_values(a['partial'])),series('Fine hashes only',serving_values(a['fine_hash']))]))
+change=100*(a['partial']['candidate_duration_median_ms']/a['baseline']['candidate_duration_median_ms']-1)
+matches=candidate_matches(q4,'partial')
+p['finding']=(f"Candidate reuse increased 2,432 to 2,563 tokens on both models. Batch-median change: -0.64% on 0.6B; {change:+.2f}% on 1.7B. Partial won 3/3 and 2/3 paired rounds respectively. The 31-of-32-token probe matched cold generation on both models.")
+p['caution']=(f"The 1.7B partial answers matched stock in {matches}/25 candidates by round; 0.6B matched 16/25 each. Exact causal caching can change low-precision prefill shapes and generation. Small, overlapping timing ranges and three repeats do not establish a general speedup or semantic quality parity.")
+
+q5=read('05-skip-continue/qwen3-1.7B/evidence/summary.json')
+q5metrics=read('05-skip-continue/qwen3-1.7B/evidence/replication-metrics.json')
+g={r['variant']:r['groups'] for r in q5metrics}
+vals=lambda k:[q5['aggregate'][k]['duration_median_ms']/1000,g[k]['long']['first_text_ms']/1000,g[k]['short']['first_text_ms']/1000]
+p=add_replication(5,'05-skip-continue',model(['Targeted batch','Long first text','Short first text'],vals('baseline'),[series('Skip/continue',vals('skip'))],control='Unchunked FCFS'))
+change=100*(vals('skip')[0]/vals('baseline')[0]-1)
+p['finding']=(f"Batch-median change: -3.04% on 0.6B; {change:+.2f}% on 1.7B. On 1.7B, long first text rose {vals('baseline')[1]:.2f}s to {vals('skip')[1]:.2f}s; short first text fell {vals('baseline')[2]:.2f}s to {vals('skip')[2]:.2f}s. The long/short tradeoff repeated on both models.")
+p['caution']='Original A-Y did not activate skipping on either model; targeted packing did. The 1.7B batch gain is tiny and its pairs were mixed. Four-bypass and age bounds limit bypassing, but do not free occupied slots or guarantee an admission deadline. Semantic quality was not scored.'
+
+q6=read('06-combined/qwen3-1.7B/evidence/summary.json')['aggregate']
+q6metrics=read('06-combined/qwen3-1.7B/evidence/replication-metrics.json')
+profiles=['ay','targeted','temporal']
+vals=lambda k:[q6[profile][k]['batch_median_ms']/1000 for profile in profiles]
+p=add_replication(6,'06-combined',model(['A-Y batch','Targeted batch','Temporal batch'],vals('baseline'),[series('Combined',vals('combined'))]))
+changes=[100*(b/a-1) for a,b in zip(vals('baseline'),vals('combined'))]
+wins=sum(x<0 for r in q6metrics if r['variant']=='combined' for x in r['paired_duration_changes_pct'])
+p['finding']=("Batch-median changes (A-Y / targeted / temporal): 0.6B -0.55% / -22.21% / -2.79%; 1.7B "+' / '.join(f'{x:+.2f}%' for x in changes)+f". Combined won 5/9 paired rounds on 0.6B and {wins}/9 on 1.7B. Extra prefix reuse activated in all three profiles.")
+p['caution']='A ratio of group medians is not the median paired effect; retain the paired evidence. Targeted scheduling shifts latency toward long prompts. Combining policies does not isolate each contribution, and these small synthetic comparisons do not establish a generally faster scheduler.'
+
+q10=read('10-cache-overhead/qwen3-1.7B/evidence/summary.json')['aggregate']
+profiles=['shift','stable']
+vals=lambda k:[q10[profile][k]['batch_median_ms']/1000 for profile in profiles]
+p=add_replication(10,'10-cache-overhead',model(['Shift batch','Stable batch'],vals('reference'),[series('Incremental',vals('incremental'))],control='Study reference'))
+changes=[100*(b/a-1) for a,b in zip(vals('reference'),vals('incremental'))]
+cpu=lambda profile,k:q10[profile][k]['cpu_median_ms']['eviction_select']
+p['finding']=(f"Batch-median changes (shift / stable): 0.6B -0.56% / -1.46%; 1.7B {changes[0]:+.2f}% / {changes[1]:+.2f}%. On 1.7B, selector host time changed {cpu('shift','reference'):.2f} to {cpu('shift','incremental'):.2f}ms (shift) and {cpu('stable','reference'):.2f} to {cpu('stable','incremental'):.2f}ms (stable).")
+p['caution']='The control is the prior study LFU + partial-prefix implementation, not stock vLLM. Decisions, per-request cached counts and answers matched in both models. Less bookkeeping need not produce a large wall-time gain. Host timers include warmup/drains; the 4,096-page CPU replay is separate from GPU throughput.'
+p['sources']=[x for x in p['sources'] if 'aging-replication' not in x]
+
+for number in [1,2,3,4,5,6,10]:
+    pages[number-1]['protocol']+=' | matching 1.7B replication completed'
+pages[5]['protocol']='A-Y, targeted and temporal profiles | both models | 24 fresh-server runs/model | 3 timing pairs/profile'
+pages[9]['protocol']='Matched reference vs incremental LFU + partial reuse | both models | shift/stable | 16 GPU runs/model | 3 pairs/profile'
+assert all('1.7B' in p['models'] for p in pages)
+
+
 # All numeric plot values originate in the frozen summaries or per-request CSVs.
 for p in pages:
     for m in p['models'].values():
@@ -317,13 +410,11 @@ for p in pages:
     c.drawString(28,H-55,p['title'])
     paragraph(c,'<b>What changed.</b> '+p['change'],28,H-69,W-56,9.1,11.8)
     paragraph(c,p['protocol'],28,H-112,W-56,8,10,MUTED)
-    # Four fixed graph panels: model rows, control/modified columns.
+    # Four fixed panels share one numeric scale for direct visual comparison.
+    maximum=max(v for data in p['models'].values() for v in data['baseline']+[v for s in data['changed'] for v in s['values']])*1.23
+    maximum=math.ceil(maximum/4)*4
     for size,y in [('0.6B',306),('1.7B',139)]:
         data=p['models'].get(size)
-        maximum=None
-        if data:
-            maximum=max(data['baseline']+[v for s in data['changed'] for v in s['values']])*1.23
-            maximum=math.ceil(maximum/4)*4
         chart(c,28,y,385,153,size,'baseline',data,maximum)
         chart(c,429,y,385,153,size,'changed',data,maximum)
     paragraph(c,'<b>Observed result.</b> '+p['finding'],28,126,W-56,9,11.3)
@@ -332,7 +423,7 @@ for p in pages:
     source='Sources: '+' | '.join('experiments/'+s for s in p['sources'])
     paragraph(c,source,28,36,W-56,6.8,8,MUTED)
     c.setFont('Helvetica',6.6);c.setFillColor(MUTED)
-    c.drawString(28,10,'MacBook Air M5 / Metal | three timed rounds unless stated | graph scales match within each model row; pages use different workloads')
+    c.drawString(28,10,'MacBook Air M5 / Metal | 3 timing rounds/configuration | separate model sessions | same axis across four panels; workloads differ by page')
     c.drawRightString(W-28,10,f'{current_page:02}')
     c.showPage()
 c.save()

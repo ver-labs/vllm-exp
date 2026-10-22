@@ -1,0 +1,184 @@
+{
+  "model": "Qwen/Qwen3-1.7B",
+  "model_revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e",
+  "started": "2026-10-22T21:25:47.037534",
+  "source_checkpoint": "e997aba05543a127cb09d8a4c3b917f307357807",
+  "implementation_mode": "reference for experiments01-06; reference/incremental in10",
+  "stages": [
+    {
+      "stage": "01",
+      "summary": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/prefix-comparison/batches-20261022-212547/summary.json",
+      "frozen_summary": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/experiments/01-prefix-scheduling/qwen3-1.7B/evidence/summary.json",
+      "gpu_runs": 12,
+      "timed_runs": 9,
+      "raw_files": 52
+    },
+    {
+      "stage": "02-temporal",
+      "summary": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction/batches-20261022-214111/summary.json",
+      "frozen_summary": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/experiments/02-frequency-eviction/qwen3-1.7B/evidence/summary.json",
+      "gpu_runs": 8,
+      "timed_runs": 6,
+      "raw_files": 35
+    },
+    {
+      "stage": "02-ay",
+      "summary": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/batches-20261022-214719/summary.json",
+      "frozen_summary": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/experiments/02-frequency-eviction/qwen3-1.7B/evidence-ay/summary.json",
+      "gpu_runs": 8,
+      "timed_runs": 6,
+      "raw_files": 36
+    },
+    {
+      "stage": "03",
+      "summary": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/nonprefix-vllm/batches-20261022-215618/summary.json",
+      "frozen_summary": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/experiments/03-nonprefix-repair/qwen3-1.7B/evidence-vllm-ay/summary.json",
+      "gpu_runs": 8,
+      "timed_runs": 6,
+      "raw_files": 48
+    },
+    {
+      "stage": "04",
+      "summary": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/partial-prefix/batches-20261022-220520/summary.json",
+      "frozen_summary": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/experiments/04-partial-prefix/qwen3-1.7B/evidence/summary.json",
+      "gpu_runs": 12,
+      "timed_runs": 9,
+      "raw_files": 65
+    },
+    {
+      "stage": "05",
+      "summary": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261022-221940/summary.json",
+      "frozen_summary": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/experiments/05-skip-continue/qwen3-1.7B/evidence/summary.json",
+      "gpu_runs": 10,
+      "timed_runs": 6,
+      "raw_files": 55
+    },
+    {
+      "stage": "06",
+      "summary": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/combined/batches-20261022-222948/summary.json",
+      "frozen_summary": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/experiments/06-combined/qwen3-1.7B/evidence/summary.json",
+      "gpu_runs": 24,
+      "timed_runs": 18,
+      "raw_files": 128
+    },
+    {
+      "stage": "10",
+      "summary": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-225209/summary.json",
+      "frozen_summary": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/experiments/10-cache-overhead/qwen3-1.7B/evidence/summary.json",
+      "gpu_runs": 16,
+      "timed_runs": 12,
+      "raw_files": 101
+    }
+  ],
+  "complete": true,
+  "benchmark_code_commit": "f98085b6512034c0c134c3b78669b5d6461b5d50",
+  "all_experiment_servers_stopped": true,
+  "tokenizer_hashes": {
+    "0.6B": {
+      "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+      "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101"
+    },
+    "1.7B": {
+      "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+      "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101"
+    }
+  },
+  "input_manifest_audit": [
+    {
+      "stage": "01",
+      "profile": "default",
+      "differing_manifest_fields": [
+        ".model"
+      ],
+      "unchanged_except_model": true
+    },
+    {
+      "stage": "02-temporal",
+      "profile": "default",
+      "differing_manifest_fields": [
+        ".model"
+      ],
+      "unchanged_except_model": true
+    },
+    {
+      "stage": "02-ay",
+      "profile": "default",
+      "differing_manifest_fields": [
+        ".model"
+      ],
+      "unchanged_except_model": true
+    },
+    {
+      "stage": "03",
+      "profile": "default",
+      "differing_manifest_fields": [
+        ".model"
+      ],
+      "unchanged_except_model": true
+    },
+    {
+      "stage": "04",
+      "profile": "default",
+      "differing_manifest_fields": [
+        ".model"
+      ],
+      "unchanged_except_model": true
+    },
+    {
+      "stage": "05",
+      "profile": "original",
+      "differing_manifest_fields": [
+        ".model"
+      ],
+      "unchanged_except_model": true
+    },
+    {
+      "stage": "05",
+      "profile": "targeted",
+      "differing_manifest_fields": [
+        ".model"
+      ],
+      "unchanged_except_model": true
+    },
+    {
+      "stage": "06",
+      "profile": "ay",
+      "differing_manifest_fields": [
+        ".model"
+      ],
+      "unchanged_except_model": true
+    },
+    {
+      "stage": "06",
+      "profile": "targeted",
+      "differing_manifest_fields": [
+        ".model"
+      ],
+      "unchanged_except_model": true
+    },
+    {
+      "stage": "06",
+      "profile": "temporal",
+      "differing_manifest_fields": [
+        ".model"
+      ],
+      "unchanged_except_model": true
+    },
+    {
+      "stage": "10",
+      "profile": "shift",
+      "differing_manifest_fields": [
+        ".model"
+      ],
+      "unchanged_except_model": true
+    },
+    {
+      "stage": "10",
+      "profile": "stable",
+      "differing_manifest_fields": [
+        ".model"
+      ],
+      "unchanged_except_model": true
+    }
+  ]
+}

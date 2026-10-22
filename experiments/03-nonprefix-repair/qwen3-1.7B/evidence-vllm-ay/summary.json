@@ -1,0 +1,824 @@
+{
+  "experiment": "03-nonprefix-vllm-ay",
+  "rounds_requested": 3,
+  "diagnostics": [
+    {
+      "label": "diagnostic",
+      "probe": null,
+      "variant": "repair",
+      "mode": "trace",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/nonprefix-vllm/batches-20261022-215618/diagnostic-repair-trace.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261022-215640-067804.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/nonprefix-vllm/batches-20261022-215618/diagnostic-repair-trace-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/nonprefix-vllm/batches-20261022-215618/diagnostic-repair-trace-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/nonprefix-vllm/repair/server-trace-V69ydy",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 44556.35,
+        "output_tokens_per_second": 35.91,
+        "requests_per_second": 0.561,
+        "first_text_ms": {
+          "median": 23324.59,
+          "p95_nearest_rank": 36507.19
+        },
+        "total_ms": {
+          "median": 27554.21,
+          "p95_nearest_rank": 40619.51
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 44877.02,
+        "output_tokens_per_second": 44.21,
+        "requests_per_second": 0.624,
+        "first_text_ms": {
+          "median": 19352.77,
+          "p95_nearest_rank": 36507.19
+        },
+        "total_ms": {
+          "median": 23397.31,
+          "p95_nearest_rank": 40619.51
+        }
+      },
+      "trace_analysis": {
+        "server_policy": "fcfs",
+        "eviction_policy": "vllm",
+        "evicted_cached_blocks": 107,
+        "preemptions": 0,
+        "max_candidates_waiting": 25,
+        "candidate_reorders": [],
+        "candidate_cache_scores": {},
+        "candidate_admission_order": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y"
+        ],
+        "protected_fcfs_head": [],
+        "waiting_time_safeguard_count": 0
+      },
+      "nonprefix_totals": {
+        "step": 581,
+        "hit_steps": 7,
+        "matched_tokens_total": 352,
+        "skipped_rows_total": 308,
+        "matched_tokens": 48,
+        "skipped_rows": 42,
+        "requests": [
+          "chatcmpl-prefix-study-1792686400067756000-X-8073b95c"
+        ],
+        "matches": [
+          {
+            "request": "chatcmpl-prefix-study-1792686400067756000-X-8073b95c",
+            "target_position": 32,
+            "source_position": 32,
+            "source_block": 20,
+            "repaired_rows": 2
+          },
+          {
+            "request": "chatcmpl-prefix-study-1792686400067756000-X-8073b95c",
+            "target_position": 48,
+            "source_position": 48,
+            "source_block": 19,
+            "repaired_rows": 2
+          },
+          {
+            "request": "chatcmpl-prefix-study-1792686400067756000-X-8073b95c",
+            "target_position": 64,
+            "source_position": 64,
+            "source_block": 18,
+            "repaired_rows": 2
+          }
+        ],
+        "ratio": 0.1
+      },
+      "sha256": "25268488ec0c9587b79ddd8f11b8eeb4aacd015359b7dbcadaccd93f1ec38f78"
+    },
+    {
+      "label": "diagnostic",
+      "probe": null,
+      "variant": "baseline",
+      "mode": "trace",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/nonprefix-vllm/batches-20261022-215618/diagnostic-baseline-trace.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261022-215752-524618.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/nonprefix-vllm/batches-20261022-215618/diagnostic-baseline-trace-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/nonprefix-vllm/batches-20261022-215618/diagnostic-baseline-trace-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/nonprefix-vllm/baseline/server-trace-kuGyrW",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 41645.34,
+        "output_tokens_per_second": 38.42,
+        "requests_per_second": 0.6,
+        "first_text_ms": {
+          "median": 23055.45,
+          "p95_nearest_rank": 34434.04
+        },
+        "total_ms": {
+          "median": 26778.67,
+          "p95_nearest_rank": 38120.37
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 41856.45,
+        "output_tokens_per_second": 47.4,
+        "requests_per_second": 0.669,
+        "first_text_ms": {
+          "median": 19314.07,
+          "p95_nearest_rank": 34434.04
+        },
+        "total_ms": {
+          "median": 23117.47,
+          "p95_nearest_rank": 38120.37
+        }
+      },
+      "trace_analysis": {
+        "server_policy": "fcfs",
+        "eviction_policy": "vllm",
+        "evicted_cached_blocks": 107,
+        "preemptions": 0,
+        "max_candidates_waiting": 25,
+        "candidate_reorders": [],
+        "candidate_cache_scores": {},
+        "candidate_admission_order": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y"
+        ],
+        "protected_fcfs_head": [],
+        "waiting_time_safeguard_count": 0
+      },
+      "nonprefix_totals": {},
+      "sha256": "0611d3e2127081f008564edcb204b7c02a3f226ed3845945678cb1094efdedeb"
+    }
+  ],
+  "runs": [
+    {
+      "label": 1,
+      "probe": null,
+      "variant": "baseline",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/nonprefix-vllm/batches-20261022-215618/1-baseline-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261022-215859-589624.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/nonprefix-vllm/batches-20261022-215618/1-baseline-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/nonprefix-vllm/batches-20261022-215618/1-baseline-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/nonprefix-vllm/baseline/server-bench-BOU1qm",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 41101.0,
+        "output_tokens_per_second": 38.93,
+        "requests_per_second": 0.608,
+        "first_text_ms": {
+          "median": 22118.23,
+          "p95_nearest_rank": 33780.96
+        },
+        "total_ms": {
+          "median": 25876.06,
+          "p95_nearest_rank": 37465.17
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 41341.65,
+        "output_tokens_per_second": 47.99,
+        "requests_per_second": 0.677,
+        "first_text_ms": {
+          "median": 18571.24,
+          "p95_nearest_rank": 33780.96
+        },
+        "total_ms": {
+          "median": 22179.01,
+          "p95_nearest_rank": 37465.17
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "7d9b75bd5e45b4e9126cc4fd1ab607f302969af2b990ecd6e9befa255d84b9ae"
+    },
+    {
+      "label": 1,
+      "probe": null,
+      "variant": "repair",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/nonprefix-vllm/batches-20261022-215618/1-repair-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261022-220006-099471.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/nonprefix-vllm/batches-20261022-215618/1-repair-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/nonprefix-vllm/batches-20261022-215618/1-repair-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/nonprefix-vllm/repair/server-bench-iVQYnS",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 41394.64,
+        "output_tokens_per_second": 38.65,
+        "requests_per_second": 0.604,
+        "first_text_ms": {
+          "median": 22506.54,
+          "p95_nearest_rank": 34243.6
+        },
+        "total_ms": {
+          "median": 26264.58,
+          "p95_nearest_rank": 37965.71
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 41778.33,
+        "output_tokens_per_second": 47.49,
+        "requests_per_second": 0.67,
+        "first_text_ms": {
+          "median": 18720.34,
+          "p95_nearest_rank": 34243.6
+        },
+        "total_ms": {
+          "median": 22571.42,
+          "p95_nearest_rank": 37965.71
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {
+        "step": 581,
+        "hit_steps": 7,
+        "matched_tokens_total": 352,
+        "skipped_rows_total": 308,
+        "matched_tokens": 48,
+        "skipped_rows": 42,
+        "requests": [
+          "chatcmpl-prefix-study-1792686606099417000-X-82453445"
+        ],
+        "matches": [
+          {
+            "request": "chatcmpl-prefix-study-1792686606099417000-X-82453445",
+            "target_position": 32,
+            "source_position": 32,
+            "source_block": 20,
+            "repaired_rows": 2
+          },
+          {
+            "request": "chatcmpl-prefix-study-1792686606099417000-X-82453445",
+            "target_position": 48,
+            "source_position": 48,
+            "source_block": 19,
+            "repaired_rows": 2
+          },
+          {
+            "request": "chatcmpl-prefix-study-1792686606099417000-X-82453445",
+            "target_position": 64,
+            "source_position": 64,
+            "source_block": 18,
+            "repaired_rows": 2
+          }
+        ],
+        "ratio": 0.1
+      },
+      "sha256": "8546c95b2f51271f90d329dafb072337b39f6a9e18a1ed1e5808df1aaa86c4ee"
+    },
+    {
+      "label": 2,
+      "probe": null,
+      "variant": "repair",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/nonprefix-vllm/batches-20261022-215618/2-repair-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261022-220111-881809.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/nonprefix-vllm/batches-20261022-215618/2-repair-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/nonprefix-vllm/batches-20261022-215618/2-repair-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/nonprefix-vllm/repair/server-bench-5Mmpq7",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 41226.86,
+        "output_tokens_per_second": 38.81,
+        "requests_per_second": 0.606,
+        "first_text_ms": {
+          "median": 22275.13,
+          "p95_nearest_rank": 33809.79
+        },
+        "total_ms": {
+          "median": 26095.86,
+          "p95_nearest_rank": 37443.38
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 41562.24,
+        "output_tokens_per_second": 47.74,
+        "requests_per_second": 0.674,
+        "first_text_ms": {
+          "median": 18602.57,
+          "p95_nearest_rank": 33809.79
+        },
+        "total_ms": {
+          "median": 22341.46,
+          "p95_nearest_rank": 37443.38
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {
+        "step": 581,
+        "hit_steps": 7,
+        "matched_tokens_total": 352,
+        "skipped_rows_total": 308,
+        "matched_tokens": 48,
+        "skipped_rows": 42,
+        "requests": [
+          "chatcmpl-prefix-study-1792686671881747000-X-a9dc8047"
+        ],
+        "matches": [
+          {
+            "request": "chatcmpl-prefix-study-1792686671881747000-X-a9dc8047",
+            "target_position": 32,
+            "source_position": 32,
+            "source_block": 20,
+            "repaired_rows": 2
+          },
+          {
+            "request": "chatcmpl-prefix-study-1792686671881747000-X-a9dc8047",
+            "target_position": 48,
+            "source_position": 48,
+            "source_block": 19,
+            "repaired_rows": 2
+          },
+          {
+            "request": "chatcmpl-prefix-study-1792686671881747000-X-a9dc8047",
+            "target_position": 64,
+            "source_position": 64,
+            "source_block": 18,
+            "repaired_rows": 2
+          }
+        ],
+        "ratio": 0.1
+      },
+      "sha256": "9a3931ae343d49110bad20665c50020d723acc589749b8fce7dbb78c4895b4a8"
+    },
+    {
+      "label": 2,
+      "probe": null,
+      "variant": "baseline",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/nonprefix-vllm/batches-20261022-215618/2-baseline-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261022-220218-487438.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/nonprefix-vllm/batches-20261022-215618/2-baseline-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/nonprefix-vllm/batches-20261022-215618/2-baseline-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/nonprefix-vllm/baseline/server-bench-JpkOEh",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 40884.47,
+        "output_tokens_per_second": 39.13,
+        "requests_per_second": 0.611,
+        "first_text_ms": {
+          "median": 22568.81,
+          "p95_nearest_rank": 33791.23
+        },
+        "total_ms": {
+          "median": 26313.55,
+          "p95_nearest_rank": 37424.08
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 41131.24,
+        "output_tokens_per_second": 48.24,
+        "requests_per_second": 0.681,
+        "first_text_ms": {
+          "median": 19028.21,
+          "p95_nearest_rank": 33791.23
+        },
+        "total_ms": {
+          "median": 22633.93,
+          "p95_nearest_rank": 37424.08
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "471593955c303c32b3ba34c414692c61b58d89b6dc7aee521e55666c54c63d0a"
+    },
+    {
+      "label": 3,
+      "probe": null,
+      "variant": "baseline",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/nonprefix-vllm/batches-20261022-215618/3-baseline-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261022-220324-771106.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/nonprefix-vllm/batches-20261022-215618/3-baseline-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/nonprefix-vllm/batches-20261022-215618/3-baseline-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/nonprefix-vllm/baseline/server-bench-WU3myi",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 40723.01,
+        "output_tokens_per_second": 39.29,
+        "requests_per_second": 0.614,
+        "first_text_ms": {
+          "median": 22400.97,
+          "p95_nearest_rank": 33659.2
+        },
+        "total_ms": {
+          "median": 26145.43,
+          "p95_nearest_rank": 37303.1
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 40945.69,
+        "output_tokens_per_second": 48.45,
+        "requests_per_second": 0.684,
+        "first_text_ms": {
+          "median": 18701.08,
+          "p95_nearest_rank": 33659.2
+        },
+        "total_ms": {
+          "median": 22464.25,
+          "p95_nearest_rank": 37303.1
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "b947ebc8d9b438b74a372b2fb4307da758461c9ec9f5de88483403fae7996518"
+    },
+    {
+      "label": 3,
+      "probe": null,
+      "variant": "repair",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/nonprefix-vllm/batches-20261022-215618/3-repair-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261022-220430-908683.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/nonprefix-vllm/batches-20261022-215618/3-repair-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/nonprefix-vllm/batches-20261022-215618/3-repair-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/nonprefix-vllm/repair/server-bench-wnqb3n",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 41693.32,
+        "output_tokens_per_second": 38.38,
+        "requests_per_second": 0.6,
+        "first_text_ms": {
+          "median": 22860.4,
+          "p95_nearest_rank": 34392.62
+        },
+        "total_ms": {
+          "median": 26576.81,
+          "p95_nearest_rank": 38139.4
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 42006.89,
+        "output_tokens_per_second": 47.23,
+        "requests_per_second": 0.667,
+        "first_text_ms": {
+          "median": 19154.18,
+          "p95_nearest_rank": 34392.62
+        },
+        "total_ms": {
+          "median": 22928.75,
+          "p95_nearest_rank": 38139.4
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {
+        "step": 581,
+        "hit_steps": 7,
+        "matched_tokens_total": 352,
+        "skipped_rows_total": 308,
+        "matched_tokens": 48,
+        "skipped_rows": 42,
+        "requests": [
+          "chatcmpl-prefix-study-1792686870908632000-X-9fe804bd"
+        ],
+        "matches": [
+          {
+            "request": "chatcmpl-prefix-study-1792686870908632000-X-9fe804bd",
+            "target_position": 32,
+            "source_position": 32,
+            "source_block": 20,
+            "repaired_rows": 2
+          },
+          {
+            "request": "chatcmpl-prefix-study-1792686870908632000-X-9fe804bd",
+            "target_position": 48,
+            "source_position": 48,
+            "source_block": 19,
+            "repaired_rows": 2
+          },
+          {
+            "request": "chatcmpl-prefix-study-1792686870908632000-X-9fe804bd",
+            "target_position": 64,
+            "source_position": 64,
+            "source_block": 18,
+            "repaired_rows": 2
+          }
+        ],
+        "ratio": 0.1
+      },
+      "sha256": "b3235efea587b3fc49badcadf687552599e348e08bd8c1da47ff18af46155d9c"
+    }
+  ],
+  "complete": true,
+  "manifest": {
+    "model": "Qwen/Qwen3-1.7B",
+    "system": "You are a helpful assistant. Explain clearly and concisely.",
+    "warmup": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. \nSummarize this.",
+    "blockers": {
+      "H1": "For workshop number 1, write a detailed numbered list of forty different household objects. For each object explain its purpose and how it is made. Continue the list without an introduction.",
+      "H2": "For workshop number 2, write a detailed numbered list of forty different household objects. For each object explain its purpose and how it is made. Continue the list without an introduction.",
+      "H3": "For workshop number 3, write a detailed numbered list of forty different household objects. For each object explain its purpose and how it is made. Continue the list without an introduction."
+    },
+    "candidates": {
+      "A": "A coastal research team is studying damage to coral reefs. They record water temperature, rainfall, salinity, and the number of fish at several sites. Volunteers photograph the same reef sections every month. Some sites are close to busy harbours, while others are protected from boats and fishing. The team has a limited budget and wants reliable comparisons across locations. Explain how they should organize the observations and avoid misleading conclusions.",
+      "B": "A city transport team is reviewing bus reliability. Drivers report delays at crowded junctions and passengers report missed connections. The team has arrival records from stops, traffic counts, and anonymous passenger surveys. Some routes serve schools, others serve hospitals, and several share a congested bridge. The city can adjust schedules and stop locations but cannot purchase new buses this year. Explain how the team should choose improvements and measure their effects.",
+      "C": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. \nSuggest three improvements to the reservation process.",
+      "D": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. \nSuggest three ways to reduce uncollected reservations.",
+      "E": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. A separate branch instead uses paper cards and telephone calls. It has two volunteers each afternoon and no online member accounts. Suggest three practical improvements for this branch.",
+      "F": "A beekeeper is tracking how bees pollinate flowering plants. The team has limited funding and wants a practical plan. It can collect observations weekly but cannot hire more staff. Explain three useful steps, how to compare the results, and one common mistake to avoid when interpreting the observations.",
+      "G": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. \nSuggest three improvements to reservation reminder emails.",
+      "H": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. A separate branch uses paper cards and telephone calls. It has two volunteers each afternoon and no online accounts. Explain how volunteers could organize the paper waiting list.",
+      "I": "Astronomers are observing gas clouds where new stars are forming. The team has limited funding and wants a practical plan. It can collect observations weekly but cannot hire more staff. Explain three useful steps, how to compare the results, and one common mistake to avoid when interpreting the observations.",
+      "J": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. \nExplain how staff should handle cancelled reservations.",
+      "K": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. A separate branch uses paper cards and telephone calls. It has two volunteers each afternoon and no online accounts. Suggest three ways to improve telephone reminders.",
+      "L": "An apartment building wants to turn kitchen scraps into compost. The team has limited funding and wants a practical plan. It can collect observations weekly but cannot hire more staff. Explain three useful steps, how to compare the results, and one common mistake to avoid when interpreting the observations.",
+      "M": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. \nSuggest three useful weekly measurements for the library.",
+      "N": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. A separate branch uses paper cards and telephone calls. It has two volunteers each afternoon and no online accounts. Explain how volunteers should record cancellations.",
+      "O": "Geologists are studying earthquakes along an active fault line. The team has limited funding and wants a practical plan. It can collect observations weekly but cannot hire more staff. Explain three useful steps, how to compare the results, and one common mistake to avoid when interpreting the observations.",
+      "P": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. \nExplain how the library can support members without internet access.",
+      "Q": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. A separate branch uses paper cards and telephone calls. It has two volunteers each afternoon and no online accounts. Suggest three ways to make collection times convenient.",
+      "R": "A school science club is comparing rechargeable battery designs. The team has limited funding and wants a practical plan. It can collect observations weekly but cannot hire more staff. Explain three useful steps, how to compare the results, and one common mistake to avoid when interpreting the observations.",
+      "S": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. \nSuggest three ways to make collection deadlines clearer.",
+      "T": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. A separate branch uses paper cards and telephone calls. It has two volunteers each afternoon and no online accounts. Explain how staff can prevent duplicate paper reservations.",
+      "U": "A village is choosing water filters for its community buildings. The team has limited funding and wants a practical plan. It can collect observations weekly but cannot hire more staff. Explain three useful steps, how to compare the results, and one common mistake to avoid when interpreting the observations.",
+      "V": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. \nExplain how staff can investigate repeated collection delays.",
+      "W": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. A separate branch uses paper cards and telephone calls. It has two volunteers each afternoon and no online accounts. Suggest simple measurements for the branch to review weekly.",
+      "X": "Traffic planners are investigating congestion at a busy crossroads. The team has limited funding and wants a practical plan. It can collect observations weekly but cannot hire more staff. Explain three useful steps, how to compare the results, and one common mistake to avoid when interpreting the observations.",
+      "Y": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. \nSuggest a simple plan to evaluate changes to the service."
+    },
+    "candidate_order": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J",
+      "K",
+      "L",
+      "M",
+      "N",
+      "O",
+      "P",
+      "Q",
+      "R",
+      "S",
+      "T",
+      "U",
+      "V",
+      "W",
+      "X",
+      "Y"
+    ],
+    "candidate_interval_ms": 20.0,
+    "candidate_output_tokens": 64,
+    "blocker_output_tokens": 128,
+    "ignore_eos": true,
+    "maximum_client_concurrency": 28
+  },
+  "aggregate": {
+    "baseline": {
+      "candidate_duration_median_ms": 40884.47,
+      "candidate_duration_range_ms": [
+        40723.01,
+        41101.0
+      ],
+      "candidate_throughput_median_tokens_s": 39.13,
+      "median_first_text_ms": 22400.97,
+      "median_request_latency_ms": 26145.43,
+      "nonprefix_skipped_rows_per_run": [
+        0,
+        0,
+        0
+      ]
+    },
+    "repair": {
+      "candidate_duration_median_ms": 41394.64,
+      "candidate_duration_range_ms": [
+        41226.86,
+        41693.32
+      ],
+      "candidate_throughput_median_tokens_s": 38.65,
+      "median_first_text_ms": 22506.54,
+      "median_request_latency_ms": 26264.58,
+      "nonprefix_skipped_rows_per_run": [
+        308,
+        308,
+        308
+      ]
+    }
+  },
+  "answer_exact_agreement_by_request": {
+    "A": [
+      true,
+      true,
+      true
+    ],
+    "B": [
+      true,
+      true,
+      true
+    ],
+    "C": [
+      true,
+      true,
+      true
+    ],
+    "D": [
+      true,
+      true,
+      true
+    ],
+    "E": [
+      true,
+      true,
+      true
+    ],
+    "F": [
+      true,
+      true,
+      true
+    ],
+    "G": [
+      false,
+      false,
+      false
+    ],
+    "H": [
+      true,
+      true,
+      true
+    ],
+    "I": [
+      false,
+      false,
+      false
+    ],
+    "J": [
+      true,
+      true,
+      true
+    ],
+    "K": [
+      false,
+      false,
+      false
+    ],
+    "L": [
+      false,
+      false,
+      false
+    ],
+    "M": [
+      true,
+      true,
+      true
+    ],
+    "N": [
+      false,
+      false,
+      false
+    ],
+    "O": [
+      false,
+      false,
+      false
+    ],
+    "P": [
+      true,
+      true,
+      true
+    ],
+    "Q": [
+      false,
+      false,
+      false
+    ],
+    "R": [
+      false,
+      false,
+      false
+    ],
+    "S": [
+      true,
+      true,
+      true
+    ],
+    "T": [
+      true,
+      true,
+      true
+    ],
+    "U": [
+      false,
+      false,
+      false
+    ],
+    "V": [
+      true,
+      true,
+      true
+    ],
+    "W": [
+      false,
+      false,
+      false
+    ],
+    "X": [
+      false,
+      false,
+      false
+    ],
+    "Y": [
+      true,
+      true,
+      true
+    ]
+  },
+  "replication_provenance": {
+    "model": "Qwen/Qwen3-1.7B",
+    "model_revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e",
+    "started": "2026-10-22T21:25:47.037534",
+    "source_checkpoint": "e997aba05543a127cb09d8a4c3b917f307357807",
+    "implementation_mode": "reference for experiments01-06; reference/incremental in10",
+    "complete": false
+  },
+  "original_summary": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/nonprefix-vllm/batches-20261022-215618/summary.json"
+}

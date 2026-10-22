@@ -1,0 +1,47 @@
+Experiment10: pinned Qwen3-1.7B replication
+=================================================================
+COMPLETED
+
+Change: Preserve LFU plus exact partial-prefix decisions while replacing full publisher rescans with dirty/new-range updates and repeated free-list sorting with a lazy LFU heap. Compare study reference vs incremental implementations, not stock vLLM.
+
+Model:Qwen/Qwen3-1.7B, revision70d244cc86ccca08cf5af4e1e306ecf908b1ad5e.
+Native MLX GPU verified in every physical server log.
+Same request/tokenizer files and original per-profile serving settings.
+New model measurement session on source e997aba05543a127cb09d8a4c3b917f307357807.
+Experiments01-06 use reference cache mode;10 compares both modes explicitly.
+Original0.6B evidence remains unchanged. No historical cross-session causal timing claim.
+
+Three fresh-server untraced timing rounds per policy/profile.
+Separate mechanism diagnostics are excluded from the timing numbers.
+Negative time change means faster; group-median and paired changes both reported.
+Answer agreement is exact text, not a semantic quality score.
+
+Stage:10; 16 GPU runs; 12 timed.
+Raw summary:/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-225209/summary.json
+Profile | Variant | Batch seconds | Output tokens/s | First text ms | Request ms | p95 request ms | Change%
+shift | reference | 41.942 | 16.020 | 152.340 | 509.300 | 580.440 | +0.000
+  Batch samples ms:[41942.28, 41821.57, 41965.21]
+  Paired duration changes%:[0.0, 0.0, 0.0]
+  Cached prompt tokens, all requests:[11731, 11731, 11731]
+  Exact answer agreement, all requests:[{'matches': 84, 'total': 84}, {'matches': 84, 'total': 84}, {'matches': 84, 'total': 84}]
+shift | incremental | 43.906 | 15.310 | 159.510 | 548.580 | 635.790 | +4.682
+  Batch samples ms:[43375.62, 46195.83, 43906.14]
+  Paired duration changes%:[3.417410784535324, 10.459339522643463, 4.625093023483018]
+  Cached prompt tokens, all requests:[11731, 11731, 11731]
+  Exact answer agreement, all requests:[{'matches': 84, 'total': 84}, {'matches': 84, 'total': 84}, {'matches': 84, 'total': 84}]
+stable | reference | 20.185 | 16.650 | 145.320 | 476.150 | 565.180 | +0.000
+  Batch samples ms:[20013.69, 21156.59, 20184.59]
+  Paired duration changes%:[0.0, 0.0, 0.0]
+  Cached prompt tokens, all requests:[3766, 3766, 3766]
+  Exact answer agreement, all requests:[{'matches': 42, 'total': 42}, {'matches': 42, 'total': 42}, {'matches': 42, 'total': 42}]
+stable | incremental | 19.182 | 17.520 | 133.500 | 456.950 | 500.500 | -4.969
+  Batch samples ms:[19164.09, 19699.9, 19181.65]
+  Paired duration changes%:[-4.245094232997504, -6.885277825963443, -4.968840090385774]
+  Cached prompt tokens, all requests:[3766, 3766, 3766]
+  Exact answer agreement, all requests:[{'matches': 42, 'total': 42}, {'matches': 42, 'total': 42}, {'matches': 42, 'total': 42}]
+
+Controls, raw logs, per-request data and trace/probe outcomes are frozen in evidence.
+SHA256 inventories index original raw artifacts without deleting failed attempts.
+Three repeats are exploratory; do not equate more cache hits with overall speed.
+All request-time measurements include scheduler waiting; startup/warmup excluded.
+Reproduce the missing-model suite:.venv/bin/python src/run_missing_qwen17.py

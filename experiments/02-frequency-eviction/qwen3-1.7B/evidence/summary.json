@@ -1,0 +1,1408 @@
+{
+  "rounds_requested": 3,
+  "diagnostics": [
+    {
+      "round": "diagnostic",
+      "policy": "vllm",
+      "mode": "trace",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction/vllm/temporal-20261022-214133-161318.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction/batches-20261022-214111/diagnostic-vllm-trace-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction/batches-20261022-214111/diagnostic-vllm-trace-client.log",
+      "phases": {
+        "no_reuse_control": {
+          "successful_requests": 12,
+          "failed_requests": 0,
+          "successful_output_tokens": 96,
+          "duration_ms": 6456.3,
+          "output_tokens_per_second": 14.87,
+          "requests_per_second": 1.859,
+          "first_text_ms": {
+            "median": 172.17,
+            "p95_nearest_rank": 191.64
+          },
+          "total_ms": {
+            "median": 539.52,
+            "p95_nearest_rank": 562.82
+          },
+          "cached_prompt_tokens": 192
+        },
+        "train_hot": {
+          "successful_requests": 9,
+          "failed_requests": 0,
+          "successful_output_tokens": 72,
+          "duration_ms": 4087.58,
+          "output_tokens_per_second": 17.61,
+          "requests_per_second": 2.202,
+          "first_text_ms": {
+            "median": 78.44,
+            "p95_nearest_rank": 286.19
+          },
+          "total_ms": {
+            "median": 432.16,
+            "p95_nearest_rank": 626.64
+          },
+          "cached_prompt_tokens": 2192
+        },
+        "cold_scan": {
+          "successful_requests": 18,
+          "failed_requests": 0,
+          "successful_output_tokens": 144,
+          "duration_ms": 9490.17,
+          "output_tokens_per_second": 15.17,
+          "requests_per_second": 1.897,
+          "first_text_ms": {
+            "median": 174.63,
+            "p95_nearest_rank": 221.42
+          },
+          "total_ms": {
+            "median": 527.32,
+            "p95_nearest_rank": 550.72
+          },
+          "cached_prompt_tokens": 288
+        },
+        "hot_probe": {
+          "successful_requests": 3,
+          "failed_requests": 0,
+          "successful_output_tokens": 24,
+          "duration_ms": 1996.0,
+          "output_tokens_per_second": 12.02,
+          "requests_per_second": 1.503,
+          "first_text_ms": {
+            "median": 295.06,
+            "p95_nearest_rank": 311.6
+          },
+          "total_ms": {
+            "median": 671.98,
+            "p95_nearest_rank": 674.13
+          },
+          "cached_prompt_tokens": 48
+        }
+      },
+      "summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 22042.15,
+        "output_tokens_per_second": 15.24,
+        "requests_per_second": 1.905,
+        "first_text_ms": {
+          "median": 171.22,
+          "p95_nearest_rank": 293.61
+        },
+        "total_ms": {
+          "median": 530.36,
+          "p95_nearest_rank": 649.89
+        }
+      },
+      "trace_analysis": {
+        "eviction_policy": "vllm",
+        "waiting_policy": "fcfs",
+        "evicted_cached_blocks": 297,
+        "evicted_reuse_counts": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "preemptions": 0,
+        "probe_hit_tokens": {
+          "C1-P": 16,
+          "C2-P": 16,
+          "C3-P": 16
+        }
+      }
+    },
+    {
+      "round": "diagnostic",
+      "policy": "lfu",
+      "mode": "trace",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction/lfu/temporal-20261022-214219-097485.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction/batches-20261022-214111/diagnostic-lfu-trace-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction/batches-20261022-214111/diagnostic-lfu-trace-client.log",
+      "phases": {
+        "no_reuse_control": {
+          "successful_requests": 12,
+          "failed_requests": 0,
+          "successful_output_tokens": 96,
+          "duration_ms": 6362.34,
+          "output_tokens_per_second": 15.09,
+          "requests_per_second": 1.886,
+          "first_text_ms": {
+            "median": 170.4,
+            "p95_nearest_rank": 188.28
+          },
+          "total_ms": {
+            "median": 533.58,
+            "p95_nearest_rank": 561.02
+          },
+          "cached_prompt_tokens": 192
+        },
+        "train_hot": {
+          "successful_requests": 9,
+          "failed_requests": 0,
+          "successful_output_tokens": 72,
+          "duration_ms": 4012.49,
+          "output_tokens_per_second": 17.94,
+          "requests_per_second": 2.243,
+          "first_text_ms": {
+            "median": 73.97,
+            "p95_nearest_rank": 285.58
+          },
+          "total_ms": {
+            "median": 422.86,
+            "p95_nearest_rank": 630.07
+          },
+          "cached_prompt_tokens": 2192
+        },
+        "cold_scan": {
+          "successful_requests": 18,
+          "failed_requests": 0,
+          "successful_output_tokens": 144,
+          "duration_ms": 9442.03,
+          "output_tokens_per_second": 15.25,
+          "requests_per_second": 1.906,
+          "first_text_ms": {
+            "median": 171.94,
+            "p95_nearest_rank": 189.5
+          },
+          "total_ms": {
+            "median": 522.72,
+            "p95_nearest_rank": 555.27
+          },
+          "cached_prompt_tokens": 288
+        },
+        "hot_probe": {
+          "successful_requests": 3,
+          "failed_requests": 0,
+          "successful_output_tokens": 24,
+          "duration_ms": 1306.49,
+          "output_tokens_per_second": 18.37,
+          "requests_per_second": 2.296,
+          "first_text_ms": {
+            "median": 73.36,
+            "p95_nearest_rank": 81.61
+          },
+          "total_ms": {
+            "median": 430.6,
+            "p95_nearest_rank": 448.54
+          },
+          "cached_prompt_tokens": 816
+        }
+      },
+      "summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 21137.62,
+        "output_tokens_per_second": 15.9,
+        "requests_per_second": 1.987,
+        "first_text_ms": {
+          "median": 165.03,
+          "p95_nearest_rank": 189.45
+        },
+        "total_ms": {
+          "median": 519.4,
+          "p95_nearest_rank": 559.66
+        }
+      },
+      "trace_analysis": {
+        "eviction_policy": "lfu",
+        "waiting_policy": "fcfs",
+        "evicted_cached_blocks": 249,
+        "evicted_reuse_counts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "preemptions": 0,
+        "probe_hit_tokens": {
+          "C1-P": 272,
+          "C2-P": 272,
+          "C3-P": 272
+        }
+      }
+    }
+  ],
+  "runs": [
+    {
+      "round": 1,
+      "policy": "vllm",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction/vllm/temporal-20261022-214305-501412.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction/batches-20261022-214111/1-vllm-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction/batches-20261022-214111/1-vllm-bench-client.log",
+      "phases": {
+        "no_reuse_control": {
+          "successful_requests": 12,
+          "failed_requests": 0,
+          "successful_output_tokens": 96,
+          "duration_ms": 6761.63,
+          "output_tokens_per_second": 14.2,
+          "requests_per_second": 1.775,
+          "first_text_ms": {
+            "median": 191.94,
+            "p95_nearest_rank": 214.57
+          },
+          "total_ms": {
+            "median": 566.51,
+            "p95_nearest_rank": 581.49
+          },
+          "cached_prompt_tokens": 192
+        },
+        "train_hot": {
+          "successful_requests": 9,
+          "failed_requests": 0,
+          "successful_output_tokens": 72,
+          "duration_ms": 3966.2,
+          "output_tokens_per_second": 18.15,
+          "requests_per_second": 2.269,
+          "first_text_ms": {
+            "median": 83.46,
+            "p95_nearest_rank": 293.02
+          },
+          "total_ms": {
+            "median": 417.62,
+            "p95_nearest_rank": 623.78
+          },
+          "cached_prompt_tokens": 2192
+        },
+        "cold_scan": {
+          "successful_requests": 18,
+          "failed_requests": 0,
+          "successful_output_tokens": 144,
+          "duration_ms": 9131.44,
+          "output_tokens_per_second": 15.77,
+          "requests_per_second": 1.971,
+          "first_text_ms": {
+            "median": 173.49,
+            "p95_nearest_rank": 196.24
+          },
+          "total_ms": {
+            "median": 503.89,
+            "p95_nearest_rank": 552.74
+          },
+          "cached_prompt_tokens": 288
+        },
+        "hot_probe": {
+          "successful_requests": 3,
+          "failed_requests": 0,
+          "successful_output_tokens": 24,
+          "duration_ms": 1879.36,
+          "output_tokens_per_second": 12.77,
+          "requests_per_second": 1.596,
+          "first_text_ms": {
+            "median": 300.14,
+            "p95_nearest_rank": 311.54
+          },
+          "total_ms": {
+            "median": 626.18,
+            "p95_nearest_rank": 641.85
+          },
+          "cached_prompt_tokens": 48
+        }
+      },
+      "summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 21754.06,
+        "output_tokens_per_second": 15.45,
+        "requests_per_second": 1.931,
+        "first_text_ms": {
+          "median": 175.34,
+          "p95_nearest_rank": 293.02
+        },
+        "total_ms": {
+          "median": 511.76,
+          "p95_nearest_rank": 623.78
+        }
+      },
+      "trace_analysis": null
+    },
+    {
+      "round": 1,
+      "policy": "lfu",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction/lfu/temporal-20261022-214351-150011.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction/batches-20261022-214111/1-lfu-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction/batches-20261022-214111/1-lfu-bench-client.log",
+      "phases": {
+        "no_reuse_control": {
+          "successful_requests": 12,
+          "failed_requests": 0,
+          "successful_output_tokens": 96,
+          "duration_ms": 5949.02,
+          "output_tokens_per_second": 16.14,
+          "requests_per_second": 2.017,
+          "first_text_ms": {
+            "median": 172.08,
+            "p95_nearest_rank": 200.5
+          },
+          "total_ms": {
+            "median": 499.06,
+            "p95_nearest_rank": 569.33
+          },
+          "cached_prompt_tokens": 192
+        },
+        "train_hot": {
+          "successful_requests": 9,
+          "failed_requests": 0,
+          "successful_output_tokens": 72,
+          "duration_ms": 4120.27,
+          "output_tokens_per_second": 17.47,
+          "requests_per_second": 2.184,
+          "first_text_ms": {
+            "median": 87.42,
+            "p95_nearest_rank": 299.97
+          },
+          "total_ms": {
+            "median": 443.31,
+            "p95_nearest_rank": 639.63
+          },
+          "cached_prompt_tokens": 2192
+        },
+        "cold_scan": {
+          "successful_requests": 18,
+          "failed_requests": 0,
+          "successful_output_tokens": 144,
+          "duration_ms": 9332.56,
+          "output_tokens_per_second": 15.43,
+          "requests_per_second": 1.929,
+          "first_text_ms": {
+            "median": 179.82,
+            "p95_nearest_rank": 186.25
+          },
+          "total_ms": {
+            "median": 516.0,
+            "p95_nearest_rank": 550.12
+          },
+          "cached_prompt_tokens": 288
+        },
+        "hot_probe": {
+          "successful_requests": 3,
+          "failed_requests": 0,
+          "successful_output_tokens": 24,
+          "duration_ms": 1352.47,
+          "output_tokens_per_second": 17.75,
+          "requests_per_second": 2.218,
+          "first_text_ms": {
+            "median": 91.21,
+            "p95_nearest_rank": 93.34
+          },
+          "total_ms": {
+            "median": 452.49,
+            "p95_nearest_rank": 457.3
+          },
+          "cached_prompt_tokens": 816
+        }
+      },
+      "summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 20770.78,
+        "output_tokens_per_second": 16.18,
+        "requests_per_second": 2.022,
+        "first_text_ms": {
+          "median": 172.25,
+          "p95_nearest_rank": 186.25
+        },
+        "total_ms": {
+          "median": 502.57,
+          "p95_nearest_rank": 550.12
+        }
+      },
+      "trace_analysis": null
+    },
+    {
+      "round": 2,
+      "policy": "lfu",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction/lfu/temporal-20261022-214435-508199.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction/batches-20261022-214111/2-lfu-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction/batches-20261022-214111/2-lfu-bench-client.log",
+      "phases": {
+        "no_reuse_control": {
+          "successful_requests": 12,
+          "failed_requests": 0,
+          "successful_output_tokens": 96,
+          "duration_ms": 6193.58,
+          "output_tokens_per_second": 15.5,
+          "requests_per_second": 1.937,
+          "first_text_ms": {
+            "median": 181.22,
+            "p95_nearest_rank": 208.63
+          },
+          "total_ms": {
+            "median": 514.5,
+            "p95_nearest_rank": 547.51
+          },
+          "cached_prompt_tokens": 192
+        },
+        "train_hot": {
+          "successful_requests": 9,
+          "failed_requests": 0,
+          "successful_output_tokens": 72,
+          "duration_ms": 4105.03,
+          "output_tokens_per_second": 17.54,
+          "requests_per_second": 2.192,
+          "first_text_ms": {
+            "median": 88.52,
+            "p95_nearest_rank": 291.52
+          },
+          "total_ms": {
+            "median": 430.55,
+            "p95_nearest_rank": 650.65
+          },
+          "cached_prompt_tokens": 2192
+        },
+        "cold_scan": {
+          "successful_requests": 18,
+          "failed_requests": 0,
+          "successful_output_tokens": 144,
+          "duration_ms": 9782.3,
+          "output_tokens_per_second": 14.72,
+          "requests_per_second": 1.84,
+          "first_text_ms": {
+            "median": 189.26,
+            "p95_nearest_rank": 207.85
+          },
+          "total_ms": {
+            "median": 557.34,
+            "p95_nearest_rank": 573.6
+          },
+          "cached_prompt_tokens": 288
+        },
+        "hot_probe": {
+          "successful_requests": 3,
+          "failed_requests": 0,
+          "successful_output_tokens": 24,
+          "duration_ms": 1312.35,
+          "output_tokens_per_second": 18.29,
+          "requests_per_second": 2.286,
+          "first_text_ms": {
+            "median": 88.32,
+            "p95_nearest_rank": 90.44
+          },
+          "total_ms": {
+            "median": 438.29,
+            "p95_nearest_rank": 463.08
+          },
+          "cached_prompt_tokens": 816
+        }
+      },
+      "summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 21408.68,
+        "output_tokens_per_second": 15.69,
+        "requests_per_second": 1.962,
+        "first_text_ms": {
+          "median": 180.65,
+          "p95_nearest_rank": 207.85
+        },
+        "total_ms": {
+          "median": 511.98,
+          "p95_nearest_rank": 573.25
+        }
+      },
+      "trace_analysis": null
+    },
+    {
+      "round": 2,
+      "policy": "vllm",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction/vllm/temporal-20261022-214522-220202.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction/batches-20261022-214111/2-vllm-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction/batches-20261022-214111/2-vllm-bench-client.log",
+      "phases": {
+        "no_reuse_control": {
+          "successful_requests": 12,
+          "failed_requests": 0,
+          "successful_output_tokens": 96,
+          "duration_ms": 6156.24,
+          "output_tokens_per_second": 15.59,
+          "requests_per_second": 1.949,
+          "first_text_ms": {
+            "median": 177.8,
+            "p95_nearest_rank": 193.1
+          },
+          "total_ms": {
+            "median": 514.43,
+            "p95_nearest_rank": 531.38
+          },
+          "cached_prompt_tokens": 192
+        },
+        "train_hot": {
+          "successful_requests": 9,
+          "failed_requests": 0,
+          "successful_output_tokens": 72,
+          "duration_ms": 4066.83,
+          "output_tokens_per_second": 17.7,
+          "requests_per_second": 2.213,
+          "first_text_ms": {
+            "median": 85.03,
+            "p95_nearest_rank": 299.26
+          },
+          "total_ms": {
+            "median": 428.3,
+            "p95_nearest_rank": 646.24
+          },
+          "cached_prompt_tokens": 2192
+        },
+        "cold_scan": {
+          "successful_requests": 18,
+          "failed_requests": 0,
+          "successful_output_tokens": 144,
+          "duration_ms": 9186.73,
+          "output_tokens_per_second": 15.67,
+          "requests_per_second": 1.959,
+          "first_text_ms": {
+            "median": 175.11,
+            "p95_nearest_rank": 197.64
+          },
+          "total_ms": {
+            "median": 502.27,
+            "p95_nearest_rank": 551.93
+          },
+          "cached_prompt_tokens": 288
+        },
+        "hot_probe": {
+          "successful_requests": 3,
+          "failed_requests": 0,
+          "successful_output_tokens": 24,
+          "duration_ms": 1859.75,
+          "output_tokens_per_second": 12.9,
+          "requests_per_second": 1.613,
+          "first_text_ms": {
+            "median": 288.72,
+            "p95_nearest_rank": 293.64
+          },
+          "total_ms": {
+            "median": 619.87,
+            "p95_nearest_rank": 620.94
+          },
+          "cached_prompt_tokens": 48
+        }
+      },
+      "summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 21282.67,
+        "output_tokens_per_second": 15.79,
+        "requests_per_second": 1.973,
+        "first_text_ms": {
+          "median": 175.11,
+          "p95_nearest_rank": 288.72
+        },
+        "total_ms": {
+          "median": 502.27,
+          "p95_nearest_rank": 619.87
+        }
+      },
+      "trace_analysis": null
+    },
+    {
+      "round": 3,
+      "policy": "vllm",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction/vllm/temporal-20261022-214608-725077.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction/batches-20261022-214111/3-vllm-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction/batches-20261022-214111/3-vllm-bench-client.log",
+      "phases": {
+        "no_reuse_control": {
+          "successful_requests": 12,
+          "failed_requests": 0,
+          "successful_output_tokens": 96,
+          "duration_ms": 6296.65,
+          "output_tokens_per_second": 15.25,
+          "requests_per_second": 1.906,
+          "first_text_ms": {
+            "median": 179.97,
+            "p95_nearest_rank": 199.13
+          },
+          "total_ms": {
+            "median": 519.4,
+            "p95_nearest_rank": 557.32
+          },
+          "cached_prompt_tokens": 192
+        },
+        "train_hot": {
+          "successful_requests": 9,
+          "failed_requests": 0,
+          "successful_output_tokens": 72,
+          "duration_ms": 3964.55,
+          "output_tokens_per_second": 18.16,
+          "requests_per_second": 2.27,
+          "first_text_ms": {
+            "median": 81.67,
+            "p95_nearest_rank": 305.89
+          },
+          "total_ms": {
+            "median": 410.49,
+            "p95_nearest_rank": 644.05
+          },
+          "cached_prompt_tokens": 2192
+        },
+        "cold_scan": {
+          "successful_requests": 18,
+          "failed_requests": 0,
+          "successful_output_tokens": 144,
+          "duration_ms": 9000.32,
+          "output_tokens_per_second": 16.0,
+          "requests_per_second": 2.0,
+          "first_text_ms": {
+            "median": 170.05,
+            "p95_nearest_rank": 188.28
+          },
+          "total_ms": {
+            "median": 496.41,
+            "p95_nearest_rank": 522.42
+          },
+          "cached_prompt_tokens": 288
+        },
+        "hot_probe": {
+          "successful_requests": 3,
+          "failed_requests": 0,
+          "successful_output_tokens": 24,
+          "duration_ms": 1854.69,
+          "output_tokens_per_second": 12.94,
+          "requests_per_second": 1.618,
+          "first_text_ms": {
+            "median": 291.08,
+            "p95_nearest_rank": 301.28
+          },
+          "total_ms": {
+            "median": 616.63,
+            "p95_nearest_rank": 625.09
+          },
+          "cached_prompt_tokens": 48
+        }
+      },
+      "summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 21129.75,
+        "output_tokens_per_second": 15.9,
+        "requests_per_second": 1.988,
+        "first_text_ms": {
+          "median": 171.47,
+          "p95_nearest_rank": 291.08
+        },
+        "total_ms": {
+          "median": 501.55,
+          "p95_nearest_rank": 616.63
+        }
+      },
+      "trace_analysis": null
+    },
+    {
+      "round": 3,
+      "policy": "lfu",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction/lfu/temporal-20261022-214655-266677.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction/batches-20261022-214111/3-lfu-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction/batches-20261022-214111/3-lfu-bench-client.log",
+      "phases": {
+        "no_reuse_control": {
+          "successful_requests": 12,
+          "failed_requests": 0,
+          "successful_output_tokens": 96,
+          "duration_ms": 6165.61,
+          "output_tokens_per_second": 15.57,
+          "requests_per_second": 1.946,
+          "first_text_ms": {
+            "median": 177.22,
+            "p95_nearest_rank": 201.12
+          },
+          "total_ms": {
+            "median": 512.61,
+            "p95_nearest_rank": 536.66
+          },
+          "cached_prompt_tokens": 192
+        },
+        "train_hot": {
+          "successful_requests": 9,
+          "failed_requests": 0,
+          "successful_output_tokens": 72,
+          "duration_ms": 3922.34,
+          "output_tokens_per_second": 18.36,
+          "requests_per_second": 2.295,
+          "first_text_ms": {
+            "median": 83.99,
+            "p95_nearest_rank": 293.38
+          },
+          "total_ms": {
+            "median": 411.31,
+            "p95_nearest_rank": 619.54
+          },
+          "cached_prompt_tokens": 2192
+        },
+        "cold_scan": {
+          "successful_requests": 18,
+          "failed_requests": 0,
+          "successful_output_tokens": 144,
+          "duration_ms": 9101.28,
+          "output_tokens_per_second": 15.82,
+          "requests_per_second": 1.978,
+          "first_text_ms": {
+            "median": 169.44,
+            "p95_nearest_rank": 180.57
+          },
+          "total_ms": {
+            "median": 499.47,
+            "p95_nearest_rank": 551.05
+          },
+          "cached_prompt_tokens": 288
+        },
+        "hot_probe": {
+          "successful_requests": 3,
+          "failed_requests": 0,
+          "successful_output_tokens": 24,
+          "duration_ms": 1305.37,
+          "output_tokens_per_second": 18.39,
+          "requests_per_second": 2.298,
+          "first_text_ms": {
+            "median": 86.24,
+            "p95_nearest_rank": 88.18
+          },
+          "total_ms": {
+            "median": 431.66,
+            "p95_nearest_rank": 450.35
+          },
+          "cached_prompt_tokens": 816
+        }
+      },
+      "summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 20510.8,
+        "output_tokens_per_second": 16.38,
+        "requests_per_second": 2.048,
+        "first_text_ms": {
+          "median": 169.03,
+          "p95_nearest_rank": 189.25
+        },
+        "total_ms": {
+          "median": 497.96,
+          "p95_nearest_rank": 537.43
+        }
+      },
+      "trace_analysis": null
+    }
+  ],
+  "aggregate": {
+    "vllm": {
+      "no_reuse_control": {
+        "median_first_text_ms": 179.97,
+        "median_total_ms": 519.4,
+        "cached_tokens_per_run": [
+          192,
+          192,
+          192
+        ],
+        "first_text_median_range_ms": [
+          177.8,
+          191.94
+        ]
+      },
+      "hot_probe": {
+        "median_first_text_ms": 291.08,
+        "median_total_ms": 619.87,
+        "cached_tokens_per_run": [
+          48,
+          48,
+          48
+        ],
+        "first_text_median_range_ms": [
+          288.72,
+          300.14
+        ]
+      },
+      "median_batch_ms": 21282.67
+    },
+    "lfu": {
+      "no_reuse_control": {
+        "median_first_text_ms": 177.22,
+        "median_total_ms": 512.61,
+        "cached_tokens_per_run": [
+          192,
+          192,
+          192
+        ],
+        "first_text_median_range_ms": [
+          172.08,
+          181.22
+        ]
+      },
+      "hot_probe": {
+        "median_first_text_ms": 88.32,
+        "median_total_ms": 438.29,
+        "cached_tokens_per_run": [
+          816,
+          816,
+          816
+        ],
+        "first_text_median_range_ms": [
+          86.24,
+          91.21
+        ]
+      },
+      "median_batch_ms": 20770.78
+    }
+  },
+  "complete": true,
+  "mechanism_demonstrated": true,
+  "replication_provenance": {
+    "model": "Qwen/Qwen3-1.7B",
+    "model_revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e",
+    "started": "2026-10-22T21:25:47.037534",
+    "source_checkpoint": "e997aba05543a127cb09d8a4c3b917f307357807",
+    "implementation_mode": "reference for experiments01-06; reference/incremental in10",
+    "complete": false
+  },
+  "original_summary": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction/batches-20261022-214111/summary.json"
+}

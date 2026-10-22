@@ -1,0 +1,1495 @@
+{
+  "experiment": "05-skip-continue",
+  "diagnostics": [
+    {
+      "label": "original-diagnostic",
+      "probe": null,
+      "variant": "baseline",
+      "mode": "trace",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261022-221940/original-diagnostic-baseline-trace.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261022-222002-747442.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261022-221940/original-diagnostic-baseline-trace-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261022-221940/original-diagnostic-baseline-trace-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/original/baseline/server-trace-4jrxNL",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 45492.26,
+        "output_tokens_per_second": 35.17,
+        "requests_per_second": 0.55,
+        "first_text_ms": {
+          "median": 24356.9,
+          "p95_nearest_rank": 37223.52
+        },
+        "total_ms": {
+          "median": 28572.52,
+          "p95_nearest_rank": 41445.98
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 45702.52,
+        "output_tokens_per_second": 43.41,
+        "requests_per_second": 0.613,
+        "first_text_ms": {
+          "median": 23586.89,
+          "p95_nearest_rank": 37223.52
+        },
+        "total_ms": {
+          "median": 24385.46,
+          "p95_nearest_rank": 41445.98
+        }
+      },
+      "trace_analysis": {
+        "server_policy": "fcfs",
+        "eviction_policy": "vllm",
+        "evicted_cached_blocks": 107,
+        "preemptions": 0,
+        "max_candidates_waiting": 25,
+        "candidate_reorders": [],
+        "candidate_cache_scores": {},
+        "candidate_admission_order": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y"
+        ],
+        "protected_fcfs_head": [],
+        "waiting_time_safeguard_count": 0
+      },
+      "nonprefix_totals": {},
+      "sha256": "e9e6098f649b1f7cb625eb962dbddd9d6114a6ebe7640a5658d170cdc50f6b6e",
+      "profile": "original",
+      "round": "diagnostic",
+      "backfill_trace": {
+        "budget_skips": 0,
+        "budget_stops": 0,
+        "scan_limits": 0,
+        "admission_order": [
+          "chatcmpl-prefix-study-1792687802747386000-WARMUP-9b5ea292",
+          "chatcmpl-prefix-study-1792687802747386000-H1-a0da38ea",
+          "chatcmpl-prefix-study-1792687802747386000-H2-93c3d089",
+          "chatcmpl-prefix-study-1792687802747386000-H3-a5505127",
+          "chatcmpl-prefix-study-1792687802747386000-A-979b8c54",
+          "chatcmpl-prefix-study-1792687802747386000-B-a19cb9df",
+          "chatcmpl-prefix-study-1792687802747386000-C-a1cae78e",
+          "chatcmpl-prefix-study-1792687802747386000-D-a72470cb",
+          "chatcmpl-prefix-study-1792687802747386000-E-a4057dc5",
+          "chatcmpl-prefix-study-1792687802747386000-F-93e89d53",
+          "chatcmpl-prefix-study-1792687802747386000-G-89397538",
+          "chatcmpl-prefix-study-1792687802747386000-H-8f87e59e",
+          "chatcmpl-prefix-study-1792687802747386000-I-85f659c0",
+          "chatcmpl-prefix-study-1792687802747386000-J-b226c0a0",
+          "chatcmpl-prefix-study-1792687802747386000-K-a093c8e4",
+          "chatcmpl-prefix-study-1792687802747386000-L-bd717b7b",
+          "chatcmpl-prefix-study-1792687802747386000-M-8aaceeb2",
+          "chatcmpl-prefix-study-1792687802747386000-N-bafc04c0",
+          "chatcmpl-prefix-study-1792687802747386000-O-ad78486b",
+          "chatcmpl-prefix-study-1792687802747386000-P-989d9b40",
+          "chatcmpl-prefix-study-1792687802747386000-Q-96fa6ff2",
+          "chatcmpl-prefix-study-1792687802747386000-R-bf85ef52",
+          "chatcmpl-prefix-study-1792687802747386000-S-9483a728",
+          "chatcmpl-prefix-study-1792687802747386000-T-ad75c4aa",
+          "chatcmpl-prefix-study-1792687802747386000-U-b5f6537a",
+          "chatcmpl-prefix-study-1792687802747386000-V-a96f566b",
+          "chatcmpl-prefix-study-1792687802747386000-W-a25088a8",
+          "chatcmpl-prefix-study-1792687802747386000-X-9b0fbf3c",
+          "chatcmpl-prefix-study-1792687802747386000-Y-88bf7ba0"
+        ],
+        "steps": []
+      }
+    },
+    {
+      "label": "original-diagnostic",
+      "probe": null,
+      "variant": "skip",
+      "mode": "trace",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261022-221940/original-diagnostic-skip-trace.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261022-222115-777428.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261022-221940/original-diagnostic-skip-trace-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261022-221940/original-diagnostic-skip-trace-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/original/skip/server-trace-ue6OHy",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 43259.13,
+        "output_tokens_per_second": 36.99,
+        "requests_per_second": 0.578,
+        "first_text_ms": {
+          "median": 23677.32,
+          "p95_nearest_rank": 35811.34
+        },
+        "total_ms": {
+          "median": 27710.63,
+          "p95_nearest_rank": 39582.88
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 28,
+        "failed_requests": 0,
+        "successful_output_tokens": 1984,
+        "duration_ms": 43495.29,
+        "output_tokens_per_second": 45.61,
+        "requests_per_second": 0.644,
+        "first_text_ms": {
+          "median": 19982.61,
+          "p95_nearest_rank": 35811.34
+        },
+        "total_ms": {
+          "median": 23707.22,
+          "p95_nearest_rank": 39582.88
+        }
+      },
+      "trace_analysis": {
+        "server_policy": "fcfs",
+        "eviction_policy": "vllm",
+        "evicted_cached_blocks": 107,
+        "preemptions": 0,
+        "max_candidates_waiting": 25,
+        "candidate_reorders": [],
+        "candidate_cache_scores": {},
+        "candidate_admission_order": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y"
+        ],
+        "protected_fcfs_head": [],
+        "waiting_time_safeguard_count": 0
+      },
+      "nonprefix_totals": {},
+      "sha256": "213c052a233735f039785746408f08b90e76179dd3cc338757671108a0555f1c",
+      "profile": "original",
+      "round": "diagnostic",
+      "backfill_trace": {
+        "budget_skips": 0,
+        "budget_stops": 0,
+        "scan_limits": 0,
+        "admission_order": [
+          "chatcmpl-prefix-study-1792687875777374000-WARMUP-92e15420",
+          "chatcmpl-prefix-study-1792687875777374000-H1-aecb8887",
+          "chatcmpl-prefix-study-1792687875777374000-H2-9317ef09",
+          "chatcmpl-prefix-study-1792687875777374000-H3-8d92749d",
+          "chatcmpl-prefix-study-1792687875777374000-A-b59372ab",
+          "chatcmpl-prefix-study-1792687875777374000-B-9fa7e353",
+          "chatcmpl-prefix-study-1792687875777374000-C-9b6e3dcd",
+          "chatcmpl-prefix-study-1792687875777374000-D-a4382d73",
+          "chatcmpl-prefix-study-1792687875777374000-E-ba22c2aa",
+          "chatcmpl-prefix-study-1792687875777374000-F-82c4e119",
+          "chatcmpl-prefix-study-1792687875777374000-G-be31d731",
+          "chatcmpl-prefix-study-1792687875777374000-H-bc77606d",
+          "chatcmpl-prefix-study-1792687875777374000-I-be829ba4",
+          "chatcmpl-prefix-study-1792687875777374000-J-b684b07d",
+          "chatcmpl-prefix-study-1792687875777374000-K-94c758bb",
+          "chatcmpl-prefix-study-1792687875777374000-L-ac3bd234",
+          "chatcmpl-prefix-study-1792687875777374000-M-8427d976",
+          "chatcmpl-prefix-study-1792687875777374000-N-97595948",
+          "chatcmpl-prefix-study-1792687875777374000-O-8fdfa654",
+          "chatcmpl-prefix-study-1792687875777374000-P-94bb9e2d",
+          "chatcmpl-prefix-study-1792687875777374000-Q-990bb26e",
+          "chatcmpl-prefix-study-1792687875777374000-R-82ab60ce",
+          "chatcmpl-prefix-study-1792687875777374000-S-84575103",
+          "chatcmpl-prefix-study-1792687875777374000-T-bf9fe3af",
+          "chatcmpl-prefix-study-1792687875777374000-U-a4f8f389",
+          "chatcmpl-prefix-study-1792687875777374000-V-9d6b955b",
+          "chatcmpl-prefix-study-1792687875777374000-W-81956314",
+          "chatcmpl-prefix-study-1792687875777374000-X-adbe18e6",
+          "chatcmpl-prefix-study-1792687875777374000-Y-b068d0f7"
+        ],
+        "steps": []
+      }
+    },
+    {
+      "label": "targeted-diagnostic",
+      "probe": null,
+      "variant": "baseline",
+      "mode": "trace",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261022-221940/targeted-diagnostic-baseline-trace.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261022-222232-523360.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261022-221940/targeted-diagnostic-baseline-trace-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261022-221940/targeted-diagnostic-baseline-trace-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/targeted/baseline/server-trace-fOE27Q",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 26937.32,
+        "output_tokens_per_second": 59.4,
+        "requests_per_second": 0.928,
+        "first_text_ms": {
+          "median": 12712.11,
+          "p95_nearest_rank": 18291.1
+        },
+        "total_ms": {
+          "median": 18120.28,
+          "p95_nearest_rank": 23365.24
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 33,
+        "failed_requests": 0,
+        "successful_output_tokens": 2112,
+        "duration_ms": 27336.57,
+        "output_tokens_per_second": 77.26,
+        "requests_per_second": 1.207,
+        "first_text_ms": {
+          "median": 11766.35,
+          "p95_nearest_rank": 18291.1
+        },
+        "total_ms": {
+          "median": 17769.63,
+          "p95_nearest_rank": 23365.24
+        }
+      },
+      "trace_analysis": {
+        "server_policy": "fcfs",
+        "eviction_policy": "vllm",
+        "evicted_cached_blocks": 175,
+        "preemptions": 0,
+        "max_candidates_waiting": 25,
+        "candidate_reorders": [],
+        "candidate_cache_scores": {},
+        "candidate_admission_order": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y"
+        ],
+        "protected_fcfs_head": [],
+        "waiting_time_safeguard_count": 0
+      },
+      "nonprefix_totals": {},
+      "sha256": "c44fe437814a7e093d35f95681e68df2e1297eff10d23b817d3ff4feb6951f24",
+      "profile": "targeted",
+      "round": "diagnostic",
+      "backfill_trace": {
+        "budget_skips": 0,
+        "budget_stops": 6,
+        "scan_limits": 0,
+        "admission_order": [
+          "chatcmpl-prefix-study-1792687952523261000-WARMUP-82dcbef4",
+          "chatcmpl-prefix-study-1792687952523261000-H2-acd916eb",
+          "chatcmpl-prefix-study-1792687952523261000-H3-af57445d",
+          "chatcmpl-prefix-study-1792687952523261000-H1-90811290",
+          "chatcmpl-prefix-study-1792687952523261000-H4-bc92d630",
+          "chatcmpl-prefix-study-1792687952523261000-H5-a03b42d2",
+          "chatcmpl-prefix-study-1792687952523261000-H7-a687517d",
+          "chatcmpl-prefix-study-1792687952523261000-H6-9f818eb4",
+          "chatcmpl-prefix-study-1792687952523261000-H8-8637fc5d",
+          "chatcmpl-prefix-study-1792687952523261000-A-aad8b1e0",
+          "chatcmpl-prefix-study-1792687952523261000-B-a2cd0384",
+          "chatcmpl-prefix-study-1792687952523261000-C-ade36ef4",
+          "chatcmpl-prefix-study-1792687952523261000-D-bd3fc3ca",
+          "chatcmpl-prefix-study-1792687952523261000-E-9b01ff99",
+          "chatcmpl-prefix-study-1792687952523261000-F-b0ab870b",
+          "chatcmpl-prefix-study-1792687952523261000-G-be974511",
+          "chatcmpl-prefix-study-1792687952523261000-H-afa809b9",
+          "chatcmpl-prefix-study-1792687952523261000-I-a5ad4390",
+          "chatcmpl-prefix-study-1792687952523261000-J-8ea5fd99",
+          "chatcmpl-prefix-study-1792687952523261000-K-b33793f4",
+          "chatcmpl-prefix-study-1792687952523261000-L-afd70b74",
+          "chatcmpl-prefix-study-1792687952523261000-M-a4e70252",
+          "chatcmpl-prefix-study-1792687952523261000-N-bf862885",
+          "chatcmpl-prefix-study-1792687952523261000-O-99be4b9f",
+          "chatcmpl-prefix-study-1792687952523261000-P-b9ada156",
+          "chatcmpl-prefix-study-1792687952523261000-Q-a08d2c0c",
+          "chatcmpl-prefix-study-1792687952523261000-R-b9c48912",
+          "chatcmpl-prefix-study-1792687952523261000-S-b758a321",
+          "chatcmpl-prefix-study-1792687952523261000-T-a6969628",
+          "chatcmpl-prefix-study-1792687952523261000-U-b96efde9",
+          "chatcmpl-prefix-study-1792687952523261000-V-ae2ead7f",
+          "chatcmpl-prefix-study-1792687952523261000-W-99b47019",
+          "chatcmpl-prefix-study-1792687952523261000-X-a8dcc3fb",
+          "chatcmpl-prefix-study-1792687952523261000-Y-8ee1ef93"
+        ],
+        "steps": [
+          {
+            "step": 68,
+            "assigned": 305,
+            "unused": 207
+          },
+          {
+            "step": 69,
+            "assigned": 306,
+            "unused": 206
+          },
+          {
+            "step": 70,
+            "assigned": 307,
+            "unused": 205
+          },
+          {
+            "step": 71,
+            "assigned": 308,
+            "unused": 204
+          },
+          {
+            "step": 72,
+            "assigned": 309,
+            "unused": 203
+          },
+          {
+            "step": 73,
+            "assigned": 310,
+            "unused": 202
+          }
+        ]
+      }
+    },
+    {
+      "label": "targeted-diagnostic",
+      "probe": null,
+      "variant": "skip",
+      "mode": "trace",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261022-221940/targeted-diagnostic-skip-trace.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261022-222335-400808.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261022-221940/targeted-diagnostic-skip-trace-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261022-221940/targeted-diagnostic-skip-trace-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/targeted/skip/server-trace-88KGy1",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 26341.62,
+        "output_tokens_per_second": 60.74,
+        "requests_per_second": 0.949,
+        "first_text_ms": {
+          "median": 10940.13,
+          "p95_nearest_rank": 17971.31
+        },
+        "total_ms": {
+          "median": 16379.98,
+          "p95_nearest_rank": 22976.95
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 33,
+        "failed_requests": 0,
+        "successful_output_tokens": 2112,
+        "duration_ms": 26711.8,
+        "output_tokens_per_second": 79.07,
+        "requests_per_second": 1.235,
+        "first_text_ms": {
+          "median": 10856.54,
+          "p95_nearest_rank": 17971.31
+        },
+        "total_ms": {
+          "median": 16290.61,
+          "p95_nearest_rank": 22976.95
+        }
+      },
+      "trace_analysis": {
+        "server_policy": "fcfs",
+        "eviction_policy": "vllm",
+        "evicted_cached_blocks": 175,
+        "preemptions": 0,
+        "max_candidates_waiting": 25,
+        "candidate_reorders": [],
+        "candidate_cache_scores": {},
+        "candidate_admission_order": [
+          "A",
+          "B",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "C",
+          "R",
+          "D",
+          "E",
+          "S",
+          "T",
+          "U",
+          "V",
+          "F",
+          "W",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "X",
+          "Y"
+        ],
+        "protected_fcfs_head": [],
+        "waiting_time_safeguard_count": 0
+      },
+      "nonprefix_totals": {},
+      "sha256": "c4e8d3ce8e63a28bb3411cdb7848ff0385451d9eb28cf96a55911f93affc55b7",
+      "profile": "targeted",
+      "round": "diagnostic",
+      "backfill_trace": {
+        "budget_skips": 37,
+        "budget_stops": 5,
+        "scan_limits": 1,
+        "admission_order": [
+          "chatcmpl-prefix-study-1792688015400677000-WARMUP-8f01942f",
+          "chatcmpl-prefix-study-1792688015400677000-H2-8cbebac2",
+          "chatcmpl-prefix-study-1792688015400677000-H1-8f70e1c3",
+          "chatcmpl-prefix-study-1792688015400677000-H4-bdaa07d2",
+          "chatcmpl-prefix-study-1792688015400677000-H3-afc99218",
+          "chatcmpl-prefix-study-1792688015400677000-H6-82d6c39b",
+          "chatcmpl-prefix-study-1792688015400677000-H5-bea3ccc6",
+          "chatcmpl-prefix-study-1792688015400677000-H7-a5e8af3d",
+          "chatcmpl-prefix-study-1792688015400677000-H8-a1873406",
+          "chatcmpl-prefix-study-1792688015400677000-A-a6239841",
+          "chatcmpl-prefix-study-1792688015400677000-B-a185620a",
+          "chatcmpl-prefix-study-1792688015400677000-N-93f0df0e",
+          "chatcmpl-prefix-study-1792688015400677000-O-a749c955",
+          "chatcmpl-prefix-study-1792688015400677000-P-a435f9d4",
+          "chatcmpl-prefix-study-1792688015400677000-Q-ba3d1b76",
+          "chatcmpl-prefix-study-1792688015400677000-C-9e13651e",
+          "chatcmpl-prefix-study-1792688015400677000-R-8cad4a51",
+          "chatcmpl-prefix-study-1792688015400677000-D-9e2f9fe6",
+          "chatcmpl-prefix-study-1792688015400677000-E-8f86d0d3",
+          "chatcmpl-prefix-study-1792688015400677000-S-91e3a8cb",
+          "chatcmpl-prefix-study-1792688015400677000-T-a54796b9",
+          "chatcmpl-prefix-study-1792688015400677000-U-bf02488e",
+          "chatcmpl-prefix-study-1792688015400677000-V-b7945d10",
+          "chatcmpl-prefix-study-1792688015400677000-F-8aeb8714",
+          "chatcmpl-prefix-study-1792688015400677000-W-913a6585",
+          "chatcmpl-prefix-study-1792688015400677000-G-bb41e383",
+          "chatcmpl-prefix-study-1792688015400677000-H-bdc5d5c0",
+          "chatcmpl-prefix-study-1792688015400677000-I-bda00a65",
+          "chatcmpl-prefix-study-1792688015400677000-J-83034724",
+          "chatcmpl-prefix-study-1792688015400677000-K-a08f2054",
+          "chatcmpl-prefix-study-1792688015400677000-L-b8eee4e2",
+          "chatcmpl-prefix-study-1792688015400677000-M-9fc72da5",
+          "chatcmpl-prefix-study-1792688015400677000-X-b3d87753",
+          "chatcmpl-prefix-study-1792688015400677000-Y-990c8859"
+        ],
+        "steps": [
+          {
+            "step": 68,
+            "assigned": 497,
+            "unused": 15
+          },
+          {
+            "step": 69,
+            "assigned": 358,
+            "unused": 154
+          },
+          {
+            "step": 132,
+            "assigned": 499,
+            "unused": 13
+          },
+          {
+            "step": 133,
+            "assigned": 358,
+            "unused": 154
+          },
+          {
+            "step": 196,
+            "assigned": 307,
+            "unused": 205
+          },
+          {
+            "step": 197,
+            "assigned": 306,
+            "unused": 206
+          },
+          {
+            "step": 198,
+            "assigned": 307,
+            "unused": 205
+          },
+          {
+            "step": 199,
+            "assigned": 308,
+            "unused": 204
+          },
+          {
+            "step": 200,
+            "assigned": 309,
+            "unused": 203
+          }
+        ]
+      }
+    }
+  ],
+  "runs": [
+    {
+      "label": "targeted-1",
+      "probe": null,
+      "variant": "baseline",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261022-221940/targeted-1-baseline-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261022-222438-147738.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261022-221940/targeted-1-baseline-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261022-221940/targeted-1-baseline-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/targeted/baseline/server-bench-yWgWiV",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 24745.42,
+        "output_tokens_per_second": 64.66,
+        "requests_per_second": 1.01,
+        "first_text_ms": {
+          "median": 12024.74,
+          "p95_nearest_rank": 16996.12
+        },
+        "total_ms": {
+          "median": 16851.28,
+          "p95_nearest_rank": 21503.01
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 33,
+        "failed_requests": 0,
+        "successful_output_tokens": 2112,
+        "duration_ms": 25117.62,
+        "output_tokens_per_second": 84.08,
+        "requests_per_second": 1.314,
+        "first_text_ms": {
+          "median": 11012.22,
+          "p95_nearest_rank": 16996.12
+        },
+        "total_ms": {
+          "median": 16541.07,
+          "p95_nearest_rank": 21503.01
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "3ab145ab67b18382e1895f0a7e1cfe0553943d90332b88f187e3c52404c5fae6",
+      "profile": "targeted",
+      "round": 1
+    },
+    {
+      "label": "targeted-1",
+      "probe": null,
+      "variant": "skip",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261022-221940/targeted-1-skip-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261022-222533-808339.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261022-221940/targeted-1-skip-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261022-221940/targeted-1-skip-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/targeted/skip/server-bench-26PPqY",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 25240.22,
+        "output_tokens_per_second": 63.39,
+        "requests_per_second": 0.99,
+        "first_text_ms": {
+          "median": 10195.04,
+          "p95_nearest_rank": 16918.88
+        },
+        "total_ms": {
+          "median": 15271.43,
+          "p95_nearest_rank": 21802.44
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 33,
+        "failed_requests": 0,
+        "successful_output_tokens": 2112,
+        "duration_ms": 25639.46,
+        "output_tokens_per_second": 82.37,
+        "requests_per_second": 1.287,
+        "first_text_ms": {
+          "median": 10132.8,
+          "p95_nearest_rank": 16918.88
+        },
+        "total_ms": {
+          "median": 15178.37,
+          "p95_nearest_rank": 21802.44
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "67c7b376db89baa594ea85d6cee89bd7b3a7f521c0608d043903e3c9a38b972c",
+      "profile": "targeted",
+      "round": 1
+    },
+    {
+      "label": "targeted-2",
+      "probe": null,
+      "variant": "skip",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261022-221940/targeted-2-skip-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261022-222630-636951.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261022-221940/targeted-2-skip-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261022-221940/targeted-2-skip-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/targeted/skip/server-bench-lfpOsi",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 24664.19,
+        "output_tokens_per_second": 64.87,
+        "requests_per_second": 1.014,
+        "first_text_ms": {
+          "median": 10214.68,
+          "p95_nearest_rank": 16870.82
+        },
+        "total_ms": {
+          "median": 15274.22,
+          "p95_nearest_rank": 21651.16
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 33,
+        "failed_requests": 0,
+        "successful_output_tokens": 2112,
+        "duration_ms": 25094.21,
+        "output_tokens_per_second": 84.16,
+        "requests_per_second": 1.315,
+        "first_text_ms": {
+          "median": 10146.2,
+          "p95_nearest_rank": 16870.82
+        },
+        "total_ms": {
+          "median": 15176.22,
+          "p95_nearest_rank": 21651.16
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "55b26b83f2ae5d3c720a0084ddf1fbabe6c194b29bde1f1fa5e5da9f94333b86",
+      "profile": "targeted",
+      "round": 2
+    },
+    {
+      "label": "targeted-2",
+      "probe": null,
+      "variant": "baseline",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261022-221940/targeted-2-baseline-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261022-222726-263104.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261022-221940/targeted-2-baseline-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261022-221940/targeted-2-baseline-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/targeted/baseline/server-bench-FLVFyK",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 25258.74,
+        "output_tokens_per_second": 63.34,
+        "requests_per_second": 0.99,
+        "first_text_ms": {
+          "median": 11860.25,
+          "p95_nearest_rank": 17358.27
+        },
+        "total_ms": {
+          "median": 17170.82,
+          "p95_nearest_rank": 22022.12
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 33,
+        "failed_requests": 0,
+        "successful_output_tokens": 2112,
+        "duration_ms": 25653.12,
+        "output_tokens_per_second": 82.33,
+        "requests_per_second": 1.286,
+        "first_text_ms": {
+          "median": 10841.4,
+          "p95_nearest_rank": 17358.27
+        },
+        "total_ms": {
+          "median": 16810.63,
+          "p95_nearest_rank": 22022.12
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "91da47ba233ef3bbc2142465cad9ddae3ffbfeadde3f6f581e946089ace252d8",
+      "profile": "targeted",
+      "round": 2
+    },
+    {
+      "label": "targeted-3",
+      "probe": null,
+      "variant": "baseline",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261022-221940/targeted-3-baseline-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261022-222822-520443.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261022-221940/targeted-3-baseline-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261022-221940/targeted-3-baseline-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/targeted/baseline/server-bench-CgF4iT",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 24731.83,
+        "output_tokens_per_second": 64.69,
+        "requests_per_second": 1.011,
+        "first_text_ms": {
+          "median": 11995.74,
+          "p95_nearest_rank": 17076.96
+        },
+        "total_ms": {
+          "median": 16935.04,
+          "p95_nearest_rank": 21543.11
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 33,
+        "failed_requests": 0,
+        "successful_output_tokens": 2112,
+        "duration_ms": 25149.49,
+        "output_tokens_per_second": 83.98,
+        "requests_per_second": 1.312,
+        "first_text_ms": {
+          "median": 11020.02,
+          "p95_nearest_rank": 17076.96
+        },
+        "total_ms": {
+          "median": 16622.62,
+          "p95_nearest_rank": 21543.11
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "a9e29c3801899d70c2a63fbb1231f8718975e2bddb9ba0fc7a2119d590b95e75",
+      "profile": "targeted",
+      "round": 3
+    },
+    {
+      "label": "targeted-3",
+      "probe": null,
+      "variant": "skip",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261022-221940/targeted-3-skip-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-eviction-ay/vllm/controlled-20261022-222917-965125.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261022-221940/targeted-3-skip-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261022-221940/targeted-3-skip-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/targeted/skip/server-bench-rOxkcD",
+      "candidate_summary": {
+        "successful_requests": 25,
+        "failed_requests": 0,
+        "successful_output_tokens": 1600,
+        "duration_ms": 24608.27,
+        "output_tokens_per_second": 65.02,
+        "requests_per_second": 1.016,
+        "first_text_ms": {
+          "median": 10043.67,
+          "p95_nearest_rank": 16735.89
+        },
+        "total_ms": {
+          "median": 15125.5,
+          "p95_nearest_rank": 21530.9
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 33,
+        "failed_requests": 0,
+        "successful_output_tokens": 2112,
+        "duration_ms": 24992.1,
+        "output_tokens_per_second": 84.51,
+        "requests_per_second": 1.32,
+        "first_text_ms": {
+          "median": 9988.92,
+          "p95_nearest_rank": 16735.89
+        },
+        "total_ms": {
+          "median": 15025.0,
+          "p95_nearest_rank": 21530.9
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "e8fde90877b0800cb2073ccd57888ce196278caa8ff2e371d2ef4891c0a121c5",
+      "profile": "targeted",
+      "round": 3
+    }
+  ],
+  "complete": true,
+  "aggregate": {
+    "baseline": {
+      "duration_median_ms": 24745.42,
+      "throughput_median_tokens_s": 64.66,
+      "first_text_median_ms": 11995.74,
+      "latency_median_ms": 16935.04
+    },
+    "skip": {
+      "duration_median_ms": 24664.19,
+      "throughput_median_tokens_s": 64.87,
+      "first_text_median_ms": 10195.04,
+      "latency_median_ms": 15271.43
+    }
+  },
+  "per_request": {
+    "baseline": {
+      "A": {
+        "first_text_median_ms": 4880.18,
+        "latency_median_ms": 10914.17,
+        "answers": [
+          "Planning a community project is a critical step to ensure success. Here are **three useful steps** for planning, with detailed explanations on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Define the Purpose and Scope**\n**Why it matters:**  \nA clear purpose and scope",
+          "Planning a community project is a critical step to ensure success. Here are **three useful steps** for planning, with detailed explanations on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Define the Purpose and Scope**\n**Why it matters:**  \nA clear purpose and scope",
+          "Planning a community project is a critical step to ensure success. Here are **three useful steps** for planning, with detailed explanations on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Define the Purpose and Scope**\n**Why it matters:**  \nA clear purpose and scope"
+        ]
+      },
+      "B": {
+        "first_text_median_ms": 5091.8,
+        "latency_median_ms": 11152.95,
+        "answers": [
+          "Planning a community project requires careful consideration of several key factors. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the",
+          "Planning a community project requires careful consideration of several key factors. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the",
+          "Planning a community project requires careful consideration of several key factors. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the"
+        ]
+      },
+      "C": {
+        "first_text_median_ms": 5321.06,
+        "latency_median_ms": 11378.11,
+        "answers": [
+          "Planning a community project requires careful thought and organization. Here are three useful steps to ensure your project is successful:\n\n---\n\n### **1. Define Clear Goals and Objectives**\n- **Why it's important:** A clear plan helps everyone understand what the project aims to achieve.\n- **What to do:** \n  - Identify",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to ensure your project is successful:\n\n---\n\n### **1. Define Clear Goals and Objectives**\n- **Why it's important:** A clear plan helps everyone understand what the project aims to achieve.\n- **What to do:** \n  - Identify",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to ensure your project is successful:\n\n---\n\n### **1. Define Clear Goals and Objectives**\n- **Why it's important:** A clear plan helps everyone understand what the project aims to achieve.\n- **What to do:** \n  - Identify"
+        ]
+      },
+      "D": {
+        "first_text_median_ms": 5542.47,
+        "latency_median_ms": 11617.51,
+        "answers": [
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you succeed:\n\n---\n\n### **1. Define the Purpose and Goals**\n- **What is the goal of the project?**  \n  Clearly identify the purpose of the project, such as improving public spaces, providing education, or supporting local",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you succeed:\n\n---\n\n### **1. Define the Purpose and Goals**\n- **What is the goal of the project?**  \n  Clearly identify the purpose of the project, such as improving public spaces, providing education, or supporting local",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you succeed:\n\n---\n\n### **1. Define the Purpose and Goals**\n- **What is the goal of the project?**  \n  Clearly identify the purpose of the project, such as improving public spaces, providing education, or supporting local"
+        ]
+      },
+      "E": {
+        "first_text_median_ms": 5759.11,
+        "latency_median_ms": 11877.53,
+        "answers": [
+          "Planning a community project requires careful thought and organization. Here are three useful steps to ensure your project is successful:\n\n---\n\n### **1. Define Clear Goals and Objectives**\n- **Why it's important:** A clear plan helps everyone understand what the project aims to achieve.\n- **What to do:** \n  - Identify",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to ensure your project is successful:\n\n---\n\n### **1. Define Clear Goals and Objectives**\n- **Why it's important:** A clear plan helps everyone understand what the project aims to achieve.\n- **What to do:** \n  - Identify",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to ensure your project is successful:\n\n---\n\n### **1. Define Clear Goals and Objectives**\n- **Why it's important:** A clear plan helps everyone understand what the project aims to achieve.\n- **What to do:** \n  - Identify"
+        ]
+      },
+      "F": {
+        "first_text_median_ms": 5994.44,
+        "latency_median_ms": 12128.79,
+        "answers": [
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you succeed, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Plan the Budget (Cost)**\n- **Estimate Costs**: Calculate all expenses, including materials, labor",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you succeed, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Plan the Budget (Cost)**\n- **Estimate Costs**: Calculate all expenses, including materials, labor",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you succeed, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Plan the Budget (Cost)**\n- **Estimate Costs**: Calculate all expenses, including materials, labor"
+        ]
+      },
+      "G": {
+        "first_text_median_ms": 6212.03,
+        "latency_median_ms": 12202.72,
+        "answers": [
+          "Planning a community project requires careful consideration of several key factors. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Define the Purpose and Scope**\n- **Cost**: Determine the project\u2019s goals",
+          "Planning a community project requires careful consideration of several key factors. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Define the Purpose and Scope**\n- **Cost**: Determine the project\u2019s goals",
+          "Planning a community project requires careful consideration of several key factors. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Define the Purpose and Scope**\n- **Cost**: Determine the project\u2019s goals"
+        ]
+      },
+      "H": {
+        "first_text_median_ms": 6456.81,
+        "latency_median_ms": 12287.44,
+        "answers": [
+          "Planning a community project requires careful consideration of several key factors. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Define the Purpose and Scope**\n- **Cost**: Determine the project\u2019s goals",
+          "Planning a community project requires careful consideration of several key factors. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Define the Purpose and Scope**\n- **Cost**: Determine the project\u2019s goals",
+          "Planning a community project requires careful consideration of several key factors. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Define the Purpose and Scope**\n- **Cost**: Determine the project\u2019s goals"
+        ]
+      },
+      "I": {
+        "first_text_median_ms": 11012.22,
+        "latency_median_ms": 16622.62,
+        "answers": [
+          "Planning a community project is a critical step to ensure success. Here are **three useful steps** for planning, with details on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Define the Purpose and Scope**\n**Why it matters:**  \nA clear purpose and scope guide",
+          "Planning a community project is a critical step to ensure success. Here are **three useful steps** for planning, with details on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Define the Purpose and Scope**\n**Why it matters:**  \nA clear purpose and scope guide",
+          "Planning a community project is a critical step to ensure success. Here are **three useful steps** for planning, with details on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Define the Purpose and Scope**\n**Why it matters:**  \nA clear purpose and scope guide"
+        ]
+      },
+      "J": {
+        "first_text_median_ms": 11241.76,
+        "latency_median_ms": 16699.03,
+        "answers": [
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you succeed:\n\n---\n\n### **1. Define the Purpose and Goals**\n- **Why is the project needed?** Identify the problem or need the community is addressing. For example, improving public spaces, providing education, or supporting local businesses",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you succeed:\n\n---\n\n### **1. Define the Purpose and Goals**\n- **Why is the project needed?** Identify the problem or need the community is addressing. For example, improving public spaces, providing education, or supporting local businesses",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you succeed:\n\n---\n\n### **1. Define the Purpose and Goals**\n- **Why is the project needed?** Identify the problem or need the community is addressing. For example, improving public spaces, providing education, or supporting local businesses"
+        ]
+      },
+      "K": {
+        "first_text_median_ms": 11478.37,
+        "latency_median_ms": 16778.04,
+        "answers": [
+          "Planning a community project requires careful thought and organization. Here are three useful steps to ensure your project is successful:\n\n---\n\n### **1. Define Clear Objectives and Scope**\n- **Why it matters:** A clear plan helps you focus your efforts and avoid wasting time on irrelevant tasks.\n- **What to do:** \n ",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to ensure your project is successful:\n\n---\n\n### **1. Define Clear Objectives and Scope**\n- **Why it matters:** A clear plan helps you focus your efforts and avoid wasting time on irrelevant tasks.\n- **What to do:** \n ",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to ensure your project is successful:\n\n---\n\n### **1. Define Clear Objectives and Scope**\n- **Why it matters:** A clear plan helps you focus your efforts and avoid wasting time on irrelevant tasks.\n- **What to do:** \n "
+        ]
+      },
+      "L": {
+        "first_text_median_ms": 11733.62,
+        "latency_median_ms": 16856.74,
+        "answers": [
+          "Planning a community project requires careful thought and organization. Here are three useful steps to ensure your project is successful:\n\n---\n\n### **1. Define Clear Objectives and Goals**\n- **Why it matters:** A clear plan helps you focus your efforts and measure success.\n- **What to do:** \n  - Identify the **",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to ensure your project is successful:\n\n---\n\n### **1. Define Clear Objectives and Goals**\n- **Why it matters:** A clear plan helps you focus your efforts and measure success.\n- **What to do:** \n  - Identify the **",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to ensure your project is successful:\n\n---\n\n### **1. Define Clear Objectives and Goals**\n- **Why it matters:** A clear plan helps you focus your efforts and measure success.\n- **What to do:** \n  - Identify the **"
+        ]
+      },
+      "M": {
+        "first_text_median_ms": 11995.74,
+        "latency_median_ms": 16935.04,
+        "answers": [
+          "Planning a community project requires careful consideration of several key factors. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the",
+          "Planning a community project requires careful consideration of several key factors. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the",
+          "Planning a community project requires careful consideration of several key factors. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the"
+        ]
+      },
+      "N": {
+        "first_text_median_ms": 12062.1,
+        "latency_median_ms": 17004.24,
+        "answers": [
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **"
+        ]
+      },
+      "O": {
+        "first_text_median_ms": 12151.52,
+        "latency_median_ms": 17083.93,
+        "answers": [
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **"
+        ]
+      },
+      "P": {
+        "first_text_median_ms": 12232.56,
+        "latency_median_ms": 17155.69,
+        "answers": [
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **"
+        ]
+      },
+      "Q": {
+        "first_text_median_ms": 16559.48,
+        "latency_median_ms": 21230.54,
+        "answers": [
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **"
+        ]
+      },
+      "R": {
+        "first_text_median_ms": 16640.62,
+        "latency_median_ms": 21303.91,
+        "answers": [
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Determine the **goals** and",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Determine the **goals** and",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Determine the **goals** and"
+        ]
+      },
+      "S": {
+        "first_text_median_ms": 16716.71,
+        "latency_median_ms": 21349.43,
+        "answers": [
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **goal",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **goal",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **goal"
+        ]
+      },
+      "T": {
+        "first_text_median_ms": 16796.0,
+        "latency_median_ms": 21402.47,
+        "answers": [
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **"
+        ]
+      },
+      "U": {
+        "first_text_median_ms": 16868.9,
+        "latency_median_ms": 21438.75,
+        "answers": [
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **"
+        ]
+      },
+      "V": {
+        "first_text_median_ms": 16939.11,
+        "latency_median_ms": 21467.89,
+        "answers": [
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **"
+        ]
+      },
+      "W": {
+        "first_text_median_ms": 17018.66,
+        "latency_median_ms": 21515.6,
+        "answers": [
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **"
+        ]
+      },
+      "X": {
+        "first_text_median_ms": 17076.96,
+        "latency_median_ms": 21543.11,
+        "answers": [
+          "Planning a community project requires careful consideration of several key factors to ensure success. Here are three useful steps for planning a community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining",
+          "Planning a community project requires careful consideration of several key factors to ensure success. Here are three useful steps for planning a community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining",
+          "Planning a community project requires careful consideration of several key factors to ensure success. Here are three useful steps for planning a community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining"
+        ]
+      },
+      "Y": {
+        "first_text_median_ms": 21163.65,
+        "latency_median_ms": 24260.6,
+        "answers": [
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **"
+        ]
+      }
+    },
+    "skip": {
+      "A": {
+        "first_text_median_ms": 4793.46,
+        "latency_median_ms": 9943.73,
+        "answers": [
+          "Planning a community project is a critical step to ensure success. Here are **three useful steps** for planning, with detailed explanations on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Define the Purpose and Scope**\n**Why it matters:**  \nA clear purpose and scope",
+          "Planning a community project is a critical step to ensure success. Here are **three useful steps** for planning, with detailed explanations on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Define the Purpose and Scope**\n**Why it matters:**  \nA clear purpose and scope",
+          "Planning a community project is a critical step to ensure success. Here are **three useful steps** for planning, with detailed explanations on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Define the Purpose and Scope**\n**Why it matters:**  \nA clear purpose and scope"
+        ]
+      },
+      "B": {
+        "first_text_median_ms": 5141.57,
+        "latency_median_ms": 10183.14,
+        "answers": [
+          "Planning a community project requires careful consideration of several key factors. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the",
+          "Planning a community project requires careful consideration of several key factors. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the",
+          "Planning a community project requires careful consideration of several key factors. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the"
+        ]
+      },
+      "C": {
+        "first_text_median_ms": 5398.5,
+        "latency_median_ms": 10509.05,
+        "answers": [
+          "Planning a community project requires careful thought and organization. Here are three useful steps to ensure your project is successful:\n\n---\n\n### **1. Define Clear Goals and Objectives**\n- **Why it's important:** A clear plan helps everyone understand what the project aims to achieve.\n- **How to do it:** \n  -",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to ensure your project is successful:\n\n---\n\n### **1. Define Clear Goals and Objectives**\n- **Why it's important:** A clear plan helps everyone understand what the project aims to achieve.\n- **How to do it:** \n  -",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to ensure your project is successful:\n\n---\n\n### **1. Define Clear Goals and Objectives**\n- **Why it's important:** A clear plan helps everyone understand what the project aims to achieve.\n- **How to do it:** \n  -"
+        ]
+      },
+      "D": {
+        "first_text_median_ms": 10146.2,
+        "latency_median_ms": 15271.43,
+        "answers": [
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you succeed, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Plan the Budget (Cost)**\n- **Estimate Costs**: Identify all expenses, such as materials,",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you succeed, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Plan the Budget (Cost)**\n- **Estimate Costs**: Identify all expenses, such as materials,",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you succeed, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Plan the Budget (Cost)**\n- **Estimate Costs**: Identify all expenses, such as materials,"
+        ]
+      },
+      "E": {
+        "first_text_median_ms": 10477.2,
+        "latency_median_ms": 15516.14,
+        "answers": [
+          "Planning a community project requires careful thought and organization. Here are three useful steps to ensure your project is successful:\n\n---\n\n### **1. Define Clear Goals and Objectives**\n- **Why it's important:** A clear plan helps everyone understand what the project aims to achieve.\n- **What to do:** \n  - Identify",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to ensure your project is successful:\n\n---\n\n### **1. Define Clear Goals and Objectives**\n- **Why it's important:** A clear plan helps everyone understand what the project aims to achieve.\n- **What to do:** \n  - Identify",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to ensure your project is successful:\n\n---\n\n### **1. Define Clear Goals and Objectives**\n- **Why it's important:** A clear plan helps everyone understand what the project aims to achieve.\n- **What to do:** \n  - Identify"
+        ]
+      },
+      "F": {
+        "first_text_median_ms": 10723.88,
+        "latency_median_ms": 15743.27,
+        "answers": [
+          "Planning a community project requires careful thought and organization. Here are three useful steps to ensure your project is successful:\n\n---\n\n### **1. Define Clear Objectives and Goals**\n- **Why it matters:** A clear plan helps you focus your efforts and measure success.\n- **What to do:** \n  - Identify the **",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to ensure your project is successful:\n\n---\n\n### **1. Define Clear Objectives and Goals**\n- **Why it matters:** A clear plan helps you focus your efforts and measure success.\n- **What to do:** \n  - Identify the **",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to ensure your project is successful:\n\n---\n\n### **1. Define Clear Objectives and Goals**\n- **Why it matters:** A clear plan helps you focus your efforts and measure success.\n- **What to do:** \n  - Identify the **"
+        ]
+      },
+      "G": {
+        "first_text_median_ms": 15475.58,
+        "latency_median_ms": 21349.22,
+        "answers": [
+          "Planning a community project requires careful consideration of several key factors. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the",
+          "Planning a community project requires careful consideration of several key factors. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the",
+          "Planning a community project requires careful consideration of several key factors. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the"
+        ]
+      },
+      "H": {
+        "first_text_median_ms": 15697.83,
+        "latency_median_ms": 21430.97,
+        "answers": [
+          "Planning a community project requires careful consideration of several key factors. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the",
+          "Planning a community project requires careful consideration of several key factors. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the",
+          "Planning a community project requires careful consideration of several key factors. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the"
+        ]
+      },
+      "I": {
+        "first_text_median_ms": 15926.22,
+        "latency_median_ms": 21486.3,
+        "answers": [
+          "Planning a community project is a crucial step to ensure success. Here are **three useful steps** for planning, with details on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Define the Purpose and Scope**\n**Why it matters:**  \nA clear purpose and scope guide",
+          "Planning a community project is a crucial step to ensure success. Here are **three useful steps** for planning, with details on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Define the Purpose and Scope**\n**Why it matters:**  \nA clear purpose and scope guide",
+          "Planning a community project is a crucial step to ensure success. Here are **three useful steps** for planning, with details on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Define the Purpose and Scope**\n**Why it matters:**  \nA clear purpose and scope guide"
+        ]
+      },
+      "J": {
+        "first_text_median_ms": 16154.25,
+        "latency_median_ms": 21535.21,
+        "answers": [
+          "Planning a community project requires careful thought and organization. Here are three useful steps to ensure your project is successful:\n\n---\n\n### **1. Define Clear Goals and Objectives**\n- **Why it's important:** A clear plan helps you focus your efforts and measure success.\n- **What to do:** \n  - Identify the",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to ensure your project is successful:\n\n---\n\n### **1. Define Clear Goals and Objectives**\n- **Why it's important:** A clear plan helps you focus your efforts and measure success.\n- **What to do:** \n  - Identify the",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to ensure your project is successful:\n\n---\n\n### **1. Define Clear Goals and Objectives**\n- **Why it's important:** A clear plan helps you focus your efforts and measure success.\n- **What to do:** \n  - Identify the"
+        ]
+      },
+      "K": {
+        "first_text_median_ms": 16378.38,
+        "latency_median_ms": 21568.43,
+        "answers": [
+          "Planning a community project requires careful thought and organization. Here are three useful steps to ensure your project is successful:\n\n---\n\n### **1. Define Clear Objectives and Scope**\n- **Why it matters:** A clear plan helps you focus your efforts and avoid wasting time on irrelevant tasks.\n- **What to do:** \n ",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to ensure your project is successful:\n\n---\n\n### **1. Define Clear Objectives and Scope**\n- **Why it matters:** A clear plan helps you focus your efforts and avoid wasting time on irrelevant tasks.\n- **What to do:** \n ",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to ensure your project is successful:\n\n---\n\n### **1. Define Clear Objectives and Scope**\n- **Why it matters:** A clear plan helps you focus your efforts and avoid wasting time on irrelevant tasks.\n- **What to do:** \n "
+        ]
+      },
+      "L": {
+        "first_text_median_ms": 16605.89,
+        "latency_median_ms": 21614.14,
+        "answers": [
+          "Planning a community project requires careful thought and organization. Here are three useful steps to ensure your project is successful:\n\n---\n\n### **1. Define Clear Objectives and Goals**\n- **Why it matters:** A clear plan helps you focus your efforts and measure success.\n- **What to do:** \n  - Identify the **",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to ensure your project is successful:\n\n---\n\n### **1. Define Clear Objectives and Goals**\n- **Why it matters:** A clear plan helps you focus your efforts and measure success.\n- **What to do:** \n  - Identify the **",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to ensure your project is successful:\n\n---\n\n### **1. Define Clear Objectives and Goals**\n- **Why it matters:** A clear plan helps you focus your efforts and measure success.\n- **What to do:** \n  - Identify the **"
+        ]
+      },
+      "M": {
+        "first_text_median_ms": 16870.82,
+        "latency_median_ms": 21651.16,
+        "answers": [
+          "Planning a community project requires careful consideration of several key factors. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the",
+          "Planning a community project requires careful consideration of several key factors. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the",
+          "Planning a community project requires careful consideration of several key factors. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the"
+        ]
+      },
+      "N": {
+        "first_text_median_ms": 4898.88,
+        "latency_median_ms": 9944.36,
+        "answers": [
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **"
+        ]
+      },
+      "O": {
+        "first_text_median_ms": 4874.59,
+        "latency_median_ms": 9923.92,
+        "answers": [
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **"
+        ]
+      },
+      "P": {
+        "first_text_median_ms": 4857.02,
+        "latency_median_ms": 9908.67,
+        "answers": [
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **"
+        ]
+      },
+      "Q": {
+        "first_text_median_ms": 4838.6,
+        "latency_median_ms": 9889.19,
+        "answers": [
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **"
+        ]
+      },
+      "R": {
+        "first_text_median_ms": 5103.88,
+        "latency_median_ms": 10214.52,
+        "answers": [
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **"
+        ]
+      },
+      "S": {
+        "first_text_median_ms": 10195.04,
+        "latency_median_ms": 15225.8,
+        "answers": [
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **goal",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **goal",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### **1. Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **goal"
+        ]
+      },
+      "T": {
+        "first_text_median_ms": 10171.52,
+        "latency_median_ms": 15216.67,
+        "answers": [
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **"
+        ]
+      },
+      "U": {
+        "first_text_median_ms": 10156.23,
+        "latency_median_ms": 15198.62,
+        "answers": [
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **"
+        ]
+      },
+      "V": {
+        "first_text_median_ms": 10132.8,
+        "latency_median_ms": 15176.22,
+        "answers": [
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **"
+        ]
+      },
+      "W": {
+        "first_text_median_ms": 10381.48,
+        "latency_median_ms": 15402.64,
+        "answers": [
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **"
+        ]
+      },
+      "X": {
+        "first_text_median_ms": 16648.74,
+        "latency_median_ms": 21429.45,
+        "answers": [
+          "Planning a community project requires careful consideration of several key factors to ensure success. Here are three useful steps for planning a community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining",
+          "Planning a community project requires careful consideration of several key factors to ensure success. Here are three useful steps for planning a community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining",
+          "Planning a community project requires careful consideration of several key factors to ensure success. Here are three useful steps for planning a community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining"
+        ]
+      },
+      "Y": {
+        "first_text_median_ms": 21096.89,
+        "latency_median_ms": 24182.04,
+        "answers": [
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **",
+          "Planning a community project requires careful thought and organization. Here are three useful steps to help you plan a successful community project, focusing on **cost**, **practical work**, and **how to measure progress**:\n\n---\n\n### 1. **Define the Purpose and Scope**\n- **Cost**: Start by clearly defining the **"
+        ]
+      }
+    }
+  },
+  "manifests": {
+    "original": {
+      "model": "Qwen/Qwen3-1.7B",
+      "system": "You are a helpful assistant. Explain clearly and concisely.",
+      "warmup": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. \nSummarize this.",
+      "blockers": {
+        "H1": "For workshop number 1, write a detailed numbered list of forty different household objects. For each object explain its purpose and how it is made. Continue the list without an introduction.",
+        "H2": "For workshop number 2, write a detailed numbered list of forty different household objects. For each object explain its purpose and how it is made. Continue the list without an introduction.",
+        "H3": "For workshop number 3, write a detailed numbered list of forty different household objects. For each object explain its purpose and how it is made. Continue the list without an introduction."
+      },
+      "candidates": {
+        "A": "A coastal research team is studying damage to coral reefs. They record water temperature, rainfall, salinity, and the number of fish at several sites. Volunteers photograph the same reef sections every month. Some sites are close to busy harbours, while others are protected from boats and fishing. The team has a limited budget and wants reliable comparisons across locations. Explain how they should organize the observations and avoid misleading conclusions.",
+        "B": "A city transport team is reviewing bus reliability. Drivers report delays at crowded junctions and passengers report missed connections. The team has arrival records from stops, traffic counts, and anonymous passenger surveys. Some routes serve schools, others serve hospitals, and several share a congested bridge. The city can adjust schedules and stop locations but cannot purchase new buses this year. Explain how the team should choose improvements and measure their effects.",
+        "C": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. \nSuggest three improvements to the reservation process.",
+        "D": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. \nSuggest three ways to reduce uncollected reservations.",
+        "E": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. A separate branch instead uses paper cards and telephone calls. It has two volunteers each afternoon and no online member accounts. Suggest three practical improvements for this branch.",
+        "F": "A beekeeper is tracking how bees pollinate flowering plants. The team has limited funding and wants a practical plan. It can collect observations weekly but cannot hire more staff. Explain three useful steps, how to compare the results, and one common mistake to avoid when interpreting the observations.",
+        "G": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. \nSuggest three improvements to reservation reminder emails.",
+        "H": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. A separate branch uses paper cards and telephone calls. It has two volunteers each afternoon and no online accounts. Explain how volunteers could organize the paper waiting list.",
+        "I": "Astronomers are observing gas clouds where new stars are forming. The team has limited funding and wants a practical plan. It can collect observations weekly but cannot hire more staff. Explain three useful steps, how to compare the results, and one common mistake to avoid when interpreting the observations.",
+        "J": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. \nExplain how staff should handle cancelled reservations.",
+        "K": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. A separate branch uses paper cards and telephone calls. It has two volunteers each afternoon and no online accounts. Suggest three ways to improve telephone reminders.",
+        "L": "An apartment building wants to turn kitchen scraps into compost. The team has limited funding and wants a practical plan. It can collect observations weekly but cannot hire more staff. Explain three useful steps, how to compare the results, and one common mistake to avoid when interpreting the observations.",
+        "M": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. \nSuggest three useful weekly measurements for the library.",
+        "N": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. A separate branch uses paper cards and telephone calls. It has two volunteers each afternoon and no online accounts. Explain how volunteers should record cancellations.",
+        "O": "Geologists are studying earthquakes along an active fault line. The team has limited funding and wants a practical plan. It can collect observations weekly but cannot hire more staff. Explain three useful steps, how to compare the results, and one common mistake to avoid when interpreting the observations.",
+        "P": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. \nExplain how the library can support members without internet access.",
+        "Q": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. A separate branch uses paper cards and telephone calls. It has two volunteers each afternoon and no online accounts. Suggest three ways to make collection times convenient.",
+        "R": "A school science club is comparing rechargeable battery designs. The team has limited funding and wants a practical plan. It can collect observations weekly but cannot hire more staff. Explain three useful steps, how to compare the results, and one common mistake to avoid when interpreting the observations.",
+        "S": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. \nSuggest three ways to make collection deadlines clearer.",
+        "T": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. A separate branch uses paper cards and telephone calls. It has two volunteers each afternoon and no online accounts. Explain how staff can prevent duplicate paper reservations.",
+        "U": "A village is choosing water filters for its community buildings. The team has limited funding and wants a practical plan. It can collect observations weekly but cannot hire more staff. Explain three useful steps, how to compare the results, and one common mistake to avoid when interpreting the observations.",
+        "V": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. \nExplain how staff can investigate repeated collection delays.",
+        "W": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. A separate branch uses paper cards and telephone calls. It has two volunteers each afternoon and no online accounts. Suggest simple measurements for the branch to review weekly.",
+        "X": "Traffic planners are investigating congestion at a busy crossroads. The team has limited funding and wants a practical plan. It can collect observations weekly but cannot hire more staff. Explain three useful steps, how to compare the results, and one common mistake to avoid when interpreting the observations.",
+        "Y": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. \nSuggest a simple plan to evaluate changes to the service."
+      },
+      "candidate_order": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H",
+        "I",
+        "J",
+        "K",
+        "L",
+        "M",
+        "N",
+        "O",
+        "P",
+        "Q",
+        "R",
+        "S",
+        "T",
+        "U",
+        "V",
+        "W",
+        "X",
+        "Y"
+      ],
+      "candidate_interval_ms": 20.0,
+      "candidate_output_tokens": 64,
+      "blocker_output_tokens": 128,
+      "ignore_eos": true,
+      "maximum_client_concurrency": 28
+    },
+    "targeted": {
+      "model": "Qwen/Qwen3-1.7B",
+      "system": "You are a helpful assistant. Explain clearly and concisely.",
+      "warmup": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. \nSummarize this.",
+      "blockers": {
+        "H1": "For workshop number 1, write a detailed numbered list of forty different household objects. For each object explain its purpose and how it is made. Continue the list without an introduction.",
+        "H2": "For workshop number 2, write a detailed numbered list of forty different household objects. For each object explain its purpose and how it is made. Continue the list without an introduction.",
+        "H3": "For workshop number 3, write a detailed numbered list of forty different household objects. For each object explain its purpose and how it is made. Continue the list without an introduction.",
+        "H4": "For workshop number 4, write a detailed numbered list of forty different household objects. For each object explain its purpose and how it is made. Continue the list without an introduction.",
+        "H5": "For workshop number 5, write a detailed numbered list of forty different household objects. For each object explain its purpose and how it is made. Continue the list without an introduction.",
+        "H6": "For workshop number 6, write a detailed numbered list of forty different household objects. For each object explain its purpose and how it is made. Continue the list without an introduction.",
+        "H7": "For workshop number 7, write a detailed numbered list of forty different household objects. For each object explain its purpose and how it is made. Continue the list without an introduction.",
+        "H8": "For workshop number 8, write a detailed numbered list of forty different household objects. For each object explain its purpose and how it is made. Continue the list without an introduction."
+      },
+      "candidates": {
+        "A": "Case A: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+        "B": "Case B: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+        "C": "Case C: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+        "D": "Case D: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+        "E": "Case E: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+        "F": "Case F: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+        "G": "Case G: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+        "H": "Case H: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+        "I": "Case I: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+        "J": "Case J: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+        "K": "Case K: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+        "L": "Case L: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+        "M": "Case M: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail",
+        "N": "Case N: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail",
+        "O": "Case O: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail",
+        "P": "Case P: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail",
+        "Q": "Case Q: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail",
+        "R": "Case R: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail",
+        "S": "Case S: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail",
+        "T": "Case T: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail",
+        "U": "Case U: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail",
+        "V": "Case V: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail",
+        "W": "Case W: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail",
+        "X": "Case X: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail",
+        "Y": "Case Y: Explain three useful steps for planning a community project. Consider cost, practical work, and how to measure progress. detail detail detail detail detail detail detail detail detail"
+      },
+      "candidate_order": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H",
+        "I",
+        "J",
+        "K",
+        "L",
+        "M",
+        "N",
+        "O",
+        "P",
+        "Q",
+        "R",
+        "S",
+        "T",
+        "U",
+        "V",
+        "W",
+        "X",
+        "Y"
+      ],
+      "candidate_interval_ms": 20.0,
+      "candidate_output_tokens": 64,
+      "blocker_output_tokens": 64,
+      "ignore_eos": true,
+      "maximum_client_concurrency": 33
+    }
+  },
+  "replication_provenance": {
+    "model": "Qwen/Qwen3-1.7B",
+    "model_revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e",
+    "started": "2026-10-22T21:25:47.037534",
+    "source_checkpoint": "e997aba05543a127cb09d8a4c3b917f307357807",
+    "implementation_mode": "reference for experiments01-06; reference/incremental in10",
+    "complete": false
+  },
+  "original_summary": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/skip-continue/batches-20261022-221940/summary.json"
+}
