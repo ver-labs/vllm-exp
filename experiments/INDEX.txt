@@ -69,7 +69,13 @@ Experiment registry
  40 fresh-server runs, same tokens/offsets/configurations and cached counts.
  Separate per-offset comparisons, frozen summaries and raw checksums saved.
 
-Current experiment branch: study/experiment-11-partial-threshold in both repositories.
+12-concurrent-partial/ : mixed64-512-token prompts,16-64 output tokens,
+                       48 requests,4/12 clients and4 running slots on1.7B.
+                       Stock, unrestricted and minimum8,24 fresh-server runs.
+                       Throughput, queue/copy checks, tails and paired timings
+                       saved. See RESULTS.txt, PLAN.txt and evidence/.
+
+Current experiment branch: study/experiment-12-concurrent-partial in both repositories.
 Nested vLLM source checkpoint:490d80d. Experiment09 uses pinned Qwen3-0.6B and Qwen3-1.7B.
 Completed code, plans, result summaries, CSV evidence and SHA256 inventories
 are saved in local Git checkpoints. Large raw logs/requests remain under

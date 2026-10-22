@@ -1,0 +1,25 @@
+Experiment12: mixed-length concurrent partial reuse
+
+Pinned Qwen3-1.7B70d244cc86ccca08cf5af4e1e306ecf908b1ad5e, native Metal.
+Compare stock16-token matching, unrestricted1-token,1-token minimum8.
+Source unchanged490d80d; root base5e3c882. Incremental publishing on fine modes.
+FCFS synchronous chunked prefill, stock eviction, no other scheduling policy.
+Physical16-token pages,256 pages, context768,128 token budget,4 running slots.
+48 fixed requests:16 exact-repeat,16 last-block divergence,16 unrelated;
+prompt lengths64/128/256/512 and output limits16/32/64 balanced by family.
+Sixteen completed one-output source requests seed document cache before batch.
+Seed cost reported separately; setup excluded from timed batch, no resets within
+batch. Eviction is possible; no preemption expected with4 running slots.
+Client closed-loop concurrency4 and12, fixed shuffled submission order.
+TTFT/total latency start on actual HTTP send, exclude executor waiting; batch
+time includes whole submission queue. Completion changes replacement arrivals.
+Temperature0, seed0, ignore EOS,1728 timed output tokens per run.
+One traced diagnostic +3 untraced timing rounds per variant/concurrency:24 runs.
+Rotate all3 variants across rounds. Collect throughput, TTFT/total median/p95,
+cohort/length breakdowns, cached tokens, client peak inflight, answer agreement.
+Trace must confirm >=2 running, queued requests at12 clients, API cache hits
+match lookups, copies match fractional hits, zero invalid eviction refs.
+Do not require identical cached hits across rounds: concurrent closed-loop
+arrivals and eviction can change cache availability. All misses are recorded.
+Synthetic warm-cache mix, not production traffic; only3 rounds and one model.
+Reproduce: .venv/bin/python src/run_concurrent_partial.py

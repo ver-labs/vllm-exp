@@ -1,0 +1,147 @@
+Experiment12: mixed-length concurrent partial reuse
+=================================================================
+
+Qwen3-1.7B, pinned70d244cc86ccca08cf5af4e1e306ecf908b1ad5e, native Metal.
+Source policy unchanged490d80d; all modes FCFS, synchronous chunked prefill.
+Stock16 matching versus exact one-token matching, minimum0 or8; stock eviction.
+256 physical16-token pages, context768, batch128, four running slots.
+48 requests,16 each of exact-repeat, interior-divergence and unrelated cohorts.
+Prompt lengths64/128/256/512, generated lengths16/32/64,1728 outputs/batch.
+16 completed source prompts seed cache. Seeding time is separate, not in batch.
+Three untraced fresh-server rounds and one diagnostic per policy/concurrency.
+Client closed-loop concurrency4 and12; identical fixed shuffled submission order.
+Replacement arrivals depend on completion and differ as policies perform differently.
+Client latency excludes time waiting in executor; full batch duration includes it.
+This is a synthetic warm-cache workload with two-thirds related requests, not
+a representative production trace. One model, one cache capacity and three rounds.
+
+Mechanism validation
+-----------------------------------------------------------------
+c4/stock: {"max_running": 4, "max_waiting": 3, "preemptions": 0, "cached_evictions": 558, "invalid_eviction_refs": 0, "copies": 0, "expected_copies": 0, "lookup_matches_api": true}
+c4/partial: {"max_running": 4, "max_waiting": 3, "preemptions": 0, "cached_evictions": 554, "invalid_eviction_refs": 0, "copies": 42, "expected_copies": 42, "lookup_matches_api": true}
+c4/minimum8: {"max_running": 4, "max_waiting": 3, "preemptions": 0, "cached_evictions": 564, "invalid_eviction_refs": 0, "copies": 6, "expected_copies": 6, "lookup_matches_api": true}
+c12/stock: {"max_running": 4, "max_waiting": 11, "preemptions": 0, "cached_evictions": 557, "invalid_eviction_refs": 0, "copies": 0, "expected_copies": 0, "lookup_matches_api": true}
+c12/partial: {"max_running": 4, "max_waiting": 11, "preemptions": 0, "cached_evictions": 548, "invalid_eviction_refs": 0, "copies": 42, "expected_copies": 42, "lookup_matches_api": true}
+c12/minimum8: {"max_running": 4, "max_waiting": 11, "preemptions": 0, "cached_evictions": 561, "invalid_eviction_refs": 0, "copies": 6, "expected_copies": 6, "lookup_matches_api": true}
+
+Client concurrency4
+-----------------------------------------------------------------
+Metric                                  Stock     Partial1    Minimum8
+Batch seconds                             43.370      41.868      41.889
+Output tokens/s                           39.843      41.273      41.252
+Requests/s                                 1.107       1.146       1.146
+Median first text ms                     460.940     415.497     361.412
+p95 first text ms                       1108.366    1108.788    1111.381
+Median request ms                       3047.324    2883.184    2856.973
+p95 request ms                          6492.250    6322.744    6111.416
+stock batch durations ms: [43370.184416882694, 43720.34366708249, 41444.9591669254]
+stock cached tokens/run: [3328, 3328, 3296]
+stock seed wall ms (not timed): [4881.683625280857, 4457.562334369868, 4032.715708948672]
+stock paired batch changes versus stock (% negative=faster): [0.0, 0.0, 0.0]
+stock exact answers matching stock: [48, 48, 48]/48
+partial batch durations ms: [42367.931958287954, 39389.797375071794, 41867.81912529841]
+partial cached tokens/run: [3569, 3475, 3556]
+partial seed wall ms (not timed): [4480.922999791801, 4060.1893328130245, 4597.046334296465]
+partial paired batch changes versus stock (% negative=faster): [-2.3109250561650696, -9.90510579007916, 1.0202928579803539]
+partial exact answers matching stock: [48, 48, 48]/48
+minimum8 batch durations ms: [41901.383250020444, 41889.229541644454, 40235.23937538266]
+minimum8 cached tokens/run: [3356, 3372, 3324]
+minimum8 seed wall ms (not timed): [4737.544875126332, 3669.518416747451, 4360.805917065591]
+minimum8 paired batch changes versus stock (% negative=faster): [-3.386661105112776, -4.1882427534912114, -2.918858688388193]
+minimum8 exact answers matching stock: [48, 48, 48]/48
+
+Cohort median first-text / total request ms (median over3 run medians):
+repeat
+  stock: 356.943 / 2842.473; cached totals [1648, 1648, 1648]
+  partial: 259.035 / 2786.786; cached totals [1745, 1745, 1745]
+  minimum8: 329.607 / 2721.950; cached totals [1673, 1673, 1673]
+partial
+  stock: 380.118 / 3038.591; cached totals [1680, 1680, 1648]
+  partial: 448.913 / 2841.986; cached totals [1759, 1665, 1746]
+  minimum8: 288.023 / 2961.957; cached totals [1683, 1699, 1651]
+unrelated
+  stock: 565.868 / 3083.741; cached totals [0, 0, 0]
+  partial: 444.933 / 2905.343; cached totals [65, 65, 65]
+  minimum8: 477.676 / 2940.982; cached totals [0, 0, 0]
+
+Prompt-length latency breakdowns are in evidence/aggregate.json.
+
+Client concurrency12
+-----------------------------------------------------------------
+Metric                                  Stock     Partial1    Minimum8
+Batch seconds                             41.803      41.009      40.966
+Output tokens/s                           41.336      42.137      42.181
+Requests/s                                 1.148       1.170       1.172
+Median first text ms                    6669.956    6639.823    6785.293
+p95 first text ms                       9356.799    9274.235    9158.518
+Median request ms                       9487.587    9458.690    9519.204
+p95 request ms                         13758.734   14420.928   13761.252
+stock batch durations ms: [41803.356458898634, 41933.26404225081, 39104.27549993619]
+stock cached tokens/run: [3360, 3408, 3328]
+stock seed wall ms (not timed): [4565.623000264168, 4064.1956659965217, 4290.897999890149]
+stock paired batch changes versus stock (% negative=faster): [0.0, 0.0, 0.0]
+stock exact answers matching stock: [48, 48, 48]/48
+partial batch durations ms: [39646.39591658488, 41183.90483269468, 41008.864915929735]
+partial cached tokens/run: [3599, 3601, 3521]
+partial seed wall ms (not timed): [4559.8899172618985, 5765.31891617924, 4310.664750169963]
+partial paired batch changes versus stock (% negative=faster): [-5.159778364769574, -1.7870280949298323, 4.870540092212283]
+partial exact answers matching stock: [48, 48, 48]/48
+minimum8 batch durations ms: [41720.90549999848, 40819.917290937155, 40966.13574959338]
+minimum8 cached tokens/run: [3372, 3388, 3388]
+minimum8 seed wall ms (not timed): [4283.642583992332, 4271.634833887219, 4175.16191676259]
+minimum8 paired batch changes versus stock (% negative=faster): [-0.19723526023853744, -2.65504433471212, 4.7612702852920075]
+minimum8 exact answers matching stock: [48, 48, 48]/48
+
+Cohort median first-text / total request ms (median over3 run medians):
+repeat
+  stock: 6528.162 / 9792.625; cached totals [1632, 1744, 1648]
+  partial: 6533.158 / 9699.985; cached totals [1854, 1745, 1745]
+  minimum8: 6468.572 / 9623.038; cached totals [1673, 1673, 1689]
+partial
+  stock: 7368.928 / 10087.048; cached totals [1728, 1664, 1680]
+  partial: 7057.864 / 10171.354; cached totals [1680, 1791, 1711]
+  minimum8: 7286.781 / 10247.738; cached totals [1699, 1715, 1699]
+unrelated
+  stock: 6063.076 / 8456.257; cached totals [0, 0, 0]
+  partial: 6786.975 / 8910.358; cached totals [65, 65, 65]
+  minimum8: 5767.199 / 8335.459; cached totals [0, 0, 0]
+
+Prompt-length latency breakdowns are in evidence/aggregate.json.
+
+Interpretation limits
+-----------------------------------------------------------------
+Initial cache contents are seeded, but eviction and closed-loop arrivals affect
+which prefixes remain available. Do not require or assume equal cache-hit counts
+across runs. All diagnostic per-request lookup hits matched API usage.
+Copy counts match fractional prefix hits; all recorded evictions have zero refs.
+Diagnostics confirmed running overlap and scheduler waiting. Traces are excluded
+from timing comparisons. Output lengths are fixed, so throughput is comparable.
+Dense batching and longer decode can dilute a small prefill gain. Compare full
+completion time, throughput and tail latency, not isolated first-token wins.
+Three rounds are exploratory; per-round times, negative findings and answer
+agreement are preserved. Exact text disagreement is not a semantic-quality score.
+No new default threshold, scheduling policy or deployment was adopted.
+Reproduce:PLAN.txt. Raw logs are indexed by evidence/raw-sha256.json.
+
+Additional scope and quality notes
+-----------------------------------------------------------------
+All measured target answers matched stock exactly in every paired round.
+This does not independently score semantic quality. Prompt lengths, output
+limits and divergence offsets are fixed examples, not a fully crossed
+factorial design; cohort/length breakdowns are descriptive.
+Unrestricted and minimum8 had nearly identical group-median batch completion.
+At12 clients unrestricted p95 total latency increased about4.8%, despite a
+small batch/throughput gain; no across-the-board latency win is established.
+
+Observed outcome
+-----------------------------------------------------------------
+C4/partial: batch group-median ratio -3.46%; median TTFT -9.86%; p95 request -2.61%. Negative=faster. Paired batch faster in 2/3 rounds.
+C4/minimum8: batch group-median ratio -3.41%; median TTFT -21.59%; p95 request -5.87%. Negative=faster. Paired batch faster in 3/3 rounds.
+C12/partial: batch group-median ratio -1.90%; median TTFT -0.45%; p95 request +4.81%. Negative=faster. Paired batch faster in 2/3 rounds.
+C12/minimum8: batch group-median ratio -2.00%; median TTFT +1.73%; p95 request +0.02%. Negative=faster. Paired batch faster in 2/3 rounds.
+Cache capacity was deliberately fixed; substantial cache eviction can remove
+the interior block before a related request arrives. These measurements combine
+concurrency, mixed lengths, longer decoding and finite-cache effects; they do not
+isolate which of those factors changed the isolated-probe result.
+A roomier-cache control or open-loop arrival trace would be separate follow-ups.
+All evidence checksums verified; all experimental servers stopped.
