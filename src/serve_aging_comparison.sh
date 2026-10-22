@@ -19,13 +19,14 @@ export VLLM_LOGGING_LEVEL=INFO
 export VLLM_STUDY_TRACE=0
 export VLLM_STUDY_TRACE_STDOUT=0
 export VLLM_SERVER_DEV_MODE=0
-mkdir -p "results/aging-lfu/$profile/$policy"
-run_dir="$(mktemp -d "$experiment_root/results/aging-lfu/$profile/$policy/server-$mode-XXXXXX")"
+results_root="${STUDY_AGING_RESULTS_ROOT:-$experiment_root/results/aging-lfu}"
+mkdir -p "$results_root/$profile/$policy"
+run_dir="$(mktemp -d "$results_root/$profile/$policy/server-$mode-XXXXXX")"
 echo "Server results: $run_dir"
 export VLLM_STUDY_TRACE_DIR="$run_dir"
 if [ "$mode" = trace ]; then export VLLM_STUDY_TRACE=1; fi
 "$experiment_root/.venv/bin/vllm" serve "$STUDY_MODEL_PATH" \
-  --served-model-name Qwen/Qwen3-0.6B --host 127.0.0.1 --port 8001 --seed 0 \
+  --served-model-name "${STUDY_MODEL:-Qwen/Qwen3-0.6B}" --host 127.0.0.1 --port 8001 --seed 0 \
   --worker-cls auto --max-model-len 384 --max-num-seqs 1 \
   --max-num-batched-tokens 128 --block-size 16 --num-gpu-blocks-override 32 \
   --prefix-match-unit 16 --enable-prefix-caching --enable-chunked-prefill \

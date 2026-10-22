@@ -11,6 +11,11 @@ from huggingface_hub import snapshot_download
 from run_nonprefix_vllm_batches import run_one
 from run_prefix_batches import ROOT
 
+REVISIONS = {
+    "Qwen/Qwen3-0.6B": "c1899de289a04d12100db370d81485cdf75e47ca",
+    "Qwen/Qwen3-1.7B": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e",
+}
+
 POLICIES = ("vllm", "lfu", "aged_lfu")
 
 
@@ -46,27 +51,30 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--profile", choices=("shift", "stable"), required=True)
     parser.add_argument("--rounds", type=int, default=3)
+    parser.add_argument("--model", choices=tuple(REVISIONS), default="Qwen/Qwen3-0.6B")
     args = parser.parse_args()
     if args.rounds < 0:
         parser.error("rounds must be nonnegative")
-    os.environ["STUDY_MODEL"] = "Qwen/Qwen3-0.6B"
+    os.environ["STUDY_MODEL"] = args.model
     os.environ["STUDY_MODEL_PATH"] = snapshot_download(
         os.environ["STUDY_MODEL"],
-        revision="c1899de289a04d12100db370d81485cdf75e47ca",
+        revision=REVISIONS[args.model],
         local_files_only=True,
     )
     os.environ["STUDY_AGING_PROFILE"] = args.profile
-    folder = (
-        ROOT
-        / "results/aging-lfu"
-        / args.profile
-        / f"batches-{datetime.now():%Y%m%d-%H%M%S}"
-    )
+    results_root = ROOT / "results/aging-lfu"
+    if args.model != "Qwen/Qwen3-0.6B":
+        results_root /= args.model.replace("/", "--")
+    os.environ["STUDY_AGING_RESULTS_ROOT"] = str(results_root)
+    folder = results_root / args.profile / f"batches-{datetime.now():%Y%m%d-%H%M%S}"
     folder.mkdir(parents=True)
     path = folder / "summary.json"
     summary = dict(
         experiment="09-aging-lfu",
         profile=args.profile,
+        model=args.model,
+        model_revision=REVISIONS[args.model],
+        model_path=os.environ["STUDY_MODEL_PATH"],
         half_life_blocks=64,
         rounds=args.rounds,
         diagnostics=[],
@@ -98,6 +106,7 @@ def main():
                 path.write_text(json.dumps(summary, indent=2) + "\n")
         data = [load(r) for r in summary["diagnostics"] + summary["runs"]]
         assert all(d["manifest"] == data[0]["manifest"] for d in data)
+        assert data[0]["manifest"]["model"] == args.model
         assert all(d["valid_run"] for d in data)
         summary["manifest"] = data[0]["manifest"]
         if args.rounds:

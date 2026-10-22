@@ -1,0 +1,1160 @@
+{
+  "experiment": "09-aging-lfu",
+  "profile": "stable",
+  "model": "Qwen/Qwen3-1.7B",
+  "model_revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e",
+  "model_path": "/Users/nandanadileep/.cache/huggingface/hub/models--Qwen--Qwen3-1.7B/snapshots/70d244cc86ccca08cf5af4e1e306ecf908b1ad5e",
+  "half_life_blocks": 64,
+  "rounds": 3,
+  "diagnostics": [
+    {
+      "label": "diagnostic",
+      "probe": null,
+      "variant": "vllm",
+      "mode": "trace",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/batches-20261022-083209/diagnostic-vllm-trace.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/vllm/temporal-20261022-083235-277071.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/batches-20261022-083209/diagnostic-vllm-trace-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/batches-20261022-083209/diagnostic-vllm-trace-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/vllm/server-trace-UoDfar",
+      "candidate_summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 22088.58,
+        "output_tokens_per_second": 15.21,
+        "requests_per_second": 1.901,
+        "first_text_ms": {
+          "median": 173.1,
+          "p95_nearest_rank": 289.31
+        },
+        "total_ms": {
+          "median": 526.36,
+          "p95_nearest_rank": 633.56
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 22088.58,
+        "output_tokens_per_second": 15.21,
+        "requests_per_second": 1.901,
+        "first_text_ms": {
+          "median": 173.1,
+          "p95_nearest_rank": 289.31
+        },
+        "total_ms": {
+          "median": 526.36,
+          "p95_nearest_rank": 633.56
+        }
+      },
+      "trace_analysis": {
+        "eviction_policy": "vllm",
+        "half_life_blocks": null,
+        "decays": 0,
+        "epochs": [],
+        "preemptions": 0,
+        "evictions": 297,
+        "invalid_eviction_refs": 0,
+        "lookup_hits": {
+          "N00": 16,
+          "N01": 16,
+          "N02": 16,
+          "N03": 16,
+          "N04": 16,
+          "N05": 16,
+          "N06": 16,
+          "N07": 16,
+          "N08": 16,
+          "N09": 16,
+          "N10": 16,
+          "N11": 16,
+          "C1-T0": 16,
+          "C1-T1": 272,
+          "C1-T2": 272,
+          "C1-S0": 16,
+          "C1-S1": 16,
+          "C1-S2": 16,
+          "C1-S3": 16,
+          "C1-S4": 16,
+          "C1-S5": 16,
+          "C1-P": 16,
+          "C2-T0": 272,
+          "C2-T1": 272,
+          "C2-T2": 272,
+          "C2-S0": 16,
+          "C2-S1": 16,
+          "C2-S2": 16,
+          "C2-S3": 16,
+          "C2-S4": 16,
+          "C2-S5": 16,
+          "C2-P": 16,
+          "C3-T0": 272,
+          "C3-T1": 272,
+          "C3-T2": 272,
+          "C3-S0": 16,
+          "C3-S1": 16,
+          "C3-S2": 16,
+          "C3-S3": 16,
+          "C3-S4": 16,
+          "C3-S5": 16,
+          "C3-P": 16
+        }
+      },
+      "nonprefix_totals": {},
+      "sha256": "f03aaf19af4958569f2506c7de111e44869d8a16da3d4265c9b928cc116a8798",
+      "round": "diagnostic"
+    },
+    {
+      "label": "diagnostic",
+      "probe": null,
+      "variant": "lfu",
+      "mode": "trace",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/batches-20261022-083209/diagnostic-lfu-trace.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/lfu/temporal-20261022-083328-087036.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/batches-20261022-083209/diagnostic-lfu-trace-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/batches-20261022-083209/diagnostic-lfu-trace-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/lfu/server-trace-iFaW4N",
+      "candidate_summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 21854.61,
+        "output_tokens_per_second": 15.37,
+        "requests_per_second": 1.922,
+        "first_text_ms": {
+          "median": 169.19,
+          "p95_nearest_rank": 196.35
+        },
+        "total_ms": {
+          "median": 531.25,
+          "p95_nearest_rank": 577.18
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 21854.61,
+        "output_tokens_per_second": 15.37,
+        "requests_per_second": 1.922,
+        "first_text_ms": {
+          "median": 169.19,
+          "p95_nearest_rank": 196.35
+        },
+        "total_ms": {
+          "median": 531.25,
+          "p95_nearest_rank": 577.18
+        }
+      },
+      "trace_analysis": {
+        "eviction_policy": "lfu",
+        "half_life_blocks": null,
+        "decays": 0,
+        "epochs": [],
+        "preemptions": 0,
+        "evictions": 249,
+        "invalid_eviction_refs": 0,
+        "lookup_hits": {
+          "N00": 16,
+          "N01": 16,
+          "N02": 16,
+          "N03": 16,
+          "N04": 16,
+          "N05": 16,
+          "N06": 16,
+          "N07": 16,
+          "N08": 16,
+          "N09": 16,
+          "N10": 16,
+          "N11": 16,
+          "C1-T0": 16,
+          "C1-T1": 272,
+          "C1-T2": 272,
+          "C1-S0": 16,
+          "C1-S1": 16,
+          "C1-S2": 16,
+          "C1-S3": 16,
+          "C1-S4": 16,
+          "C1-S5": 16,
+          "C1-P": 272,
+          "C2-T0": 272,
+          "C2-T1": 272,
+          "C2-T2": 272,
+          "C2-S0": 16,
+          "C2-S1": 16,
+          "C2-S2": 16,
+          "C2-S3": 16,
+          "C2-S4": 16,
+          "C2-S5": 16,
+          "C2-P": 272,
+          "C3-T0": 272,
+          "C3-T1": 272,
+          "C3-T2": 272,
+          "C3-S0": 16,
+          "C3-S1": 16,
+          "C3-S2": 16,
+          "C3-S3": 16,
+          "C3-S4": 16,
+          "C3-S5": 16,
+          "C3-P": 272
+        }
+      },
+      "nonprefix_totals": {},
+      "sha256": "875c6e39c7e9474ceaec03b05a1a593fbdbfcfd4ed3dce34de37b284970643ab",
+      "round": "diagnostic"
+    },
+    {
+      "label": "diagnostic",
+      "probe": null,
+      "variant": "aged_lfu",
+      "mode": "trace",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/batches-20261022-083209/diagnostic-aged_lfu-trace.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/aged_lfu/temporal-20261022-083420-445284.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/batches-20261022-083209/diagnostic-aged_lfu-trace-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/batches-20261022-083209/diagnostic-aged_lfu-trace-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/aged_lfu/server-trace-3x9e7V",
+      "candidate_summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 22002.99,
+        "output_tokens_per_second": 15.27,
+        "requests_per_second": 1.909,
+        "first_text_ms": {
+          "median": 173.05,
+          "p95_nearest_rank": 264.83
+        },
+        "total_ms": {
+          "median": 529.76,
+          "p95_nearest_rank": 614.98
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 22002.99,
+        "output_tokens_per_second": 15.27,
+        "requests_per_second": 1.909,
+        "first_text_ms": {
+          "median": 173.05,
+          "p95_nearest_rank": 264.83
+        },
+        "total_ms": {
+          "median": 529.76,
+          "p95_nearest_rank": 614.98
+        }
+      },
+      "trace_analysis": {
+        "eviction_policy": "aged_lfu",
+        "half_life_blocks": 64,
+        "decays": 4,
+        "epochs": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "preemptions": 0,
+        "evictions": 249,
+        "invalid_eviction_refs": 0,
+        "lookup_hits": {
+          "N00": 16,
+          "N01": 16,
+          "N02": 16,
+          "N03": 16,
+          "N04": 16,
+          "N05": 16,
+          "N06": 16,
+          "N07": 16,
+          "N08": 16,
+          "N09": 16,
+          "N10": 16,
+          "N11": 16,
+          "C1-T0": 16,
+          "C1-T1": 272,
+          "C1-T2": 272,
+          "C1-S0": 16,
+          "C1-S1": 16,
+          "C1-S2": 16,
+          "C1-S3": 16,
+          "C1-S4": 16,
+          "C1-S5": 16,
+          "C1-P": 272,
+          "C2-T0": 272,
+          "C2-T1": 272,
+          "C2-T2": 272,
+          "C2-S0": 16,
+          "C2-S1": 16,
+          "C2-S2": 16,
+          "C2-S3": 16,
+          "C2-S4": 16,
+          "C2-S5": 16,
+          "C2-P": 272,
+          "C3-T0": 272,
+          "C3-T1": 272,
+          "C3-T2": 272,
+          "C3-S0": 16,
+          "C3-S1": 16,
+          "C3-S2": 16,
+          "C3-S3": 16,
+          "C3-S4": 16,
+          "C3-S5": 16,
+          "C3-P": 272
+        }
+      },
+      "nonprefix_totals": {},
+      "sha256": "8f11e6b8d0b6831d797254157e6c198752186d078ca1d68ce307dea75d73ec3a",
+      "round": "diagnostic"
+    }
+  ],
+  "runs": [
+    {
+      "label": 1,
+      "probe": null,
+      "variant": "vllm",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/batches-20261022-083209/1-vllm-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/vllm/temporal-20261022-083513-094369.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/batches-20261022-083209/1-vllm-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/batches-20261022-083209/1-vllm-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/vllm/server-bench-N1IYZu",
+      "candidate_summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 21715.86,
+        "output_tokens_per_second": 15.47,
+        "requests_per_second": 1.934,
+        "first_text_ms": {
+          "median": 177.09,
+          "p95_nearest_rank": 297.93
+        },
+        "total_ms": {
+          "median": 511.48,
+          "p95_nearest_rank": 652.01
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 21715.86,
+        "output_tokens_per_second": 15.47,
+        "requests_per_second": 1.934,
+        "first_text_ms": {
+          "median": 177.09,
+          "p95_nearest_rank": 297.93
+        },
+        "total_ms": {
+          "median": 511.48,
+          "p95_nearest_rank": 652.01
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "d82947ca7b6e5793113e2d386a3738b4d392bc7ed754c96c807ea8e9101ea208",
+      "round": 1
+    },
+    {
+      "label": 1,
+      "probe": null,
+      "variant": "lfu",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/batches-20261022-083209/1-lfu-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/lfu/temporal-20261022-083604-927831.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/batches-20261022-083209/1-lfu-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/batches-20261022-083209/1-lfu-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/lfu/server-bench-qRjxHv",
+      "candidate_summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 21208.02,
+        "output_tokens_per_second": 15.84,
+        "requests_per_second": 1.98,
+        "first_text_ms": {
+          "median": 178.17,
+          "p95_nearest_rank": 195.22
+        },
+        "total_ms": {
+          "median": 515.13,
+          "p95_nearest_rank": 560.75
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 21208.02,
+        "output_tokens_per_second": 15.84,
+        "requests_per_second": 1.98,
+        "first_text_ms": {
+          "median": 178.17,
+          "p95_nearest_rank": 195.22
+        },
+        "total_ms": {
+          "median": 515.13,
+          "p95_nearest_rank": 560.75
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "1fb345d586e9d906c99855201824d27bba6c47ec643a15682db507a63d609bd1",
+      "round": 1
+    },
+    {
+      "label": 1,
+      "probe": null,
+      "variant": "aged_lfu",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/batches-20261022-083209/1-aged_lfu-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/aged_lfu/temporal-20261022-083656-850406.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/batches-20261022-083209/1-aged_lfu-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/batches-20261022-083209/1-aged_lfu-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/aged_lfu/server-bench-ApddRy",
+      "candidate_summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 21185.89,
+        "output_tokens_per_second": 15.86,
+        "requests_per_second": 1.982,
+        "first_text_ms": {
+          "median": 179.45,
+          "p95_nearest_rank": 198.68
+        },
+        "total_ms": {
+          "median": 512.92,
+          "p95_nearest_rank": 562.77
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 21185.89,
+        "output_tokens_per_second": 15.86,
+        "requests_per_second": 1.982,
+        "first_text_ms": {
+          "median": 179.45,
+          "p95_nearest_rank": 198.68
+        },
+        "total_ms": {
+          "median": 512.92,
+          "p95_nearest_rank": 562.77
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "c1c9fbae7f3cc841a92afba15b234041cb9382af015e2411475687e4627fb78b",
+      "round": 1
+    },
+    {
+      "label": 2,
+      "probe": null,
+      "variant": "lfu",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/batches-20261022-083209/2-lfu-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/lfu/temporal-20261022-083746-319370.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/batches-20261022-083209/2-lfu-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/batches-20261022-083209/2-lfu-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/lfu/server-bench-w5zmca",
+      "candidate_summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 21042.3,
+        "output_tokens_per_second": 15.97,
+        "requests_per_second": 1.996,
+        "first_text_ms": {
+          "median": 177.01,
+          "p95_nearest_rank": 197.18
+        },
+        "total_ms": {
+          "median": 507.66,
+          "p95_nearest_rank": 562.68
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 21042.3,
+        "output_tokens_per_second": 15.97,
+        "requests_per_second": 1.996,
+        "first_text_ms": {
+          "median": 177.01,
+          "p95_nearest_rank": 197.18
+        },
+        "total_ms": {
+          "median": 507.66,
+          "p95_nearest_rank": 562.68
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "8dff76e2279db7d0528d1ae6405733b22a3277ef727fa43bd0e21b20877ae96a",
+      "round": 2
+    },
+    {
+      "label": 2,
+      "probe": null,
+      "variant": "aged_lfu",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/batches-20261022-083209/2-aged_lfu-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/aged_lfu/temporal-20261022-083836-705711.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/batches-20261022-083209/2-aged_lfu-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/batches-20261022-083209/2-aged_lfu-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/aged_lfu/server-bench-M03Pmn",
+      "candidate_summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 21688.22,
+        "output_tokens_per_second": 15.49,
+        "requests_per_second": 1.937,
+        "first_text_ms": {
+          "median": 179.36,
+          "p95_nearest_rank": 208.18
+        },
+        "total_ms": {
+          "median": 519.48,
+          "p95_nearest_rank": 579.98
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 21688.22,
+        "output_tokens_per_second": 15.49,
+        "requests_per_second": 1.937,
+        "first_text_ms": {
+          "median": 179.36,
+          "p95_nearest_rank": 208.18
+        },
+        "total_ms": {
+          "median": 519.48,
+          "p95_nearest_rank": 579.98
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "ccf5035695fa7c4a119701394c0b8cbc38031f2bf3e9402cdbadd9e207b1f77a",
+      "round": 2
+    },
+    {
+      "label": 2,
+      "probe": null,
+      "variant": "vllm",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/batches-20261022-083209/2-vllm-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/vllm/temporal-20261022-083928-905326.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/batches-20261022-083209/2-vllm-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/batches-20261022-083209/2-vllm-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/vllm/server-bench-rFMdE5",
+      "candidate_summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 22943.45,
+        "output_tokens_per_second": 14.64,
+        "requests_per_second": 1.831,
+        "first_text_ms": {
+          "median": 186.66,
+          "p95_nearest_rank": 306.54
+        },
+        "total_ms": {
+          "median": 540.6,
+          "p95_nearest_rank": 682.64
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 22943.45,
+        "output_tokens_per_second": 14.64,
+        "requests_per_second": 1.831,
+        "first_text_ms": {
+          "median": 186.66,
+          "p95_nearest_rank": 306.54
+        },
+        "total_ms": {
+          "median": 540.6,
+          "p95_nearest_rank": 682.64
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "4a44946d45effa2f4cfaf7480305720018dc38079991319422cc58bd1bf409c5",
+      "round": 2
+    },
+    {
+      "label": 3,
+      "probe": null,
+      "variant": "aged_lfu",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/batches-20261022-083209/3-aged_lfu-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/aged_lfu/temporal-20261022-084022-257693.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/batches-20261022-083209/3-aged_lfu-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/batches-20261022-083209/3-aged_lfu-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/aged_lfu/server-bench-3S4TYA",
+      "candidate_summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 21266.54,
+        "output_tokens_per_second": 15.8,
+        "requests_per_second": 1.975,
+        "first_text_ms": {
+          "median": 175.09,
+          "p95_nearest_rank": 209.48
+        },
+        "total_ms": {
+          "median": 513.51,
+          "p95_nearest_rank": 564.66
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 21266.54,
+        "output_tokens_per_second": 15.8,
+        "requests_per_second": 1.975,
+        "first_text_ms": {
+          "median": 175.09,
+          "p95_nearest_rank": 209.48
+        },
+        "total_ms": {
+          "median": 513.51,
+          "p95_nearest_rank": 564.66
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "a547a3bcfee78067ecc5007a1af4e1b17b6b19c2b79e93fa3ea680413c207b4d",
+      "round": 3
+    },
+    {
+      "label": 3,
+      "probe": null,
+      "variant": "vllm",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/batches-20261022-083209/3-vllm-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/vllm/temporal-20261022-084114-635085.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/batches-20261022-083209/3-vllm-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/batches-20261022-083209/3-vllm-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/vllm/server-bench-YPBsvx",
+      "candidate_summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 21532.0,
+        "output_tokens_per_second": 15.6,
+        "requests_per_second": 1.951,
+        "first_text_ms": {
+          "median": 176.86,
+          "p95_nearest_rank": 294.09
+        },
+        "total_ms": {
+          "median": 511.36,
+          "p95_nearest_rank": 631.53
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 21532.0,
+        "output_tokens_per_second": 15.6,
+        "requests_per_second": 1.951,
+        "first_text_ms": {
+          "median": 176.86,
+          "p95_nearest_rank": 294.09
+        },
+        "total_ms": {
+          "median": 511.36,
+          "p95_nearest_rank": 631.53
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "ef0792ebcaab33df757ce4294cabe0240a0c6263757c7b97915ff88b97df0e3e",
+      "round": 3
+    },
+    {
+      "label": 3,
+      "probe": null,
+      "variant": "lfu",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/batches-20261022-083209/3-lfu-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/lfu/temporal-20261022-084206-189662.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/batches-20261022-083209/3-lfu-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/batches-20261022-083209/3-lfu-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/lfu/server-bench-o6ZZWu",
+      "candidate_summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 21097.18,
+        "output_tokens_per_second": 15.93,
+        "requests_per_second": 1.991,
+        "first_text_ms": {
+          "median": 173.25,
+          "p95_nearest_rank": 201.65
+        },
+        "total_ms": {
+          "median": 508.23,
+          "p95_nearest_rank": 574.08
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 21097.18,
+        "output_tokens_per_second": 15.93,
+        "requests_per_second": 1.991,
+        "first_text_ms": {
+          "median": 173.25,
+          "p95_nearest_rank": 201.65
+        },
+        "total_ms": {
+          "median": 508.23,
+          "p95_nearest_rank": 574.08
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "e4fb752e23f975c95a392a45c832d30ec0b520bfdc193a75317f316b685dbe6c",
+      "round": 3
+    }
+  ],
+  "complete": true,
+  "manifest": {
+    "workload": "aging-lfu-v1",
+    "profile": "stable",
+    "model": "Qwen/Qwen3-1.7B",
+    "system": "You are a helpful assistant. Explain clearly and concisely.",
+    "output_tokens": 8,
+    "client_concurrency": 1,
+    "full_probe_hit_tokens": 272,
+    "sequence": [
+      {
+        "label": "N00",
+        "phase": "no_reuse_control",
+        "cycle": 0,
+        "prompt": "Coral reef monitoring: A small community team wants to improve its work over the next three months. It has a limited budget and several volunteers. The team can collect observations every week, interview residents, and compare records from different locations. The locations differ in size, activity, weather exposure, and access to transport. Some records are incomplete and several volunteers are new. The team cannot hire more staff or buy expensive equipment. It wants practical changes that can be checked with simple measurements. Suggest a useful first step and explain what observation would show whether that step is helping. Keep the answer brief."
+      },
+      {
+        "label": "N01",
+        "phase": "no_reuse_control",
+        "cycle": 0,
+        "prompt": "Mountain weather records: A small community team wants to improve its work over the next three months. It has a limited budget and several volunteers. The team can collect observations every week, interview residents, and compare records from different locations. The locations differ in size, activity, weather exposure, and access to transport. Some records are incomplete and several volunteers are new. The team cannot hire more staff or buy expensive equipment. It wants practical changes that can be checked with simple measurements. Suggest a useful first step and explain what observation would show whether that step is helping. Keep the answer brief."
+      },
+      {
+        "label": "N02",
+        "phase": "no_reuse_control",
+        "cycle": 0,
+        "prompt": "Composting food scraps: A small community team wants to improve its work over the next three months. It has a limited budget and several volunteers. The team can collect observations every week, interview residents, and compare records from different locations. The locations differ in size, activity, weather exposure, and access to transport. Some records are incomplete and several volunteers are new. The team cannot hire more staff or buy expensive equipment. It wants practical changes that can be checked with simple measurements. Suggest a useful first step and explain what observation would show whether that step is helping. Keep the answer brief."
+      },
+      {
+        "label": "N03",
+        "phase": "no_reuse_control",
+        "cycle": 0,
+        "prompt": "Bicycle gear maintenance: A small community team wants to improve its work over the next three months. It has a limited budget and several volunteers. The team can collect observations every week, interview residents, and compare records from different locations. The locations differ in size, activity, weather exposure, and access to transport. Some records are incomplete and several volunteers are new. The team cannot hire more staff or buy expensive equipment. It wants practical changes that can be checked with simple measurements. Suggest a useful first step and explain what observation would show whether that step is helping. Keep the answer brief."
+      },
+      {
+        "label": "N04",
+        "phase": "no_reuse_control",
+        "cycle": 0,
+        "prompt": "Urban bus reliability: A small community team wants to improve its work over the next three months. It has a limited budget and several volunteers. The team can collect observations every week, interview residents, and compare records from different locations. The locations differ in size, activity, weather exposure, and access to transport. Some records are incomplete and several volunteers are new. The team cannot hire more staff or buy expensive equipment. It wants practical changes that can be checked with simple measurements. Suggest a useful first step and explain what observation would show whether that step is helping. Keep the answer brief."
+      },
+      {
+        "label": "N05",
+        "phase": "no_reuse_control",
+        "cycle": 0,
+        "prompt": "Solar battery storage: A small community team wants to improve its work over the next three months. It has a limited budget and several volunteers. The team can collect observations every week, interview residents, and compare records from different locations. The locations differ in size, activity, weather exposure, and access to transport. Some records are incomplete and several volunteers are new. The team cannot hire more staff or buy expensive equipment. It wants practical changes that can be checked with simple measurements. Suggest a useful first step and explain what observation would show whether that step is helping. Keep the answer brief."
+      },
+      {
+        "label": "N06",
+        "phase": "no_reuse_control",
+        "cycle": 0,
+        "prompt": "Earthquake preparedness: A small community team wants to improve its work over the next three months. It has a limited budget and several volunteers. The team can collect observations every week, interview residents, and compare records from different locations. The locations differ in size, activity, weather exposure, and access to transport. Some records are incomplete and several volunteers are new. The team cannot hire more staff or buy expensive equipment. It wants practical changes that can be checked with simple measurements. Suggest a useful first step and explain what observation would show whether that step is helping. Keep the answer brief."
+      },
+      {
+        "label": "N07",
+        "phase": "no_reuse_control",
+        "cycle": 0,
+        "prompt": "Honeybee pollination: A small community team wants to improve its work over the next three months. It has a limited budget and several volunteers. The team can collect observations every week, interview residents, and compare records from different locations. The locations differ in size, activity, weather exposure, and access to transport. Some records are incomplete and several volunteers are new. The team cannot hire more staff or buy expensive equipment. It wants practical changes that can be checked with simple measurements. Suggest a useful first step and explain what observation would show whether that step is helping. Keep the answer brief."
+      },
+      {
+        "label": "N08",
+        "phase": "no_reuse_control",
+        "cycle": 0,
+        "prompt": "Museum audio guides: A small community team wants to improve its work over the next three months. It has a limited budget and several volunteers. The team can collect observations every week, interview residents, and compare records from different locations. The locations differ in size, activity, weather exposure, and access to transport. Some records are incomplete and several volunteers are new. The team cannot hire more staff or buy expensive equipment. It wants practical changes that can be checked with simple measurements. Suggest a useful first step and explain what observation would show whether that step is helping. Keep the answer brief."
+      },
+      {
+        "label": "N09",
+        "phase": "no_reuse_control",
+        "cycle": 0,
+        "prompt": "River water filtration: A small community team wants to improve its work over the next three months. It has a limited budget and several volunteers. The team can collect observations every week, interview residents, and compare records from different locations. The locations differ in size, activity, weather exposure, and access to transport. Some records are incomplete and several volunteers are new. The team cannot hire more staff or buy expensive equipment. It wants practical changes that can be checked with simple measurements. Suggest a useful first step and explain what observation would show whether that step is helping. Keep the answer brief."
+      },
+      {
+        "label": "N10",
+        "phase": "no_reuse_control",
+        "cycle": 0,
+        "prompt": "School meal planning: A small community team wants to improve its work over the next three months. It has a limited budget and several volunteers. The team can collect observations every week, interview residents, and compare records from different locations. The locations differ in size, activity, weather exposure, and access to transport. Some records are incomplete and several volunteers are new. The team cannot hire more staff or buy expensive equipment. It wants practical changes that can be checked with simple measurements. Suggest a useful first step and explain what observation would show whether that step is helping. Keep the answer brief."
+      },
+      {
+        "label": "N11",
+        "phase": "no_reuse_control",
+        "cycle": 0,
+        "prompt": "Bird migration tracking: A small community team wants to improve its work over the next three months. It has a limited budget and several volunteers. The team can collect observations every week, interview residents, and compare records from different locations. The locations differ in size, activity, weather exposure, and access to transport. Some records are incomplete and several volunteers are new. The team cannot hire more staff or buy expensive equipment. It wants practical changes that can be checked with simple measurements. Suggest a useful first step and explain what observation would show whether that step is helping. Keep the answer brief."
+      },
+      {
+        "label": "C1-T0",
+        "phase": "train_hot",
+        "cycle": 1,
+        "prompt": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. The manager plans a small pilot before changing the entire service. One volunteer will check reminder messages and another will record whether members collect books on time. Every week the team will compare the number of notices sent, cancelled reservations, and books returned to the shelf. They will ask members whether the messages are clear and whether collection hours are convenient. Changes must preserve the original order of the waiting list and provide the same service to telephone and online members. \nGive a brief summary. Note 1.0."
+      },
+      {
+        "label": "C1-T1",
+        "phase": "train_hot",
+        "cycle": 1,
+        "prompt": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. The manager plans a small pilot before changing the entire service. One volunteer will check reminder messages and another will record whether members collect books on time. Every week the team will compare the number of notices sent, cancelled reservations, and books returned to the shelf. They will ask members whether the messages are clear and whether collection hours are convenient. Changes must preserve the original order of the waiting list and provide the same service to telephone and online members. \nGive a brief summary. Note 1.1."
+      },
+      {
+        "label": "C1-T2",
+        "phase": "train_hot",
+        "cycle": 1,
+        "prompt": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. The manager plans a small pilot before changing the entire service. One volunteer will check reminder messages and another will record whether members collect books on time. Every week the team will compare the number of notices sent, cancelled reservations, and books returned to the shelf. They will ask members whether the messages are clear and whether collection hours are convenient. Changes must preserve the original order of the waiting list and provide the same service to telephone and online members. \nGive a brief summary. Note 1.2."
+      },
+      {
+        "label": "C1-S0",
+        "phase": "cold_scan",
+        "cycle": 1,
+        "prompt": "Public park accessibility: A small community team wants to improve its work over the next three months. It has a limited budget and several volunteers. The team can collect observations every week, interview residents, and compare records from different locations. The locations differ in size, activity, weather exposure, and access to transport. Some records are incomplete and several volunteers are new. The team cannot hire more staff or buy expensive equipment. It wants practical changes that can be checked with simple measurements. Suggest a useful first step and explain what observation would show whether that step is helping. Keep the answer brief."
+      },
+      {
+        "label": "C1-S1",
+        "phase": "cold_scan",
+        "cycle": 1,
+        "prompt": "Household recycling: A small community team wants to improve its work over the next three months. It has a limited budget and several volunteers. The team can collect observations every week, interview residents, and compare records from different locations. The locations differ in size, activity, weather exposure, and access to transport. Some records are incomplete and several volunteers are new. The team cannot hire more staff or buy expensive equipment. It wants practical changes that can be checked with simple measurements. Suggest a useful first step and explain what observation would show whether that step is helping. Keep the answer brief."
+      },
+      {
+        "label": "C1-S2",
+        "phase": "cold_scan",
+        "cycle": 1,
+        "prompt": "Stellar cloud observations: A small community team wants to improve its work over the next three months. It has a limited budget and several volunteers. The team can collect observations every week, interview residents, and compare records from different locations. The locations differ in size, activity, weather exposure, and access to transport. Some records are incomplete and several volunteers are new. The team cannot hire more staff or buy expensive equipment. It wants practical changes that can be checked with simple measurements. Suggest a useful first step and explain what observation would show whether that step is helping. Keep the answer brief."
+      },
+      {
+        "label": "C1-S3",
+        "phase": "cold_scan",
+        "cycle": 1,
+        "prompt": "Community gardening: A small community team wants to improve its work over the next three months. It has a limited budget and several volunteers. The team can collect observations every week, interview residents, and compare records from different locations. The locations differ in size, activity, weather exposure, and access to transport. Some records are incomplete and several volunteers are new. The team cannot hire more staff or buy expensive equipment. It wants practical changes that can be checked with simple measurements. Suggest a useful first step and explain what observation would show whether that step is helping. Keep the answer brief."
+      },
+      {
+        "label": "C1-S4",
+        "phase": "cold_scan",
+        "cycle": 1,
+        "prompt": "Apartment insulation: A small community team wants to improve its work over the next three months. It has a limited budget and several volunteers. The team can collect observations every week, interview residents, and compare records from different locations. The locations differ in size, activity, weather exposure, and access to transport. Some records are incomplete and several volunteers are new. The team cannot hire more staff or buy expensive equipment. It wants practical changes that can be checked with simple measurements. Suggest a useful first step and explain what observation would show whether that step is helping. Keep the answer brief."
+      },
+      {
+        "label": "C1-S5",
+        "phase": "cold_scan",
+        "cycle": 1,
+        "prompt": "Coastal tide measurements: A small community team wants to improve its work over the next three months. It has a limited budget and several volunteers. The team can collect observations every week, interview residents, and compare records from different locations. The locations differ in size, activity, weather exposure, and access to transport. Some records are incomplete and several volunteers are new. The team cannot hire more staff or buy expensive equipment. It wants practical changes that can be checked with simple measurements. Suggest a useful first step and explain what observation would show whether that step is helping. Keep the answer brief."
+      },
+      {
+        "label": "C1-P",
+        "phase": "probe",
+        "cycle": 1,
+        "prompt": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. The manager plans a small pilot before changing the entire service. One volunteer will check reminder messages and another will record whether members collect books on time. Every week the team will compare the number of notices sent, cancelled reservations, and books returned to the shelf. They will ask members whether the messages are clear and whether collection hours are convenient. Changes must preserve the original order of the waiting list and provide the same service to telephone and online members. \nSuggest one useful improvement. Note 1."
+      },
+      {
+        "label": "C2-T0",
+        "phase": "train_hot",
+        "cycle": 2,
+        "prompt": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. The manager plans a small pilot before changing the entire service. One volunteer will check reminder messages and another will record whether members collect books on time. Every week the team will compare the number of notices sent, cancelled reservations, and books returned to the shelf. They will ask members whether the messages are clear and whether collection hours are convenient. Changes must preserve the original order of the waiting list and provide the same service to telephone and online members. \nGive a brief summary. Note 2.0."
+      },
+      {
+        "label": "C2-T1",
+        "phase": "train_hot",
+        "cycle": 2,
+        "prompt": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. The manager plans a small pilot before changing the entire service. One volunteer will check reminder messages and another will record whether members collect books on time. Every week the team will compare the number of notices sent, cancelled reservations, and books returned to the shelf. They will ask members whether the messages are clear and whether collection hours are convenient. Changes must preserve the original order of the waiting list and provide the same service to telephone and online members. \nGive a brief summary. Note 2.1."
+      },
+      {
+        "label": "C2-T2",
+        "phase": "train_hot",
+        "cycle": 2,
+        "prompt": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. The manager plans a small pilot before changing the entire service. One volunteer will check reminder messages and another will record whether members collect books on time. Every week the team will compare the number of notices sent, cancelled reservations, and books returned to the shelf. They will ask members whether the messages are clear and whether collection hours are convenient. Changes must preserve the original order of the waiting list and provide the same service to telephone and online members. \nGive a brief summary. Note 2.2."
+      },
+      {
+        "label": "C2-S0",
+        "phase": "cold_scan",
+        "cycle": 2,
+        "prompt": "Hospital appointment reminders: A small community team wants to improve its work over the next three months. It has a limited budget and several volunteers. The team can collect observations every week, interview residents, and compare records from different locations. The locations differ in size, activity, weather exposure, and access to transport. Some records are incomplete and several volunteers are new. The team cannot hire more staff or buy expensive equipment. It wants practical changes that can be checked with simple measurements. Suggest a useful first step and explain what observation would show whether that step is helping. Keep the answer brief."
+      },
+      {
+        "label": "C2-S1",
+        "phase": "cold_scan",
+        "cycle": 2,
+        "prompt": "Rainwater collection: A small community team wants to improve its work over the next three months. It has a limited budget and several volunteers. The team can collect observations every week, interview residents, and compare records from different locations. The locations differ in size, activity, weather exposure, and access to transport. Some records are incomplete and several volunteers are new. The team cannot hire more staff or buy expensive equipment. It wants practical changes that can be checked with simple measurements. Suggest a useful first step and explain what observation would show whether that step is helping. Keep the answer brief."
+      },
+      {
+        "label": "C2-S2",
+        "phase": "cold_scan",
+        "cycle": 2,
+        "prompt": "Ocean current mapping: A small community team wants to improve its work over the next three months. It has a limited budget and several volunteers. The team can collect observations every week, interview residents, and compare records from different locations. The locations differ in size, activity, weather exposure, and access to transport. Some records are incomplete and several volunteers are new. The team cannot hire more staff or buy expensive equipment. It wants practical changes that can be checked with simple measurements. Suggest a useful first step and explain what observation would show whether that step is helping. Keep the answer brief."
+      },
+      {
+        "label": "C2-S3",
+        "phase": "cold_scan",
+        "cycle": 2,
+        "prompt": "Railway timetable planning: A small community team wants to improve its work over the next three months. It has a limited budget and several volunteers. The team can collect observations every week, interview residents, and compare records from different locations. The locations differ in size, activity, weather exposure, and access to transport. Some records are incomplete and several volunteers are new. The team cannot hire more staff or buy expensive equipment. It wants practical changes that can be checked with simple measurements. Suggest a useful first step and explain what observation would show whether that step is helping. Keep the answer brief."
+      },
+      {
+        "label": "C2-S4",
+        "phase": "cold_scan",
+        "cycle": 2,
+        "prompt": "Forest fire monitoring: A small community team wants to improve its work over the next three months. It has a limited budget and several volunteers. The team can collect observations every week, interview residents, and compare records from different locations. The locations differ in size, activity, weather exposure, and access to transport. Some records are incomplete and several volunteers are new. The team cannot hire more staff or buy expensive equipment. It wants practical changes that can be checked with simple measurements. Suggest a useful first step and explain what observation would show whether that step is helping. Keep the answer brief."
+      },
+      {
+        "label": "C2-S5",
+        "phase": "cold_scan",
+        "cycle": 2,
+        "prompt": "Wind turbine inspections: A small community team wants to improve its work over the next three months. It has a limited budget and several volunteers. The team can collect observations every week, interview residents, and compare records from different locations. The locations differ in size, activity, weather exposure, and access to transport. Some records are incomplete and several volunteers are new. The team cannot hire more staff or buy expensive equipment. It wants practical changes that can be checked with simple measurements. Suggest a useful first step and explain what observation would show whether that step is helping. Keep the answer brief."
+      },
+      {
+        "label": "C2-P",
+        "phase": "probe",
+        "cycle": 2,
+        "prompt": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. The manager plans a small pilot before changing the entire service. One volunteer will check reminder messages and another will record whether members collect books on time. Every week the team will compare the number of notices sent, cancelled reservations, and books returned to the shelf. They will ask members whether the messages are clear and whether collection hours are convenient. Changes must preserve the original order of the waiting list and provide the same service to telephone and online members. \nSuggest one useful improvement. Note 2."
+      },
+      {
+        "label": "C3-T0",
+        "phase": "train_hot",
+        "cycle": 3,
+        "prompt": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. The manager plans a small pilot before changing the entire service. One volunteer will check reminder messages and another will record whether members collect books on time. Every week the team will compare the number of notices sent, cancelled reservations, and books returned to the shelf. They will ask members whether the messages are clear and whether collection hours are convenient. Changes must preserve the original order of the waiting list and provide the same service to telephone and online members. \nGive a brief summary. Note 3.0."
+      },
+      {
+        "label": "C3-T1",
+        "phase": "train_hot",
+        "cycle": 3,
+        "prompt": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. The manager plans a small pilot before changing the entire service. One volunteer will check reminder messages and another will record whether members collect books on time. Every week the team will compare the number of notices sent, cancelled reservations, and books returned to the shelf. They will ask members whether the messages are clear and whether collection hours are convenient. Changes must preserve the original order of the waiting list and provide the same service to telephone and online members. \nGive a brief summary. Note 3.1."
+      },
+      {
+        "label": "C3-T2",
+        "phase": "train_hot",
+        "cycle": 3,
+        "prompt": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. The manager plans a small pilot before changing the entire service. One volunteer will check reminder messages and another will record whether members collect books on time. Every week the team will compare the number of notices sent, cancelled reservations, and books returned to the shelf. They will ask members whether the messages are clear and whether collection hours are convenient. Changes must preserve the original order of the waiting list and provide the same service to telephone and online members. \nGive a brief summary. Note 3.2."
+      },
+      {
+        "label": "C3-S0",
+        "phase": "cold_scan",
+        "cycle": 3,
+        "prompt": "Local theatre ticketing: A small community team wants to improve its work over the next three months. It has a limited budget and several volunteers. The team can collect observations every week, interview residents, and compare records from different locations. The locations differ in size, activity, weather exposure, and access to transport. Some records are incomplete and several volunteers are new. The team cannot hire more staff or buy expensive equipment. It wants practical changes that can be checked with simple measurements. Suggest a useful first step and explain what observation would show whether that step is helping. Keep the answer brief."
+      },
+      {
+        "label": "C3-S1",
+        "phase": "cold_scan",
+        "cycle": 3,
+        "prompt": "Sports facility maintenance: A small community team wants to improve its work over the next three months. It has a limited budget and several volunteers. The team can collect observations every week, interview residents, and compare records from different locations. The locations differ in size, activity, weather exposure, and access to transport. Some records are incomplete and several volunteers are new. The team cannot hire more staff or buy expensive equipment. It wants practical changes that can be checked with simple measurements. Suggest a useful first step and explain what observation would show whether that step is helping. Keep the answer brief."
+      },
+      {
+        "label": "C3-S2",
+        "phase": "cold_scan",
+        "cycle": 3,
+        "prompt": "Footpath repairs: A small community team wants to improve its work over the next three months. It has a limited budget and several volunteers. The team can collect observations every week, interview residents, and compare records from different locations. The locations differ in size, activity, weather exposure, and access to transport. Some records are incomplete and several volunteers are new. The team cannot hire more staff or buy expensive equipment. It wants practical changes that can be checked with simple measurements. Suggest a useful first step and explain what observation would show whether that step is helping. Keep the answer brief."
+      },
+      {
+        "label": "C3-S3",
+        "phase": "cold_scan",
+        "cycle": 3,
+        "prompt": "Historic building restoration: A small community team wants to improve its work over the next three months. It has a limited budget and several volunteers. The team can collect observations every week, interview residents, and compare records from different locations. The locations differ in size, activity, weather exposure, and access to transport. Some records are incomplete and several volunteers are new. The team cannot hire more staff or buy expensive equipment. It wants practical changes that can be checked with simple measurements. Suggest a useful first step and explain what observation would show whether that step is helping. Keep the answer brief."
+      },
+      {
+        "label": "C3-S4",
+        "phase": "cold_scan",
+        "cycle": 3,
+        "prompt": "Air quality sampling: A small community team wants to improve its work over the next three months. It has a limited budget and several volunteers. The team can collect observations every week, interview residents, and compare records from different locations. The locations differ in size, activity, weather exposure, and access to transport. Some records are incomplete and several volunteers are new. The team cannot hire more staff or buy expensive equipment. It wants practical changes that can be checked with simple measurements. Suggest a useful first step and explain what observation would show whether that step is helping. Keep the answer brief."
+      },
+      {
+        "label": "C3-S5",
+        "phase": "cold_scan",
+        "cycle": 3,
+        "prompt": "Mountain trail safety: A small community team wants to improve its work over the next three months. It has a limited budget and several volunteers. The team can collect observations every week, interview residents, and compare records from different locations. The locations differ in size, activity, weather exposure, and access to transport. Some records are incomplete and several volunteers are new. The team cannot hire more staff or buy expensive equipment. It wants practical changes that can be checked with simple measurements. Suggest a useful first step and explain what observation would show whether that step is helping. Keep the answer brief."
+      },
+      {
+        "label": "C3-P",
+        "phase": "probe",
+        "cycle": 3,
+        "prompt": "Our town library is reviewing its reservation service. Members search the catalogue, choose a title, and join a waiting list when every copy is on loan. Staff contact the next member when a returned copy becomes available. Reserved books remain at the collection desk for three working days. Members can update their contact details through an online account. The service sends email reminders before a reservation expires. Staff help members who cannot use the website and record telephone reservations in the same queue. Each title has its own waiting list ordered by reservation time. A member can cancel a reservation without losing a place on another list. The library wants shorter waiting times and fewer uncollected books. Its budget allows small changes to messages and staff procedures, but no additional building or large software purchase. Staff will review outcomes weekly using reservation counts, cancellations, and collection delays. The manager plans a small pilot before changing the entire service. One volunteer will check reminder messages and another will record whether members collect books on time. Every week the team will compare the number of notices sent, cancelled reservations, and books returned to the shelf. They will ask members whether the messages are clear and whether collection hours are convenient. Changes must preserve the original order of the waiting list and provide the same service to telephone and online members. \nSuggest one useful improvement. Note 3."
+      }
+    ],
+    "ignore_eos": true
+  },
+  "aggregate": {
+    "vllm": {
+      "duration_ms": [
+        21715.86,
+        22943.45,
+        21532.0
+      ],
+      "median_duration_ms": 21715.86,
+      "median_throughput": 15.47,
+      "median_probe_first_text_ms": 297.93,
+      "median_probe_latency_ms": 652.01,
+      "cached_tokens": [
+        2720,
+        2720,
+        2720
+      ],
+      "probe_hits": [
+        [
+          16,
+          16,
+          16
+        ],
+        [
+          16,
+          16,
+          16
+        ],
+        [
+          16,
+          16,
+          16
+        ]
+      ],
+      "adaptation_cycles": [
+        null,
+        null,
+        null
+      ]
+    },
+    "lfu": {
+      "duration_ms": [
+        21208.02,
+        21042.3,
+        21097.18
+      ],
+      "median_duration_ms": 21097.18,
+      "median_throughput": 15.93,
+      "median_probe_first_text_ms": 81.06,
+      "median_probe_latency_ms": 424.52,
+      "cached_tokens": [
+        3488,
+        3488,
+        3488
+      ],
+      "probe_hits": [
+        [
+          272,
+          272,
+          272
+        ],
+        [
+          272,
+          272,
+          272
+        ],
+        [
+          272,
+          272,
+          272
+        ]
+      ],
+      "adaptation_cycles": [
+        1,
+        1,
+        1
+      ]
+    },
+    "aged_lfu": {
+      "duration_ms": [
+        21185.89,
+        21688.22,
+        21266.54
+      ],
+      "median_duration_ms": 21266.54,
+      "median_throughput": 15.8,
+      "median_probe_first_text_ms": 85.32,
+      "median_probe_latency_ms": 427.96,
+      "cached_tokens": [
+        3488,
+        3488,
+        3488
+      ],
+      "probe_hits": [
+        [
+          272,
+          272,
+          272
+        ],
+        [
+          272,
+          272,
+          272
+        ],
+        [
+          272,
+          272,
+          272
+        ]
+      ],
+      "adaptation_cycles": [
+        1,
+        1,
+        1
+      ]
+    }
+  },
+  "paired": [
+    {
+      "round": 1,
+      "duration_change_pct": {
+        "vllm": 0.0,
+        "lfu": -2.339,
+        "aged_lfu": -2.44
+      },
+      "answers_matching_baseline": {
+        "vllm": 42,
+        "lfu": 42,
+        "aged_lfu": 42
+      }
+    },
+    {
+      "round": 2,
+      "duration_change_pct": {
+        "vllm": 0.0,
+        "lfu": -8.286,
+        "aged_lfu": -5.471
+      },
+      "answers_matching_baseline": {
+        "vllm": 42,
+        "lfu": 42,
+        "aged_lfu": 42
+      }
+    },
+    {
+      "round": 3,
+      "duration_change_pct": {
+        "vllm": 0.0,
+        "lfu": -2.019,
+        "aged_lfu": -1.233
+      },
+      "answers_matching_baseline": {
+        "vllm": 42,
+        "lfu": 42,
+        "aged_lfu": 42
+      }
+    }
+  ]
+}

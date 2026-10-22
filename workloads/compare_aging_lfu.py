@@ -157,7 +157,11 @@ def main():
     if args.prepare_only:
         print(json.dumps(manifest, indent=2))
         return
-    folder = Path("results/aging-lfu") / profile / args.eviction_policy
+    folder = (
+        Path(os.environ.get("STUDY_AGING_RESULTS_ROOT", "results/aging-lfu"))
+        / profile
+        / args.eviction_policy
+    )
     folder.mkdir(parents=True, exist_ok=True)
     output = folder / f"temporal-{datetime.now():%Y%m%d-%H%M%S-%f}.json"
     url = "http://127.0.0.1:8001/v1/chat/completions"

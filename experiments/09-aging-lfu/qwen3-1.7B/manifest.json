@@ -1,0 +1,51 @@
+{
+  "experiment": "09-aging-lfu",
+  "status": "completed",
+  "model": "Qwen/Qwen3-1.7B",
+  "model_revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e",
+  "source_base_commit": "ab12684fdff56dac5e7990442c15655bdfccac42",
+  "source_commit": "9f3639b44b1d69dd6782c94c4f71b695a8b375ba",
+  "root_base_commit": "726f38d",
+  "serving_runs": 24,
+  "timed_rounds_per_policy_profile": 3,
+  "half_life_blocks": 64,
+  "decay_rule": "Globally right-shift reuse counts by elapsed 64-physical-block allocation epochs before victim selection.",
+  "policies": [
+    "vllm",
+    "lfu",
+    "aged_lfu"
+  ],
+  "profiles": [
+    "shift",
+    "stable"
+  ],
+  "timed_request_rows": 1134,
+  "raw_files_hashed": 128,
+  "code_sha256": {
+    "vllm-src/vllm/v1/core/study_aging_eviction.py": "3bb2ba30808173f2edfe45d6328a3692d963a19bf80208b826b7199af89568ba",
+    "vllm-src/vllm/v1/core/study_cache_eviction.py": "ae8802dccefee707b613902f9e1bbcac6b5dbd70b922c698d794771fdc295e79",
+    "vllm-src/vllm/v1/core/sched/study_trace.py": "f274687d0f9919d16d7246cf9284f35b7d75c37601084e70d6f98bf85b033e5e",
+    "src/run_aging_lfu.py": "e162422e03026f62294cb2d88b7843b92fe38936ea6213150a1ff988bb4f7037",
+    "src/serve_aging_comparison.sh": "6fe2743b1f50bf8f8a159b235e0f3c64cb2325f58b1bf71d82fdda999a877199",
+    "workloads/compare_aging_lfu.py": "2c96ce140d5250d3c2f9bd2fa8a1322576a38632a89966569a1cd591fc06b361",
+    "experiments/09-aging-lfu/test_aging_lfu.py": "74e8f158ca0a033a5fba7250568b70ff557df9d74fef8e1804b7b38b427ebce2"
+  },
+  "environment": {
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "packages": {
+      "vllm": "0.31.0+cpu",
+      "vllm-metal": "0.31.0.dev20261020082747",
+      "mlx": "0.32.2",
+      "mlx-lm": "0.32.0",
+      "torch": "2.13.0",
+      "transformers": "5.17.0"
+    }
+  },
+  "summaries": {
+    "shift": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/shift/batches-20261022-081433/summary.json",
+    "stable": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/Qwen--Qwen3-1.7B/stable/batches-20261022-083209/summary.json"
+  },
+  "root_code_base_commit": "726f38decc21917856d2d09f8e30042593be03b4",
+  "all_timed_answers_match_stock": true,
+  "servers_stopped": true
+}

@@ -1,0 +1,15 @@
+/Users/nandanadileep/.cache/pre-commit/reporh6_dz_e/py_env-python3.12/bin/ruff format --no-cache src/run_aging_lfu.py workloads/compare_aging_lfu.py
+1 file reformatted, 1 file left unchanged
+
+/Users/nandanadileep/.cache/pre-commit/reporh6_dz_e/py_env-python3.12/bin/ruff check --no-cache src/run_aging_lfu.py workloads/compare_aging_lfu.py
+All checks passed!
+
+bash -n src/serve_aging_comparison.sh
+
+shift: request manifest identical to frozen0.6B except model; 84 requests.
+stable: request manifest identical to frozen0.6B except model; 42 requests.
+Final validation:24 completed native Metal GPU runs;1134 timed request rows.
+All timed answers match corresponding stock runs exactly.
+All diagnostic API cache hits match trace lookups; evicted refs zero; no preemptions.
+All score shifts verified; untraced timing runs contain no trace event files.
+Port8001 closed; no experiment server left running.

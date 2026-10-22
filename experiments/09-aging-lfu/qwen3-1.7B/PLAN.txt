@@ -1,0 +1,14 @@
+Experiment09 bigger-model replication: Qwen/Qwen3-1.7B
+
+Pinned revision70d244cc86ccca08cf5af4e1e306ecf908b1ad5e.
+Repeat shift and stable profiles without tuning: stock, LFU, aging LFU;
+64-block global halving interval,32 physical16-token pages, context384,
+batch128, one running slot, sequential requests, eight output tokens each.
+One diagnostic plus three untraced fresh-server rounds per policy/profile;
+rotate policy order.24 GPU runs. Compare against this model own stock runs.
+Keep all results separate from0.6B; report probe/cache/batch metrics and
+negative results. Identical source checkpoint9f3639b.
+
+Reproduce from experiment root:
+.venv/bin/python src/run_aging_lfu.py --model Qwen/Qwen3-1.7B --profile shift --rounds 3
+.venv/bin/python src/run_aging_lfu.py --model Qwen/Qwen3-1.7B --profile stable --rounds 3

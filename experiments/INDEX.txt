@@ -45,8 +45,14 @@ Experiment registry
                  Stable-hot control preserved all272 reusable tokens with both
                  frequency policies. See RESULTS.txt, PLAN.txt and evidence/.
 
+09 larger-model replication: qwen3-1.7B/RESULTS.txt under09-aging-lfu/.
+ 24 native GPU runs; aging retains new B prefix from cycle2 in every round.
+ Probe first text100.4ms versus stock261.5ms; batch median47.14s versus
+ stock44.01s on shift. Stable control21.27s versus stock21.72s.
+ Separate CSV, frozen summaries and128 raw-file checksums saved.
+
 Current experiment branch: study/experiment-09-aging-lfu in both repositories.
-Nested vLLM source checkpoint:9f3639b. Experiment09 uses pinned Qwen3-0.6B.
+Nested vLLM source checkpoint:9f3639b. Experiment09 uses pinned Qwen3-0.6B and Qwen3-1.7B.
 Completed code, plans, result summaries, CSV evidence and SHA256 inventories
 are saved in local Git checkpoints. Large raw logs/requests remain under
 results/ and are indexed by each experiment's evidence inventories.
