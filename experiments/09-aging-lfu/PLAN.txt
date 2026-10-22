@@ -1,0 +1,44 @@
+Experiment 09: allocation-clock aging of cached-prefix popularity
+================================================================
+
+Compare stock eviction, unchanged cumulative LFU and aging LFU independently
+of queue retention, partial caching and skip/continue. Qwen3-0.6B pinned at
+c1899de289a04d12100db370d81485cdf75e47ca; native Mac Metal GPU.
+
+Predeclared interval:64 allocated physical blocks per half-life, about two
+turnovers of the32-page pool. Before victim selection, advance the global
+allocation clock by the requested page count and right-shift every reuse count
+by all elapsed epochs. All pages use the same epoch, including active pages;
+only ref_count=0 pages are eviction candidates. No references/hashes change
+when scores decay. Uncached-first, deferred-reader priority and stable free-list
+ties are identical to existing LFU. Score0 pages may be evicted normally.
+No wall-clock decay or interval tuning based on benchmark outcomes.
+
+Shift workload:12 initial requests reuse document A. Then8 cycles each contain
+four document-B training requests, four one-off scan prompts, and one B probe.
+84 sequential requests,8 output tokens each=672 outputs. Documents A/B are
+padded to256 chat tokens before varying questions; B's full shared prefix is
+240 tokens. Adaptation is the first cycle whose probe and next cycle's probe
+both reuse the full prefix. Report the entire per-cycle series, not just this
+summary. Null means no sustained full-hit pair within the measured window.
+
+Stable control: the existing experiment02 temporal sequence of42 requests
+(336 output tokens) with an unchanged hot document. No traffic shift; tests
+whether aging destroys useful scan resistance. Same request text as archived02.
+
+All policies/profiles:32 physical pages (31 usable),16-token pages/hash units,
+context384, batch128,1 running slot, FCFS, synchronous chunked prefill,
+temperature0, seed0, ignore EOS, identical one-token warmup outside timing.
+Historical experiment02 used3 slots; these are fresh within-profile comparisons.
+
+One traced diagnostic per policy/profile validates decay events, zero-ref
+evictions, API/trace cache-hit agreement and no preemption. Three untraced rounds
+per policy with fresh servers and rotated order.24 serving runs total.
+Record adaptation, cache hits, phase/probe TTFT and request latency, full batch
+latency, throughput, all paired timings and answer agreement. Report negative
+results and tradeoffs without retuning the predeclared64-block interval.
+
+Run from the experiment root:
+  .venv/bin/python experiments/09-aging-lfu/test_aging_lfu.py
+  .venv/bin/python src/run_aging_lfu.py --profile shift --rounds 3
+  .venv/bin/python src/run_aging_lfu.py --profile stable --rounds 3
