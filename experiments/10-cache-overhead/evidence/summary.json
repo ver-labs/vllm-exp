@@ -1,0 +1,1678 @@
+{
+  "experiment": "10-cache-overhead",
+  "diagnostics": [
+    {
+      "label": "shift-diagnostic",
+      "probe": null,
+      "variant": "reference",
+      "mode": "trace",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/shift-diagnostic-reference-trace.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/reference/shift/lfu/temporal-20261022-085708-672911.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/shift-diagnostic-reference-trace-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/shift-diagnostic-reference-trace-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/reference/shift/lfu/server-trace-wWc5x7",
+      "candidate_summary": {
+        "successful_requests": 84,
+        "failed_requests": 0,
+        "successful_output_tokens": 672,
+        "duration_ms": 19992.52,
+        "output_tokens_per_second": 33.61,
+        "requests_per_second": 4.202,
+        "first_text_ms": {
+          "median": 66.76,
+          "p95_nearest_rank": 101.18
+        },
+        "total_ms": {
+          "median": 247.29,
+          "p95_nearest_rank": 291.75
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 84,
+        "failed_requests": 0,
+        "successful_output_tokens": 672,
+        "duration_ms": 19992.52,
+        "output_tokens_per_second": 33.61,
+        "requests_per_second": 4.202,
+        "first_text_ms": {
+          "median": 66.76,
+          "p95_nearest_rank": 101.18
+        },
+        "total_ms": {
+          "median": 247.29,
+          "p95_nearest_rank": 291.75
+        }
+      },
+      "trace_analysis": {
+        "eviction_policy": "lfu",
+        "half_life_blocks": null,
+        "decays": 0,
+        "epochs": [],
+        "preemptions": 0,
+        "evictions": 689,
+        "invalid_eviction_refs": 0,
+        "lookup_hits": {
+          "A00": 21,
+          "A01": 253,
+          "A02": 253,
+          "A03": 253,
+          "A04": 253,
+          "A05": 253,
+          "A06": 253,
+          "A07": 253,
+          "A08": 253,
+          "A09": 253,
+          "A10": 253,
+          "A11": 254,
+          "B1-T0": 22,
+          "B1-T1": 255,
+          "B1-T2": 255,
+          "B1-T3": 255,
+          "S1-0": 21,
+          "S1-1": 26,
+          "S1-2": 26,
+          "S1-3": 26,
+          "B1-P": 32,
+          "B2-T0": 248,
+          "B2-T1": 255,
+          "B2-T2": 255,
+          "B2-T3": 255,
+          "S2-0": 21,
+          "S2-1": 26,
+          "S2-2": 26,
+          "S2-3": 26,
+          "B2-P": 32,
+          "B3-T0": 248,
+          "B3-T1": 255,
+          "B3-T2": 255,
+          "B3-T3": 255,
+          "S3-0": 21,
+          "S3-1": 26,
+          "S3-2": 26,
+          "S3-3": 26,
+          "B3-P": 32,
+          "B4-T0": 248,
+          "B4-T1": 255,
+          "B4-T2": 255,
+          "B4-T3": 255,
+          "S4-0": 21,
+          "S4-1": 26,
+          "S4-2": 26,
+          "S4-3": 26,
+          "B4-P": 32,
+          "B5-T0": 248,
+          "B5-T1": 255,
+          "B5-T2": 255,
+          "B5-T3": 255,
+          "S5-0": 21,
+          "S5-1": 26,
+          "S5-2": 26,
+          "S5-3": 26,
+          "B5-P": 32,
+          "B6-T0": 248,
+          "B6-T1": 255,
+          "B6-T2": 255,
+          "B6-T3": 255,
+          "S6-0": 21,
+          "S6-1": 26,
+          "S6-2": 26,
+          "S6-3": 26,
+          "B6-P": 32,
+          "B7-T0": 248,
+          "B7-T1": 255,
+          "B7-T2": 255,
+          "B7-T3": 255,
+          "S7-0": 21,
+          "S7-1": 26,
+          "S7-2": 26,
+          "S7-3": 26,
+          "B7-P": 32,
+          "B8-T0": 248,
+          "B8-T1": 255,
+          "B8-T2": 255,
+          "B8-T3": 255,
+          "S8-0": 21,
+          "S8-1": 26,
+          "S8-2": 26,
+          "S8-3": 26,
+          "B8-P": 32
+        }
+      },
+      "nonprefix_totals": {},
+      "sha256": "1a50bd3df33ee03565a250f440d3789404336a999e7c3d9af0f5a36535d794d5",
+      "profile": "shift",
+      "round": "diagnostic",
+      "cpu_profile": {
+        "implementation": "reference",
+        "timings": {
+          "request_finish": {
+            "calls": 85,
+            "ns": 40221836
+          },
+          "schedule": {
+            "calls": 800,
+            "ns": 1098964116
+          },
+          "update_from_output": {
+            "calls": 800,
+            "ns": 514301865
+          },
+          "partial_publish": {
+            "calls": 715,
+            "ns": 74993676
+          },
+          "eviction_select": {
+            "calls": 275,
+            "ns": 5750746
+          }
+        },
+        "partial_blocks_visited": 11855,
+        "order_rebuilds": 0,
+        "idle_updates": 170,
+        "includes_warmup": true,
+        "clock": "perf_counter_ns (host elapsed, no GPU synchronization)"
+      },
+      "cpu_profile_path": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/reference/shift/lfu/server-trace-wWc5x7/cpu-profile.json"
+    },
+    {
+      "label": "shift-diagnostic",
+      "probe": null,
+      "variant": "incremental",
+      "mode": "trace",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/shift-diagnostic-incremental-trace.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/incremental/shift/lfu/temporal-20261022-085758-478048.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/shift-diagnostic-incremental-trace-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/shift-diagnostic-incremental-trace-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/incremental/shift/lfu/server-trace-M5hIFt",
+      "candidate_summary": {
+        "successful_requests": 84,
+        "failed_requests": 0,
+        "successful_output_tokens": 672,
+        "duration_ms": 19074.92,
+        "output_tokens_per_second": 35.23,
+        "requests_per_second": 4.404,
+        "first_text_ms": {
+          "median": 56.48,
+          "p95_nearest_rank": 87.5
+        },
+        "total_ms": {
+          "median": 238.13,
+          "p95_nearest_rank": 287.61
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 84,
+        "failed_requests": 0,
+        "successful_output_tokens": 672,
+        "duration_ms": 19074.92,
+        "output_tokens_per_second": 35.23,
+        "requests_per_second": 4.404,
+        "first_text_ms": {
+          "median": 56.48,
+          "p95_nearest_rank": 87.5
+        },
+        "total_ms": {
+          "median": 238.13,
+          "p95_nearest_rank": 287.61
+        }
+      },
+      "trace_analysis": {
+        "eviction_policy": "lfu",
+        "half_life_blocks": null,
+        "decays": 0,
+        "epochs": [],
+        "preemptions": 0,
+        "evictions": 689,
+        "invalid_eviction_refs": 0,
+        "lookup_hits": {
+          "A00": 21,
+          "A01": 253,
+          "A02": 253,
+          "A03": 253,
+          "A04": 253,
+          "A05": 253,
+          "A06": 253,
+          "A07": 253,
+          "A08": 253,
+          "A09": 253,
+          "A10": 253,
+          "A11": 254,
+          "B1-T0": 22,
+          "B1-T1": 255,
+          "B1-T2": 255,
+          "B1-T3": 255,
+          "S1-0": 21,
+          "S1-1": 26,
+          "S1-2": 26,
+          "S1-3": 26,
+          "B1-P": 32,
+          "B2-T0": 248,
+          "B2-T1": 255,
+          "B2-T2": 255,
+          "B2-T3": 255,
+          "S2-0": 21,
+          "S2-1": 26,
+          "S2-2": 26,
+          "S2-3": 26,
+          "B2-P": 32,
+          "B3-T0": 248,
+          "B3-T1": 255,
+          "B3-T2": 255,
+          "B3-T3": 255,
+          "S3-0": 21,
+          "S3-1": 26,
+          "S3-2": 26,
+          "S3-3": 26,
+          "B3-P": 32,
+          "B4-T0": 248,
+          "B4-T1": 255,
+          "B4-T2": 255,
+          "B4-T3": 255,
+          "S4-0": 21,
+          "S4-1": 26,
+          "S4-2": 26,
+          "S4-3": 26,
+          "B4-P": 32,
+          "B5-T0": 248,
+          "B5-T1": 255,
+          "B5-T2": 255,
+          "B5-T3": 255,
+          "S5-0": 21,
+          "S5-1": 26,
+          "S5-2": 26,
+          "S5-3": 26,
+          "B5-P": 32,
+          "B6-T0": 248,
+          "B6-T1": 255,
+          "B6-T2": 255,
+          "B6-T3": 255,
+          "S6-0": 21,
+          "S6-1": 26,
+          "S6-2": 26,
+          "S6-3": 26,
+          "B6-P": 32,
+          "B7-T0": 248,
+          "B7-T1": 255,
+          "B7-T2": 255,
+          "B7-T3": 255,
+          "S7-0": 21,
+          "S7-1": 26,
+          "S7-2": 26,
+          "S7-3": 26,
+          "B7-P": 32,
+          "B8-T0": 248,
+          "B8-T1": 255,
+          "B8-T2": 255,
+          "B8-T3": 255,
+          "S8-0": 21,
+          "S8-1": 26,
+          "S8-2": 26,
+          "S8-3": 26,
+          "B8-P": 32
+        }
+      },
+      "nonprefix_totals": {},
+      "sha256": "7494e7041ef65382c1dc06de12b74ea81916650b3f3b7b45ab2d78eaef2437c9",
+      "profile": "shift",
+      "round": "diagnostic",
+      "cpu_profile": {
+        "implementation": "incremental",
+        "timings": {
+          "request_finish": {
+            "calls": 85,
+            "ns": 43021752
+          },
+          "schedule": {
+            "calls": 800,
+            "ns": 1051460254
+          },
+          "update_from_output": {
+            "calls": 800,
+            "ns": 473544251
+          },
+          "partial_publish": {
+            "calls": 715,
+            "ns": 56396168
+          },
+          "eviction_select": {
+            "calls": 275,
+            "ns": 4766294
+          }
+        },
+        "partial_blocks_visited": 1527,
+        "order_rebuilds": 3,
+        "idle_updates": 170,
+        "includes_warmup": true,
+        "clock": "perf_counter_ns (host elapsed, no GPU synchronization)"
+      },
+      "cpu_profile_path": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/incremental/shift/lfu/server-trace-M5hIFt/cpu-profile.json"
+    },
+    {
+      "label": "stable-diagnostic",
+      "probe": null,
+      "variant": "reference",
+      "mode": "trace",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/stable-diagnostic-reference-trace.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/reference/stable/lfu/temporal-20261022-090417-643515.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/stable-diagnostic-reference-trace-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/stable-diagnostic-reference-trace-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/reference/stable/lfu/server-trace-NCamZS",
+      "candidate_summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 9725.74,
+        "output_tokens_per_second": 34.55,
+        "requests_per_second": 4.318,
+        "first_text_ms": {
+          "median": 50.88,
+          "p95_nearest_rank": 84.5
+        },
+        "total_ms": {
+          "median": 231.5,
+          "p95_nearest_rank": 259.63
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 9725.74,
+        "output_tokens_per_second": 34.55,
+        "requests_per_second": 4.318,
+        "first_text_ms": {
+          "median": 50.88,
+          "p95_nearest_rank": 84.5
+        },
+        "total_ms": {
+          "median": 231.5,
+          "p95_nearest_rank": 259.63
+        }
+      },
+      "trace_analysis": {
+        "eviction_policy": "lfu",
+        "half_life_blocks": null,
+        "decays": 0,
+        "epochs": [],
+        "preemptions": 0,
+        "evictions": 282,
+        "invalid_eviction_refs": 0,
+        "lookup_hits": {
+          "N00": 21,
+          "N01": 21,
+          "N02": 21,
+          "N03": 21,
+          "N04": 21,
+          "N05": 21,
+          "N06": 21,
+          "N07": 21,
+          "N08": 21,
+          "N09": 21,
+          "N10": 21,
+          "N11": 21,
+          "C1-T0": 21,
+          "C1-T1": 286,
+          "C1-T2": 286,
+          "C1-S0": 21,
+          "C1-S1": 21,
+          "C1-S2": 21,
+          "C1-S3": 21,
+          "C1-S4": 21,
+          "C1-S5": 21,
+          "C1-P": 277,
+          "C2-T0": 284,
+          "C2-T1": 286,
+          "C2-T2": 286,
+          "C2-S0": 21,
+          "C2-S1": 21,
+          "C2-S2": 21,
+          "C2-S3": 21,
+          "C2-S4": 21,
+          "C2-S5": 21,
+          "C2-P": 277,
+          "C3-T0": 284,
+          "C3-T1": 286,
+          "C3-T2": 286,
+          "C3-S0": 21,
+          "C3-S1": 21,
+          "C3-S2": 21,
+          "C3-S3": 21,
+          "C3-S4": 21,
+          "C3-S5": 21,
+          "C3-P": 277
+        }
+      },
+      "nonprefix_totals": {},
+      "sha256": "544fcbecb1c934c39f0772ef95f42dff63f5acc117946c3a029dd6f330f4946e",
+      "profile": "stable",
+      "round": "diagnostic",
+      "cpu_profile": {
+        "implementation": "reference",
+        "timings": {
+          "request_finish": {
+            "calls": 43,
+            "ns": 19092003
+          },
+          "schedule": {
+            "calls": 384,
+            "ns": 486317659
+          },
+          "update_from_output": {
+            "calls": 384,
+            "ns": 233465424
+          },
+          "partial_publish": {
+            "calls": 341,
+            "ns": 28137954
+          },
+          "eviction_select": {
+            "calls": 87,
+            "ns": 2005919
+          }
+        },
+        "partial_blocks_visited": 4275,
+        "order_rebuilds": 0,
+        "idle_updates": 86,
+        "includes_warmup": true,
+        "clock": "perf_counter_ns (host elapsed, no GPU synchronization)"
+      },
+      "cpu_profile_path": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/reference/stable/lfu/server-trace-NCamZS/cpu-profile.json"
+    },
+    {
+      "label": "stable-diagnostic",
+      "probe": null,
+      "variant": "incremental",
+      "mode": "trace",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/stable-diagnostic-incremental-trace.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/incremental/stable/lfu/temporal-20261022-090454-884961.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/stable-diagnostic-incremental-trace-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/stable-diagnostic-incremental-trace-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/incremental/stable/lfu/server-trace-WDUtsi",
+      "candidate_summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 9191.59,
+        "output_tokens_per_second": 36.56,
+        "requests_per_second": 4.569,
+        "first_text_ms": {
+          "median": 47.55,
+          "p95_nearest_rank": 67.76
+        },
+        "total_ms": {
+          "median": 216.0,
+          "p95_nearest_rank": 245.87
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 9191.59,
+        "output_tokens_per_second": 36.56,
+        "requests_per_second": 4.569,
+        "first_text_ms": {
+          "median": 47.55,
+          "p95_nearest_rank": 67.76
+        },
+        "total_ms": {
+          "median": 216.0,
+          "p95_nearest_rank": 245.87
+        }
+      },
+      "trace_analysis": {
+        "eviction_policy": "lfu",
+        "half_life_blocks": null,
+        "decays": 0,
+        "epochs": [],
+        "preemptions": 0,
+        "evictions": 282,
+        "invalid_eviction_refs": 0,
+        "lookup_hits": {
+          "N00": 21,
+          "N01": 21,
+          "N02": 21,
+          "N03": 21,
+          "N04": 21,
+          "N05": 21,
+          "N06": 21,
+          "N07": 21,
+          "N08": 21,
+          "N09": 21,
+          "N10": 21,
+          "N11": 21,
+          "C1-T0": 21,
+          "C1-T1": 286,
+          "C1-T2": 286,
+          "C1-S0": 21,
+          "C1-S1": 21,
+          "C1-S2": 21,
+          "C1-S3": 21,
+          "C1-S4": 21,
+          "C1-S5": 21,
+          "C1-P": 277,
+          "C2-T0": 284,
+          "C2-T1": 286,
+          "C2-T2": 286,
+          "C2-S0": 21,
+          "C2-S1": 21,
+          "C2-S2": 21,
+          "C2-S3": 21,
+          "C2-S4": 21,
+          "C2-S5": 21,
+          "C2-P": 277,
+          "C3-T0": 284,
+          "C3-T1": 286,
+          "C3-T2": 286,
+          "C3-S0": 21,
+          "C3-S1": 21,
+          "C3-S2": 21,
+          "C3-S3": 21,
+          "C3-S4": 21,
+          "C3-S5": 21,
+          "C3-P": 277
+        }
+      },
+      "nonprefix_totals": {},
+      "sha256": "ac3b7dceda57600b80103e42b5af09764b8d5d47f4134c0a6b547847e906431f",
+      "profile": "stable",
+      "round": "diagnostic",
+      "cpu_profile": {
+        "implementation": "incremental",
+        "timings": {
+          "request_finish": {
+            "calls": 43,
+            "ns": 20394667
+          },
+          "schedule": {
+            "calls": 384,
+            "ns": 474637968
+          },
+          "update_from_output": {
+            "calls": 384,
+            "ns": 223896708
+          },
+          "partial_publish": {
+            "calls": 341,
+            "ns": 22674209
+          },
+          "eviction_select": {
+            "calls": 87,
+            "ns": 1303332
+          }
+        },
+        "partial_blocks_visited": 584,
+        "order_rebuilds": 2,
+        "idle_updates": 86,
+        "includes_warmup": true,
+        "clock": "perf_counter_ns (host elapsed, no GPU synchronization)"
+      },
+      "cpu_profile_path": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/incremental/stable/lfu/server-trace-WDUtsi/cpu-profile.json"
+    }
+  ],
+  "runs": [
+    {
+      "label": "shift-1",
+      "probe": null,
+      "variant": "reference",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/shift-1-reference-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/reference/shift/lfu/temporal-20261022-085859-348624.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/shift-1-reference-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/shift-1-reference-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/reference/shift/lfu/server-bench-dOsF81",
+      "candidate_summary": {
+        "successful_requests": 84,
+        "failed_requests": 0,
+        "successful_output_tokens": 672,
+        "duration_ms": 22422.32,
+        "output_tokens_per_second": 29.97,
+        "requests_per_second": 3.746,
+        "first_text_ms": {
+          "median": 79.34,
+          "p95_nearest_rank": 137.03
+        },
+        "total_ms": {
+          "median": 266.34,
+          "p95_nearest_rank": 355.54
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 84,
+        "failed_requests": 0,
+        "successful_output_tokens": 672,
+        "duration_ms": 22422.32,
+        "output_tokens_per_second": 29.97,
+        "requests_per_second": 3.746,
+        "first_text_ms": {
+          "median": 79.34,
+          "p95_nearest_rank": 137.03
+        },
+        "total_ms": {
+          "median": 266.34,
+          "p95_nearest_rank": 355.54
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "fa2489287edbd20777e38490d16b0e12a8e352ecc233def918f59d4863a256bb",
+      "profile": "shift",
+      "round": 1,
+      "cpu_profile": {
+        "implementation": "reference",
+        "timings": {
+          "request_finish": {
+            "calls": 85,
+            "ns": 6502956
+          },
+          "schedule": {
+            "calls": 800,
+            "ns": 172835835
+          },
+          "update_from_output": {
+            "calls": 800,
+            "ns": 226544394
+          },
+          "partial_publish": {
+            "calls": 715,
+            "ns": 94617165
+          },
+          "eviction_select": {
+            "calls": 275,
+            "ns": 6956758
+          }
+        },
+        "partial_blocks_visited": 11855,
+        "order_rebuilds": 0,
+        "idle_updates": 170,
+        "includes_warmup": true,
+        "clock": "perf_counter_ns (host elapsed, no GPU synchronization)"
+      },
+      "cpu_profile_path": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/reference/shift/lfu/server-bench-dOsF81/cpu-profile.json"
+    },
+    {
+      "label": "shift-1",
+      "probe": null,
+      "variant": "incremental",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/shift-1-incremental-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/incremental/shift/lfu/temporal-20261022-085953-828218.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/shift-1-incremental-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/shift-1-incremental-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/incremental/shift/lfu/server-bench-jeCcTv",
+      "candidate_summary": {
+        "successful_requests": 84,
+        "failed_requests": 0,
+        "successful_output_tokens": 672,
+        "duration_ms": 20409.63,
+        "output_tokens_per_second": 32.93,
+        "requests_per_second": 4.116,
+        "first_text_ms": {
+          "median": 76.37,
+          "p95_nearest_rank": 107.48
+        },
+        "total_ms": {
+          "median": 238.96,
+          "p95_nearest_rank": 293.48
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 84,
+        "failed_requests": 0,
+        "successful_output_tokens": 672,
+        "duration_ms": 20409.63,
+        "output_tokens_per_second": 32.93,
+        "requests_per_second": 4.116,
+        "first_text_ms": {
+          "median": 76.37,
+          "p95_nearest_rank": 107.48
+        },
+        "total_ms": {
+          "median": 238.96,
+          "p95_nearest_rank": 293.48
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "6ff9b4d36ee054e0c8be90d55e26cc45cbbb62f7d2b2eee60558081aa7e54569",
+      "profile": "shift",
+      "round": 1,
+      "cpu_profile": {
+        "implementation": "incremental",
+        "timings": {
+          "request_finish": {
+            "calls": 85,
+            "ns": 9734424
+          },
+          "schedule": {
+            "calls": 800,
+            "ns": 171611045
+          },
+          "update_from_output": {
+            "calls": 800,
+            "ns": 202923340
+          },
+          "partial_publish": {
+            "calls": 715,
+            "ns": 84163499
+          },
+          "eviction_select": {
+            "calls": 275,
+            "ns": 5518842
+          }
+        },
+        "partial_blocks_visited": 1527,
+        "order_rebuilds": 3,
+        "idle_updates": 170,
+        "includes_warmup": true,
+        "clock": "perf_counter_ns (host elapsed, no GPU synchronization)"
+      },
+      "cpu_profile_path": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/incremental/shift/lfu/server-bench-jeCcTv/cpu-profile.json"
+    },
+    {
+      "label": "shift-2",
+      "probe": null,
+      "variant": "incremental",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/shift-2-incremental-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/incremental/shift/lfu/temporal-20261022-090045-033117.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/shift-2-incremental-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/shift-2-incremental-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/incremental/shift/lfu/server-bench-OO3Cmr",
+      "candidate_summary": {
+        "successful_requests": 84,
+        "failed_requests": 0,
+        "successful_output_tokens": 672,
+        "duration_ms": 19104.57,
+        "output_tokens_per_second": 35.17,
+        "requests_per_second": 4.397,
+        "first_text_ms": {
+          "median": 61.11,
+          "p95_nearest_rank": 96.8
+        },
+        "total_ms": {
+          "median": 235.8,
+          "p95_nearest_rank": 270.9
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 84,
+        "failed_requests": 0,
+        "successful_output_tokens": 672,
+        "duration_ms": 19104.57,
+        "output_tokens_per_second": 35.17,
+        "requests_per_second": 4.397,
+        "first_text_ms": {
+          "median": 61.11,
+          "p95_nearest_rank": 96.8
+        },
+        "total_ms": {
+          "median": 235.8,
+          "p95_nearest_rank": 270.9
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "aa5d6a15c75c03b3bbef6c41aea550d66e3f67d822a3716661fa8c4d6a4116d0",
+      "profile": "shift",
+      "round": 2,
+      "cpu_profile": {
+        "implementation": "incremental",
+        "timings": {
+          "request_finish": {
+            "calls": 85,
+            "ns": 8920374
+          },
+          "schedule": {
+            "calls": 800,
+            "ns": 157277045
+          },
+          "update_from_output": {
+            "calls": 800,
+            "ns": 187685903
+          },
+          "partial_publish": {
+            "calls": 715,
+            "ns": 77907339
+          },
+          "eviction_select": {
+            "calls": 275,
+            "ns": 4928180
+          }
+        },
+        "partial_blocks_visited": 1527,
+        "order_rebuilds": 3,
+        "idle_updates": 170,
+        "includes_warmup": true,
+        "clock": "perf_counter_ns (host elapsed, no GPU synchronization)"
+      },
+      "cpu_profile_path": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/incremental/shift/lfu/server-bench-OO3Cmr/cpu-profile.json"
+    },
+    {
+      "label": "shift-2",
+      "probe": null,
+      "variant": "reference",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/shift-2-reference-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/reference/shift/lfu/temporal-20261022-090133-989492.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/shift-2-reference-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/shift-2-reference-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/reference/shift/lfu/server-bench-SL0zlj",
+      "candidate_summary": {
+        "successful_requests": 84,
+        "failed_requests": 0,
+        "successful_output_tokens": 672,
+        "duration_ms": 19673.5,
+        "output_tokens_per_second": 34.16,
+        "requests_per_second": 4.27,
+        "first_text_ms": {
+          "median": 65.72,
+          "p95_nearest_rank": 102.04
+        },
+        "total_ms": {
+          "median": 243.75,
+          "p95_nearest_rank": 280.41
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 84,
+        "failed_requests": 0,
+        "successful_output_tokens": 672,
+        "duration_ms": 19673.5,
+        "output_tokens_per_second": 34.16,
+        "requests_per_second": 4.27,
+        "first_text_ms": {
+          "median": 65.72,
+          "p95_nearest_rank": 102.04
+        },
+        "total_ms": {
+          "median": 243.75,
+          "p95_nearest_rank": 280.41
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "be79b7eddc4d9cf6f5447177786fbd60d4a675f0d6d7ba42a4d0902d1dd68fa6",
+      "profile": "shift",
+      "round": 2,
+      "cpu_profile": {
+        "implementation": "reference",
+        "timings": {
+          "request_finish": {
+            "calls": 85,
+            "ns": 3943125
+          },
+          "schedule": {
+            "calls": 800,
+            "ns": 160870421
+          },
+          "update_from_output": {
+            "calls": 800,
+            "ns": 201516691
+          },
+          "partial_publish": {
+            "calls": 715,
+            "ns": 95218797
+          },
+          "eviction_select": {
+            "calls": 275,
+            "ns": 7147662
+          }
+        },
+        "partial_blocks_visited": 11855,
+        "order_rebuilds": 0,
+        "idle_updates": 170,
+        "includes_warmup": true,
+        "clock": "perf_counter_ns (host elapsed, no GPU synchronization)"
+      },
+      "cpu_profile_path": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/reference/shift/lfu/server-bench-SL0zlj/cpu-profile.json"
+    },
+    {
+      "label": "shift-3",
+      "probe": null,
+      "variant": "reference",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/shift-3-reference-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/reference/shift/lfu/temporal-20261022-090238-292042.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/shift-3-reference-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/shift-3-reference-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/reference/shift/lfu/server-bench-Stfu24",
+      "candidate_summary": {
+        "successful_requests": 84,
+        "failed_requests": 0,
+        "successful_output_tokens": 672,
+        "duration_ms": 19787.39,
+        "output_tokens_per_second": 33.96,
+        "requests_per_second": 4.245,
+        "first_text_ms": {
+          "median": 70.28,
+          "p95_nearest_rank": 124.16
+        },
+        "total_ms": {
+          "median": 234.56,
+          "p95_nearest_rank": 291.96
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 84,
+        "failed_requests": 0,
+        "successful_output_tokens": 672,
+        "duration_ms": 19787.39,
+        "output_tokens_per_second": 33.96,
+        "requests_per_second": 4.245,
+        "first_text_ms": {
+          "median": 70.28,
+          "p95_nearest_rank": 124.16
+        },
+        "total_ms": {
+          "median": 234.56,
+          "p95_nearest_rank": 291.96
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "167c8ee3840e44d564a637453df9609bb8e85e4775292d3ea6c1727afd7d3af3",
+      "profile": "shift",
+      "round": 3,
+      "cpu_profile": {
+        "implementation": "reference",
+        "timings": {
+          "request_finish": {
+            "calls": 85,
+            "ns": 4145955
+          },
+          "schedule": {
+            "calls": 800,
+            "ns": 164707075
+          },
+          "update_from_output": {
+            "calls": 800,
+            "ns": 206448044
+          },
+          "partial_publish": {
+            "calls": 715,
+            "ns": 95868624
+          },
+          "eviction_select": {
+            "calls": 275,
+            "ns": 6895573
+          }
+        },
+        "partial_blocks_visited": 11855,
+        "order_rebuilds": 0,
+        "idle_updates": 170,
+        "includes_warmup": true,
+        "clock": "perf_counter_ns (host elapsed, no GPU synchronization)"
+      },
+      "cpu_profile_path": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/reference/shift/lfu/server-bench-Stfu24/cpu-profile.json"
+    },
+    {
+      "label": "shift-3",
+      "probe": null,
+      "variant": "incremental",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/shift-3-incremental-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/incremental/shift/lfu/temporal-20261022-090329-175656.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/shift-3-incremental-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/shift-3-incremental-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/incremental/shift/lfu/server-bench-rJrJYa",
+      "candidate_summary": {
+        "successful_requests": 84,
+        "failed_requests": 0,
+        "successful_output_tokens": 672,
+        "duration_ms": 19675.85,
+        "output_tokens_per_second": 34.15,
+        "requests_per_second": 4.269,
+        "first_text_ms": {
+          "median": 62.02,
+          "p95_nearest_rank": 100.39
+        },
+        "total_ms": {
+          "median": 237.33,
+          "p95_nearest_rank": 316.74
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 84,
+        "failed_requests": 0,
+        "successful_output_tokens": 672,
+        "duration_ms": 19675.85,
+        "output_tokens_per_second": 34.15,
+        "requests_per_second": 4.269,
+        "first_text_ms": {
+          "median": 62.02,
+          "p95_nearest_rank": 100.39
+        },
+        "total_ms": {
+          "median": 237.33,
+          "p95_nearest_rank": 316.74
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "361d7c3aab418bc913387b4afd755800d482c0702c282840df04d579e667c43c",
+      "profile": "shift",
+      "round": 3,
+      "cpu_profile": {
+        "implementation": "incremental",
+        "timings": {
+          "request_finish": {
+            "calls": 85,
+            "ns": 9081495
+          },
+          "schedule": {
+            "calls": 800,
+            "ns": 151139705
+          },
+          "update_from_output": {
+            "calls": 800,
+            "ns": 201235996
+          },
+          "partial_publish": {
+            "calls": 715,
+            "ns": 77517003
+          },
+          "eviction_select": {
+            "calls": 275,
+            "ns": 4720045
+          }
+        },
+        "partial_blocks_visited": 1527,
+        "order_rebuilds": 3,
+        "idle_updates": 170,
+        "includes_warmup": true,
+        "clock": "perf_counter_ns (host elapsed, no GPU synchronization)"
+      },
+      "cpu_profile_path": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/incremental/shift/lfu/server-bench-rJrJYa/cpu-profile.json"
+    },
+    {
+      "label": "stable-1",
+      "probe": null,
+      "variant": "reference",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/stable-1-reference-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/reference/stable/lfu/temporal-20261022-090531-180784.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/stable-1-reference-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/stable-1-reference-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/reference/stable/lfu/server-bench-zsoJBi",
+      "candidate_summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 9310.72,
+        "output_tokens_per_second": 36.09,
+        "requests_per_second": 4.511,
+        "first_text_ms": {
+          "median": 56.72,
+          "p95_nearest_rank": 72.97
+        },
+        "total_ms": {
+          "median": 221.27,
+          "p95_nearest_rank": 300.84
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 9310.72,
+        "output_tokens_per_second": 36.09,
+        "requests_per_second": 4.511,
+        "first_text_ms": {
+          "median": 56.72,
+          "p95_nearest_rank": 72.97
+        },
+        "total_ms": {
+          "median": 221.27,
+          "p95_nearest_rank": 300.84
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "580f778512171c6f1ff5bf6da19213d67589ab87855554e377bc202735cc7c26",
+      "profile": "stable",
+      "round": 1,
+      "cpu_profile": {
+        "implementation": "reference",
+        "timings": {
+          "request_finish": {
+            "calls": 43,
+            "ns": 1903290
+          },
+          "schedule": {
+            "calls": 384,
+            "ns": 73039882
+          },
+          "update_from_output": {
+            "calls": 384,
+            "ns": 91487786
+          },
+          "partial_publish": {
+            "calls": 341,
+            "ns": 35820200
+          },
+          "eviction_select": {
+            "calls": 87,
+            "ns": 2553668
+          }
+        },
+        "partial_blocks_visited": 4275,
+        "order_rebuilds": 0,
+        "idle_updates": 86,
+        "includes_warmup": true,
+        "clock": "perf_counter_ns (host elapsed, no GPU synchronization)"
+      },
+      "cpu_profile_path": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/reference/stable/lfu/server-bench-zsoJBi/cpu-profile.json"
+    },
+    {
+      "label": "stable-1",
+      "probe": null,
+      "variant": "incremental",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/stable-1-incremental-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/incremental/stable/lfu/temporal-20261022-090607-859210.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/stable-1-incremental-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/stable-1-incremental-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/incremental/stable/lfu/server-bench-YNATx4",
+      "candidate_summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 8626.1,
+        "output_tokens_per_second": 38.95,
+        "requests_per_second": 4.869,
+        "first_text_ms": {
+          "median": 49.42,
+          "p95_nearest_rank": 62.06
+        },
+        "total_ms": {
+          "median": 197.83,
+          "p95_nearest_rank": 274.84
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 8626.1,
+        "output_tokens_per_second": 38.95,
+        "requests_per_second": 4.869,
+        "first_text_ms": {
+          "median": 49.42,
+          "p95_nearest_rank": 62.06
+        },
+        "total_ms": {
+          "median": 197.83,
+          "p95_nearest_rank": 274.84
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "62d0f0bd37f756980a1dbc3950cdc394583b5c341bae565fd28613af3a31f181",
+      "profile": "stable",
+      "round": 1,
+      "cpu_profile": {
+        "implementation": "incremental",
+        "timings": {
+          "request_finish": {
+            "calls": 43,
+            "ns": 3725124
+          },
+          "schedule": {
+            "calls": 384,
+            "ns": 65608357
+          },
+          "update_from_output": {
+            "calls": 384,
+            "ns": 74684300
+          },
+          "partial_publish": {
+            "calls": 341,
+            "ns": 25423963
+          },
+          "eviction_select": {
+            "calls": 87,
+            "ns": 1300129
+          }
+        },
+        "partial_blocks_visited": 584,
+        "order_rebuilds": 2,
+        "idle_updates": 86,
+        "includes_warmup": true,
+        "clock": "perf_counter_ns (host elapsed, no GPU synchronization)"
+      },
+      "cpu_profile_path": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/incremental/stable/lfu/server-bench-YNATx4/cpu-profile.json"
+    },
+    {
+      "label": "stable-2",
+      "probe": null,
+      "variant": "incremental",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/stable-2-incremental-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/incremental/stable/lfu/temporal-20261022-090645-027533.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/stable-2-incremental-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/stable-2-incremental-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/incremental/stable/lfu/server-bench-AF3VBt",
+      "candidate_summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 9669.99,
+        "output_tokens_per_second": 34.75,
+        "requests_per_second": 4.343,
+        "first_text_ms": {
+          "median": 58.3,
+          "p95_nearest_rank": 91.31
+        },
+        "total_ms": {
+          "median": 227.22,
+          "p95_nearest_rank": 262.33
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 9669.99,
+        "output_tokens_per_second": 34.75,
+        "requests_per_second": 4.343,
+        "first_text_ms": {
+          "median": 58.3,
+          "p95_nearest_rank": 91.31
+        },
+        "total_ms": {
+          "median": 227.22,
+          "p95_nearest_rank": 262.33
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "fed2c82cb91e2dc2117c23b2d472f92c84684fbadfe17d5798c3efd49d298adc",
+      "profile": "stable",
+      "round": 2,
+      "cpu_profile": {
+        "implementation": "incremental",
+        "timings": {
+          "request_finish": {
+            "calls": 43,
+            "ns": 4161670
+          },
+          "schedule": {
+            "calls": 384,
+            "ns": 76776182
+          },
+          "update_from_output": {
+            "calls": 384,
+            "ns": 88893884
+          },
+          "partial_publish": {
+            "calls": 341,
+            "ns": 30065001
+          },
+          "eviction_select": {
+            "calls": 87,
+            "ns": 1489167
+          }
+        },
+        "partial_blocks_visited": 584,
+        "order_rebuilds": 2,
+        "idle_updates": 86,
+        "includes_warmup": true,
+        "clock": "perf_counter_ns (host elapsed, no GPU synchronization)"
+      },
+      "cpu_profile_path": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/incremental/stable/lfu/server-bench-AF3VBt/cpu-profile.json"
+    },
+    {
+      "label": "stable-2",
+      "probe": null,
+      "variant": "reference",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/stable-2-reference-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/reference/stable/lfu/temporal-20261022-090723-528186.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/stable-2-reference-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/stable-2-reference-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/reference/stable/lfu/server-bench-xLbbHy",
+      "candidate_summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 8937.85,
+        "output_tokens_per_second": 37.59,
+        "requests_per_second": 4.699,
+        "first_text_ms": {
+          "median": 52.96,
+          "p95_nearest_rank": 77.16
+        },
+        "total_ms": {
+          "median": 207.78,
+          "p95_nearest_rank": 273.75
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 8937.85,
+        "output_tokens_per_second": 37.59,
+        "requests_per_second": 4.699,
+        "first_text_ms": {
+          "median": 52.96,
+          "p95_nearest_rank": 77.16
+        },
+        "total_ms": {
+          "median": 207.78,
+          "p95_nearest_rank": 273.75
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "b009bd13dd355d0c853f3819aa01f769d0f0aff8158a79646fcfb93410599808",
+      "profile": "stable",
+      "round": 2,
+      "cpu_profile": {
+        "implementation": "reference",
+        "timings": {
+          "request_finish": {
+            "calls": 43,
+            "ns": 1931460
+          },
+          "schedule": {
+            "calls": 384,
+            "ns": 70564372
+          },
+          "update_from_output": {
+            "calls": 384,
+            "ns": 83606452
+          },
+          "partial_publish": {
+            "calls": 341,
+            "ns": 33667112
+          },
+          "eviction_select": {
+            "calls": 87,
+            "ns": 2382078
+          }
+        },
+        "partial_blocks_visited": 4275,
+        "order_rebuilds": 0,
+        "idle_updates": 86,
+        "includes_warmup": true,
+        "clock": "perf_counter_ns (host elapsed, no GPU synchronization)"
+      },
+      "cpu_profile_path": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/reference/stable/lfu/server-bench-xLbbHy/cpu-profile.json"
+    },
+    {
+      "label": "stable-3",
+      "probe": null,
+      "variant": "reference",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/stable-3-reference-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/reference/stable/lfu/temporal-20261022-090759-958944.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/stable-3-reference-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/stable-3-reference-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/reference/stable/lfu/server-bench-qY01db",
+      "candidate_summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 8628.73,
+        "output_tokens_per_second": 38.94,
+        "requests_per_second": 4.867,
+        "first_text_ms": {
+          "median": 50.7,
+          "p95_nearest_rank": 63.68
+        },
+        "total_ms": {
+          "median": 205.66,
+          "p95_nearest_rank": 228.23
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 8628.73,
+        "output_tokens_per_second": 38.94,
+        "requests_per_second": 4.867,
+        "first_text_ms": {
+          "median": 50.7,
+          "p95_nearest_rank": 63.68
+        },
+        "total_ms": {
+          "median": 205.66,
+          "p95_nearest_rank": 228.23
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "8a6aabed6f3b791a45657c242c632d5debe918cf160b0244ac327e7d1b9f3657",
+      "profile": "stable",
+      "round": 3,
+      "cpu_profile": {
+        "implementation": "reference",
+        "timings": {
+          "request_finish": {
+            "calls": 43,
+            "ns": 1889334
+          },
+          "schedule": {
+            "calls": 384,
+            "ns": 69957617
+          },
+          "update_from_output": {
+            "calls": 384,
+            "ns": 83070419
+          },
+          "partial_publish": {
+            "calls": 341,
+            "ns": 33215244
+          },
+          "eviction_select": {
+            "calls": 87,
+            "ns": 2332499
+          }
+        },
+        "partial_blocks_visited": 4275,
+        "order_rebuilds": 0,
+        "idle_updates": 86,
+        "includes_warmup": true,
+        "clock": "perf_counter_ns (host elapsed, no GPU synchronization)"
+      },
+      "cpu_profile_path": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/reference/stable/lfu/server-bench-qY01db/cpu-profile.json"
+    },
+    {
+      "label": "stable-3",
+      "probe": null,
+      "variant": "incremental",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/stable-3-incremental-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/incremental/stable/lfu/temporal-20261022-090836-152897.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/stable-3-incremental-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/batches-20261022-085639/stable-3-incremental-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/incremental/stable/lfu/server-bench-pJ4inu",
+      "candidate_summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 8806.97,
+        "output_tokens_per_second": 38.15,
+        "requests_per_second": 4.769,
+        "first_text_ms": {
+          "median": 53.62,
+          "p95_nearest_rank": 69.58
+        },
+        "total_ms": {
+          "median": 209.92,
+          "p95_nearest_rank": 228.39
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 42,
+        "failed_requests": 0,
+        "successful_output_tokens": 336,
+        "duration_ms": 8806.97,
+        "output_tokens_per_second": 38.15,
+        "requests_per_second": 4.769,
+        "first_text_ms": {
+          "median": 53.62,
+          "p95_nearest_rank": 69.58
+        },
+        "total_ms": {
+          "median": 209.92,
+          "p95_nearest_rank": 228.39
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "964643e948d630386f109d6162bbb4aa8f7beb17b1da96d10c9ee9997a7f37ee",
+      "profile": "stable",
+      "round": 3,
+      "cpu_profile": {
+        "implementation": "incremental",
+        "timings": {
+          "request_finish": {
+            "calls": 43,
+            "ns": 3944666
+          },
+          "schedule": {
+            "calls": 384,
+            "ns": 73156133
+          },
+          "update_from_output": {
+            "calls": 384,
+            "ns": 83126743
+          },
+          "partial_publish": {
+            "calls": 341,
+            "ns": 30681921
+          },
+          "eviction_select": {
+            "calls": 87,
+            "ns": 1635804
+          }
+        },
+        "partial_blocks_visited": 584,
+        "order_rebuilds": 2,
+        "idle_updates": 86,
+        "includes_warmup": true,
+        "clock": "perf_counter_ns (host elapsed, no GPU synchronization)"
+      },
+      "cpu_profile_path": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/incremental/stable/lfu/server-bench-pJ4inu/cpu-profile.json"
+    }
+  ],
+  "complete": true,
+  "aggregate": {
+    "shift": {
+      "reference": {
+        "duration_ms": [
+          22422.32,
+          19673.5,
+          19787.39
+        ],
+        "batch_median_ms": 19787.39,
+        "median_request_latency_ms": 243.75,
+        "median_throughput": 33.96,
+        "cpu_median_ms": {
+          "request_finish": 4.145955,
+          "schedule": 164.707075,
+          "update_from_output": 206.448044,
+          "partial_publish": 95.218797,
+          "eviction_select": 6.956758
+        },
+        "visited_blocks": [
+          11855,
+          11855,
+          11855
+        ],
+        "order_rebuilds": [
+          0,
+          0,
+          0
+        ]
+      },
+      "incremental": {
+        "duration_ms": [
+          20409.63,
+          19104.57,
+          19675.85
+        ],
+        "batch_median_ms": 19675.85,
+        "median_request_latency_ms": 237.33,
+        "median_throughput": 34.15,
+        "cpu_median_ms": {
+          "request_finish": 9.081495,
+          "schedule": 157.277045,
+          "update_from_output": 201.235996,
+          "partial_publish": 77.907339,
+          "eviction_select": 4.92818
+        },
+        "visited_blocks": [
+          1527,
+          1527,
+          1527
+        ],
+        "order_rebuilds": [
+          3,
+          3,
+          3
+        ]
+      }
+    },
+    "stable": {
+      "reference": {
+        "duration_ms": [
+          9310.72,
+          8937.85,
+          8628.73
+        ],
+        "batch_median_ms": 8937.85,
+        "median_request_latency_ms": 207.78,
+        "median_throughput": 37.59,
+        "cpu_median_ms": {
+          "request_finish": 1.90329,
+          "schedule": 70.564372,
+          "update_from_output": 83.606452,
+          "partial_publish": 33.667112,
+          "eviction_select": 2.382078
+        },
+        "visited_blocks": [
+          4275,
+          4275,
+          4275
+        ],
+        "order_rebuilds": [
+          0,
+          0,
+          0
+        ]
+      },
+      "incremental": {
+        "duration_ms": [
+          8626.1,
+          9669.99,
+          8806.97
+        ],
+        "batch_median_ms": 8806.97,
+        "median_request_latency_ms": 209.92,
+        "median_throughput": 38.15,
+        "cpu_median_ms": {
+          "request_finish": 3.944666,
+          "schedule": 73.156133,
+          "update_from_output": 83.126743,
+          "partial_publish": 30.065001,
+          "eviction_select": 1.489167
+        },
+        "visited_blocks": [
+          584,
+          584,
+          584
+        ],
+        "order_rebuilds": [
+          2,
+          2,
+          2
+        ]
+      }
+    }
+  }
+}

@@ -52,6 +52,7 @@ def main():
     parser.add_argument("--profile", choices=("shift", "stable"), required=True)
     parser.add_argument("--rounds", type=int, default=3)
     parser.add_argument("--model", choices=tuple(REVISIONS), default="Qwen/Qwen3-0.6B")
+    parser.add_argument("--results-root", type=Path)
     args = parser.parse_args()
     if args.rounds < 0:
         parser.error("rounds must be nonnegative")
@@ -62,7 +63,7 @@ def main():
         local_files_only=True,
     )
     os.environ["STUDY_AGING_PROFILE"] = args.profile
-    results_root = ROOT / "results/aging-lfu"
+    results_root = (args.results_root or (ROOT / "results/aging-lfu")).resolve()
     if args.model != "Qwen/Qwen3-0.6B":
         results_root /= args.model.replace("/", "--")
     os.environ["STUDY_AGING_RESULTS_ROOT"] = str(results_root)

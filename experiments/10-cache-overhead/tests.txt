@@ -1,0 +1,152 @@
+/Users/nandanadileep/.cache/pre-commit/reporh6_dz_e/py_env-python3.12/bin/ruff format --no-cache experiments/10-cache-overhead/bench_cache_overhead.py src/run_aging_lfu.py
+1 file reformatted, 1 file left unchanged
+
+/Users/nandanadileep/.cache/pre-commit/reporh6_dz_e/py_env-python3.12/bin/ruff check --no-cache experiments/10-cache-overhead src/run_cache_overhead.py src/run_aging_lfu.py workloads/compare_cache_overhead.py
+All checks passed!
+
+/Users/nandanadileep/projects/vllm/vllm/vllm-exp/.venv/bin/python experiments/10-cache-overhead/test_cache_overhead.py -v
+objc[20726]: Class AVFFrameReceiver is implemented in both /opt/homebrew/Cellar/ffmpeg/8.1.2/lib/libavdevice.62.3.102.dylib (0x126b7c328) and /Users/nandanadileep/projects/vllm/vllm/vllm-exp/.venv/lib/python3.12/site-packages/cv2/.dylibs/libavdevice.61.3.100.dylib (0x1271a03a8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+objc[20726]: Class AVFAudioReceiver is implemented in both /opt/homebrew/Cellar/ffmpeg/8.1.2/lib/libavdevice.62.3.102.dylib (0x126b7c378) and /Users/nandanadileep/projects/vllm/vllm/vllm-exp/.venv/lib/python3.12/site-packages/cv2/.dylibs/libavdevice.61.3.100.dylib (0x1271a03f8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+test_identical_victims_after_mixed_pool_operations_and_decay (__main__.FreeOrderingTests.test_identical_victims_after_mixed_pool_operations_and_decay) ... ok
+test_configuration_resolves_one_token_matching_with_four_token_pages (__main__.IncrementalPartialTests.test_configuration_resolves_one_token_matching_with_four_token_pages) ... ok
+test_decode_does_not_rescan_old_prompt_blocks (__main__.IncrementalPartialTests.test_decode_does_not_rescan_old_prompt_blocks) ... ok
+test_disabled_index_keeps_full_block_matching_and_deferred_free_cleans_up (__main__.IncrementalPartialTests.test_disabled_index_keeps_full_block_matching_and_deferred_free_cleans_up) ... ok
+test_eviction_and_reset_remove_every_interior_alias (__main__.IncrementalPartialTests.test_eviction_and_reset_remove_every_interior_alias) ... ok
+test_only_completed_kv_is_published_then_seven_tokens_hit (__main__.IncrementalPartialTests.test_only_completed_kv_is_published_then_seven_tokens_hit) ... ok
+test_partial_hit_gets_private_tail_and_retains_copy_endpoints (__main__.IncrementalPartialTests.test_partial_hit_gets_private_tail_and_retains_copy_endpoints) ... ok
+test_partial_to_full_promotion_restores_shorter_aliases (__main__.IncrementalPartialTests.test_partial_to_full_promotion_restores_shorter_aliases) ... ok
+test_promotion_copy_move_and_preemption_forget_are_republished (__main__.IncrementalPartialTests.test_promotion_copy_move_and_preemption_forget_are_republished) ... ok
+test_configuration_resolves_one_token_matching_with_four_token_pages (builtins.PartialPrefixTests.test_configuration_resolves_one_token_matching_with_four_token_pages) ... ok
+test_disabled_index_keeps_full_block_matching_and_deferred_free_cleans_up (builtins.PartialPrefixTests.test_disabled_index_keeps_full_block_matching_and_deferred_free_cleans_up) ... ok
+test_eviction_and_reset_remove_every_interior_alias (builtins.PartialPrefixTests.test_eviction_and_reset_remove_every_interior_alias) ... ok
+test_only_completed_kv_is_published_then_seven_tokens_hit (builtins.PartialPrefixTests.test_only_completed_kv_is_published_then_seven_tokens_hit) ... ok
+test_partial_hit_gets_private_tail_and_retains_copy_endpoints (builtins.PartialPrefixTests.test_partial_hit_gets_private_tail_and_retains_copy_endpoints) ... ok
+test_partial_to_full_promotion_restores_shorter_aliases (builtins.PartialPrefixTests.test_partial_to_full_promotion_restores_shorter_aliases) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.048s
+
+OK
+
+/Users/nandanadileep/projects/vllm/vllm/vllm-exp/.venv/bin/python experiments/09-aging-lfu/test_aging_lfu.py -v
+objc[20732]: Class AVFFrameReceiver is implemented in both /opt/homebrew/Cellar/ffmpeg/8.1.2/lib/libavdevice.62.3.102.dylib (0x128f20328) and /Users/nandanadileep/projects/vllm/vllm/vllm-exp/.venv/lib/python3.12/site-packages/cv2/.dylibs/libavdevice.61.3.100.dylib (0x1295d03a8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+objc[20732]: Class AVFAudioReceiver is implemented in both /opt/homebrew/Cellar/ffmpeg/8.1.2/lib/libavdevice.62.3.102.dylib (0x128f20378) and /Users/nandanadileep/projects/vllm/vllm/vllm-exp/.venv/lib/python3.12/site-packages/cv2/.dylibs/libavdevice.61.3.100.dylib (0x1295d03f8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+test_decay_uses_allocated_blocks_and_applies_to_every_count (__main__.AgingLFUTests.test_decay_uses_allocated_blocks_and_applies_to_every_count) ... ok
+test_factory_is_opt_in_and_rejects_invalid_interval (__main__.AgingLFUTests.test_factory_is_opt_in_and_rejects_invalid_interval) ... ok
+test_multiple_epochs_are_applied_together_and_zero_allocations_do_not_age (__main__.AgingLFUTests.test_multiple_epochs_are_applied_together_and_zero_allocations_do_not_age) ... ok
+test_stale_hot_score_can_fall_below_a_recently_used_score (__main__.AgingLFUTests.test_stale_hot_score_can_fall_below_a_recently_used_score) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.002s
+
+OK
+
+/Users/nandanadileep/projects/vllm/vllm/vllm-exp/.venv/bin/python experiments/10-cache-overhead/bench_cache_overhead.py
+{
+  "kind": "host-only synthetic allocation/cache/touch/free replay",
+  "identical_victims": true,
+  "runs": [
+    {
+      "total_ms": 3.167792,
+      "allocation_ms": 2.410586,
+      "free_blocks": 32,
+      "measured_allocations": 400,
+      "implementation": "reference",
+      "round": 1
+    },
+    {
+      "total_ms": 1.794083,
+      "allocation_ms": 0.686418,
+      "free_blocks": 32,
+      "measured_allocations": 400,
+      "implementation": "incremental",
+      "round": 1
+    },
+    {
+      "total_ms": 1.787083,
+      "allocation_ms": 0.680173,
+      "free_blocks": 32,
+      "measured_allocations": 400,
+      "implementation": "incremental",
+      "round": 2
+    },
+    {
+      "total_ms": 3.120959,
+      "allocation_ms": 2.409633,
+      "free_blocks": 32,
+      "measured_allocations": 400,
+      "implementation": "reference",
+      "round": 2
+    },
+    {
+      "total_ms": 3.111042,
+      "allocation_ms": 2.3963,
+      "free_blocks": 32,
+      "measured_allocations": 400,
+      "implementation": "reference",
+      "round": 3
+    },
+    {
+      "total_ms": 1.795542,
+      "allocation_ms": 0.686174,
+      "free_blocks": 32,
+      "measured_allocations": 400,
+      "implementation": "incremental",
+      "round": 3
+    },
+    {
+      "total_ms": 269.997458,
+      "allocation_ms": 268.872286,
+      "free_blocks": 4096,
+      "measured_allocations": 400,
+      "implementation": "reference",
+      "round": 1
+    },
+    {
+      "total_ms": 1.934208,
+      "allocation_ms": 0.832886,
+      "free_blocks": 4096,
+      "measured_allocations": 400,
+      "implementation": "incremental",
+      "round": 1
+    },
+    {
+      "total_ms": 1.9975,
+      "allocation_ms": 0.882452,
+      "free_blocks": 4096,
+      "measured_allocations": 400,
+      "implementation": "incremental",
+      "round": 2
+    },
+    {
+      "total_ms": 271.585167,
+      "allocation_ms": 270.448867,
+      "free_blocks": 4096,
+      "measured_allocations": 400,
+      "implementation": "reference",
+      "round": 2
+    },
+    {
+      "total_ms": 269.314542,
+      "allocation_ms": 268.270515,
+      "free_blocks": 4096,
+      "measured_allocations": 400,
+      "implementation": "reference",
+      "round": 3
+    },
+    {
+      "total_ms": 2.095291,
+      "allocation_ms": 0.913625,
+      "free_blocks": 4096,
+      "measured_allocations": 400,
+      "implementation": "incremental",
+      "round": 3
+    }
+  ]
+}
+
+objc[20737]: Class AVFFrameReceiver is implemented in both /opt/homebrew/Cellar/ffmpeg/8.1.2/lib/libavdevice.62.3.102.dylib (0x1390c8328) and /Users/nandanadileep/projects/vllm/vllm/vllm-exp/.venv/lib/python3.12/site-packages/cv2/.dylibs/libavdevice.61.3.100.dylib (0x1397a03a8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+objc[20737]: Class AVFAudioReceiver is implemented in both /opt/homebrew/Cellar/ffmpeg/8.1.2/lib/libavdevice.62.3.102.dylib (0x1390c8378) and /Users/nandanadileep/projects/vllm/vllm/vllm-exp/.venv/lib/python3.12/site-packages/cv2/.dylibs/libavdevice.61.3.100.dylib (0x1397a03f8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+
+bash -n src/serve_cache_overhead.sh
+

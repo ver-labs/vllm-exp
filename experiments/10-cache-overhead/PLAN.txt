@@ -1,0 +1,28 @@
+Experiment10: implementation overhead only
+
+Compare reference versus incremental implementations of the same policies.
+Both enable exact interior-prefix publication and LFU; FCFS synchronous
+chunked prefill, native Metal, pinned Qwen3-0.6B c1899de289a04d12100db370d81485cdf75e47ca.
+No approximate reuse, queue prioritization or skip/continue.
+Use existing shift(84) and stable(42) request manifests unchanged, eight outputs
+per request.32 physical16-token pages, context384, token budget128, one slot.
+One traced diagnostic and three untraced alternating-order timing rounds per
+implementation/profile:16 GPU runs. Host aggregate timers enabled equally,
+snapshotted at idle request boundaries and written by a background thread.
+The client waits0.5s outside its measurement window for the final report. Includes warmup; timers are elapsed host times,
+not GPU kernel time. Check per-request cache hits, answers and physical
+allocation/lookup/eviction decisions. Trace timings are excluded from comparisons.
+Also run differential randomized pool tests and exact partial-prefix tests for
+copy, reassignment, promotion/reset and free/preemption/recompute lifecycle.
+Report scheduler schedule/update totals, publisher/selector time and end-to-end
+latency/throughput, all rounds and negative results. Original source9f3639b;
+original rootb192c97. Source and evidence saved in isolated experiment branch.
+
+User-requested previous-experiment replication:
+Repeat experiment09 stock/LFU/aging-LFU on pinned Qwen3-1.7B with
+incremental implementation, unchanged64-block decay,32 pages and profiles.
+One diagnostic and three rotated untraced rounds per policy/profile:24 runs.
+Save under results/cache-overhead/aging-replication/ and archive separately.
+Compare current policies with current stock and confirm decisions/cache hits
+against frozen experiment09 1.7B diagnostics. Historical timing comparison
+is descriptive across sessions; not an isolated overhead A/B measurement.

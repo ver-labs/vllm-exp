@@ -1,0 +1,99 @@
+Experiment10: cache implementation overhead
+=================================================================
+
+Matched reference versus incremental implementations of LFU + exact partial-prefix caching.
+Pinned Qwen3-0.6B, native Mac Metal GPU, FCFS synchronous chunked prefill.
+32 physical16-token pages, one slot, batch128, context384, eight outputs/request.
+No skip/continue, queue-demand retention, aging or approximate reuse in this A/B.
+One diagnostic and three alternating timing rounds per implementation/profile:16 runs.
+Both modes use the same new integration hooks and lightweight aggregate timers.
+The reference mode retains the previous publication scan and stable allocation sort.
+Timings include warmup and empty drain steps; schedule/update timings are inclusive.
+Selector/publisher times are nested subsets: do not add them to scheduler totals.
+Snapshots copy counters at idle boundaries; background file writes are outside timers.
+This instrumentation is enabled equally in both modes; no per-step trace during timing.
+
+Mechanism and correctness
+-----------------------------------------------------------------
+Partial publication visits new computed prompt ranges and invalidated owned blocks.
+Hash removal/promotion/moves dirty affected owners; CoW marks the replaced index.
+Free/preemption clears request progress; reset clears progress and ownership.
+LFU uses a lazy-invalidated heap keyed by watcher,cached,frequency,free-queue order.
+Prepend/append stamps preserve exact stable-sort ties. Heap rebuilds occur at startup,
+bounded stale-entry compaction, global aging epochs, and explicit cache reset.
+No count, reference, hash identity, or victim-selection policy was changed.
+15 integration/differential tests plus4 existing aging tests passed.
+Differential pool replay:1500 mixed operations each for LFU and aging LFU.
+Both GPU diagnostic decision streams match exactly (physical allocations, evictions,
+lookup hits/blocks, scheduled positions and copies; empty drains excluded).
+Every timed per-request cached-token count and answer matches its paired reference.
+Preemption free/forget/recompute uses the same checked lifecycle; these sequential
+GPU workloads do not induce preemption. No preemption-latency claim is made.
+
+SHIFT
+-----------------------------------------------------------------
+Metric                                      Reference     Incremental
+Batch median seconds                             19.787          19.676
+Median request latency ms                       243.750         237.330
+Output tokens/second                             33.960          34.150
+schedule host median ms                         164.707         157.277
+update_from_output host median ms               206.448         201.236
+partial_publish host median ms                   95.219          77.907
+eviction_select host median ms                    6.957           4.928
+request_finish host median ms                     4.146           9.081
+reference batch times ms: [22422.32, 19673.5, 19787.39]
+reference publisher block visits: [11855, 11855, 11855]
+reference ordering rebuilds: [0, 0, 0]
+reference schedule+update ms per run: [399.380229, 362.387112, 371.155119]; median 371.155.
+incremental batch times ms: [20409.63, 19104.57, 19675.85]
+incremental publisher block visits: [1527, 1527, 1527]
+incremental ordering rebuilds: [3, 3, 3]
+incremental schedule+update ms per run: [374.534385, 344.962948, 352.375701]; median 352.376.
+Batch time changes % (negative=faster): [-8.976278993431542, -2.8918596081022763, -0.5636923313281916]; group-median ratio -0.564%.
+
+STABLE
+-----------------------------------------------------------------
+Metric                                      Reference     Incremental
+Batch median seconds                              8.938           8.807
+Median request latency ms                       207.780         209.920
+Output tokens/second                             37.590          38.150
+schedule host median ms                          70.564          73.156
+update_from_output host median ms                83.606          83.127
+partial_publish host median ms                   33.667          30.065
+eviction_select host median ms                    2.382           1.489
+request_finish host median ms                     1.903           3.945
+reference batch times ms: [9310.72, 8937.85, 8628.73]
+reference publisher block visits: [4275, 4275, 4275]
+reference ordering rebuilds: [0, 0, 0]
+reference schedule+update ms per run: [164.527668, 154.170824, 153.028036]; median 154.171.
+incremental batch times ms: [8626.1, 9669.99, 8806.97]
+incremental publisher block visits: [584, 584, 584]
+incremental ordering rebuilds: [2, 2, 2]
+incremental schedule+update ms per run: [140.292657, 165.670066, 156.282876]; median 156.283.
+Batch time changes % (negative=faster): [-7.353029626065433, 8.191455439507255, 2.065657402653698]; group-median ratio -1.464%.
+
+Host-only allocation scaling (separate synthetic replay)
+-----------------------------------------------------------------
+400 measured allocations after50 warmup, cache insertion/touch/free included.
+Three alternating rounds each; all physical victim sequences identical.
+32 free pages, reference: total ms [3.167792, 3.120959, 3.111042]; median 3.121.
+32 free pages, incremental: total ms [1.794083, 1.787083, 1.795542]; median 1.794.
+4096 free pages, reference: total ms [269.997458, 271.585167, 269.314542]; median 269.997.
+4096 free pages, incremental: total ms [1.934208, 1.9975, 2.095291]; median 1.998.
+
+Interpretation
+-----------------------------------------------------------------
+Publishing revisits about87% fewer blocks in these workloads; much of its remaining
+time still comes from publishing actual prefix aliases. Selector time decreased in
+both GPU profiles. Maintaining dirty owners/free ordering adds work on other paths.
+Full scheduler CPU time improved on shift but slightly regressed on stable.
+End-to-end median batch time improved slightly (about0.6% shift,1.5% stable).
+Paired wall times vary; stable improved in only one of three pairs. Three rounds
+on one small-pool workload do not establish a general serving speedup.
+Host-only large-pool improvement is not a model-throughput benchmark.
+Two excluded setup diagnostics exposed profiler shutdown/completeness issues;
+their raw failed summary/log folders remain under results/cache-overhead.
+Reports now validate exactly one finish per request, including warmup.
+See PLAN.txt for the separate requested experiment09 larger-model replication.
+Source checkpoint:1e1b324e7077874af3799ebc3a659940210263c5
+Raw logs are indexed by evidence/raw-sha256.json; summaries and CSV are versioned.
