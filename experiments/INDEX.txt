@@ -59,8 +59,14 @@ Experiment registry
                      experiment09 replication completed:24 runs, unchanged
                      choices and hits. See aging-replication/RESULTS.txt.
 
-Current experiment branch: study/experiment-10-cache-overhead in both repositories.
-Nested vLLM source checkpoint:1e1b324. Experiment09 uses pinned Qwen3-0.6B and Qwen3-1.7B.
+11-partial-threshold/ : exact partial-hit minimum and1/4/8-token granularity.
+                       40 GPU runs; unrestricted1-token matching improved
+                       target first text15.5% versus stock in this probe.
+                       Minimum8 discarded useful smaller hits; no universal
+                       crossover established. See RESULTS.txt and evidence/.
+
+Current experiment branch: study/experiment-11-partial-threshold in both repositories.
+Nested vLLM source checkpoint:490d80d. Experiment09 uses pinned Qwen3-0.6B and Qwen3-1.7B.
 Completed code, plans, result summaries, CSV evidence and SHA256 inventories
 are saved in local Git checkpoints. Large raw logs/requests remain under
 results/ and are indexed by each experiment's evidence inventories.

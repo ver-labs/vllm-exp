@@ -1,0 +1,35 @@
+Experiment11: partial reuse granularity and minimum saving
+
+Pinned Qwen3-0.6B c1899de289a04d12100db370d81485cdf75e47ca, native Metal.
+16-token physical blocks,96 pages, context256, batch128, one running slot.
+FCFS synchronous chunked prefill, stock eviction, incremental study publishing.
+Ten configurations: stock16; each g in1,4,8 with minimum0,8,16.
+Minimum16 rejects all interior hits while retaining the same fine hashing and
+publication overhead. This isolates accept/copy versus recompute at each g.
+Stock16 separately measures complete feature overhead. Eight is not tuned.
+One traced diagnostic and three fresh-server untraced rounds/configuration.
+Rotate launch order each round.40 serving runs.
+Each run: three shuffled repetitions of offsets1..15 into the eighth block.
+Source/target128 actual token IDs, identical through112+offset tokens; fixed
+length/suffix and differing token at that exact offset. One output token each
+(ignore EOS, seed0, temperature0), minimizing decode confounding.
+Reset cache before each source/target pair; verify source cache hit0 and target
+expected112+floor(offset/g)*g if extra>=minimum, otherwise112.
+Measure streaming first-text and total target latency, pair latency including
+source publication, output text agreement, model cached-token usage.
+Diagnostic copies must equal accepted partial hits; rejected hits copy nothing.
+No preemption is expected. Timings exclude startup, warmup and reset.
+Report all offsets, all rounds, median paired differences against same-g min16
+and stock16. Three rounds are exploratory: do not claim a universal crossover.
+Changes only gate fine lookup; native block allocation, retained CoW copying,
+KV identity, reference handling, invalidation and preemption lifecycle unchanged.
+Source base1e1b324; root based99dad0. Prior experiments remain archived.
+
+Reproduce from experiment root:
+.venv/bin/python experiments/11-partial-threshold/test_partial_threshold.py -v
+.venv/bin/python src/run_partial_threshold.py
+
+Source opt-in: STUDY_PARTIAL_PREFIX=1, STUDY_PARTIAL_MIN_TOKENS=0|8|16
+with --prefix-match-unit1|4|8 (space before number in CLI).
+Minimum counts extra tokens beyond the last complete16-token block.
+Default minimum0 preserves existing behavior.

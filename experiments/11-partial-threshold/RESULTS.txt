@@ -1,0 +1,212 @@
+Experiment11: partial-prefix saving threshold
+=================================================================
+
+Native Mac Metal GPU, pinned Qwen3-0.6B; incremental publisher enabled.
+16-token pages,96 pages, one running slot, FCFS synchronous chunked prefill.
+40 fresh-server runs:10 diagnostics and3 untraced rounds per configuration.
+45 source/target pairs per run:3 shuffled repetitions of all offsets1..15.
+128 actual prompt token IDs;112 fully shared tokens plus variable interior prefix.
+One generated token per source/target, fixed length, temperature0, ignore EOS.
+Results measure target first-text/total latency and source+target request time.
+Pair time includes source publication, excludes cache resets and startup.
+Min16 is same-granularity recomputation control; stock16 measures total feature cost.
+All observed cached tokens match predictions; copies equal accepted partial hits.
+No preemptions. Rejected hits retain full-block reuse and do not copy.
+
+Overall medians across all offsets and timing runs (135 targets/configuration):
+config         target first ms    target total ms    pair ms  exact text/control
+g1-m0                  16.610             16.637     40.073  135/135
+g1-m16                 19.838             19.874     43.373  135/135
+g1-m8                  19.137             19.169     42.608  135/135
+g16-m16                19.666             19.703     43.242  135/135
+g4-m0                  16.692             16.768     40.121  135/135
+g4-m16                 20.130             20.156     43.833  135/135
+g4-m8                  18.233             18.270     41.773  135/135
+g8-m0                  18.127             18.159     41.911  135/135
+g8-m16                 19.754             19.785     43.033  135/135
+g8-m8                  17.932             17.963     41.875  135/135
+
+Per-offset results versus same-granularity min16 control:
+config offset saved target_ms control_ms paired_change% faster_pairs/9
+g1-m0     1   1     18.549     20.046     -8.72 8/9
+g1-m0     2   2     18.000     19.784     -9.17 9/9
+g1-m0     3   3     18.018     19.871    -10.68 9/9
+g1-m0     4   4     16.378     20.169    -17.99 9/9
+g1-m0     5   5     16.132     19.604    -16.50 8/9
+g1-m0     6   6     17.258     19.311    -12.33 9/9
+g1-m0     7   7     16.619     20.095    -20.04 9/9
+g1-m0     8   8     16.986     19.549    -15.48 9/9
+g1-m0     9   9     16.027     19.684    -19.65 9/9
+g1-m0    10  10     16.235     19.228    -16.31 9/9
+g1-m0    11  11     16.526     20.008    -16.38 8/9
+g1-m0    12  12     16.006     19.917    -14.97 7/9
+g1-m0    13  13     16.135     19.795    -18.98 9/9
+g1-m0    14  14     15.648     19.838    -21.25 9/9
+g1-m0    15  15     15.940     20.089    -19.93 9/9
+g1-m16    1   0     20.046     20.046     +0.00 0/9
+g1-m16    2   0     19.784     19.784     +0.00 0/9
+g1-m16    3   0     19.871     19.871     +0.00 0/9
+g1-m16    4   0     20.169     20.169     +0.00 0/9
+g1-m16    5   0     19.604     19.604     +0.00 0/9
+g1-m16    6   0     19.311     19.311     +0.00 0/9
+g1-m16    7   0     20.095     20.095     +0.00 0/9
+g1-m16    8   0     19.549     19.549     +0.00 0/9
+g1-m16    9   0     19.684     19.684     +0.00 0/9
+g1-m16   10   0     19.228     19.228     +0.00 0/9
+g1-m16   11   0     20.008     20.008     +0.00 0/9
+g1-m16   12   0     19.917     19.917     +0.00 0/9
+g1-m16   13   0     19.795     19.795     +0.00 0/9
+g1-m16   14   0     19.838     19.838     +0.00 0/9
+g1-m16   15   0     20.089     20.089     +0.00 0/9
+g1-m8     1   0     19.906     20.046     -2.98 5/9
+g1-m8     2   0     20.620     19.784     +3.80 2/9
+g1-m8     3   0     20.461     19.871     +1.27 2/9
+g1-m8     4   0     20.131     20.169     +0.50 4/9
+g1-m8     5   0     20.429     19.604     +3.90 2/9
+g1-m8     6   0     20.359     19.311     +4.47 2/9
+g1-m8     7   0     20.311     20.095     +1.69 3/9
+g1-m8     8   8     16.284     19.549    -17.72 9/9
+g1-m8     9   9     16.856     19.684    -13.91 8/9
+g1-m8    10  10     17.135     19.228    -10.29 7/9
+g1-m8    11  11     16.860     20.008    -16.59 9/9
+g1-m8    12  12     16.826     19.917    -10.62 8/9
+g1-m8    13  13     16.803     19.795    -14.76 8/9
+g1-m8    14  14     15.902     19.838    -16.81 9/9
+g1-m8    15  15     16.206     20.089    -18.94 8/9
+g16-m16   1   0     19.950     19.950     +0.00 0/9
+g16-m16   2   0     19.573     19.573     +0.00 0/9
+g16-m16   3   0     19.312     19.312     +0.00 0/9
+g16-m16   4   0     19.666     19.666     +0.00 0/9
+g16-m16   5   0     19.933     19.933     +0.00 0/9
+g16-m16   6   0     19.737     19.737     +0.00 0/9
+g16-m16   7   0     20.132     20.132     +0.00 0/9
+g16-m16   8   0     19.049     19.049     +0.00 0/9
+g16-m16   9   0     19.573     19.573     +0.00 0/9
+g16-m16  10   0     19.538     19.538     +0.00 0/9
+g16-m16  11   0     19.510     19.510     +0.00 0/9
+g16-m16  12   0     19.918     19.918     +0.00 0/9
+g16-m16  13   0     19.637     19.637     +0.00 0/9
+g16-m16  14   0     19.740     19.740     +0.00 0/9
+g16-m16  15   0     19.281     19.281     +0.00 0/9
+g4-m0     1   0     20.004     20.051     -0.81 5/9
+g4-m0     2   0     20.223     20.177     -0.12 5/9
+g4-m0     3   0     20.083     20.350     -2.64 6/9
+g4-m0     4   4     16.206     19.872    -18.52 9/9
+g4-m0     5   4     16.343     20.328    -21.05 9/9
+g4-m0     6   4     16.974     20.388    -16.96 9/9
+g4-m0     7   4     16.477     19.991    -19.89 9/9
+g4-m0     8   8     15.941     19.594    -18.41 9/9
+g4-m0     9   8     17.035     20.380    -15.00 9/9
+g4-m0    10   8     16.778     20.191    -15.56 9/9
+g4-m0    11   8     15.926     20.022    -20.68 9/9
+g4-m0    12  12     16.492     20.007    -19.08 9/9
+g4-m0    13  12     16.427     20.696    -21.02 9/9
+g4-m0    14  12     16.677     20.060    -20.28 8/9
+g4-m0    15  12     16.011     20.014    -21.80 9/9
+g4-m16    1   0     20.051     20.051     +0.00 0/9
+g4-m16    2   0     20.177     20.177     +0.00 0/9
+g4-m16    3   0     20.350     20.350     +0.00 0/9
+g4-m16    4   0     19.872     19.872     +0.00 0/9
+g4-m16    5   0     20.328     20.328     +0.00 0/9
+g4-m16    6   0     20.388     20.388     +0.00 0/9
+g4-m16    7   0     19.991     19.991     +0.00 0/9
+g4-m16    8   0     19.594     19.594     +0.00 0/9
+g4-m16    9   0     20.380     20.380     +0.00 0/9
+g4-m16   10   0     20.191     20.191     +0.00 0/9
+g4-m16   11   0     20.022     20.022     +0.00 0/9
+g4-m16   12   0     20.007     20.007     +0.00 0/9
+g4-m16   13   0     20.696     20.696     +0.00 0/9
+g4-m16   14   0     20.060     20.060     +0.00 0/9
+g4-m16   15   0     20.014     20.014     +0.00 0/9
+g4-m8     1   0     19.760     20.051     -1.41 6/9
+g4-m8     2   0     20.188     20.177     +0.14 4/9
+g4-m8     3   0     19.860     20.350     +0.06 4/9
+g4-m8     4   0     19.699     19.872     -2.07 6/9
+g4-m8     5   0     19.988     20.328     -2.84 7/9
+g4-m8     6   0     20.102     20.388     -0.51 5/9
+g4-m8     7   0     20.017     19.991     -1.12 5/9
+g4-m8     8   8     17.244     19.594    -14.77 9/9
+g4-m8     9   8     16.349     20.380    -15.00 7/9
+g4-m8    10   8     15.864     20.191    -20.27 9/9
+g4-m8    11   8     15.971     20.022    -18.93 9/9
+g4-m8    12  12     15.794     20.007    -21.06 9/9
+g4-m8    13  12     16.065     20.696    -20.35 9/9
+g4-m8    14  12     15.869     20.060    -20.06 9/9
+g4-m8    15  12     16.021     20.014    -19.76 9/9
+g8-m0     1   0     20.098     19.556     +3.92 2/9
+g8-m0     2   0     20.232     19.654     +2.17 2/9
+g8-m0     3   0     20.073     19.905     +1.06 4/9
+g8-m0     4   0     20.339     20.028     +0.10 4/9
+g8-m0     5   0     20.067     19.523     +3.78 3/9
+g8-m0     6   0     20.072     20.131     -2.90 6/9
+g8-m0     7   0     20.320     19.890     +2.59 4/9
+g8-m0     8   8     16.696     19.524    -14.50 8/9
+g8-m0     9   8     16.588     19.733    -16.48 8/9
+g8-m0    10   8     16.889     19.383    -15.77 9/9
+g8-m0    11   8     15.855     19.600    -18.51 9/9
+g8-m0    12   8     16.683     19.658    -16.30 9/9
+g8-m0    13   8     16.679     19.712    -13.43 9/9
+g8-m0    14   8     16.880     19.716    -14.64 9/9
+g8-m0    15   8     16.366     19.590    -17.91 9/9
+g8-m16    1   0     19.556     19.556     +0.00 0/9
+g8-m16    2   0     19.654     19.654     +0.00 0/9
+g8-m16    3   0     19.905     19.905     +0.00 0/9
+g8-m16    4   0     20.028     20.028     +0.00 0/9
+g8-m16    5   0     19.523     19.523     +0.00 0/9
+g8-m16    6   0     20.131     20.131     +0.00 0/9
+g8-m16    7   0     19.890     19.890     +0.00 0/9
+g8-m16    8   0     19.524     19.524     +0.00 0/9
+g8-m16    9   0     19.733     19.733     +0.00 0/9
+g8-m16   10   0     19.383     19.383     +0.00 0/9
+g8-m16   11   0     19.600     19.600     +0.00 0/9
+g8-m16   12   0     19.658     19.658     +0.00 0/9
+g8-m16   13   0     19.712     19.712     +0.00 0/9
+g8-m16   14   0     19.716     19.716     +0.00 0/9
+g8-m16   15   0     19.590     19.590     +0.00 0/9
+g8-m8     1   0     20.103     19.556     +3.30 3/9
+g8-m8     2   0     19.956     19.654     +1.16 2/9
+g8-m8     3   0     20.003     19.905     +0.14 4/9
+g8-m8     4   0     20.016     20.028     -0.53 7/9
+g8-m8     5   0     19.755     19.523     +1.18 4/9
+g8-m8     6   0     20.088     20.131     +1.17 4/9
+g8-m8     7   0     20.226     19.890     +0.50 4/9
+g8-m8     8   8     16.852     19.524    -12.80 8/9
+g8-m8     9   8     16.820     19.733    -15.86 9/9
+g8-m8    10   8     16.687     19.383    -12.30 9/9
+g8-m8    11   8     16.660     19.600    -16.26 9/9
+g8-m8    12   8     16.756     19.658    -12.74 9/9
+g8-m8    13   8     16.101     19.712    -15.67 9/9
+g8-m8    14   8     16.902     19.716    -16.75 9/9
+g8-m8    15   8     16.304     19.590    -18.26 9/9
+
+Interpretation and limits
+-----------------------------------------------------------------
+Additional saved tokens refer only to the partial block, beyond112 full-block hits.
+Granularity rounds down savings; minimum8 rejects a rounded gain below8.
+g8/min0 and g8/min8 have identical reuse decisions: their spread is a noise check.
+Look for repeated wins across offsets and rounds, not one best point.
+Three server rounds with three repeats each are exploratory. Paired ratios compare
+corresponding round/repetition, not simultaneously running servers. Launch order
+rotates but is not fully balanced over all10 configurations in only3 rounds.
+No single measured offset establishes a universal crossover or optimum threshold.
+Exact causal KV reuse can change low-precision prefill shapes; text agreement is
+reported separately and does not establish semantic quality.
+These are synthetic one-output-token latency probes, not production concurrency
+or long-output throughput measurements. Reproduction:PLAN.txt.
+
+Observed outcome on this workload
+-----------------------------------------------------------------
+Unrestricted one-token matching: target first text16.610ms versus stock19.666ms
+(15.5% lower); source+target40.073ms versus43.242ms (7.3% lower).
+Eight-token minimum with one-token matching: first text19.137ms, worse than
+unrestricted16.610ms; this threshold removed useful small hits.
+At one-token saving, unrestricted matching beat same-g recomputation in8/9
+paired probes; median target18.549ms versus20.046ms. This is the smallest
+tested gain and not a universal break-even estimate.
+Four-token unrestricted matching was close overall (16.692ms); eight-token
+matching was slower (about18ms) but still beat stock in the overall median.
+All1350 timed target texts match corresponding same-g controls exactly.
+First encounters of prefill shapes can include warmup effects; repeated probes
+help but these are not exhaustive steady-state/production benchmarks.
+No automatic choice or new global minimum was adopted. Default minimum stays0.
+All experimental servers stopped. Raw checksums verified before commit.
