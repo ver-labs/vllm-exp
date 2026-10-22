@@ -1,0 +1,115 @@
+Experiment 09: aging frequency-based prefix-cache retention
+=================================================================
+
+Completed on Qwen3-0.6B with native Mac Metal GPU execution.
+Stock, cumulative LFU and aging LFU; no queue retention, partial reuse, or
+skip/continue. Same model, requests, page capacity and output counts within
+each comparison. Decay interval 64 physical block allocations was fixed
+before measurements; it was not retuned after seeing results.
+Halving is global and synchronized before selection, including active scores.
+Only zero-reference pages are candidates; normal allocation remains possible.
+One traced diagnostic and three untraced fresh-server timing rounds per
+policy/profile, with rotated launch order: 24 serving runs in total.
+All profiles use 32 physical 16-token pages (31 usable), context 384, batch 128,
+one running slot, sequential requests, FCFS, synchronous chunked prefill,
+temperature 0, seed 0, ignore EOS, eight outputs/request, one-token warmup.
+
+Profile: shift
+-----------------------------------------------------------------
+84 requests: 12 train document A, then eight cycles of four B
+training requests, four unique cold prompts and one B probe.
+Full B-prefix hit threshold: 240 tokens. 672 measured output tokens.
+
+Median over 3 runs          Stock          LFU       Aging LFU
+Full batch s                    20.908       22.105       21.506
+Output tokens/s                 32.140       30.400       31.250
+Probe first text ms             87.110       96.890       53.440
+Probe request ms               268.070      277.760      212.840
+
+Per-run probe cache-hit series (one value/cycle):
+  vllm: [[16, 16, 16, 16, 16, 16, 16, 16], [16, 16, 16, 16, 16, 16, 16, 16], [16, 16, 16, 16, 16, 16, 16, 16]]
+    First sustained full-hit cycle: [None, None, None]
+    Total cached tokens per run: [10752, 10752, 10752]
+  lfu: [[32, 32, 32, 32, 32, 32, 32, 32], [32, 32, 32, 32, 32, 32, 32, 32], [32, 32, 32, 32, 32, 32, 32, 32]]
+    First sustained full-hit cycle: [None, None, None]
+    Total cached tokens per run: [10880, 10880, 10880]
+  aged_lfu: [[32, 240, 240, 240, 240, 240, 240, 240], [32, 240, 240, 240, 240, 240, 240, 240], [32, 240, 240, 240, 240, 240, 240, 240]]
+    First sustained full-hit cycle: [2, 2, 2]
+    Total cached tokens per run: [12336, 12336, 12336]
+
+Paired full-batch time changes versus stock (%; negative=faster):
+  lfu: [-0.169, 5.725, -10.127]; median paired -0.17%; group-median ratio +5.73%.
+  aged_lfu: [-2.411, 2.857, -3.555]; median paired -2.41%; group-median ratio +2.86%.
+  Aging versus cumulative LFU: [-2.246, -2.713, 7.312].
+
+Exact answers matching stock, by round:
+  lfu: [84, 84, 84] / 84
+  aged_lfu: [84, 84, 84] / 84
+
+Diagnostic validation: zero preemptions, all evicted references zero,
+per-request API cached-token counts match actual lookups. Aging
+decay events: 10. All recorded score shifts verified.
+
+Profile: stable
+-----------------------------------------------------------------
+Existing experiment 02 stable hot-prefix workload: 42 requests,
+three probe cycles, full hot-prefix hit 272, 336 output tokens.
+These are fresh comparisons; historical02 had three running slots.
+
+Median over 3 runs          Stock          LFU       Aging LFU
+Full batch s                    10.959       10.562       10.676
+Output tokens/s                 30.660       31.810       31.470
+Probe first text ms            130.290       51.930       56.280
+Probe request ms               313.100      202.810      212.180
+
+Per-run probe cache-hit series (one value/cycle):
+  vllm: [[16, 16, 16], [16, 16, 16], [16, 16, 16]]
+    Total cached tokens per run: [2720, 2720, 2720]
+  lfu: [[272, 272, 272], [272, 272, 272], [272, 272, 272]]
+    Total cached tokens per run: [3488, 3488, 3488]
+  aged_lfu: [[272, 272, 272], [272, 272, 272], [272, 272, 272]]
+    Total cached tokens per run: [3488, 3488, 3488]
+
+Paired full-batch time changes versus stock (%; negative=faster):
+  lfu: [-8.152, 3.824, -5.704]; median paired -5.70%; group-median ratio -3.62%.
+  aged_lfu: [1.53, 4.937, -9.054]; median paired +1.53%; group-median ratio -2.59%.
+  Aging versus cumulative LFU: [10.541, 1.072, -3.553].
+
+Exact answers matching stock, by round:
+  lfu: [42, 42, 42] / 42
+  aged_lfu: [42, 42, 42] / 42
+
+Diagnostic validation: zero preemptions, all evicted references zero,
+per-request API cached-token counts match actual lookups. Aging
+decay events: 4. All recorded score shifts verified.
+
+Observed outcome
+-----------------------------------------------------------------
+After the intervening cold scans, aging retained the full 240-token B prefix
+from cycle 2 through 8 in every timed run. Stock retained 16 and cumulative LFU
+retained 32 on every such probe. All policies still reused B during consecutive
+B-training requests; these probes specifically test survival through scans.
+Median B-probe first text: 53.44ms aging, 87.11ms stock, 96.89ms cumulative LFU.
+This is 38.65% below stock and 44.85% below cumulative LFU for these probes.
+In the stable-hot control, both LFU policies retained 272 tokens on every probe;
+aging did not reduce hot-prefix retention in this measured window.
+Shift full-batch medians: 20.908s stock, 22.105s LFU, 21.506s aging. Stable medians:
+10.959s stock,10.562s LFU,10.676s aging. Paired results remain mixed, so no
+reliable overall batch-speed advantage is established. All output texts matched
+stock within every timed comparison (84/84 shift, 42/42 stable).
+
+Interpretation and limits
+-----------------------------------------------------------------
+Adaptation is the first probe cycle followed by another full-hit probe.
+Null means no such consecutive pair within the measured window; it is not
+an extrapolation to infinite time. The stable profile has no traffic switch,
+so use its hit series to assess the retention tradeoff rather than adaptation.
+Stock and cumulative LFU can reuse B during consecutive B-training requests;
+the probe series measures survival through the subsequent cold scans.
+Cache reuse, adaptation speed and wall-clock speed are distinct measurements.
+Three timing rounds are exploratory; preserve the ranges and paired results.
+Exact text agreement does not measure semantic quality. This is a fixed
+small-pool experiment on one model, not a production/general speed claim.
+Source/model revisions, file hashes, summaries, CSV and validation are saved.
+Large raw logs remain under results/aging-lfu and are indexed by SHA256.
+All experimental servers stopped. Reproduction: PLAN.txt.

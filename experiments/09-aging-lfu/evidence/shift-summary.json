@@ -1,0 +1,1586 @@
+{
+  "experiment": "09-aging-lfu",
+  "profile": "shift",
+  "half_life_blocks": 64,
+  "rounds": 3,
+  "diagnostics": [
+    {
+      "label": "diagnostic",
+      "probe": null,
+      "variant": "vllm",
+      "mode": "trace",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/batches-20261022-074445/diagnostic-vllm-trace.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/vllm/temporal-20261022-074558-934218.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/batches-20261022-074445/diagnostic-vllm-trace-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/batches-20261022-074445/diagnostic-vllm-trace-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/vllm/server-trace-xWriH4",
+      "candidate_summary": {
+        "successful_requests": 84,
+        "failed_requests": 0,
+        "successful_output_tokens": 672,
+        "duration_ms": 25990.48,
+        "output_tokens_per_second": 25.86,
+        "requests_per_second": 3.232,
+        "first_text_ms": {
+          "median": 92.48,
+          "p95_nearest_rank": 150.29
+        },
+        "total_ms": {
+          "median": 308.06,
+          "p95_nearest_rank": 393.78
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 84,
+        "failed_requests": 0,
+        "successful_output_tokens": 672,
+        "duration_ms": 25990.48,
+        "output_tokens_per_second": 25.86,
+        "requests_per_second": 3.232,
+        "first_text_ms": {
+          "median": 92.48,
+          "p95_nearest_rank": 150.29
+        },
+        "total_ms": {
+          "median": 308.06,
+          "p95_nearest_rank": 393.78
+        }
+      },
+      "trace_analysis": {
+        "eviction_policy": "vllm",
+        "half_life_blocks": null,
+        "decays": 0,
+        "epochs": [],
+        "preemptions": 0,
+        "evictions": 686,
+        "invalid_eviction_refs": 0,
+        "lookup_hits": {
+          "A00": 16,
+          "A01": 240,
+          "A02": 240,
+          "A03": 240,
+          "A04": 240,
+          "A05": 240,
+          "A06": 240,
+          "A07": 240,
+          "A08": 240,
+          "A09": 240,
+          "A10": 240,
+          "A11": 240,
+          "B1-T0": 16,
+          "B1-T1": 240,
+          "B1-T2": 240,
+          "B1-T3": 240,
+          "S1-0": 16,
+          "S1-1": 16,
+          "S1-2": 16,
+          "S1-3": 16,
+          "B1-P": 16,
+          "B2-T0": 240,
+          "B2-T1": 240,
+          "B2-T2": 240,
+          "B2-T3": 240,
+          "S2-0": 16,
+          "S2-1": 16,
+          "S2-2": 16,
+          "S2-3": 16,
+          "B2-P": 16,
+          "B3-T0": 240,
+          "B3-T1": 240,
+          "B3-T2": 240,
+          "B3-T3": 240,
+          "S3-0": 16,
+          "S3-1": 16,
+          "S3-2": 16,
+          "S3-3": 16,
+          "B3-P": 16,
+          "B4-T0": 240,
+          "B4-T1": 240,
+          "B4-T2": 240,
+          "B4-T3": 240,
+          "S4-0": 16,
+          "S4-1": 16,
+          "S4-2": 16,
+          "S4-3": 16,
+          "B4-P": 16,
+          "B5-T0": 240,
+          "B5-T1": 240,
+          "B5-T2": 240,
+          "B5-T3": 240,
+          "S5-0": 16,
+          "S5-1": 16,
+          "S5-2": 16,
+          "S5-3": 16,
+          "B5-P": 16,
+          "B6-T0": 240,
+          "B6-T1": 240,
+          "B6-T2": 240,
+          "B6-T3": 240,
+          "S6-0": 16,
+          "S6-1": 16,
+          "S6-2": 16,
+          "S6-3": 16,
+          "B6-P": 16,
+          "B7-T0": 240,
+          "B7-T1": 240,
+          "B7-T2": 240,
+          "B7-T3": 240,
+          "S7-0": 16,
+          "S7-1": 16,
+          "S7-2": 16,
+          "S7-3": 16,
+          "B7-P": 16,
+          "B8-T0": 240,
+          "B8-T1": 240,
+          "B8-T2": 240,
+          "B8-T3": 240,
+          "S8-0": 16,
+          "S8-1": 16,
+          "S8-2": 16,
+          "S8-3": 16,
+          "B8-P": 16
+        }
+      },
+      "nonprefix_totals": {},
+      "sha256": "69d59ca8bbb809745987d1fbc32d2c0b325fb5720ee834248d6386c98e764f0d",
+      "round": "diagnostic"
+    },
+    {
+      "label": "diagnostic",
+      "probe": null,
+      "variant": "lfu",
+      "mode": "trace",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/batches-20261022-074445/diagnostic-lfu-trace.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/lfu/temporal-20261022-074724-789659.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/batches-20261022-074445/diagnostic-lfu-trace-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/batches-20261022-074445/diagnostic-lfu-trace-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/lfu/server-trace-LC4Dtc",
+      "candidate_summary": {
+        "successful_requests": 84,
+        "failed_requests": 0,
+        "successful_output_tokens": 672,
+        "duration_ms": 25044.27,
+        "output_tokens_per_second": 26.83,
+        "requests_per_second": 3.354,
+        "first_text_ms": {
+          "median": 91.67,
+          "p95_nearest_rank": 121.89
+        },
+        "total_ms": {
+          "median": 302.52,
+          "p95_nearest_rank": 352.46
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 84,
+        "failed_requests": 0,
+        "successful_output_tokens": 672,
+        "duration_ms": 25044.27,
+        "output_tokens_per_second": 26.83,
+        "requests_per_second": 3.354,
+        "first_text_ms": {
+          "median": 91.67,
+          "p95_nearest_rank": 121.89
+        },
+        "total_ms": {
+          "median": 302.52,
+          "p95_nearest_rank": 352.46
+        }
+      },
+      "trace_analysis": {
+        "eviction_policy": "lfu",
+        "half_life_blocks": null,
+        "decays": 0,
+        "epochs": [],
+        "preemptions": 0,
+        "evictions": 678,
+        "invalid_eviction_refs": 0,
+        "lookup_hits": {
+          "A00": 16,
+          "A01": 240,
+          "A02": 240,
+          "A03": 240,
+          "A04": 240,
+          "A05": 240,
+          "A06": 240,
+          "A07": 240,
+          "A08": 240,
+          "A09": 240,
+          "A10": 240,
+          "A11": 240,
+          "B1-T0": 16,
+          "B1-T1": 240,
+          "B1-T2": 240,
+          "B1-T3": 240,
+          "S1-0": 16,
+          "S1-1": 16,
+          "S1-2": 16,
+          "S1-3": 16,
+          "B1-P": 32,
+          "B2-T0": 240,
+          "B2-T1": 240,
+          "B2-T2": 240,
+          "B2-T3": 240,
+          "S2-0": 16,
+          "S2-1": 16,
+          "S2-2": 16,
+          "S2-3": 16,
+          "B2-P": 32,
+          "B3-T0": 240,
+          "B3-T1": 240,
+          "B3-T2": 240,
+          "B3-T3": 240,
+          "S3-0": 16,
+          "S3-1": 16,
+          "S3-2": 16,
+          "S3-3": 16,
+          "B3-P": 32,
+          "B4-T0": 240,
+          "B4-T1": 240,
+          "B4-T2": 240,
+          "B4-T3": 240,
+          "S4-0": 16,
+          "S4-1": 16,
+          "S4-2": 16,
+          "S4-3": 16,
+          "B4-P": 32,
+          "B5-T0": 240,
+          "B5-T1": 240,
+          "B5-T2": 240,
+          "B5-T3": 240,
+          "S5-0": 16,
+          "S5-1": 16,
+          "S5-2": 16,
+          "S5-3": 16,
+          "B5-P": 32,
+          "B6-T0": 240,
+          "B6-T1": 240,
+          "B6-T2": 240,
+          "B6-T3": 240,
+          "S6-0": 16,
+          "S6-1": 16,
+          "S6-2": 16,
+          "S6-3": 16,
+          "B6-P": 32,
+          "B7-T0": 240,
+          "B7-T1": 240,
+          "B7-T2": 240,
+          "B7-T3": 240,
+          "S7-0": 16,
+          "S7-1": 16,
+          "S7-2": 16,
+          "S7-3": 16,
+          "B7-P": 32,
+          "B8-T0": 240,
+          "B8-T1": 240,
+          "B8-T2": 240,
+          "B8-T3": 240,
+          "S8-0": 16,
+          "S8-1": 16,
+          "S8-2": 16,
+          "S8-3": 16,
+          "B8-P": 32
+        }
+      },
+      "nonprefix_totals": {},
+      "sha256": "893cfb553a9896505eea86186348a6bc3a50c9feaa9bff6df86cc0cbb9ef8ea8",
+      "round": "diagnostic"
+    },
+    {
+      "label": "diagnostic",
+      "probe": null,
+      "variant": "aged_lfu",
+      "mode": "trace",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/batches-20261022-074445/diagnostic-aged_lfu-trace.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/aged_lfu/temporal-20261022-074823-073446.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/batches-20261022-074445/diagnostic-aged_lfu-trace-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/batches-20261022-074445/diagnostic-aged_lfu-trace-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/aged_lfu/server-trace-pegT5K",
+      "candidate_summary": {
+        "successful_requests": 84,
+        "failed_requests": 0,
+        "successful_output_tokens": 672,
+        "duration_ms": 26935.36,
+        "output_tokens_per_second": 24.95,
+        "requests_per_second": 3.119,
+        "first_text_ms": {
+          "median": 72.57,
+          "p95_nearest_rank": 239.9
+        },
+        "total_ms": {
+          "median": 299.39,
+          "p95_nearest_rank": 459.11
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 84,
+        "failed_requests": 0,
+        "successful_output_tokens": 672,
+        "duration_ms": 26935.36,
+        "output_tokens_per_second": 24.95,
+        "requests_per_second": 3.119,
+        "first_text_ms": {
+          "median": 72.57,
+          "p95_nearest_rank": 239.9
+        },
+        "total_ms": {
+          "median": 299.39,
+          "p95_nearest_rank": 459.11
+        }
+      },
+      "trace_analysis": {
+        "eviction_policy": "aged_lfu",
+        "half_life_blocks": 64,
+        "decays": 10,
+        "epochs": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "preemptions": 0,
+        "evictions": 587,
+        "invalid_eviction_refs": 0,
+        "lookup_hits": {
+          "A00": 16,
+          "A01": 240,
+          "A02": 240,
+          "A03": 240,
+          "A04": 240,
+          "A05": 240,
+          "A06": 240,
+          "A07": 240,
+          "A08": 240,
+          "A09": 240,
+          "A10": 240,
+          "A11": 240,
+          "B1-T0": 16,
+          "B1-T1": 240,
+          "B1-T2": 240,
+          "B1-T3": 240,
+          "S1-0": 16,
+          "S1-1": 16,
+          "S1-2": 16,
+          "S1-3": 16,
+          "B1-P": 32,
+          "B2-T0": 240,
+          "B2-T1": 240,
+          "B2-T2": 240,
+          "B2-T3": 240,
+          "S2-0": 16,
+          "S2-1": 16,
+          "S2-2": 16,
+          "S2-3": 16,
+          "B2-P": 240,
+          "B3-T0": 240,
+          "B3-T1": 240,
+          "B3-T2": 240,
+          "B3-T3": 240,
+          "S3-0": 16,
+          "S3-1": 16,
+          "S3-2": 16,
+          "S3-3": 16,
+          "B3-P": 240,
+          "B4-T0": 240,
+          "B4-T1": 240,
+          "B4-T2": 240,
+          "B4-T3": 240,
+          "S4-0": 16,
+          "S4-1": 16,
+          "S4-2": 16,
+          "S4-3": 16,
+          "B4-P": 240,
+          "B5-T0": 240,
+          "B5-T1": 240,
+          "B5-T2": 240,
+          "B5-T3": 240,
+          "S5-0": 16,
+          "S5-1": 16,
+          "S5-2": 16,
+          "S5-3": 16,
+          "B5-P": 240,
+          "B6-T0": 240,
+          "B6-T1": 240,
+          "B6-T2": 240,
+          "B6-T3": 240,
+          "S6-0": 16,
+          "S6-1": 16,
+          "S6-2": 16,
+          "S6-3": 16,
+          "B6-P": 240,
+          "B7-T0": 240,
+          "B7-T1": 240,
+          "B7-T2": 240,
+          "B7-T3": 240,
+          "S7-0": 16,
+          "S7-1": 16,
+          "S7-2": 16,
+          "S7-3": 16,
+          "B7-P": 240,
+          "B8-T0": 240,
+          "B8-T1": 240,
+          "B8-T2": 240,
+          "B8-T3": 240,
+          "S8-0": 16,
+          "S8-1": 16,
+          "S8-2": 16,
+          "S8-3": 16,
+          "B8-P": 240
+        }
+      },
+      "nonprefix_totals": {},
+      "sha256": "19250331d6adb4d124646423707b160dc7ec33dd10eefa88a3bc7942f242432f",
+      "round": "diagnostic"
+    }
+  ],
+  "runs": [
+    {
+      "label": 1,
+      "probe": null,
+      "variant": "vllm",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/batches-20261022-074445/1-vllm-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/vllm/temporal-20261022-074927-684548.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/batches-20261022-074445/1-vllm-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/batches-20261022-074445/1-vllm-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/vllm/server-bench-KbVSuf",
+      "candidate_summary": {
+        "successful_requests": 84,
+        "failed_requests": 0,
+        "successful_output_tokens": 672,
+        "duration_ms": 24493.2,
+        "output_tokens_per_second": 27.44,
+        "requests_per_second": 3.43,
+        "first_text_ms": {
+          "median": 83.45,
+          "p95_nearest_rank": 172.05
+        },
+        "total_ms": {
+          "median": 292.21,
+          "p95_nearest_rank": 377.71
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 84,
+        "failed_requests": 0,
+        "successful_output_tokens": 672,
+        "duration_ms": 24493.2,
+        "output_tokens_per_second": 27.44,
+        "requests_per_second": 3.43,
+        "first_text_ms": {
+          "median": 83.45,
+          "p95_nearest_rank": 172.05
+        },
+        "total_ms": {
+          "median": 292.21,
+          "p95_nearest_rank": 377.71
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "10ee07f75a42c4cd10ee0f32d1623c7dfba07dc6d058965f6828aac6138eb918",
+      "round": 1
+    },
+    {
+      "label": 1,
+      "probe": null,
+      "variant": "lfu",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/batches-20261022-074445/1-lfu-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/lfu/temporal-20261022-075027-330654.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/batches-20261022-074445/1-lfu-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/batches-20261022-074445/1-lfu-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/lfu/server-bench-X3qxbx",
+      "candidate_summary": {
+        "successful_requests": 84,
+        "failed_requests": 0,
+        "successful_output_tokens": 672,
+        "duration_ms": 24451.91,
+        "output_tokens_per_second": 27.48,
+        "requests_per_second": 3.435,
+        "first_text_ms": {
+          "median": 89.91,
+          "p95_nearest_rank": 136.65
+        },
+        "total_ms": {
+          "median": 294.02,
+          "p95_nearest_rank": 364.52
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 84,
+        "failed_requests": 0,
+        "successful_output_tokens": 672,
+        "duration_ms": 24451.91,
+        "output_tokens_per_second": 27.48,
+        "requests_per_second": 3.435,
+        "first_text_ms": {
+          "median": 89.91,
+          "p95_nearest_rank": 136.65
+        },
+        "total_ms": {
+          "median": 294.02,
+          "p95_nearest_rank": 364.52
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "8a7c9cc1901fda1fc8660529fcc2dde7a4d87f5dd92abfe98ac6bc5582e7f5c8",
+      "round": 1
+    },
+    {
+      "label": 1,
+      "probe": null,
+      "variant": "aged_lfu",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/batches-20261022-074445/1-aged_lfu-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/aged_lfu/temporal-20261022-075127-839484.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/batches-20261022-074445/1-aged_lfu-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/batches-20261022-074445/1-aged_lfu-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/aged_lfu/server-bench-cjLnwj",
+      "candidate_summary": {
+        "successful_requests": 84,
+        "failed_requests": 0,
+        "successful_output_tokens": 672,
+        "duration_ms": 23902.74,
+        "output_tokens_per_second": 28.11,
+        "requests_per_second": 3.514,
+        "first_text_ms": {
+          "median": 78.61,
+          "p95_nearest_rank": 275.73
+        },
+        "total_ms": {
+          "median": 273.4,
+          "p95_nearest_rank": 408.15
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 84,
+        "failed_requests": 0,
+        "successful_output_tokens": 672,
+        "duration_ms": 23902.74,
+        "output_tokens_per_second": 28.11,
+        "requests_per_second": 3.514,
+        "first_text_ms": {
+          "median": 78.61,
+          "p95_nearest_rank": 275.73
+        },
+        "total_ms": {
+          "median": 273.4,
+          "p95_nearest_rank": 408.15
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "849449be2b1ea777c3522e24838d2570aabe3725a20f4406f20b8f04a55c31a5",
+      "round": 1
+    },
+    {
+      "label": 2,
+      "probe": null,
+      "variant": "lfu",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/batches-20261022-074445/2-lfu-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/lfu/temporal-20261022-075228-511132.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/batches-20261022-074445/2-lfu-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/batches-20261022-074445/2-lfu-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/lfu/server-bench-kvNa0E",
+      "candidate_summary": {
+        "successful_requests": 84,
+        "failed_requests": 0,
+        "successful_output_tokens": 672,
+        "duration_ms": 22105.2,
+        "output_tokens_per_second": 30.4,
+        "requests_per_second": 3.8,
+        "first_text_ms": {
+          "median": 83.72,
+          "p95_nearest_rank": 222.11
+        },
+        "total_ms": {
+          "median": 264.02,
+          "p95_nearest_rank": 350.27
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 84,
+        "failed_requests": 0,
+        "successful_output_tokens": 672,
+        "duration_ms": 22105.2,
+        "output_tokens_per_second": 30.4,
+        "requests_per_second": 3.8,
+        "first_text_ms": {
+          "median": 83.72,
+          "p95_nearest_rank": 222.11
+        },
+        "total_ms": {
+          "median": 264.02,
+          "p95_nearest_rank": 350.27
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "e201c0fdc4b2a12b2f9f5fd6d5754743c276b958b6bceda969aac5f2f0ef84bd",
+      "round": 2
+    },
+    {
+      "label": 2,
+      "probe": null,
+      "variant": "aged_lfu",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/batches-20261022-074445/2-aged_lfu-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/aged_lfu/temporal-20261022-075322-416443.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/batches-20261022-074445/2-aged_lfu-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/batches-20261022-074445/2-aged_lfu-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/aged_lfu/server-bench-5f2pPP",
+      "candidate_summary": {
+        "successful_requests": 84,
+        "failed_requests": 0,
+        "successful_output_tokens": 672,
+        "duration_ms": 21505.51,
+        "output_tokens_per_second": 31.25,
+        "requests_per_second": 3.906,
+        "first_text_ms": {
+          "median": 63.72,
+          "p95_nearest_rank": 120.22
+        },
+        "total_ms": {
+          "median": 244.22,
+          "p95_nearest_rank": 303.73
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 84,
+        "failed_requests": 0,
+        "successful_output_tokens": 672,
+        "duration_ms": 21505.51,
+        "output_tokens_per_second": 31.25,
+        "requests_per_second": 3.906,
+        "first_text_ms": {
+          "median": 63.72,
+          "p95_nearest_rank": 120.22
+        },
+        "total_ms": {
+          "median": 244.22,
+          "p95_nearest_rank": 303.73
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "add5fdfd1c571e5790ad3fecfba8021f5c102acba54cf86d9b2025c23e500ea6",
+      "round": 2
+    },
+    {
+      "label": 2,
+      "probe": null,
+      "variant": "vllm",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/batches-20261022-074445/2-vllm-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/vllm/temporal-20261022-075443-182251.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/batches-20261022-074445/2-vllm-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/batches-20261022-074445/2-vllm-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/vllm/server-bench-F29ly6",
+      "candidate_summary": {
+        "successful_requests": 84,
+        "failed_requests": 0,
+        "successful_output_tokens": 672,
+        "duration_ms": 20908.15,
+        "output_tokens_per_second": 32.14,
+        "requests_per_second": 4.018,
+        "first_text_ms": {
+          "median": 75.94,
+          "p95_nearest_rank": 141.36
+        },
+        "total_ms": {
+          "median": 250.38,
+          "p95_nearest_rank": 321.48
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 84,
+        "failed_requests": 0,
+        "successful_output_tokens": 672,
+        "duration_ms": 20908.15,
+        "output_tokens_per_second": 32.14,
+        "requests_per_second": 4.018,
+        "first_text_ms": {
+          "median": 75.94,
+          "p95_nearest_rank": 141.36
+        },
+        "total_ms": {
+          "median": 250.38,
+          "p95_nearest_rank": 321.48
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "7e05f1abced1674849f4d50244b6bcdf51eb2dfe319247f64dd21f50c1ca2447",
+      "round": 2
+    },
+    {
+      "label": 3,
+      "probe": null,
+      "variant": "aged_lfu",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/batches-20261022-074445/3-aged_lfu-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/aged_lfu/temporal-20261022-075535-565811.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/batches-20261022-074445/3-aged_lfu-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/batches-20261022-074445/3-aged_lfu-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/aged_lfu/server-bench-RxLUnm",
+      "candidate_summary": {
+        "successful_requests": 84,
+        "failed_requests": 0,
+        "successful_output_tokens": 672,
+        "duration_ms": 19418.18,
+        "output_tokens_per_second": 34.61,
+        "requests_per_second": 4.326,
+        "first_text_ms": {
+          "median": 54.63,
+          "p95_nearest_rank": 104.79
+        },
+        "total_ms": {
+          "median": 223.91,
+          "p95_nearest_rank": 298.57
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 84,
+        "failed_requests": 0,
+        "successful_output_tokens": 672,
+        "duration_ms": 19418.18,
+        "output_tokens_per_second": 34.61,
+        "requests_per_second": 4.326,
+        "first_text_ms": {
+          "median": 54.63,
+          "p95_nearest_rank": 104.79
+        },
+        "total_ms": {
+          "median": 223.91,
+          "p95_nearest_rank": 298.57
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "30185483a7b01c81bf5ba66216302b5a8c913b8c7f89feb8ca45e2769bf9a467",
+      "round": 3
+    },
+    {
+      "label": 3,
+      "probe": null,
+      "variant": "vllm",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/batches-20261022-074445/3-vllm-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/vllm/temporal-20261022-075626-895924.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/batches-20261022-074445/3-vllm-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/batches-20261022-074445/3-vllm-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/vllm/server-bench-7k6jqJ",
+      "candidate_summary": {
+        "successful_requests": 84,
+        "failed_requests": 0,
+        "successful_output_tokens": 672,
+        "duration_ms": 20133.97,
+        "output_tokens_per_second": 33.38,
+        "requests_per_second": 4.172,
+        "first_text_ms": {
+          "median": 75.4,
+          "p95_nearest_rank": 195.31
+        },
+        "total_ms": {
+          "median": 249.74,
+          "p95_nearest_rank": 309.48
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 84,
+        "failed_requests": 0,
+        "successful_output_tokens": 672,
+        "duration_ms": 20133.97,
+        "output_tokens_per_second": 33.38,
+        "requests_per_second": 4.172,
+        "first_text_ms": {
+          "median": 75.4,
+          "p95_nearest_rank": 195.31
+        },
+        "total_ms": {
+          "median": 249.74,
+          "p95_nearest_rank": 309.48
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "f7a7c06507d4b9d2c19b76c8617c8d1f960c831c9c6559aecaa1ac24050d4992",
+      "round": 3
+    },
+    {
+      "label": 3,
+      "probe": null,
+      "variant": "lfu",
+      "mode": "bench",
+      "result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/batches-20261022-074445/3-lfu-bench.json",
+      "original_result": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/lfu/temporal-20261022-075718-279322.json",
+      "server_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/batches-20261022-074445/3-lfu-bench-server.log",
+      "client_log": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/batches-20261022-074445/3-lfu-bench-client.log",
+      "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-lfu/shift/lfu/server-bench-zIqjtU",
+      "candidate_summary": {
+        "successful_requests": 84,
+        "failed_requests": 0,
+        "successful_output_tokens": 672,
+        "duration_ms": 18095.05,
+        "output_tokens_per_second": 37.14,
+        "requests_per_second": 4.642,
+        "first_text_ms": {
+          "median": 63.9,
+          "p95_nearest_rank": 90.5
+        },
+        "total_ms": {
+          "median": 224.82,
+          "p95_nearest_rank": 262.24
+        }
+      },
+      "batch_summary": {
+        "successful_requests": 84,
+        "failed_requests": 0,
+        "successful_output_tokens": 672,
+        "duration_ms": 18095.05,
+        "output_tokens_per_second": 37.14,
+        "requests_per_second": 4.642,
+        "first_text_ms": {
+          "median": 63.9,
+          "p95_nearest_rank": 90.5
+        },
+        "total_ms": {
+          "median": 224.82,
+          "p95_nearest_rank": 262.24
+        }
+      },
+      "trace_analysis": null,
+      "nonprefix_totals": {},
+      "sha256": "c8c1e272de94dcba83dfff5cc6ddf3be90b52c1d901af7581998e975b5b1c52d",
+      "round": 3
+    }
+  ],
+  "complete": true,
+  "manifest": {
+    "workload": "aging-lfu-v1",
+    "profile": "shift",
+    "model": "Qwen/Qwen3-0.6B",
+    "system": "You are a helpful assistant. Explain clearly and concisely.",
+    "output_tokens": 8,
+    "client_concurrency": 1,
+    "full_probe_hit_tokens": 240,
+    "sequence": [
+      {
+        "label": "A00",
+        "phase": "train_old",
+        "cycle": 0,
+        "prompt": "Document A: A mountain weather team records rainfall and wind. Explain how it organizes observations. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSummarize note 0."
+      },
+      {
+        "label": "A01",
+        "phase": "train_old",
+        "cycle": 0,
+        "prompt": "Document A: A mountain weather team records rainfall and wind. Explain how it organizes observations. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSummarize note 1."
+      },
+      {
+        "label": "A02",
+        "phase": "train_old",
+        "cycle": 0,
+        "prompt": "Document A: A mountain weather team records rainfall and wind. Explain how it organizes observations. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSummarize note 2."
+      },
+      {
+        "label": "A03",
+        "phase": "train_old",
+        "cycle": 0,
+        "prompt": "Document A: A mountain weather team records rainfall and wind. Explain how it organizes observations. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSummarize note 3."
+      },
+      {
+        "label": "A04",
+        "phase": "train_old",
+        "cycle": 0,
+        "prompt": "Document A: A mountain weather team records rainfall and wind. Explain how it organizes observations. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSummarize note 4."
+      },
+      {
+        "label": "A05",
+        "phase": "train_old",
+        "cycle": 0,
+        "prompt": "Document A: A mountain weather team records rainfall and wind. Explain how it organizes observations. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSummarize note 5."
+      },
+      {
+        "label": "A06",
+        "phase": "train_old",
+        "cycle": 0,
+        "prompt": "Document A: A mountain weather team records rainfall and wind. Explain how it organizes observations. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSummarize note 6."
+      },
+      {
+        "label": "A07",
+        "phase": "train_old",
+        "cycle": 0,
+        "prompt": "Document A: A mountain weather team records rainfall and wind. Explain how it organizes observations. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSummarize note 7."
+      },
+      {
+        "label": "A08",
+        "phase": "train_old",
+        "cycle": 0,
+        "prompt": "Document A: A mountain weather team records rainfall and wind. Explain how it organizes observations. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSummarize note 8."
+      },
+      {
+        "label": "A09",
+        "phase": "train_old",
+        "cycle": 0,
+        "prompt": "Document A: A mountain weather team records rainfall and wind. Explain how it organizes observations. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSummarize note 9."
+      },
+      {
+        "label": "A10",
+        "phase": "train_old",
+        "cycle": 0,
+        "prompt": "Document A: A mountain weather team records rainfall and wind. Explain how it organizes observations. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSummarize note 10."
+      },
+      {
+        "label": "A11",
+        "phase": "train_old",
+        "cycle": 0,
+        "prompt": "Document A: A mountain weather team records rainfall and wind. Explain how it organizes observations. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSummarize note 11."
+      },
+      {
+        "label": "B1-T0",
+        "phase": "train_new",
+        "cycle": 1,
+        "prompt": "Document B: A library team records reservations and sends collection notices. Explain how it organizes its service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSummarize note 1.0."
+      },
+      {
+        "label": "B1-T1",
+        "phase": "train_new",
+        "cycle": 1,
+        "prompt": "Document B: A library team records reservations and sends collection notices. Explain how it organizes its service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSummarize note 1.1."
+      },
+      {
+        "label": "B1-T2",
+        "phase": "train_new",
+        "cycle": 1,
+        "prompt": "Document B: A library team records reservations and sends collection notices. Explain how it organizes its service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSummarize note 1.2."
+      },
+      {
+        "label": "B1-T3",
+        "phase": "train_new",
+        "cycle": 1,
+        "prompt": "Document B: A library team records reservations and sends collection notices. Explain how it organizes its service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSummarize note 1.3."
+      },
+      {
+        "label": "S1-0",
+        "phase": "cold_scan",
+        "cycle": 1,
+        "prompt": "Independent scan 1.0: A community project needs observations, a plan and practical measurements. Explain its first steps. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail"
+      },
+      {
+        "label": "S1-1",
+        "phase": "cold_scan",
+        "cycle": 1,
+        "prompt": "Independent scan 1.1: A community project needs observations, a plan and practical measurements. Explain its first steps. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail"
+      },
+      {
+        "label": "S1-2",
+        "phase": "cold_scan",
+        "cycle": 1,
+        "prompt": "Independent scan 1.2: A community project needs observations, a plan and practical measurements. Explain its first steps. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail"
+      },
+      {
+        "label": "S1-3",
+        "phase": "cold_scan",
+        "cycle": 1,
+        "prompt": "Independent scan 1.3: A community project needs observations, a plan and practical measurements. Explain its first steps. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail"
+      },
+      {
+        "label": "B1-P",
+        "phase": "probe",
+        "cycle": 1,
+        "prompt": "Document B: A library team records reservations and sends collection notices. Explain how it organizes its service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSuggest an improvement. Note 1."
+      },
+      {
+        "label": "B2-T0",
+        "phase": "train_new",
+        "cycle": 2,
+        "prompt": "Document B: A library team records reservations and sends collection notices. Explain how it organizes its service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSummarize note 2.0."
+      },
+      {
+        "label": "B2-T1",
+        "phase": "train_new",
+        "cycle": 2,
+        "prompt": "Document B: A library team records reservations and sends collection notices. Explain how it organizes its service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSummarize note 2.1."
+      },
+      {
+        "label": "B2-T2",
+        "phase": "train_new",
+        "cycle": 2,
+        "prompt": "Document B: A library team records reservations and sends collection notices. Explain how it organizes its service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSummarize note 2.2."
+      },
+      {
+        "label": "B2-T3",
+        "phase": "train_new",
+        "cycle": 2,
+        "prompt": "Document B: A library team records reservations and sends collection notices. Explain how it organizes its service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSummarize note 2.3."
+      },
+      {
+        "label": "S2-0",
+        "phase": "cold_scan",
+        "cycle": 2,
+        "prompt": "Independent scan 2.0: A community project needs observations, a plan and practical measurements. Explain its first steps. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail"
+      },
+      {
+        "label": "S2-1",
+        "phase": "cold_scan",
+        "cycle": 2,
+        "prompt": "Independent scan 2.1: A community project needs observations, a plan and practical measurements. Explain its first steps. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail"
+      },
+      {
+        "label": "S2-2",
+        "phase": "cold_scan",
+        "cycle": 2,
+        "prompt": "Independent scan 2.2: A community project needs observations, a plan and practical measurements. Explain its first steps. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail"
+      },
+      {
+        "label": "S2-3",
+        "phase": "cold_scan",
+        "cycle": 2,
+        "prompt": "Independent scan 2.3: A community project needs observations, a plan and practical measurements. Explain its first steps. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail"
+      },
+      {
+        "label": "B2-P",
+        "phase": "probe",
+        "cycle": 2,
+        "prompt": "Document B: A library team records reservations and sends collection notices. Explain how it organizes its service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSuggest an improvement. Note 2."
+      },
+      {
+        "label": "B3-T0",
+        "phase": "train_new",
+        "cycle": 3,
+        "prompt": "Document B: A library team records reservations and sends collection notices. Explain how it organizes its service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSummarize note 3.0."
+      },
+      {
+        "label": "B3-T1",
+        "phase": "train_new",
+        "cycle": 3,
+        "prompt": "Document B: A library team records reservations and sends collection notices. Explain how it organizes its service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSummarize note 3.1."
+      },
+      {
+        "label": "B3-T2",
+        "phase": "train_new",
+        "cycle": 3,
+        "prompt": "Document B: A library team records reservations and sends collection notices. Explain how it organizes its service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSummarize note 3.2."
+      },
+      {
+        "label": "B3-T3",
+        "phase": "train_new",
+        "cycle": 3,
+        "prompt": "Document B: A library team records reservations and sends collection notices. Explain how it organizes its service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSummarize note 3.3."
+      },
+      {
+        "label": "S3-0",
+        "phase": "cold_scan",
+        "cycle": 3,
+        "prompt": "Independent scan 3.0: A community project needs observations, a plan and practical measurements. Explain its first steps. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail"
+      },
+      {
+        "label": "S3-1",
+        "phase": "cold_scan",
+        "cycle": 3,
+        "prompt": "Independent scan 3.1: A community project needs observations, a plan and practical measurements. Explain its first steps. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail"
+      },
+      {
+        "label": "S3-2",
+        "phase": "cold_scan",
+        "cycle": 3,
+        "prompt": "Independent scan 3.2: A community project needs observations, a plan and practical measurements. Explain its first steps. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail"
+      },
+      {
+        "label": "S3-3",
+        "phase": "cold_scan",
+        "cycle": 3,
+        "prompt": "Independent scan 3.3: A community project needs observations, a plan and practical measurements. Explain its first steps. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail"
+      },
+      {
+        "label": "B3-P",
+        "phase": "probe",
+        "cycle": 3,
+        "prompt": "Document B: A library team records reservations and sends collection notices. Explain how it organizes its service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSuggest an improvement. Note 3."
+      },
+      {
+        "label": "B4-T0",
+        "phase": "train_new",
+        "cycle": 4,
+        "prompt": "Document B: A library team records reservations and sends collection notices. Explain how it organizes its service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSummarize note 4.0."
+      },
+      {
+        "label": "B4-T1",
+        "phase": "train_new",
+        "cycle": 4,
+        "prompt": "Document B: A library team records reservations and sends collection notices. Explain how it organizes its service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSummarize note 4.1."
+      },
+      {
+        "label": "B4-T2",
+        "phase": "train_new",
+        "cycle": 4,
+        "prompt": "Document B: A library team records reservations and sends collection notices. Explain how it organizes its service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSummarize note 4.2."
+      },
+      {
+        "label": "B4-T3",
+        "phase": "train_new",
+        "cycle": 4,
+        "prompt": "Document B: A library team records reservations and sends collection notices. Explain how it organizes its service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSummarize note 4.3."
+      },
+      {
+        "label": "S4-0",
+        "phase": "cold_scan",
+        "cycle": 4,
+        "prompt": "Independent scan 4.0: A community project needs observations, a plan and practical measurements. Explain its first steps. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail"
+      },
+      {
+        "label": "S4-1",
+        "phase": "cold_scan",
+        "cycle": 4,
+        "prompt": "Independent scan 4.1: A community project needs observations, a plan and practical measurements. Explain its first steps. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail"
+      },
+      {
+        "label": "S4-2",
+        "phase": "cold_scan",
+        "cycle": 4,
+        "prompt": "Independent scan 4.2: A community project needs observations, a plan and practical measurements. Explain its first steps. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail"
+      },
+      {
+        "label": "S4-3",
+        "phase": "cold_scan",
+        "cycle": 4,
+        "prompt": "Independent scan 4.3: A community project needs observations, a plan and practical measurements. Explain its first steps. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail"
+      },
+      {
+        "label": "B4-P",
+        "phase": "probe",
+        "cycle": 4,
+        "prompt": "Document B: A library team records reservations and sends collection notices. Explain how it organizes its service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSuggest an improvement. Note 4."
+      },
+      {
+        "label": "B5-T0",
+        "phase": "train_new",
+        "cycle": 5,
+        "prompt": "Document B: A library team records reservations and sends collection notices. Explain how it organizes its service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSummarize note 5.0."
+      },
+      {
+        "label": "B5-T1",
+        "phase": "train_new",
+        "cycle": 5,
+        "prompt": "Document B: A library team records reservations and sends collection notices. Explain how it organizes its service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSummarize note 5.1."
+      },
+      {
+        "label": "B5-T2",
+        "phase": "train_new",
+        "cycle": 5,
+        "prompt": "Document B: A library team records reservations and sends collection notices. Explain how it organizes its service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSummarize note 5.2."
+      },
+      {
+        "label": "B5-T3",
+        "phase": "train_new",
+        "cycle": 5,
+        "prompt": "Document B: A library team records reservations and sends collection notices. Explain how it organizes its service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSummarize note 5.3."
+      },
+      {
+        "label": "S5-0",
+        "phase": "cold_scan",
+        "cycle": 5,
+        "prompt": "Independent scan 5.0: A community project needs observations, a plan and practical measurements. Explain its first steps. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail"
+      },
+      {
+        "label": "S5-1",
+        "phase": "cold_scan",
+        "cycle": 5,
+        "prompt": "Independent scan 5.1: A community project needs observations, a plan and practical measurements. Explain its first steps. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail"
+      },
+      {
+        "label": "S5-2",
+        "phase": "cold_scan",
+        "cycle": 5,
+        "prompt": "Independent scan 5.2: A community project needs observations, a plan and practical measurements. Explain its first steps. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail"
+      },
+      {
+        "label": "S5-3",
+        "phase": "cold_scan",
+        "cycle": 5,
+        "prompt": "Independent scan 5.3: A community project needs observations, a plan and practical measurements. Explain its first steps. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail"
+      },
+      {
+        "label": "B5-P",
+        "phase": "probe",
+        "cycle": 5,
+        "prompt": "Document B: A library team records reservations and sends collection notices. Explain how it organizes its service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSuggest an improvement. Note 5."
+      },
+      {
+        "label": "B6-T0",
+        "phase": "train_new",
+        "cycle": 6,
+        "prompt": "Document B: A library team records reservations and sends collection notices. Explain how it organizes its service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSummarize note 6.0."
+      },
+      {
+        "label": "B6-T1",
+        "phase": "train_new",
+        "cycle": 6,
+        "prompt": "Document B: A library team records reservations and sends collection notices. Explain how it organizes its service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSummarize note 6.1."
+      },
+      {
+        "label": "B6-T2",
+        "phase": "train_new",
+        "cycle": 6,
+        "prompt": "Document B: A library team records reservations and sends collection notices. Explain how it organizes its service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSummarize note 6.2."
+      },
+      {
+        "label": "B6-T3",
+        "phase": "train_new",
+        "cycle": 6,
+        "prompt": "Document B: A library team records reservations and sends collection notices. Explain how it organizes its service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSummarize note 6.3."
+      },
+      {
+        "label": "S6-0",
+        "phase": "cold_scan",
+        "cycle": 6,
+        "prompt": "Independent scan 6.0: A community project needs observations, a plan and practical measurements. Explain its first steps. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail"
+      },
+      {
+        "label": "S6-1",
+        "phase": "cold_scan",
+        "cycle": 6,
+        "prompt": "Independent scan 6.1: A community project needs observations, a plan and practical measurements. Explain its first steps. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail"
+      },
+      {
+        "label": "S6-2",
+        "phase": "cold_scan",
+        "cycle": 6,
+        "prompt": "Independent scan 6.2: A community project needs observations, a plan and practical measurements. Explain its first steps. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail"
+      },
+      {
+        "label": "S6-3",
+        "phase": "cold_scan",
+        "cycle": 6,
+        "prompt": "Independent scan 6.3: A community project needs observations, a plan and practical measurements. Explain its first steps. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail"
+      },
+      {
+        "label": "B6-P",
+        "phase": "probe",
+        "cycle": 6,
+        "prompt": "Document B: A library team records reservations and sends collection notices. Explain how it organizes its service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSuggest an improvement. Note 6."
+      },
+      {
+        "label": "B7-T0",
+        "phase": "train_new",
+        "cycle": 7,
+        "prompt": "Document B: A library team records reservations and sends collection notices. Explain how it organizes its service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSummarize note 7.0."
+      },
+      {
+        "label": "B7-T1",
+        "phase": "train_new",
+        "cycle": 7,
+        "prompt": "Document B: A library team records reservations and sends collection notices. Explain how it organizes its service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSummarize note 7.1."
+      },
+      {
+        "label": "B7-T2",
+        "phase": "train_new",
+        "cycle": 7,
+        "prompt": "Document B: A library team records reservations and sends collection notices. Explain how it organizes its service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSummarize note 7.2."
+      },
+      {
+        "label": "B7-T3",
+        "phase": "train_new",
+        "cycle": 7,
+        "prompt": "Document B: A library team records reservations and sends collection notices. Explain how it organizes its service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSummarize note 7.3."
+      },
+      {
+        "label": "S7-0",
+        "phase": "cold_scan",
+        "cycle": 7,
+        "prompt": "Independent scan 7.0: A community project needs observations, a plan and practical measurements. Explain its first steps. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail"
+      },
+      {
+        "label": "S7-1",
+        "phase": "cold_scan",
+        "cycle": 7,
+        "prompt": "Independent scan 7.1: A community project needs observations, a plan and practical measurements. Explain its first steps. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail"
+      },
+      {
+        "label": "S7-2",
+        "phase": "cold_scan",
+        "cycle": 7,
+        "prompt": "Independent scan 7.2: A community project needs observations, a plan and practical measurements. Explain its first steps. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail"
+      },
+      {
+        "label": "S7-3",
+        "phase": "cold_scan",
+        "cycle": 7,
+        "prompt": "Independent scan 7.3: A community project needs observations, a plan and practical measurements. Explain its first steps. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail"
+      },
+      {
+        "label": "B7-P",
+        "phase": "probe",
+        "cycle": 7,
+        "prompt": "Document B: A library team records reservations and sends collection notices. Explain how it organizes its service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSuggest an improvement. Note 7."
+      },
+      {
+        "label": "B8-T0",
+        "phase": "train_new",
+        "cycle": 8,
+        "prompt": "Document B: A library team records reservations and sends collection notices. Explain how it organizes its service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSummarize note 8.0."
+      },
+      {
+        "label": "B8-T1",
+        "phase": "train_new",
+        "cycle": 8,
+        "prompt": "Document B: A library team records reservations and sends collection notices. Explain how it organizes its service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSummarize note 8.1."
+      },
+      {
+        "label": "B8-T2",
+        "phase": "train_new",
+        "cycle": 8,
+        "prompt": "Document B: A library team records reservations and sends collection notices. Explain how it organizes its service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSummarize note 8.2."
+      },
+      {
+        "label": "B8-T3",
+        "phase": "train_new",
+        "cycle": 8,
+        "prompt": "Document B: A library team records reservations and sends collection notices. Explain how it organizes its service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSummarize note 8.3."
+      },
+      {
+        "label": "S8-0",
+        "phase": "cold_scan",
+        "cycle": 8,
+        "prompt": "Independent scan 8.0: A community project needs observations, a plan and practical measurements. Explain its first steps. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail"
+      },
+      {
+        "label": "S8-1",
+        "phase": "cold_scan",
+        "cycle": 8,
+        "prompt": "Independent scan 8.1: A community project needs observations, a plan and practical measurements. Explain its first steps. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail"
+      },
+      {
+        "label": "S8-2",
+        "phase": "cold_scan",
+        "cycle": 8,
+        "prompt": "Independent scan 8.2: A community project needs observations, a plan and practical measurements. Explain its first steps. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail"
+      },
+      {
+        "label": "S8-3",
+        "phase": "cold_scan",
+        "cycle": 8,
+        "prompt": "Independent scan 8.3: A community project needs observations, a plan and practical measurements. Explain its first steps. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail"
+      },
+      {
+        "label": "B8-P",
+        "phase": "probe",
+        "cycle": 8,
+        "prompt": "Document B: A library team records reservations and sends collection notices. Explain how it organizes its service. detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail detail\nSuggest an improvement. Note 8."
+      }
+    ],
+    "ignore_eos": true
+  },
+  "aggregate": {
+    "vllm": {
+      "duration_ms": [
+        24493.2,
+        20908.15,
+        20133.97
+      ],
+      "median_duration_ms": 20908.15,
+      "median_throughput": 32.14,
+      "median_probe_first_text_ms": 87.11,
+      "median_probe_latency_ms": 268.07,
+      "cached_tokens": [
+        10752,
+        10752,
+        10752
+      ],
+      "probe_hits": [
+        [
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16
+        ],
+        [
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16
+        ],
+        [
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16,
+          16
+        ]
+      ],
+      "adaptation_cycles": [
+        null,
+        null,
+        null
+      ]
+    },
+    "lfu": {
+      "duration_ms": [
+        24451.91,
+        22105.2,
+        18095.05
+      ],
+      "median_duration_ms": 22105.2,
+      "median_throughput": 30.4,
+      "median_probe_first_text_ms": 96.89,
+      "median_probe_latency_ms": 277.76,
+      "cached_tokens": [
+        10880,
+        10880,
+        10880
+      ],
+      "probe_hits": [
+        [
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32
+        ],
+        [
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32
+        ],
+        [
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32
+        ]
+      ],
+      "adaptation_cycles": [
+        null,
+        null,
+        null
+      ]
+    },
+    "aged_lfu": {
+      "duration_ms": [
+        23902.74,
+        21505.51,
+        19418.18
+      ],
+      "median_duration_ms": 21505.51,
+      "median_throughput": 31.25,
+      "median_probe_first_text_ms": 53.44,
+      "median_probe_latency_ms": 212.84,
+      "cached_tokens": [
+        12336,
+        12336,
+        12336
+      ],
+      "probe_hits": [
+        [
+          32,
+          240,
+          240,
+          240,
+          240,
+          240,
+          240,
+          240
+        ],
+        [
+          32,
+          240,
+          240,
+          240,
+          240,
+          240,
+          240,
+          240
+        ],
+        [
+          32,
+          240,
+          240,
+          240,
+          240,
+          240,
+          240,
+          240
+        ]
+      ],
+      "adaptation_cycles": [
+        2,
+        2,
+        2
+      ]
+    }
+  },
+  "paired": [
+    {
+      "round": 1,
+      "duration_change_pct": {
+        "vllm": 0.0,
+        "lfu": -0.169,
+        "aged_lfu": -2.411
+      },
+      "answers_matching_baseline": {
+        "vllm": 84,
+        "lfu": 84,
+        "aged_lfu": 84
+      }
+    },
+    {
+      "round": 2,
+      "duration_change_pct": {
+        "vllm": 0.0,
+        "lfu": 5.725,
+        "aged_lfu": 2.857
+      },
+      "answers_matching_baseline": {
+        "vllm": 84,
+        "lfu": 84,
+        "aged_lfu": 84
+      }
+    },
+    {
+      "round": 3,
+      "duration_change_pct": {
+        "vllm": 0.0,
+        "lfu": -10.127,
+        "aged_lfu": -3.555
+      },
+      "answers_matching_baseline": {
+        "vllm": 84,
+        "lfu": 84,
+        "aged_lfu": 84
+      }
+    }
+  ]
+}

@@ -34,9 +34,21 @@ Experiment registry
                       Cache gains repeated; overall speed mixed across pairs.
                       See RESULTS.txt, PLAN.txt and evidence/.
 
-Current experiment branch: study/experiment-07-scale-and-model in vllm-exp.
-Nested vLLM source remains at e04a615 on study/experiment-05-skip-continue.
-vLLM defaults remain FCFS scheduling and upstream eviction. Its implementation
-was not changed for experiment03; the optional Metal worker is separate. No server or pretrained benchmark remains running.
-Completed code and evidence remain on the earlier experiment branches.
-Raw results/ are local generated data, excluded from Git, and preserved in place.
+08-queue-retention/ : queue-informed retention implemented and benchmarked
+                       on Qwen3-0.6B and Qwen3-1.7B. Targeted cache gains repeat;
+                       overall speed remains workload-dependent. See RESULTS.txt
+                       and qwen3-1.7B/RESULTS.txt, with separate frozen evidence.
+
+09-aging-lfu/ : global score halving every64 physical block allocations.
+                 A-to-B scans: full B-prefix retention from cycle2 in all3 runs;
+                 probe first-text latency improved, full-batch speed mixed.
+                 Stable-hot control preserved all272 reusable tokens with both
+                 frequency policies. See RESULTS.txt, PLAN.txt and evidence/.
+
+Current experiment branch: study/experiment-09-aging-lfu in both repositories.
+Nested vLLM source checkpoint:9f3639b. Experiment09 uses pinned Qwen3-0.6B.
+Completed code, plans, result summaries, CSV evidence and SHA256 inventories
+are saved in local Git checkpoints. Large raw logs/requests remain under
+results/ and are indexed by each experiment's evidence inventories.
+All experimental servers stopped. Default policies remain upstream vLLM;
+experimental policies are enabled explicitly by their launchers.
