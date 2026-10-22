@@ -1,5 +1,6 @@
 """Matched partial-hit thresholds across actual token divergence offsets."""
 
+import argparse
 import json
 import os
 import random
@@ -14,6 +15,10 @@ from transformers import AutoTokenizer
 
 MODEL = "Qwen/Qwen3-0.6B"
 REVISION = "c1899de289a04d12100db370d81485cdf75e47ca"
+REVISIONS = {
+    "Qwen/Qwen3-0.6B": "c1899de289a04d12100db370d81485cdf75e47ca",
+    "Qwen/Qwen3-1.7B": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e",
+}
 CONFIGS = [(16, 16)] + [(g, m) for g in (1, 4, 8) for m in (0, 8, 16)]
 
 
@@ -240,6 +245,13 @@ def run(folder, source, targets, g, minimum, mode, round_id):
 
 
 def main():
+    global MODEL, REVISION
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--model", choices=tuple(REVISIONS), default=MODEL)
+    parser.add_argument("--prepare-only", action="store_true")
+    args = parser.parse_args()
+    MODEL = args.model
+    REVISION = REVISIONS[MODEL]
     os.environ["STUDY_MODEL_PATH"] = snapshot_download(
         MODEL, revision=REVISION, local_files_only=True
     )
@@ -258,9 +270,24 @@ def main():
         assert alternative != target[112 + offset]
         target[112 + offset] = alternative
         targets[str(offset)] = target
-    folder = (
-        ROOT / "results/partial-threshold" / f"batches-{datetime.now():%Y%m%d-%H%M%S}"
-    )
+    if args.prepare_only:
+        print(
+            json.dumps(
+                dict(
+                    model=MODEL,
+                    revision=REVISION,
+                    source=source,
+                    targets=targets,
+                    configs=CONFIGS,
+                ),
+                indent=2,
+            )
+        )
+        return
+    results_root = ROOT / "results/partial-threshold"
+    if MODEL != "Qwen/Qwen3-0.6B":
+        results_root /= MODEL.replace("/", "--")
+    folder = results_root / f"batches-{datetime.now():%Y%m%d-%H%M%S}"
     folder.mkdir(parents=True)
     summary = dict(
         model=MODEL,

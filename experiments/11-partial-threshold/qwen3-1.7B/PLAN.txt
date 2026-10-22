@@ -1,0 +1,17 @@
+Experiment11 larger-model replication
+
+Repeat the complete0.6B protocol with pinned Qwen/Qwen3-1.7B revision
+70d244cc86ccca08cf5af4e1e306ecf908b1ad5e, native Mac Metal GPU.
+Ten configurations: stock16, granularities1/4/8 each with minimum0/8/16.
+Physical blocks16 tokens,96 pages, context256, batch128, one running slot.
+Same128-token source and15 divergence targets,45 shuffled pairs/server,
+one output token, temperature0, ignore EOS, reset before each pair.
+One diagnostic and three untraced fresh-server rounds/configuration:40 runs.
+Unchanged launch-order rotations and shuffle seeds. Source checkpoint490d80d.
+Check exact cached-token counts, copies only for accepted hits, text agreement
+with same-granularity recomputation, first-text/total/pair timings per offset.
+Do not infer a universal cutoff or production throughput from one-token probes.
+No threshold tuning based on results. Save separately from the smaller model.
+
+Reproduce from experiment root:
+.venv/bin/python src/run_partial_threshold.py --model Qwen/Qwen3-1.7B
