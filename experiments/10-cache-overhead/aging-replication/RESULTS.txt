@@ -1,0 +1,116 @@
+Experiment10 follow-up: repeat experiment09 with incremental LFU ordering
+=================================================================
+
+Completed on Qwen3-1.7B with native Mac Metal GPU execution.
+Stock, cumulative LFU and aging LFU; no queue retention, partial reuse, or
+skip/continue. Same model, requests, page capacity and output counts within
+each comparison. Decay interval 64 physical block allocations was fixed
+before measurements; it was not retuned after seeing results.
+Halving is global and synchronized before selection, including active scores.
+Only zero-reference pages are candidates; normal allocation remains possible.
+One traced diagnostic and three untraced fresh-server timing rounds per
+policy/profile, with rotated launch order:24 serving runs in total.
+All profiles use 32 physical16-token pages (31 usable), context384, batch128,
+one running slot, sequential requests, FCFS, synchronous chunked prefill,
+temperature0, seed0, ignore EOS, eight outputs/request, one-token warmup.
+
+Profile: shift
+-----------------------------------------------------------------
+84 requests:12 train document A, then eight cycles of four B
+training requests, four unique cold prompts and one B probe.
+Full B-prefix hit threshold:240 tokens.672 measured output tokens.
+
+Median over3 runs          Stock          LFU       Aging LFU
+Full batch s                    43.729       42.127       41.194
+Output tokens/s                 15.370       15.950       16.310
+Probe first text ms            268.780      250.950       85.340
+Probe request ms               606.550      571.500      433.780
+
+Per-run probe cache-hit series (one value/cycle):
+  vllm: [[16, 16, 16, 16, 16, 16, 16, 16], [16, 16, 16, 16, 16, 16, 16, 16], [16, 16, 16, 16, 16, 16, 16, 16]]
+    First sustained full-hit cycle: [None, None, None]
+    Total cached tokens per run: [10752, 10752, 10752]
+  lfu: [[32, 32, 32, 32, 32, 32, 32, 32], [32, 32, 32, 32, 32, 32, 32, 32], [32, 32, 32, 32, 32, 32, 32, 32]]
+    First sustained full-hit cycle: [None, None, None]
+    Total cached tokens per run: [10880, 10880, 10880]
+  aged_lfu: [[32, 240, 240, 240, 240, 240, 240, 240], [32, 240, 240, 240, 240, 240, 240, 240], [32, 240, 240, 240, 240, 240, 240, 240]]
+    First sustained full-hit cycle: [2, 2, 2]
+    Total cached tokens per run: [12336, 12336, 12336]
+
+Paired full-batch time changes versus stock (%; negative=faster):
+  lfu: [-3.341, -4.26, -8.964]; median paired -4.26%; group-median ratio -3.66%.
+  aged_lfu: [-5.483, -6.826, -18.398]; median paired -6.83%; group-median ratio -5.80%.
+  Aging versus cumulative LFU: [-2.216, -2.68, -10.362].
+
+Exact answers matching stock, by round:
+  lfu: [84, 84, 84] / 84
+  aged_lfu: [84, 84, 84] / 84
+
+Diagnostic validation:zero preemptions, all evicted references zero,
+per-request API cached-token counts match actual lookups. Aging
+decay events: 10. All recorded score shifts verified.
+
+Profile: stable
+-----------------------------------------------------------------
+Existing experiment02 stable hot-prefix workload:42 requests,
+three probe cycles, full hot-prefix hit272,336 output tokens.
+These are fresh comparisons; historical02 had three running slots.
+
+Median over3 runs          Stock          LFU       Aging LFU
+Full batch s                    24.753       23.482       22.843
+Output tokens/s                 13.570       14.310       14.710
+Probe first text ms            375.350       93.890       93.390
+Probe request ms               777.580      489.000      466.440
+
+Per-run probe cache-hit series (one value/cycle):
+  vllm: [[16, 16, 16], [16, 16, 16], [16, 16, 16]]
+    Total cached tokens per run: [2720, 2720, 2720]
+  lfu: [[272, 272, 272], [272, 272, 272], [272, 272, 272]]
+    Total cached tokens per run: [3488, 3488, 3488]
+  aged_lfu: [[272, 272, 272], [272, 272, 272], [272, 272, 272]]
+    Total cached tokens per run: [3488, 3488, 3488]
+
+Paired full-batch time changes versus stock (%; negative=faster):
+  lfu: [-4.496, -12.811, -2.765]; median paired -4.50%; group-median ratio -5.14%.
+  aged_lfu: [-7.717, -4.659, -5.297]; median paired -5.30%; group-median ratio -7.72%.
+  Aging versus cumulative LFU: [-3.372, 9.349, -2.604].
+
+Exact answers matching stock, by round:
+  lfu: [42, 42, 42] / 42
+  aged_lfu: [42, 42, 42] / 42
+
+Diagnostic validation:zero preemptions, all evicted references zero,
+per-request API cached-token counts match actual lookups. Aging
+decay events: 4. All recorded score shifts verified.
+
+Interpretation and limits
+-----------------------------------------------------------------
+Adaptation is the first probe cycle followed by another full-hit probe.
+Null means no such consecutive pair within the measured window; it is not
+an extrapolation to infinite time. The stable profile has no traffic switch,
+so use its hit series to assess the retention tradeoff rather than adaptation.
+Stock and cumulative LFU can reuse B during consecutive B-training requests;
+the probe series measures survival through the subsequent cold scans.
+Cache reuse, adaptation speed and wall-clock speed are distinct measurements.
+Three timing rounds are exploratory; preserve the ranges and paired results.
+Exact text agreement does not measure semantic quality. This is a fixed
+small-pool experiment on one model, not a production/general speed claim.
+Source/model revisions, file hashes, summaries, CSV and validation are saved.
+Raw logs remain under results/cache-overhead/aging-replication, indexed by SHA256.
+All experimental servers stopped. Reproduction:../PLAN.txt.
+
+Comparison with saved pre-optimization1.7B experiment09
+-----------------------------------------------------------------
+Identical policies, pinned model and request manifests; implementation changed.
+Historical elapsed timings are descriptive, not a controlled overhead A/B.
+shift/vllm: old batch median 44.012s; new 43.729s. Diagnostic choices and all per-request cache hits identical.
+shift/lfu: old batch median 48.979s; new 42.127s. Diagnostic choices and all per-request cache hits identical.
+shift/aged_lfu: old batch median 47.139s; new 41.194s. Diagnostic choices and all per-request cache hits identical.
+Current shift aging versus current stock: probe first text -68.25%; batch group-median ratio -5.80%. Negative=faster.
+Aging retained probe series: [[32, 240, 240, 240, 240, 240, 240, 240], [32, 240, 240, 240, 240, 240, 240, 240], [32, 240, 240, 240, 240, 240, 240, 240]]; sustained full-hit cycles [2, 2, 2].
+stable/vllm: old batch median 21.716s; new 24.753s. Diagnostic choices and all per-request cache hits identical.
+stable/lfu: old batch median 21.097s; new 23.482s. Diagnostic choices and all per-request cache hits identical.
+stable/aged_lfu: old batch median 21.267s; new 22.843s. Diagnostic choices and all per-request cache hits identical.
+Current stable aging versus current stock: probe first text -75.12%; batch group-median ratio -7.72%. Negative=faster.
+Aging retained probe series: [[272, 272, 272], [272, 272, 272], [272, 272, 272]]; sustained full-hit cycles [1, 1, 1].
+The paired experiment10 reference/incremental comparison is reported in ../RESULTS.txt.

@@ -1,0 +1,54 @@
+{
+  "experiment": "10-cache-overhead-aging-replication",
+  "status": "completed",
+  "model": "Qwen/Qwen3-1.7B",
+  "model_revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e",
+  "source_base_commit": "9f3639b44b1d69dd6782c94c4f71b695a8b375ba",
+  "source_commit": "1e1b324e7077874af3799ebc3a659940210263c5",
+  "root_base_commit": "f69161a",
+  "serving_runs": 24,
+  "timed_rounds_per_policy_profile": 3,
+  "half_life_blocks": 64,
+  "decay_rule": "Globally right-shift reuse counts by elapsed 64-physical-block allocation epochs before victim selection.",
+  "policies": [
+    "vllm",
+    "lfu",
+    "aged_lfu"
+  ],
+  "profiles": [
+    "shift",
+    "stable"
+  ],
+  "timed_request_rows": 1134,
+  "raw_files_hashed": 152,
+  "code_sha256": {
+    "vllm-src/vllm/v1/core/study_aging_eviction.py": "9a6972c641edbb64bfee9afdbd20d0261e779ee46aa668017ed7341881b954ef",
+    "vllm-src/vllm/v1/core/study_cache_eviction.py": "2d2ada1099cc10a031d7febe1c43b8c6503efba48bf4d30ca4e69b652cc449a0",
+    "vllm-src/vllm/v1/core/sched/study_trace.py": "578d2e2e6364b475c3f9971a5e465407e9462b731603117f161f68629dac76ae",
+    "src/run_aging_lfu.py": "30c62b3fd22ee66104e2d223f7f0ce1b9fac039670fa4ff0e9dfd155c250d6ec",
+    "src/serve_aging_comparison.sh": "6fe2743b1f50bf8f8a159b235e0f3c64cb2325f58b1bf71d82fdda999a877199",
+    "workloads/compare_aging_lfu.py": "2c96ce140d5250d3c2f9bd2fa8a1322576a38632a89966569a1cd591fc06b361",
+    "experiments/09-aging-lfu/test_aging_lfu.py": "74e8f158ca0a033a5fba7250568b70ff557df9d74fef8e1804b7b38b427ebce2",
+    "vllm-src/vllm/v1/core/study_free_order.py": "9861ca4e467f5cb21b4753d1119d802b3ffa5e45e2f60c5f5c3f93aec9a655d3",
+    "vllm-src/vllm/v1/core/study_cache_profile.py": "4959342d21f8702d80810bc71ce88bee76ca0b09a2b79e5bc2861c6105c2e698"
+  },
+  "environment": {
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "packages": {
+      "vllm": "0.31.0+cpu",
+      "vllm-metal": "0.31.0.dev20261020082747",
+      "mlx": "0.32.2",
+      "mlx-lm": "0.32.0",
+      "torch": "2.13.0",
+      "transformers": "5.17.0"
+    }
+  },
+  "summaries": {
+    "shift": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/aging-replication/Qwen--Qwen3-1.7B/shift/batches-20261022-091032/summary.json",
+    "stable": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/cache-overhead/aging-replication/Qwen--Qwen3-1.7B/stable/batches-20261022-092615/summary.json"
+  },
+  "same_decisions_as_saved_experiment09": true,
+  "same_per_request_cached_tokens_as_experiment09": true,
+  "implementation": "incremental",
+  "partial_prefix_enabled": false
+}

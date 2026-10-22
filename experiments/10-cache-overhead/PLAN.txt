@@ -26,3 +26,11 @@ Save under results/cache-overhead/aging-replication/ and archive separately.
 Compare current policies with current stock and confirm decisions/cache hits
 against frozen experiment09 1.7B diagnostics. Historical timing comparison
 is descriptive across sessions; not an isolated overhead A/B measurement.
+
+Reproduction from experiment root:
+.venv/bin/python src/run_cache_overhead.py
+.venv/bin/python experiments/10-cache-overhead/test_cache_overhead.py -v
+.venv/bin/python experiments/10-cache-overhead/bench_cache_overhead.py
+
+STUDY_CACHE_IMPL=incremental STUDY_CACHE_PROFILE=1 .venv/bin/python src/run_aging_lfu.py --model Qwen/Qwen3-1.7B --profile shift --rounds 3 --results-root results/cache-overhead/aging-replication
+STUDY_CACHE_IMPL=incremental STUDY_CACHE_PROFILE=1 .venv/bin/python src/run_aging_lfu.py --model Qwen/Qwen3-1.7B --profile stable --rounds 3 --results-root results/cache-overhead/aging-replication
