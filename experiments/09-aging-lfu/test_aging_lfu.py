@@ -53,9 +53,11 @@ class AgingLFUTests(unittest.TestCase):
     def test_factory_is_opt_in_and_rejects_invalid_interval(self):
         with patch.dict(os.environ, STUDY_EVICTION_POLICY="vllm"):
             self.assertIsNone(BlockPool(4, True, 4)._study_eviction)
-        with patch.dict(os.environ, STUDY_LFU_HALF_LIFE_BLOCKS="0"):
-            with self.assertRaises(ValueError):
-                StudyAgingLFUEviction(4)
+        with (
+            patch.dict(os.environ, STUDY_LFU_HALF_LIFE_BLOCKS="0"),
+            self.assertRaises(ValueError),
+        ):
+            StudyAgingLFUEviction(4)
 
 
 if __name__ == "__main__":
