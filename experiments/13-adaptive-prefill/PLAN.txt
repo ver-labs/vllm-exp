@@ -1,0 +1,30 @@
+Experiment13: adaptive prefill under fixed-time prompt bursts
+==========================================================
+Qwen3-1.7B pinned70d244cc86ccca08cf5af4e1e306ecf908b1ad5e.
+Three policies: stock chunked prefill threshold0; built-in adaptive
+threshold16 with fair-share floor; study decoder-load cap.
+Study cap per prompt/request/step = max(16,128//(1+2*decoders)),
+clamped to128. An unfinished prompt older than750ms raises global
+cap to at least64. Age is since request arrival, not since last progress.
+This is not an aggregate prefill cap and not strict decode-first ordering.
+Upstream running traversal/FCFS admission and allocation checks are unchanged.
+No strict starvation bound: slots/memory/total token budget still constrain work.
+Policy is opt-in and mutually exclusive with built-in adaptive and skip/continue.
+
+Four64-token prompts start at0s and generate128 tokens each. Ten prompts
+arrive at0.8s, ten at2.4s; each has512/1024 prompt tokens and16 outputs.
+24 HTTP workers avoid closed-loop arrival coupling. Prompt tokens and
+scheduled arrival times identical across policies; dispatch lateness recorded.
+Eight running slots,128-token batch budget,1024 physical16-token pages,
+context1280, synchronous scheduler, native Metal worker, no prefix caching,
+no other study policies, temperature0/seed0/ignoreEOS. Total832 outputs/run.
+One short warmup outside timing. Fresh sequential server per run.
+Three traced mechanism diagnostics, then three untraced rotated rounds/policy.
+Diagnostics must show mixed prefill+decode steps, queueing and no preemptions;
+adaptive cap must change and age boost activate. All requests must complete.
+Capture total duration, throughput, cohort TTFT/latency, per-request TPOT
+(first-to-last text arrival divided by output count-1), SSE text-chunk gaps,
+dispatch lag, exact answer agreement. Chunk gaps are not exact per-token ITL.
+No semantic quality claim from text matching. Three rounds exploratory.
+Repeated timing results are local synthetic workload evidence, not universal.
+Compare to tuned fixed thresholds as future work before superiority claims.

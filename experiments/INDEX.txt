@@ -75,8 +75,16 @@ Experiment registry
                        Throughput, queue/copy checks, tails and paired timings
                        saved. See RESULTS.txt, PLAN.txt and evidence/.
 
-Current experiment branch: study/experiment-12-concurrent-partial in both repositories.
-Nested vLLM source checkpoint:490d80d. Experiment09 uses pinned Qwen3-0.6B and Qwen3-1.7B.
+13-adaptive-prefill/ : final three-way prefill comparison on Qwen3-1.7B.
+                       Ordinary chunking, built-in fair-share adaptive, and
+                       decoder-load cap with750ms prompt-age boost. Fixed-time
+                       bursts,24 requests/run,12 fresh-server GPU runs.
+                       Streaming/TTFT/throughput tradeoffs saved, including
+                       paired rounds, diagnostics and answer comparisons.
+                       See RESULTS.txt, PLAN.txt and evidence/.
+
+Current experiment branch: study/experiment-13-adaptive-prefill in both repositories.
+Nested vLLM source checkpoint:e997aba. Experiment09 uses pinned Qwen3-0.6B and Qwen3-1.7B.
 Completed code, plans, result summaries, CSV evidence and SHA256 inventories
 are saved in local Git checkpoints. Large raw logs/requests remain under
 results/ and are indexed by each experiment's evidence inventories.

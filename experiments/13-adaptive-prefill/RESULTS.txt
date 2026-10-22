@@ -1,0 +1,54 @@
+Experiment13: adaptive prefill under burst traffic
+=======================================================
+
+COMPLETED:3 mechanism diagnostics +9 untraced timed GPU runs.
+Pinned Qwen3-1.7B,24 requests/run,832 outputs/run. All completed.
+Timed216 requests/7488 outputs; diagnostics72 requests/2496 outputs separate.
+Nested source checkpoint:e997aba05543a127cb09d8a4c3b917f307357807
+Raw batch:/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/adaptive-prefill/batches-20261022-203205
+Reproduce:.venv/bin/python src/run_adaptive_prefill.py
+
+Median of three run metrics (not pooled requests):
+variant | batch seconds | output tok/s | ongoing TPOT ms | ongoing chunk-gap p95 ms | burst TTFT ms | burst TTFT p95 ms | request p95 ms
+stock | 22.058 | 37.719 | 150.413 | 201.457 | 9644.881 | 18074.829 | 19421.414
+existing_adaptive | 31.489 | 26.422 | 120.744 | 144.923 | 19224.232 | 27435.540 | 28804.854
+decode_adaptive | 23.451 | 35.478 | 140.548 | 169.339 | 11013.186 | 19803.215 | 20933.959
+
+Paired round evidence:
+stock:batch seconds=[23.93674233322963, 20.95659966673702, 22.0581131670624]; changes versus same-round stock%=[0.0, 0.0, 0.0]; exact answers=72/72
+existing_adaptive:batch seconds=[31.48872954118997, 31.59363791672513, 30.725531208328903]; changes versus same-round stock%=[31.549770235344287, 50.75746265684291, 39.29356049459778]; exact answers=72/72
+decode_adaptive:batch seconds=[23.311701000202447, 23.451107624918222, 24.00821587489918]; changes versus same-round stock%=[-2.611221378104922, 11.903209479830657, 8.84075030836593]; exact answers=72/72
+
+Mechanisms:
+{"age_boost_steps": 0, "all_requests_scheduled": true, "caps": [], "initial_scheduler_wait_ms_max": 19541.895167, "initial_scheduler_wait_ms_median": 6849.485979, "max_running": 8, "max_waiting": 18, "maximum_decoders": 0, "mixed_steps": 129, "preemptions": 0, "variant": "stock"}
+{"age_boost_steps": 0, "all_requests_scheduled": true, "caps": [], "initial_scheduler_wait_ms_max": 24941.248375, "initial_scheduler_wait_ms_median": 13365.797271, "max_running": 8, "max_waiting": 16, "maximum_decoders": 0, "mixed_steps": 185, "preemptions": 0, "variant": "existing_adaptive"}
+{"age_boost_steps": 138, "all_requests_scheduled": true, "caps": [16, 18, 25, 42, 64, 128], "initial_scheduler_wait_ms_max": 22129.180083, "initial_scheduler_wait_ms_median": 9389.115875, "max_running": 8, "max_waiting": 16, "maximum_decoders": 7, "mixed_steps": 144, "preemptions": 0, "variant": "decode_adaptive"}
+
+Interpretation and limits:
+The three modes use the same token budget, slots, KV pool, request token vectors
+and open-loop arrival times. Trace runs are excluded from latency comparisons.
+Prefix caching and other experimental cache/scheduling policies are disabled.
+The new cap is per-request, not an aggregate prefill allowance. It does not
+reorder running requests or guarantee decode-first service. Its750ms age boost
+uses time since arrival and is global; it does not establish a strict wait bound.
+Built-in adaptive uses threshold16 as its floor; comparing other tuned fixed
+thresholds and age/cap settings would be needed before optimality claims.
+TPOT is client-observed first-to-last text time/(output_tokens-1). SSE gaps
+are text-chunk gaps, not exact token timing; buffering can merge tokens.
+TTFT includes server waiting. Client scheduling lateness is separately saved.
+One synthetic arrival trace, one model, three timing rounds: exploratory.
+Text equality is reported; semantic quality was not independently evaluated.
+Changes relative to earlier cache experiments cannot be inferred from these times.
+28 raw files indexed with SHA256; code/plans/evidence saved locally.
+No production defaults changed and no upstream PR/push/deployment performed.
+
+Observed tradeoffs (group medians relative to ordinary chunked prefill):
+existing_adaptive: {"batch_s": 42.753504357795855, "burst_ttft_ms": 99.32056856178203, "ongoing_chunk_gap_p95_ms": -28.06273819941686, "ongoing_tpot_ms": -19.72535768267757, "p95_latency_ms": 48.3149158969423}
+decode_adaptive: {"batch_s": 6.315111575072829, "burst_ttft_ms": 14.186848615594227, "ongoing_chunk_gap_p95_ms": -15.94285267273875, "ongoing_tpot_ms": -6.559056882193504, "p95_latency_ms": 7.788024007065819}
+
+Warmup caveat: only one32-token/one-output request preceded each run;
+all execution shapes were not prewarmed. These are fresh-server burst measurements,
+not an established steady-state production advantage. No parameters were tuned
+after looking at timing results. No failed GPU timing runs were discarded.
+A read-only CLI-help invocation failed inside the sandbox before benchmarking;
+the GPU-capable invocation succeeded. This was not a workload/timing run.
