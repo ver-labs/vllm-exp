@@ -1,0 +1,77 @@
+Experiment 14 | Qwen/Qwen3-0.6B | shift
+========================================================================
+Medians of three fresh-server untraced timing runs.
+Lower duration/latency is better; higher throughput is better.
+
+Variant     Batch s   Output tok/s  First text ms  p95 request ms  vs stock
+stock        19.444       34.561         72.887         288.576    +0.00%
+  cached tokens/run: [10768, 10768, 10768]
+  cohort latency medians: {"cold_scan": {"first_text_ms": 90.0174172129482, "total_ms": 262.04631198197603}, "probe": {"first_text_ms": 80.60931204818189, "total_ms": 252.2373751271516}, "train_new": {"first_text_ms": 45.51935428753495, "total_ms": 198.65756295621395}, "train_old": {"first_text_ms": 44.191895984113216, "total_ms": 192.81845772638917}}
+aging        19.003       35.362         51.159         282.848    -2.27%
+  cached tokens/run: [12352, 12352, 12352]
+  cohort latency medians: {"cold_scan": {"first_text_ms": 83.66189547814429, "total_ms": 265.7792295794934}, "probe": {"first_text_ms": 42.36908280290663, "total_ms": 200.01768693327904}, "train_new": {"first_text_ms": 45.82679201848805, "total_ms": 198.23960354551673}, "train_old": {"first_text_ms": 42.611312586814165, "total_ms": 186.9171040598303}}
+partial      18.660       36.014         52.460         269.811    -4.03%
+  cached tokens/run: [11675, 11675, 11675]
+  cohort latency medians: {"cold_scan": {"first_text_ms": 82.40302070043981, "total_ms": 251.9779794383794}, "probe": {"first_text_ms": 77.59150001220405, "total_ms": 248.33075003698468}, "train_new": {"first_text_ms": 44.11291657015681, "total_ms": 193.41135350987315}, "train_old": {"first_text_ms": 41.117270942777395, "total_ms": 196.37572928331792}}
+combined     18.110       37.106         48.123         266.051    -6.86%
+  cached tokens/run: [13200, 13200, 13200]
+  cohort latency medians: {"cold_scan": {"first_text_ms": 82.88179198279977, "total_ms": 253.50785395130515}, "probe": {"first_text_ms": 41.58010380342603, "total_ms": 178.3086876384914}, "train_new": {"first_text_ms": 46.110708033666015, "total_ms": 197.85377103835344}, "train_old": {"first_text_ms": 39.229562506079674, "total_ms": 193.78368719480932}}
+
+Paired rounds (preserve alongside ratios of group medians):
+[
+  {
+    "round": 1,
+    "duration_change_pct": {
+      "stock": 0.0,
+      "aging": -2.266183598890248,
+      "partial": -4.034031016116391,
+      "combined": -9.084570961102923
+    },
+    "exact_answer_matches": {
+      "stock": 84,
+      "aging": 84,
+      "partial": 81,
+      "combined": 81
+    }
+  },
+  {
+    "round": 2,
+    "duration_change_pct": {
+      "stock": 0.0,
+      "aging": -22.497774493548274,
+      "partial": -20.34856078520255,
+      "combined": -9.311336705595163
+    },
+    "exact_answer_matches": {
+      "stock": 84,
+      "aging": 84,
+      "partial": 81,
+      "combined": 81
+    }
+  },
+  {
+    "round": 3,
+    "duration_change_pct": {
+      "stock": 0.0,
+      "aging": 15.456802052010786,
+      "partial": 3.1167951768614977,
+      "combined": -2.461327209117048
+    },
+    "exact_answer_matches": {
+      "stock": 84,
+      "aging": 84,
+      "partial": 81,
+      "combined": 81
+    }
+  }
+]
+
+Combination compared directly with each component:
+  vs aging: -4.70% batch median; 2/3 paired rounds faster
+  vs partial: -2.94% batch median; 2/3 paired rounds faster
+
+Cautions: only three timing rounds; synthetic workload; closed-loop
+completion order affects arrivals/cache churn in mixed traffic.
+Shift is sequential.
+Seed publication excluded. Exact text agreement is not a
+semantic quality score. Traced/profiled runs excluded from timing.

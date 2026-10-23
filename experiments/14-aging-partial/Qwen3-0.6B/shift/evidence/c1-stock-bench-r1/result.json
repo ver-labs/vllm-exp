@@ -1,0 +1,2051 @@
+{
+  "variant": "stock",
+  "concurrency": 1,
+  "mode": "bench",
+  "round": 1,
+  "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-partial/Qwen--Qwen3-0.6B/shift/batches-20261023-084415/c1-stock-bench-r1",
+  "command": [
+    "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/.venv/bin/vllm",
+    "serve",
+    "/Users/nandanadileep/.cache/huggingface/hub/models--Qwen--Qwen3-0.6B/snapshots/c1899de289a04d12100db370d81485cdf75e47ca",
+    "--served-model-name",
+    "Qwen/Qwen3-0.6B",
+    "--host",
+    "127.0.0.1",
+    "--port",
+    "8001",
+    "--seed",
+    "0",
+    "--worker-cls",
+    "auto",
+    "--max-model-len",
+    "384",
+    "--max-num-seqs",
+    "1",
+    "--max-num-batched-tokens",
+    "128",
+    "--block-size",
+    "16",
+    "--num-gpu-blocks-override",
+    "32",
+    "--prefix-match-unit",
+    "16",
+    "--enable-prefix-caching",
+    "--enable-chunked-prefill",
+    "--no-async-scheduling",
+    "--enable-prompt-tokens-details"
+  ],
+  "study_environment": {
+    "STUDY_MODEL_PATH": "/Users/nandanadileep/.cache/huggingface/hub/models--Qwen--Qwen3-0.6B/snapshots/c1899de289a04d12100db370d81485cdf75e47ca",
+    "STUDY_MODEL": "Qwen/Qwen3-0.6B",
+    "STUDY_PARTIAL_PREFIX": "0",
+    "STUDY_ADAPTIVE_PREFILL": "0",
+    "STUDY_LFU_HALF_LIFE_BLOCKS": "64",
+    "STUDY_PARTIAL_MIN_TOKENS": "0",
+    "STUDY_CACHE_IMPL": "incremental",
+    "STUDY_EVICTION_POLICY": "vllm",
+    "STUDY_WAITING_POLICY": "fcfs",
+    "STUDY_SKIP_CONTINUE": "0",
+    "STUDY_CACHE_PROFILE": "0",
+    "VLLM_STUDY_TRACE": "0",
+    "VLLM_STUDY_TRACE_DIR": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-partial/Qwen--Qwen3-0.6B/shift/batches-20261023-084415/c1-stock-bench-r1",
+    "VLLM_STUDY_TRACE_STDOUT": "0"
+  },
+  "manifest_sha256": "a98f10b9b9c020445716d4d14fd871b9a5d595e3d9f5700f0d8300343c84168b",
+  "rows": [
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T00",
+      "answer": "Note 0: The document describes a",
+      "usage": {
+        "prompt_tokens": 264,
+        "total_tokens": 272,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 32
+        }
+      },
+      "cached_tokens": 32,
+      "started_ms": 0.2720840275287628,
+      "finished_ms": 157.5065841898322,
+      "first_text_ms": 46.9561661593616,
+      "total_ms": 157.23450016230345,
+      "request_id": "T00",
+      "prompt_length": 264,
+      "output_tokens": 8,
+      "cohort": "train_old",
+      "cycle": 0
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T01",
+      "answer": "Note 1: The document describes a",
+      "usage": {
+        "prompt_tokens": 264,
+        "total_tokens": 272,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 240
+        }
+      },
+      "cached_tokens": 240,
+      "started_ms": 157.65937510877848,
+      "finished_ms": 342.6897921599448,
+      "first_text_ms": 34.62937520816922,
+      "total_ms": 185.0304170511663,
+      "request_id": "T01",
+      "prompt_length": 264,
+      "output_tokens": 8,
+      "cohort": "train_old",
+      "cycle": 0
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T02",
+      "answer": "Note 2: The document A describes",
+      "usage": {
+        "prompt_tokens": 264,
+        "total_tokens": 272,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 240
+        }
+      },
+      "cached_tokens": 240,
+      "started_ms": 342.96383429318666,
+      "finished_ms": 541.3802089169621,
+      "first_text_ms": 47.02774994075298,
+      "total_ms": 198.41637462377548,
+      "request_id": "T02",
+      "prompt_length": 264,
+      "output_tokens": 8,
+      "cohort": "train_old",
+      "cycle": 0
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T03",
+      "answer": "Note 3: The document A describes",
+      "usage": {
+        "prompt_tokens": 264,
+        "total_tokens": 272,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 240
+        }
+      },
+      "cached_tokens": 240,
+      "started_ms": 541.6217502206564,
+      "finished_ms": 719.5573342032731,
+      "first_text_ms": 40.55929183959961,
+      "total_ms": 177.93558398261666,
+      "request_id": "T03",
+      "prompt_length": 264,
+      "output_tokens": 8,
+      "cohort": "train_old",
+      "cycle": 0
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T04",
+      "answer": "Note 4: The document A describes",
+      "usage": {
+        "prompt_tokens": 264,
+        "total_tokens": 272,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 240
+        }
+      },
+      "cached_tokens": 240,
+      "started_ms": 719.8519171215594,
+      "finished_ms": 905.4473340511322,
+      "first_text_ms": 41.33762512356043,
+      "total_ms": 185.59541692957282,
+      "request_id": "T04",
+      "prompt_length": 264,
+      "output_tokens": 8,
+      "cohort": "train_old",
+      "cycle": 0
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T05",
+      "answer": "Note 5: The document A describes",
+      "usage": {
+        "prompt_tokens": 264,
+        "total_tokens": 272,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 240
+        }
+      },
+      "cached_tokens": 240,
+      "started_ms": 905.7155842892826,
+      "finished_ms": 1092.9361251182854,
+      "first_text_ms": 43.153457809239626,
+      "total_ms": 187.22054082900286,
+      "request_id": "T05",
+      "prompt_length": 264,
+      "output_tokens": 8,
+      "cohort": "train_old",
+      "cycle": 0
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T06",
+      "answer": "Note 6: The document A describes",
+      "usage": {
+        "prompt_tokens": 264,
+        "total_tokens": 272,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 240
+        }
+      },
+      "cached_tokens": 240,
+      "started_ms": 1093.2253752835095,
+      "finished_ms": 1277.124000247568,
+      "first_text_ms": 40.85333365947008,
+      "total_ms": 183.8986249640584,
+      "request_id": "T06",
+      "prompt_length": 264,
+      "output_tokens": 8,
+      "cohort": "train_old",
+      "cycle": 0
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T07",
+      "answer": "Note 7: The document A describes",
+      "usage": {
+        "prompt_tokens": 264,
+        "total_tokens": 272,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 240
+        }
+      },
+      "cached_tokens": 240,
+      "started_ms": 1277.4179172702134,
+      "finished_ms": 1486.3515421748161,
+      "first_text_ms": 43.29741699621081,
+      "total_ms": 208.93362490460277,
+      "request_id": "T07",
+      "prompt_length": 264,
+      "output_tokens": 8,
+      "cohort": "train_old",
+      "cycle": 0
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T08",
+      "answer": "Note 8: The document A describes",
+      "usage": {
+        "prompt_tokens": 264,
+        "total_tokens": 272,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 240
+        }
+      },
+      "cached_tokens": 240,
+      "started_ms": 1491.0793751478195,
+      "finished_ms": 1713.7083751149476,
+      "first_text_ms": 62.038667034357786,
+      "total_ms": 222.62899996712804,
+      "request_id": "T08",
+      "prompt_length": 264,
+      "output_tokens": 8,
+      "cohort": "train_old",
+      "cycle": 0
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T09",
+      "answer": "Note 9: The document A describes",
+      "usage": {
+        "prompt_tokens": 264,
+        "total_tokens": 272,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 240
+        }
+      },
+      "cached_tokens": 240,
+      "started_ms": 1714.7717499174178,
+      "finished_ms": 1920.729334000498,
+      "first_text_ms": 49.218375235795975,
+      "total_ms": 205.9575840830803,
+      "request_id": "T09",
+      "prompt_length": 264,
+      "output_tokens": 8,
+      "cohort": "train_old",
+      "cycle": 0
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T10",
+      "answer": "Note 10: The document A",
+      "usage": {
+        "prompt_tokens": 265,
+        "total_tokens": 273,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 240
+        }
+      },
+      "cached_tokens": 240,
+      "started_ms": 1921.0923751816154,
+      "finished_ms": 2133.4117921069264,
+      "first_text_ms": 68.21470893919468,
+      "total_ms": 212.3194169253111,
+      "request_id": "T10",
+      "prompt_length": 265,
+      "output_tokens": 8,
+      "cohort": "train_old",
+      "cycle": 0
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T11",
+      "answer": "Note 11: The document A",
+      "usage": {
+        "prompt_tokens": 265,
+        "total_tokens": 273,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 240
+        }
+      },
+      "cached_tokens": 240,
+      "started_ms": 2133.6989169940352,
+      "finished_ms": 2341.2038749083877,
+      "first_text_ms": 45.08637497201562,
+      "total_ms": 207.50495791435242,
+      "request_id": "T11",
+      "prompt_length": 265,
+      "output_tokens": 8,
+      "cohort": "train_old",
+      "cycle": 0
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T12",
+      "answer": "**Note 1.0:**  \n",
+      "usage": {
+        "prompt_tokens": 266,
+        "total_tokens": 274,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 16
+        }
+      },
+      "cached_tokens": 16,
+      "started_ms": 2341.4967921562493,
+      "finished_ms": 2579.6902501024306,
+      "first_text_ms": 74.2302080616355,
+      "total_ms": 238.1934579461813,
+      "request_id": "T12",
+      "prompt_length": 266,
+      "output_tokens": 8,
+      "cohort": "train_new",
+      "cycle": 1
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T13",
+      "answer": "Note 1.1:  \nDocument",
+      "usage": {
+        "prompt_tokens": 266,
+        "total_tokens": 274,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 240
+        }
+      },
+      "cached_tokens": 240,
+      "started_ms": 2579.980167094618,
+      "finished_ms": 2764.6515001542866,
+      "first_text_ms": 44.47520803660154,
+      "total_ms": 184.67133305966854,
+      "request_id": "T13",
+      "prompt_length": 266,
+      "output_tokens": 8,
+      "cohort": "train_new",
+      "cycle": 1
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T14",
+      "answer": "Note 1.2:  \nDocument",
+      "usage": {
+        "prompt_tokens": 266,
+        "total_tokens": 274,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 240
+        }
+      },
+      "cached_tokens": 240,
+      "started_ms": 2765.002792235464,
+      "finished_ms": 2947.838459163904,
+      "first_text_ms": 42.06558270379901,
+      "total_ms": 182.83566692844033,
+      "request_id": "T14",
+      "prompt_length": 266,
+      "output_tokens": 8,
+      "cohort": "train_new",
+      "cycle": 1
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T15",
+      "answer": "Note 1.3:  \nDocument",
+      "usage": {
+        "prompt_tokens": 266,
+        "total_tokens": 274,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 240
+        }
+      },
+      "cached_tokens": 240,
+      "started_ms": 2948.1382500380278,
+      "finished_ms": 3203.757167328149,
+      "first_text_ms": 104.4761249795556,
+      "total_ms": 255.61891729012132,
+      "request_id": "T15",
+      "prompt_length": 266,
+      "output_tokens": 8,
+      "cohort": "train_new",
+      "cycle": 1
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T16",
+      "answer": "The **Independent Scan 1.0",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 264,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 16
+        }
+      },
+      "cached_tokens": 16,
+      "started_ms": 3204.039459116757,
+      "finished_ms": 3460.3180000558496,
+      "first_text_ms": 101.16849979385734,
+      "total_ms": 256.27854093909264,
+      "request_id": "T16",
+      "prompt_length": 256,
+      "output_tokens": 8,
+      "cohort": "cold_scan",
+      "cycle": 1
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T17",
+      "answer": "The **Independent Scan 1.1",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 264,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 16
+        }
+      },
+      "cached_tokens": 16,
+      "started_ms": 3460.688666906208,
+      "finished_ms": 3774.496791884303,
+      "first_text_ms": 124.4547083042562,
+      "total_ms": 313.8081249780953,
+      "request_id": "T17",
+      "prompt_length": 256,
+      "output_tokens": 8,
+      "cohort": "cold_scan",
+      "cycle": 1
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T18",
+      "answer": "The **Independent Scan 1.2",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 264,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 16
+        }
+      },
+      "cached_tokens": 16,
+      "started_ms": 3774.721917230636,
+      "finished_ms": 4057.8469592146575,
+      "first_text_ms": 85.20845789462328,
+      "total_ms": 283.12504198402166,
+      "request_id": "T18",
+      "prompt_length": 256,
+      "output_tokens": 8,
+      "cohort": "cold_scan",
+      "cycle": 1
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T19",
+      "answer": "The **Independent Scan 1.3",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 264,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 16
+        }
+      },
+      "cached_tokens": 16,
+      "started_ms": 4058.1665839999914,
+      "finished_ms": 4317.584792152047,
+      "first_text_ms": 83.90650013461709,
+      "total_ms": 259.41820815205574,
+      "request_id": "T19",
+      "prompt_length": 256,
+      "output_tokens": 8,
+      "cohort": "cold_scan",
+      "cycle": 1
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T20",
+      "answer": "An improvement to Document B could be to",
+      "usage": {
+        "prompt_tokens": 266,
+        "total_tokens": 274,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 16
+        }
+      },
+      "cached_tokens": 16,
+      "started_ms": 4317.928709089756,
+      "finished_ms": 4596.371542196721,
+      "first_text_ms": 100.4847502335906,
+      "total_ms": 278.4428331069648,
+      "request_id": "T20",
+      "prompt_length": 266,
+      "output_tokens": 8,
+      "cohort": "probe",
+      "cycle": 1
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T21",
+      "answer": "**Note 2.0:**  \n",
+      "usage": {
+        "prompt_tokens": 266,
+        "total_tokens": 274,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 240
+        }
+      },
+      "cached_tokens": 240,
+      "started_ms": 4596.7282499186695,
+      "finished_ms": 4818.640500307083,
+      "first_text_ms": 49.93358440697193,
+      "total_ms": 221.91225038841367,
+      "request_id": "T21",
+      "prompt_length": 266,
+      "output_tokens": 8,
+      "cohort": "train_new",
+      "cycle": 2
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T22",
+      "answer": "Note 2.1 explains that the",
+      "usage": {
+        "prompt_tokens": 266,
+        "total_tokens": 274,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 240
+        }
+      },
+      "cached_tokens": 240,
+      "started_ms": 4819.122500251979,
+      "finished_ms": 5001.720459200442,
+      "first_text_ms": 38.70016662403941,
+      "total_ms": 182.5979589484632,
+      "request_id": "T22",
+      "prompt_length": 266,
+      "output_tokens": 8,
+      "cohort": "train_new",
+      "cycle": 2
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T23",
+      "answer": "Note 2.2 summarizes that the",
+      "usage": {
+        "prompt_tokens": 266,
+        "total_tokens": 274,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 240
+        }
+      },
+      "cached_tokens": 240,
+      "started_ms": 5002.0313751883805,
+      "finished_ms": 5213.191125076264,
+      "first_text_ms": 79.97620897367597,
+      "total_ms": 211.15974988788366,
+      "request_id": "T23",
+      "prompt_length": 266,
+      "output_tokens": 8,
+      "cohort": "train_new",
+      "cycle": 2
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T24",
+      "answer": "Note 2.3 summarizes that the",
+      "usage": {
+        "prompt_tokens": 266,
+        "total_tokens": 274,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 240
+        }
+      },
+      "cached_tokens": 240,
+      "started_ms": 5213.493584189564,
+      "finished_ms": 5448.637334164232,
+      "first_text_ms": 49.67370769008994,
+      "total_ms": 235.14374997466803,
+      "request_id": "T24",
+      "prompt_length": 266,
+      "output_tokens": 8,
+      "cohort": "train_new",
+      "cycle": 2
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T25",
+      "answer": "The **Independent Scan 2.0",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 264,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 16
+        }
+      },
+      "cached_tokens": 16,
+      "started_ms": 5448.944374918938,
+      "finished_ms": 5727.475041989237,
+      "first_text_ms": 81.46020909771323,
+      "total_ms": 278.5306670702994,
+      "request_id": "T25",
+      "prompt_length": 256,
+      "output_tokens": 8,
+      "cohort": "cold_scan",
+      "cycle": 2
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T26",
+      "answer": "The **Independent Scan 2.1",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 264,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 16
+        }
+      },
+      "cached_tokens": 16,
+      "started_ms": 5727.74933418259,
+      "finished_ms": 5991.258709225804,
+      "first_text_ms": 134.81695810332894,
+      "total_ms": 263.50937504321337,
+      "request_id": "T26",
+      "prompt_length": 256,
+      "output_tokens": 8,
+      "cohort": "cold_scan",
+      "cycle": 2
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T27",
+      "answer": "The **Independent Scan 2.2",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 264,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 16
+        }
+      },
+      "cached_tokens": 16,
+      "started_ms": 5991.557000204921,
+      "finished_ms": 6267.716667149216,
+      "first_text_ms": 126.24199967831373,
+      "total_ms": 276.15966694429517,
+      "request_id": "T27",
+      "prompt_length": 256,
+      "output_tokens": 8,
+      "cohort": "cold_scan",
+      "cycle": 2
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T28",
+      "answer": "The **Independent Scan 2.3",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 264,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 16
+        }
+      },
+      "cached_tokens": 16,
+      "started_ms": 6267.986459191889,
+      "finished_ms": 6572.73287512362,
+      "first_text_ms": 100.29645776376128,
+      "total_ms": 304.74641593173146,
+      "request_id": "T28",
+      "prompt_length": 256,
+      "output_tokens": 8,
+      "cohort": "cold_scan",
+      "cycle": 2
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T29",
+      "answer": "An improvement to Document B could be to",
+      "usage": {
+        "prompt_tokens": 266,
+        "total_tokens": 274,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 16
+        }
+      },
+      "cached_tokens": 16,
+      "started_ms": 6572.950917296112,
+      "finished_ms": 6837.192625273019,
+      "first_text_ms": 84.73649993538857,
+      "total_ms": 264.2417079769075,
+      "request_id": "T29",
+      "prompt_length": 266,
+      "output_tokens": 8,
+      "cohort": "probe",
+      "cycle": 2
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T30",
+      "answer": "**Note 3.0** summarizes",
+      "usage": {
+        "prompt_tokens": 266,
+        "total_tokens": 274,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 240
+        }
+      },
+      "cached_tokens": 240,
+      "started_ms": 6837.781750131398,
+      "finished_ms": 7039.658292196691,
+      "first_text_ms": 45.65341677516699,
+      "total_ms": 201.8765420652926,
+      "request_id": "T30",
+      "prompt_length": 266,
+      "output_tokens": 8,
+      "cohort": "train_new",
+      "cycle": 3
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T31",
+      "answer": "Note 3.1 explains that the",
+      "usage": {
+        "prompt_tokens": 266,
+        "total_tokens": 274,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 240
+        }
+      },
+      "cached_tokens": 240,
+      "started_ms": 7039.969209115952,
+      "finished_ms": 7290.494374930859,
+      "first_text_ms": 142.6488747820258,
+      "total_ms": 250.52516581490636,
+      "request_id": "T31",
+      "prompt_length": 266,
+      "output_tokens": 8,
+      "cohort": "train_new",
+      "cycle": 3
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T32",
+      "answer": "Note 3.2 summarizes that the",
+      "usage": {
+        "prompt_tokens": 266,
+        "total_tokens": 274,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 240
+        }
+      },
+      "cached_tokens": 240,
+      "started_ms": 7290.73570901528,
+      "finished_ms": 7633.840042166412,
+      "first_text_ms": 180.48333330079913,
+      "total_ms": 343.10433315113187,
+      "request_id": "T32",
+      "prompt_length": 266,
+      "output_tokens": 8,
+      "cohort": "train_new",
+      "cycle": 3
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T33",
+      "answer": "Note 3.3 summarizes that the",
+      "usage": {
+        "prompt_tokens": 266,
+        "total_tokens": 274,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 240
+        }
+      },
+      "cached_tokens": 240,
+      "started_ms": 7634.282167069614,
+      "finished_ms": 7842.427792027593,
+      "first_text_ms": 131.46533304825425,
+      "total_ms": 208.14562495797873,
+      "request_id": "T33",
+      "prompt_length": 266,
+      "output_tokens": 8,
+      "cohort": "train_new",
+      "cycle": 3
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T34",
+      "answer": "The **Independent Scan 3.0",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 264,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 16
+        }
+      },
+      "cached_tokens": 16,
+      "started_ms": 7842.917084228247,
+      "finished_ms": 8131.493458990008,
+      "first_text_ms": 109.48895802721381,
+      "total_ms": 288.57637476176023,
+      "request_id": "T34",
+      "prompt_length": 256,
+      "output_tokens": 8,
+      "cohort": "cold_scan",
+      "cycle": 3
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T35",
+      "answer": "The **Independent Scan 3.1",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 264,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 16
+        }
+      },
+      "cached_tokens": 16,
+      "started_ms": 8131.720291916281,
+      "finished_ms": 8396.21779229492,
+      "first_text_ms": 91.8641253374517,
+      "total_ms": 264.4975003786385,
+      "request_id": "T35",
+      "prompt_length": 256,
+      "output_tokens": 8,
+      "cohort": "cold_scan",
+      "cycle": 3
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T36",
+      "answer": "The **Independent Scan 3.2",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 264,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 16
+        }
+      },
+      "cached_tokens": 16,
+      "started_ms": 8396.559333894402,
+      "finished_ms": 8658.863124903291,
+      "first_text_ms": 133.8971252553165,
+      "total_ms": 262.3037910088897,
+      "request_id": "T36",
+      "prompt_length": 256,
+      "output_tokens": 8,
+      "cohort": "cold_scan",
+      "cycle": 3
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T37",
+      "answer": "The **Independent Scan 3.3",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 264,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 16
+        }
+      },
+      "cached_tokens": 16,
+      "started_ms": 8659.145709127188,
+      "finished_ms": 8936.06216693297,
+      "first_text_ms": 118.42279089614749,
+      "total_ms": 276.91645780578256,
+      "request_id": "T37",
+      "prompt_length": 256,
+      "output_tokens": 8,
+      "cohort": "cold_scan",
+      "cycle": 3
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T38",
+      "answer": "An improvement to Document B could be to",
+      "usage": {
+        "prompt_tokens": 266,
+        "total_tokens": 274,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 16
+        }
+      },
+      "cached_tokens": 16,
+      "started_ms": 8936.297833919525,
+      "finished_ms": 9191.36937521398,
+      "first_text_ms": 78.28854117542505,
+      "total_ms": 255.07154129445553,
+      "request_id": "T38",
+      "prompt_length": 266,
+      "output_tokens": 8,
+      "cohort": "probe",
+      "cycle": 3
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T39",
+      "answer": "Note 4.0 summarizes that **",
+      "usage": {
+        "prompt_tokens": 266,
+        "total_tokens": 274,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 240
+        }
+      },
+      "cached_tokens": 240,
+      "started_ms": 9191.66100025177,
+      "finished_ms": 9417.887791991234,
+      "first_text_ms": 56.719749700278044,
+      "total_ms": 226.2267917394638,
+      "request_id": "T39",
+      "prompt_length": 266,
+      "output_tokens": 8,
+      "cohort": "train_new",
+      "cycle": 4
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T40",
+      "answer": "Note 4.1 summarizes that the",
+      "usage": {
+        "prompt_tokens": 266,
+        "total_tokens": 274,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 240
+        }
+      },
+      "cached_tokens": 240,
+      "started_ms": 9418.14412502572,
+      "finished_ms": 9614.814667031169,
+      "first_text_ms": 58.597458992153406,
+      "total_ms": 196.67054200544953,
+      "request_id": "T40",
+      "prompt_length": 266,
+      "output_tokens": 8,
+      "cohort": "train_new",
+      "cycle": 4
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T41",
+      "answer": "Note 4.2 summarizes that the",
+      "usage": {
+        "prompt_tokens": 266,
+        "total_tokens": 274,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 240
+        }
+      },
+      "cached_tokens": 240,
+      "started_ms": 9615.140791982412,
+      "finished_ms": 9821.919292211533,
+      "first_text_ms": 55.58566702529788,
+      "total_ms": 206.77850022912025,
+      "request_id": "T41",
+      "prompt_length": 266,
+      "output_tokens": 8,
+      "cohort": "train_new",
+      "cycle": 4
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T42",
+      "answer": "Note 4.3 summarizes that the",
+      "usage": {
+        "prompt_tokens": 266,
+        "total_tokens": 274,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 240
+        }
+      },
+      "cached_tokens": 240,
+      "started_ms": 9822.244875133038,
+      "finished_ms": 10022.889459040016,
+      "first_text_ms": 45.385291799902916,
+      "total_ms": 200.64458390697837,
+      "request_id": "T42",
+      "prompt_length": 266,
+      "output_tokens": 8,
+      "cohort": "train_new",
+      "cycle": 4
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T43",
+      "answer": "The **Independent Scan 4.0",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 264,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 16
+        }
+      },
+      "cached_tokens": 16,
+      "started_ms": 10023.236583918333,
+      "finished_ms": 10314.908250235021,
+      "first_text_ms": 226.55033320188522,
+      "total_ms": 291.67166631668806,
+      "request_id": "T43",
+      "prompt_length": 256,
+      "output_tokens": 8,
+      "cohort": "cold_scan",
+      "cycle": 4
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T44",
+      "answer": "The **Independent Scan 4.1",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 264,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 16
+        }
+      },
+      "cached_tokens": 16,
+      "started_ms": 10315.225542057306,
+      "finished_ms": 10579.69225011766,
+      "first_text_ms": 152.55074994638562,
+      "total_ms": 264.466708060354,
+      "request_id": "T44",
+      "prompt_length": 256,
+      "output_tokens": 8,
+      "cohort": "cold_scan",
+      "cycle": 4
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T45",
+      "answer": "The **Independent Scan 4.2",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 264,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 16
+        }
+      },
+      "cached_tokens": 16,
+      "started_ms": 10579.956917092204,
+      "finished_ms": 10851.856166962534,
+      "first_text_ms": 133.21225019171834,
+      "total_ms": 271.8992498703301,
+      "request_id": "T45",
+      "prompt_length": 256,
+      "output_tokens": 8,
+      "cohort": "cold_scan",
+      "cycle": 4
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T46",
+      "answer": "The **Independent Scan 4.3",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 264,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 16
+        }
+      },
+      "cached_tokens": 16,
+      "started_ms": 10852.155959233642,
+      "finished_ms": 11135.35970915109,
+      "first_text_ms": 168.9513330347836,
+      "total_ms": 283.20374991744757,
+      "request_id": "T46",
+      "prompt_length": 256,
+      "output_tokens": 8,
+      "cohort": "cold_scan",
+      "cycle": 4
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T47",
+      "answer": "**Improvement:**  \nDocument B can",
+      "usage": {
+        "prompt_tokens": 266,
+        "total_tokens": 274,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 16
+        }
+      },
+      "cached_tokens": 16,
+      "started_ms": 11135.611542034894,
+      "finished_ms": 11394.932959228754,
+      "first_text_ms": 82.93008292093873,
+      "total_ms": 259.3214171938598,
+      "request_id": "T47",
+      "prompt_length": 266,
+      "output_tokens": 8,
+      "cohort": "probe",
+      "cycle": 4
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T48",
+      "answer": "Note 5.0 summarizes that **",
+      "usage": {
+        "prompt_tokens": 266,
+        "total_tokens": 274,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 240
+        }
+      },
+      "cached_tokens": 240,
+      "started_ms": 11395.314124878496,
+      "finished_ms": 11641.627334058285,
+      "first_text_ms": 64.29958436638117,
+      "total_ms": 246.31320917978883,
+      "request_id": "T48",
+      "prompt_length": 266,
+      "output_tokens": 8,
+      "cohort": "train_new",
+      "cycle": 5
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T49",
+      "answer": "Note 5.1 summarizes that the",
+      "usage": {
+        "prompt_tokens": 266,
+        "total_tokens": 274,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 240
+        }
+      },
+      "cached_tokens": 240,
+      "started_ms": 11642.185584176332,
+      "finished_ms": 11864.981791935861,
+      "first_text_ms": 64.1837497241795,
+      "total_ms": 222.79620775952935,
+      "request_id": "T49",
+      "prompt_length": 266,
+      "output_tokens": 8,
+      "cohort": "train_new",
+      "cycle": 5
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T50",
+      "answer": "Note 5.2 summarizes that the",
+      "usage": {
+        "prompt_tokens": 266,
+        "total_tokens": 274,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 240
+        }
+      },
+      "cached_tokens": 240,
+      "started_ms": 11865.31904200092,
+      "finished_ms": 12102.0766668953,
+      "first_text_ms": 47.06300003454089,
+      "total_ms": 236.75762489438057,
+      "request_id": "T50",
+      "prompt_length": 266,
+      "output_tokens": 8,
+      "cohort": "train_new",
+      "cycle": 5
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T51",
+      "answer": "Note 5.3 summarizes that the",
+      "usage": {
+        "prompt_tokens": 266,
+        "total_tokens": 274,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 240
+        }
+      },
+      "cached_tokens": 240,
+      "started_ms": 12102.36595897004,
+      "finished_ms": 12320.085209328681,
+      "first_text_ms": 53.29170823097229,
+      "total_ms": 217.71925035864115,
+      "request_id": "T51",
+      "prompt_length": 266,
+      "output_tokens": 8,
+      "cohort": "train_new",
+      "cycle": 5
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T52",
+      "answer": "The **Independent Scan 5.0",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 264,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 16
+        }
+      },
+      "cached_tokens": 16,
+      "started_ms": 12320.492791943252,
+      "finished_ms": 12592.282874975353,
+      "first_text_ms": 96.88895801082253,
+      "total_ms": 271.7900830321014,
+      "request_id": "T52",
+      "prompt_length": 256,
+      "output_tokens": 8,
+      "cohort": "cold_scan",
+      "cycle": 5
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T53",
+      "answer": "The **Independent Scan 5.1",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 264,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 16
+        }
+      },
+      "cached_tokens": 16,
+      "started_ms": 12592.542750295252,
+      "finished_ms": 12865.1637500152,
+      "first_text_ms": 94.75204162299633,
+      "total_ms": 272.6209997199476,
+      "request_id": "T53",
+      "prompt_length": 256,
+      "output_tokens": 8,
+      "cohort": "cold_scan",
+      "cycle": 5
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T54",
+      "answer": "The **Independent Scan 5.2",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 264,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 16
+        }
+      },
+      "cached_tokens": 16,
+      "started_ms": 12865.427792072296,
+      "finished_ms": 13111.27179209143,
+      "first_text_ms": 71.98137510567904,
+      "total_ms": 245.8440000191331,
+      "request_id": "T54",
+      "prompt_length": 256,
+      "output_tokens": 8,
+      "cohort": "cold_scan",
+      "cycle": 5
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T55",
+      "answer": "The **Independent Scan 5.3",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 264,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 16
+        }
+      },
+      "cached_tokens": 16,
+      "started_ms": 13111.589750275016,
+      "finished_ms": 13363.519541919231,
+      "first_text_ms": 86.90299978479743,
+      "total_ms": 251.92979164421558,
+      "request_id": "T55",
+      "prompt_length": 256,
+      "output_tokens": 8,
+      "cohort": "cold_scan",
+      "cycle": 5
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T56",
+      "answer": "**Improvement:**  \n**Note ",
+      "usage": {
+        "prompt_tokens": 266,
+        "total_tokens": 274,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 16
+        }
+      },
+      "cached_tokens": 16,
+      "started_ms": 13363.78449993208,
+      "finished_ms": 13613.187708891928,
+      "first_text_ms": 77.72987522184849,
+      "total_ms": 249.4032089598477,
+      "request_id": "T56",
+      "prompt_length": 266,
+      "output_tokens": 8,
+      "cohort": "probe",
+      "cycle": 5
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T57",
+      "answer": "Note 6.0 summarizes that the",
+      "usage": {
+        "prompt_tokens": 266,
+        "total_tokens": 274,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 240
+        }
+      },
+      "cached_tokens": 240,
+      "started_ms": 13613.557542208582,
+      "finished_ms": 13794.375209137797,
+      "first_text_ms": 41.15425003692508,
+      "total_ms": 180.8176669292152,
+      "request_id": "T57",
+      "prompt_length": 266,
+      "output_tokens": 8,
+      "cohort": "train_new",
+      "cycle": 6
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T58",
+      "answer": "Note 6.1 explains that the",
+      "usage": {
+        "prompt_tokens": 266,
+        "total_tokens": 274,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 240
+        }
+      },
+      "cached_tokens": 240,
+      "started_ms": 13795.50112504512,
+      "finished_ms": 13972.880000248551,
+      "first_text_ms": 43.74266695231199,
+      "total_ms": 177.37887520343065,
+      "request_id": "T58",
+      "prompt_length": 266,
+      "output_tokens": 8,
+      "cohort": "train_new",
+      "cycle": 6
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T59",
+      "answer": "Note 6.2 summarizes that the",
+      "usage": {
+        "prompt_tokens": 266,
+        "total_tokens": 274,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 240
+        }
+      },
+      "cached_tokens": 240,
+      "started_ms": 13973.185333888978,
+      "finished_ms": 14152.422209270298,
+      "first_text_ms": 39.76720804348588,
+      "total_ms": 179.23687538132071,
+      "request_id": "T59",
+      "prompt_length": 266,
+      "output_tokens": 8,
+      "cohort": "train_new",
+      "cycle": 6
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T60",
+      "answer": "Note 6.3 summarizes that the",
+      "usage": {
+        "prompt_tokens": 266,
+        "total_tokens": 274,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 240
+        }
+      },
+      "cached_tokens": 240,
+      "started_ms": 14152.802625205368,
+      "finished_ms": 14334.340459201485,
+      "first_text_ms": 41.75420897081494,
+      "total_ms": 181.53783399611712,
+      "request_id": "T60",
+      "prompt_length": 266,
+      "output_tokens": 8,
+      "cohort": "train_new",
+      "cycle": 6
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T61",
+      "answer": "The **Independent Scan 6.0",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 264,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 16
+        }
+      },
+      "cached_tokens": 16,
+      "started_ms": 14334.640250075608,
+      "finished_ms": 14582.413209136575,
+      "first_text_ms": 87.79624989256263,
+      "total_ms": 247.77295906096697,
+      "request_id": "T61",
+      "prompt_length": 256,
+      "output_tokens": 8,
+      "cohort": "cold_scan",
+      "cycle": 6
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T62",
+      "answer": "The **Independent Scan 6.1",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 264,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 16
+        }
+      },
+      "cached_tokens": 16,
+      "started_ms": 14582.690000068396,
+      "finished_ms": 14818.829542025924,
+      "first_text_ms": 71.65945926681161,
+      "total_ms": 236.1395419575274,
+      "request_id": "T62",
+      "prompt_length": 256,
+      "output_tokens": 8,
+      "cohort": "cold_scan",
+      "cycle": 6
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T63",
+      "answer": "The **Independent Scan 6.2",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 264,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 16
+        }
+      },
+      "cached_tokens": 16,
+      "started_ms": 14819.121750071645,
+      "finished_ms": 15056.472667027265,
+      "first_text_ms": 71.35745882987976,
+      "total_ms": 237.35091695562005,
+      "request_id": "T63",
+      "prompt_length": 256,
+      "output_tokens": 8,
+      "cohort": "cold_scan",
+      "cycle": 6
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T64",
+      "answer": "The **Independent Scan 6.3",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 264,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 16
+        }
+      },
+      "cached_tokens": 16,
+      "started_ms": 15056.690167170018,
+      "finished_ms": 15290.205541998148,
+      "first_text_ms": 77.1882077679038,
+      "total_ms": 233.51537482813,
+      "request_id": "T64",
+      "prompt_length": 256,
+      "output_tokens": 8,
+      "cohort": "cold_scan",
+      "cycle": 6
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T65",
+      "answer": "**Improvement:**  \nDocument B can",
+      "usage": {
+        "prompt_tokens": 266,
+        "total_tokens": 274,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 16
+        }
+      },
+      "cached_tokens": 16,
+      "started_ms": 15290.434459224343,
+      "finished_ms": 15528.042250312865,
+      "first_text_ms": 69.38020791858435,
+      "total_ms": 237.60779108852148,
+      "request_id": "T65",
+      "prompt_length": 266,
+      "output_tokens": 8,
+      "cohort": "probe",
+      "cycle": 6
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T66",
+      "answer": "**Note 7.0 Summary:**",
+      "usage": {
+        "prompt_tokens": 266,
+        "total_tokens": 274,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 240
+        }
+      },
+      "cached_tokens": 240,
+      "started_ms": 15528.315708972514,
+      "finished_ms": 15712.514667306095,
+      "first_text_ms": 39.61262525990605,
+      "total_ms": 184.1989583335817,
+      "request_id": "T66",
+      "prompt_length": 266,
+      "output_tokens": 8,
+      "cohort": "train_new",
+      "cycle": 7
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T67",
+      "answer": "**Note 7.1:**  \n",
+      "usage": {
+        "prompt_tokens": 266,
+        "total_tokens": 274,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 240
+        }
+      },
+      "cached_tokens": 240,
+      "started_ms": 15712.892250157893,
+      "finished_ms": 15889.61504213512,
+      "first_text_ms": 42.26483404636383,
+      "total_ms": 176.72279197722673,
+      "request_id": "T67",
+      "prompt_length": 266,
+      "output_tokens": 8,
+      "cohort": "train_new",
+      "cycle": 7
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T68",
+      "answer": "**Note 7.2:**  \n",
+      "usage": {
+        "prompt_tokens": 266,
+        "total_tokens": 274,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 240
+        }
+      },
+      "cached_tokens": 240,
+      "started_ms": 15889.924084302038,
+      "finished_ms": 16074.088499881327,
+      "first_text_ms": 39.22204067930579,
+      "total_ms": 184.1644155792892,
+      "request_id": "T68",
+      "prompt_length": 266,
+      "output_tokens": 8,
+      "cohort": "train_new",
+      "cycle": 7
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T69",
+      "answer": "Note 7.3 summarizes that the",
+      "usage": {
+        "prompt_tokens": 266,
+        "total_tokens": 274,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 240
+        }
+      },
+      "cached_tokens": 240,
+      "started_ms": 16074.392375070602,
+      "finished_ms": 16256.555709056556,
+      "first_text_ms": 42.47466707602143,
+      "total_ms": 182.16333398595452,
+      "request_id": "T69",
+      "prompt_length": 266,
+      "output_tokens": 8,
+      "cohort": "train_new",
+      "cycle": 7
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T70",
+      "answer": "The **Independent Scan 7.0",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 264,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 16
+        }
+      },
+      "cached_tokens": 16,
+      "started_ms": 16256.89599988982,
+      "finished_ms": 16505.869834218174,
+      "first_text_ms": 91.94712527096272,
+      "total_ms": 248.9738343283534,
+      "request_id": "T70",
+      "prompt_length": 256,
+      "output_tokens": 8,
+      "cohort": "cold_scan",
+      "cycle": 7
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T71",
+      "answer": "The **Independent Scan 7.1",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 264,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 16
+        }
+      },
+      "cached_tokens": 16,
+      "started_ms": 16506.185167003423,
+      "finished_ms": 16767.973999958485,
+      "first_text_ms": 81.33066724985838,
+      "total_ms": 261.7888329550624,
+      "request_id": "T71",
+      "prompt_length": 256,
+      "output_tokens": 8,
+      "cohort": "cold_scan",
+      "cycle": 7
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T72",
+      "answer": "The **Independent Scan 7.2",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 264,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 16
+        }
+      },
+      "cached_tokens": 16,
+      "started_ms": 16768.219999969006,
+      "finished_ms": 17011.516958940774,
+      "first_text_ms": 77.1706672385335,
+      "total_ms": 243.29695897176862,
+      "request_id": "T72",
+      "prompt_length": 256,
+      "output_tokens": 8,
+      "cohort": "cold_scan",
+      "cycle": 7
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T73",
+      "answer": "The **Independent Scan 7.3",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 264,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 16
+        }
+      },
+      "cached_tokens": 16,
+      "started_ms": 17011.843875050545,
+      "finished_ms": 17256.547208875418,
+      "first_text_ms": 75.48687513917685,
+      "total_ms": 244.70333382487297,
+      "request_id": "T73",
+      "prompt_length": 256,
+      "output_tokens": 8,
+      "cohort": "cold_scan",
+      "cycle": 7
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T74",
+      "answer": "**Improvement:**  \n**Note ",
+      "usage": {
+        "prompt_tokens": 266,
+        "total_tokens": 274,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 16
+        }
+      },
+      "cached_tokens": 16,
+      "started_ms": 17256.798500195146,
+      "finished_ms": 17496.870334260166,
+      "first_text_ms": 74.88599978387356,
+      "total_ms": 240.07183406502008,
+      "request_id": "T74",
+      "prompt_length": 266,
+      "output_tokens": 8,
+      "cohort": "probe",
+      "cycle": 7
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T75",
+      "answer": "Note 8.0 summarizes that **",
+      "usage": {
+        "prompt_tokens": 266,
+        "total_tokens": 274,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 240
+        }
+      },
+      "cached_tokens": 240,
+      "started_ms": 17497.094458900392,
+      "finished_ms": 17662.640458904207,
+      "first_text_ms": 38.37362537160516,
+      "total_ms": 165.5460000038147,
+      "request_id": "T75",
+      "prompt_length": 266,
+      "output_tokens": 8,
+      "cohort": "train_new",
+      "cycle": 8
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T76",
+      "answer": "Note 8.1 summarizes that the",
+      "usage": {
+        "prompt_tokens": 266,
+        "total_tokens": 274,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 240
+        }
+      },
+      "cached_tokens": 240,
+      "started_ms": 17662.93604206294,
+      "finished_ms": 17847.072209231555,
+      "first_text_ms": 42.37991711124778,
+      "total_ms": 184.13616716861725,
+      "request_id": "T76",
+      "prompt_length": 266,
+      "output_tokens": 8,
+      "cohort": "train_new",
+      "cycle": 8
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T77",
+      "answer": "Note 8.2 summarizes that the",
+      "usage": {
+        "prompt_tokens": 266,
+        "total_tokens": 274,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 240
+        }
+      },
+      "cached_tokens": 240,
+      "started_ms": 17847.497709095478,
+      "finished_ms": 18027.04641688615,
+      "first_text_ms": 42.131041176617146,
+      "total_ms": 179.54870779067278,
+      "request_id": "T77",
+      "prompt_length": 266,
+      "output_tokens": 8,
+      "cohort": "train_new",
+      "cycle": 8
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T78",
+      "answer": "Note 8.3 summarizes that the",
+      "usage": {
+        "prompt_tokens": 266,
+        "total_tokens": 274,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 240
+        }
+      },
+      "cached_tokens": 240,
+      "started_ms": 18027.3823752068,
+      "finished_ms": 18206.829042173922,
+      "first_text_ms": 40.323750115931034,
+      "total_ms": 179.44666696712375,
+      "request_id": "T78",
+      "prompt_length": 266,
+      "output_tokens": 8,
+      "cohort": "train_new",
+      "cycle": 8
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T79",
+      "answer": "The **Independent Scan 8.0",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 264,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 16
+        }
+      },
+      "cached_tokens": 16,
+      "started_ms": 18207.187834195793,
+      "finished_ms": 18452.2284171544,
+      "first_text_ms": 86.44691575318575,
+      "total_ms": 245.04058295860887,
+      "request_id": "T79",
+      "prompt_length": 256,
+      "output_tokens": 8,
+      "cohort": "cold_scan",
+      "cycle": 8
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T80",
+      "answer": "The **Independent Scan 8.1",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 264,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 16
+        }
+      },
+      "cached_tokens": 16,
+      "started_ms": 18452.567709144205,
+      "finished_ms": 18703.858125023544,
+      "first_text_ms": 73.79166595637798,
+      "total_ms": 251.29041587933898,
+      "request_id": "T80",
+      "prompt_length": 256,
+      "output_tokens": 8,
+      "cohort": "cold_scan",
+      "cycle": 8
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T81",
+      "answer": "The **Independent Scan 8.2",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 264,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 16
+        }
+      },
+      "cached_tokens": 16,
+      "started_ms": 18704.158999957144,
+      "finished_ms": 18964.9206250906,
+      "first_text_ms": 88.17070908844471,
+      "total_ms": 260.7616251334548,
+      "request_id": "T81",
+      "prompt_length": 256,
+      "output_tokens": 8,
+      "cohort": "cold_scan",
+      "cycle": 8
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T82",
+      "answer": "The **Independent Scan 8.3",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 264,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 16
+        }
+      },
+      "cached_tokens": 16,
+      "started_ms": 18965.20733414218,
+      "finished_ms": 19206.570209003985,
+      "first_text_ms": 74.18441586196423,
+      "total_ms": 241.36287486180663,
+      "request_id": "T82",
+      "prompt_length": 256,
+      "output_tokens": 8,
+      "cohort": "cold_scan",
+      "cycle": 8
+    },
+    {
+      "trace_request_id": "c1-stock-bench-r1-timed-T83",
+      "answer": "An improvement to Document B could be to",
+      "usage": {
+        "prompt_tokens": 266,
+        "total_tokens": 274,
+        "completion_tokens": 8,
+        "prompt_tokens_details": {
+          "cached_tokens": 16
+        }
+      },
+      "cached_tokens": 16,
+      "started_ms": 19206.855583935976,
+      "finished_ms": 19443.38499987498,
+      "first_text_ms": 83.04454106837511,
+      "total_ms": 236.52941593900323,
+      "request_id": "T83",
+      "prompt_length": 266,
+      "output_tokens": 8,
+      "cohort": "probe",
+      "cycle": 8
+    }
+  ],
+  "complete": true,
+  "seeds": [
+    {
+      "trace_request_id": "c1-stock-bench-r1-seed-00",
+      "answer": " speed",
+      "usage": {
+        "prompt_tokens": 32,
+        "total_tokens": 33,
+        "completion_tokens": 1,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "cached_tokens": 0,
+      "started_ms": 0.03929203376173973,
+      "finished_ms": 20.059166941791773,
+      "first_text_ms": 19.972083158791065,
+      "total_ms": 20.019874908030033
+    }
+  ],
+  "seed_wall_ms": 20.065875258296728,
+  "summary": {
+    "requests": 84,
+    "cached_tokens": 10768,
+    "output_tokens": 672,
+    "first_text_ms": {
+      "median": 72.88652053102851,
+      "p95": 142.6488747820258
+    },
+    "total_ms": {
+      "median": 237.0542709250003,
+      "p95": 288.57637476176023
+    },
+    "duration_ms": 19443.877334240824,
+    "output_tokens_per_second": 34.56100799487161,
+    "requests_per_second": 4.320125999358951
+  },
+  "groups": {
+    "cold_scan": {
+      "requests": 32,
+      "cached_tokens": 512,
+      "output_tokens": 256,
+      "first_text_ms": {
+        "median": 90.0174172129482,
+        "p95": 168.9513330347836
+      },
+      "total_ms": {
+        "median": 262.04631198197603,
+        "p95": 304.74641593173146
+      }
+    },
+    "probe": {
+      "requests": 8,
+      "cached_tokens": 128,
+      "output_tokens": 64,
+      "first_text_ms": {
+        "median": 80.60931204818189,
+        "p95": 100.4847502335906
+      },
+      "total_ms": {
+        "median": 252.2373751271516,
+        "p95": 278.4428331069648
+      }
+    },
+    "train_new": {
+      "requests": 32,
+      "cached_tokens": 7456,
+      "output_tokens": 256,
+      "first_text_ms": {
+        "median": 45.51935428753495,
+        "p95": 142.6488747820258
+      },
+      "total_ms": {
+        "median": 198.65756295621395,
+        "p95": 255.61891729012132
+      }
+    },
+    "train_old": {
+      "requests": 12,
+      "cached_tokens": 2672,
+      "output_tokens": 96,
+      "first_text_ms": {
+        "median": 44.191895984113216,
+        "p95": 68.21470893919468
+      },
+      "total_ms": {
+        "median": 192.81845772638917,
+        "p95": 222.62899996712804
+      }
+    }
+  },
+  "length_groups": {
+    "256": {
+      "requests": 32,
+      "cached_tokens": 512,
+      "output_tokens": 256,
+      "first_text_ms": {
+        "median": 90.0174172129482,
+        "p95": 168.9513330347836
+      },
+      "total_ms": {
+        "median": 262.04631198197603,
+        "p95": 304.74641593173146
+      }
+    },
+    "264": {
+      "requests": 10,
+      "cached_tokens": 2192,
+      "output_tokens": 80,
+      "first_text_ms": {
+        "median": 43.22543740272522,
+        "p95": 62.038667034357786
+      },
+      "total_ms": {
+        "median": 186.40797887928784,
+        "p95": 222.62899996712804
+      }
+    },
+    "265": {
+      "requests": 2,
+      "cached_tokens": 480,
+      "output_tokens": 16,
+      "first_text_ms": {
+        "median": 56.65054195560515,
+        "p95": 68.21470893919468
+      },
+      "total_ms": {
+        "median": 209.91218741983175,
+        "p95": 212.3194169253111
+      }
+    },
+    "266": {
+      "requests": 40,
+      "cached_tokens": 7584,
+      "output_tokens": 320,
+      "first_text_ms": {
+        "median": 51.61264631897211,
+        "p95": 131.46533304825425
+      },
+      "total_ms": {
+        "median": 209.6526874229312,
+        "p95": 264.2417079769075
+      }
+    }
+  },
+  "client_peak_inflight": 1
+}

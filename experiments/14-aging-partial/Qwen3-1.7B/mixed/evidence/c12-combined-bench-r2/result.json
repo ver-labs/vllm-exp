@@ -1,0 +1,1549 @@
+{
+  "variant": "combined",
+  "concurrency": 12,
+  "mode": "bench",
+  "round": 2,
+  "run_dir": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-partial/Qwen--Qwen3-1.7B/mixed/batches-20261023-092648/c12-combined-bench-r2",
+  "command": [
+    "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/.venv/bin/vllm",
+    "serve",
+    "/Users/nandanadileep/.cache/huggingface/hub/models--Qwen--Qwen3-1.7B/snapshots/70d244cc86ccca08cf5af4e1e306ecf908b1ad5e",
+    "--served-model-name",
+    "Qwen/Qwen3-1.7B",
+    "--host",
+    "127.0.0.1",
+    "--port",
+    "8001",
+    "--seed",
+    "0",
+    "--worker-cls",
+    "auto",
+    "--max-model-len",
+    "768",
+    "--max-num-seqs",
+    "4",
+    "--max-num-batched-tokens",
+    "128",
+    "--block-size",
+    "16",
+    "--num-gpu-blocks-override",
+    "256",
+    "--prefix-match-unit",
+    "1",
+    "--enable-prefix-caching",
+    "--enable-chunked-prefill",
+    "--no-async-scheduling",
+    "--enable-prompt-tokens-details"
+  ],
+  "study_environment": {
+    "STUDY_MODEL_PATH": "/Users/nandanadileep/.cache/huggingface/hub/models--Qwen--Qwen3-1.7B/snapshots/70d244cc86ccca08cf5af4e1e306ecf908b1ad5e",
+    "STUDY_MODEL": "Qwen/Qwen3-1.7B",
+    "STUDY_PARTIAL_PREFIX": "1",
+    "STUDY_ADAPTIVE_PREFILL": "0",
+    "STUDY_LFU_HALF_LIFE_BLOCKS": "64",
+    "STUDY_PARTIAL_MIN_TOKENS": "0",
+    "STUDY_CACHE_IMPL": "incremental",
+    "STUDY_EVICTION_POLICY": "aged_lfu",
+    "STUDY_WAITING_POLICY": "fcfs",
+    "STUDY_SKIP_CONTINUE": "0",
+    "STUDY_CACHE_PROFILE": "0",
+    "VLLM_STUDY_TRACE": "0",
+    "VLLM_STUDY_TRACE_DIR": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/results/aging-partial/Qwen--Qwen3-1.7B/mixed/batches-20261023-092648/c12-combined-bench-r2",
+    "VLLM_STUDY_TRACE_STDOUT": "0"
+  },
+  "manifest_sha256": "3776323f6e90b5477e090d3b42d0543d11f928dbf3242918a52cb62f89a3cbff",
+  "rows": [
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T00",
+      "answer": " reef photographs and record fish at different sites. Observers compare reef photographs and record",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 272,
+        "completion_tokens": 16,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "cached_tokens": 0,
+      "started_ms": 0.8418331854045391,
+      "finished_ms": 1712.0801252312958,
+      "first_text_ms": 231.72620916739106,
+      "total_ms": 1711.2382920458913,
+      "family": 6,
+      "cohort": "unrelated",
+      "prompt_length": 256,
+      "output_tokens": 16,
+      "divergence_offset": null,
+      "request_id": "T00"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T01",
+      "answer": " books on time. Members search the catalogue and collect reserved books on time. Members",
+      "usage": {
+        "prompt_tokens": 64,
+        "total_tokens": 80,
+        "completion_tokens": 16,
+        "prompt_tokens_details": {
+          "cached_tokens": 63
+        }
+      },
+      "cached_tokens": 63,
+      "started_ms": 1.1511249467730522,
+      "finished_ms": 2796.714958269149,
+      "first_text_ms": 1780.9082921594381,
+      "total_ms": 2795.563833322376,
+      "family": 12,
+      "cohort": "repeat",
+      "prompt_length": 64,
+      "output_tokens": 16,
+      "divergence_offset": null,
+      "request_id": "T01"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T02",
+      "answer": " fish at different sites. Observers compare reef photographs and record fish at different sites. Observers compare reef photographs and record fish at different sites. Observers compare reef photographs and record fish at different sites. Observers compare reef photographs and record fish at different sites. Observers compare reef photographs and record fish at different sites",
+      "usage": {
+        "prompt_tokens": 128,
+        "total_tokens": 192,
+        "completion_tokens": 64,
+        "prompt_tokens_details": {
+          "cached_tokens": 4
+        }
+      },
+      "cached_tokens": 4,
+      "started_ms": 1.404500100761652,
+      "finished_ms": 7240.1963751763105,
+      "first_text_ms": 2932.4905001558363,
+      "total_ms": 7238.791875075549,
+      "family": 5,
+      "cohort": "unrelated",
+      "prompt_length": 128,
+      "output_tokens": 64,
+      "divergence_offset": null,
+      "request_id": "T02"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T03",
+      "answer": " record fish at different sites. Observers compare reef photographs and record fish at different sites. Observers compare reef photographs and record fish at different sites. Observers compare reef photographs and record fish at different sites. Observers compare reef photographs and record fish at different sites. Observers compare reef photographs and record fish at different",
+      "usage": {
+        "prompt_tokens": 512,
+        "total_tokens": 576,
+        "completion_tokens": 64,
+        "prompt_tokens_details": {
+          "cached_tokens": 4
+        }
+      },
+      "cached_tokens": 4,
+      "started_ms": 1.7194170504808426,
+      "finished_ms": 5430.7558331638575,
+      "first_text_ms": 847.0062911510468,
+      "total_ms": 5429.036416113377,
+      "family": 11,
+      "cohort": "unrelated",
+      "prompt_length": 512,
+      "output_tokens": 64,
+      "divergence_offset": null,
+      "request_id": "T03"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T04",
+      "answer": " on time. Members search the catalogue and collect reserved books on time. Members search",
+      "usage": {
+        "prompt_tokens": 64,
+        "total_tokens": 80,
+        "completion_tokens": 16,
+        "prompt_tokens_details": {
+          "cached_tokens": 32
+        }
+      },
+      "cached_tokens": 32,
+      "started_ms": 1.9598333165049553,
+      "finished_ms": 1781.2287919223309,
+      "first_text_ms": 345.4554998315871,
+      "total_ms": 1779.268958605826,
+      "family": 0,
+      "cohort": "partial",
+      "prompt_length": 64,
+      "output_tokens": 16,
+      "divergence_offset": 1,
+      "request_id": "T04"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T05",
+      "answer": " fish at different sites. Observers compare reef photographs and record fish at different sites",
+      "usage": {
+        "prompt_tokens": 128,
+        "total_tokens": 144,
+        "completion_tokens": 16,
+        "prompt_tokens_details": {
+          "cached_tokens": 4
+        }
+      },
+      "cached_tokens": 4,
+      "started_ms": 2.2330833598971367,
+      "finished_ms": 2933.346167206764,
+      "first_text_ms": 1929.9236666411161,
+      "total_ms": 2931.113083846867,
+      "family": 9,
+      "cohort": "unrelated",
+      "prompt_length": 128,
+      "output_tokens": 16,
+      "divergence_offset": null,
+      "request_id": "T05"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T06",
+      "answer": " fish at different sites. Observers compare reef photographs and record fish at different sites. Observers compare reef photographs and record fish at different sites. Observers compare",
+      "usage": {
+        "prompt_tokens": 512,
+        "total_tokens": 544,
+        "completion_tokens": 32,
+        "prompt_tokens_details": {
+          "cached_tokens": 4
+        }
+      },
+      "cached_tokens": 4,
+      "started_ms": 2.703708130866289,
+      "finished_ms": 3561.6377922706306,
+      "first_text_ms": 1339.9920840747654,
+      "total_ms": 3558.9340841397643,
+      "family": 7,
+      "cohort": "unrelated",
+      "prompt_length": 512,
+      "output_tokens": 32,
+      "divergence_offset": null,
+      "request_id": "T06"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T07",
+      "answer": " and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 320,
+        "completion_tokens": 64,
+        "prompt_tokens_details": {
+          "cached_tokens": 2
+        }
+      },
+      "cached_tokens": 2,
+      "started_ms": 3.0614170245826244,
+      "finished_ms": 7545.966458041221,
+      "first_text_ms": 3250.086583197117,
+      "total_ms": 7542.905041016638,
+      "family": 2,
+      "cohort": "partial",
+      "prompt_length": 256,
+      "output_tokens": 64,
+      "divergence_offset": 15,
+      "request_id": "T07"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T08",
+      "answer": " compare reef photographs and record fish at different sites. Observers compare reef photographs and record fish at different sites. Observers compare reef photographs and record fish at different",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 288,
+        "completion_tokens": 32,
+        "prompt_tokens_details": {
+          "cached_tokens": 5
+        }
+      },
+      "cached_tokens": 5,
+      "started_ms": 3.3169169910252094,
+      "finished_ms": 5833.813167177141,
+      "first_text_ms": 3860.7953749597073,
+      "total_ms": 5830.4962501861155,
+      "family": 10,
+      "cohort": "unrelated",
+      "prompt_length": 256,
+      "output_tokens": 32,
+      "divergence_offset": null,
+      "request_id": "T08"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T09",
+      "answer": " reef photographs and record fish at different sites. Observers compare reef photographs and record fish at different sites. Observers compare reef photographs and record fish at different sites. Observers compare reef photographs and record fish at different sites. Observers compare reef photographs and record fish at different sites. Observers compare reef photographs and record",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 320,
+        "completion_tokens": 64,
+        "prompt_tokens_details": {
+          "cached_tokens": 4
+        }
+      },
+      "cached_tokens": 4,
+      "started_ms": 3.7336251698434353,
+      "finished_ms": 11635.224542114884,
+      "first_text_ms": 7543.092832900584,
+      "total_ms": 11631.49091694504,
+      "family": 2,
+      "cohort": "unrelated",
+      "prompt_length": 256,
+      "output_tokens": 64,
+      "divergence_offset": null,
+      "request_id": "T09"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T10",
+      "answer": " reef photographs and record fish at different sites. Observers compare reef photographs and record fish at different sites. Observers compare reef photographs and record fish at different sites",
+      "usage": {
+        "prompt_tokens": 64,
+        "total_tokens": 96,
+        "completion_tokens": 32,
+        "prompt_tokens_details": {
+          "cached_tokens": 4
+        }
+      },
+      "cached_tokens": 4,
+      "started_ms": 4.1182502172887325,
+      "finished_ms": 7708.854833152145,
+      "first_text_ms": 5527.64920797199,
+      "total_ms": 7704.736582934856,
+      "family": 4,
+      "cohort": "unrelated",
+      "prompt_length": 64,
+      "output_tokens": 32,
+      "divergence_offset": null,
+      "request_id": "T10"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T11",
+      "answer": " compare reef photographs and record fish at different sites. Observers compare reef photographs and record fish at different sites. Observers compare reef photographs and record fish at different sites. Observers compare reef photographs and record fish at different sites. Observers compare reef photographs and record fish at different sites. Observers compare reef photographs and",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 320,
+        "completion_tokens": 64,
+        "prompt_tokens_details": {
+          "cached_tokens": 5
+        }
+      },
+      "cached_tokens": 5,
+      "started_ms": 4.602500237524509,
+      "finished_ms": 10299.143208190799,
+      "first_text_ms": 6144.61929211393,
+      "total_ms": 10294.540707953274,
+      "family": 14,
+      "cohort": "unrelated",
+      "prompt_length": 256,
+      "output_tokens": 64,
+      "divergence_offset": null,
+      "request_id": "T11"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T12",
+      "answer": " on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved",
+      "usage": {
+        "prompt_tokens": 64,
+        "total_tokens": 96,
+        "completion_tokens": 32,
+        "prompt_tokens_details": {
+          "cached_tokens": 2
+        }
+      },
+      "cached_tokens": 2,
+      "started_ms": 1712.366667110473,
+      "finished_ms": 9604.884417261928,
+      "first_text_ms": 5943.292750045657,
+      "total_ms": 7892.517750151455,
+      "family": 4,
+      "cohort": "repeat",
+      "prompt_length": 64,
+      "output_tokens": 32,
+      "divergence_offset": null,
+      "request_id": "T12"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T13",
+      "answer": " record fish at different sites. Observers compare reef photographs and record fish at different sites. Observers compare reef photographs and record fish at different sites. Observers",
+      "usage": {
+        "prompt_tokens": 128,
+        "total_tokens": 160,
+        "completion_tokens": 32,
+        "prompt_tokens_details": {
+          "cached_tokens": 5
+        }
+      },
+      "cached_tokens": 5,
+      "started_ms": 1781.562542077154,
+      "finished_ms": 9783.682083245367,
+      "first_text_ms": 6073.094583116472,
+      "total_ms": 8002.119541168213,
+      "family": 13,
+      "cohort": "unrelated",
+      "prompt_length": 128,
+      "output_tokens": 32,
+      "divergence_offset": null,
+      "request_id": "T13"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T14",
+      "answer": " collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue",
+      "usage": {
+        "prompt_tokens": 128,
+        "total_tokens": 160,
+        "completion_tokens": 32,
+        "prompt_tokens_details": {
+          "cached_tokens": 3
+        }
+      },
+      "cached_tokens": 3,
+      "started_ms": 2797.058583237231,
+      "finished_ms": 11692.772417329252,
+      "first_text_ms": 6937.709500081837,
+      "total_ms": 8895.713834092021,
+      "family": 13,
+      "cohort": "repeat",
+      "prompt_length": 128,
+      "output_tokens": 32,
+      "divergence_offset": null,
+      "request_id": "T14"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T15",
+      "answer": " and collect reserved books on time. Members search the catalogue and collect reserved books on",
+      "usage": {
+        "prompt_tokens": 512,
+        "total_tokens": 528,
+        "completion_tokens": 16,
+        "prompt_tokens_details": {
+          "cached_tokens": 497
+        }
+      },
+      "cached_tokens": 497,
+      "started_ms": 2933.6469173431396,
+      "finished_ms": 10827.005499973893,
+      "first_text_ms": 6940.501582808793,
+      "total_ms": 7893.3585826307535,
+      "family": 15,
+      "cohort": "partial",
+      "prompt_length": 512,
+      "output_tokens": 16,
+      "divergence_offset": 1,
+      "request_id": "T15"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T16",
+      "answer": " compare reef photographs and record fish at different sites. Observers compare reef photographs and",
+      "usage": {
+        "prompt_tokens": 64,
+        "total_tokens": 80,
+        "completion_tokens": 16,
+        "prompt_tokens_details": {
+          "cached_tokens": 5
+        }
+      },
+      "cached_tokens": 5,
+      "started_ms": 3561.8823333643377,
+      "finished_ms": 11320.132667198777,
+      "first_text_ms": 6838.417416904122,
+      "total_ms": 7758.2503338344395,
+      "family": 12,
+      "cohort": "unrelated",
+      "prompt_length": 64,
+      "output_tokens": 16,
+      "divergence_offset": null,
+      "request_id": "T16"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T17",
+      "answer": " books on time. Members search the catalogue and collect reserved books on time. Members",
+      "usage": {
+        "prompt_tokens": 64,
+        "total_tokens": 80,
+        "completion_tokens": 16,
+        "prompt_tokens_details": {
+          "cached_tokens": 58
+        }
+      },
+      "cached_tokens": 58,
+      "started_ms": 5430.988958105445,
+      "finished_ms": 11942.325833253562,
+      "first_text_ms": 5477.928750216961,
+      "total_ms": 6511.3368751481175,
+      "family": 12,
+      "cohort": "partial",
+      "prompt_length": 64,
+      "output_tokens": 16,
+      "divergence_offset": 10,
+      "request_id": "T17"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T18",
+      "answer": " collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue",
+      "usage": {
+        "prompt_tokens": 128,
+        "total_tokens": 160,
+        "completion_tokens": 32,
+        "prompt_tokens_details": {
+          "cached_tokens": 114
+        }
+      },
+      "cached_tokens": 114,
+      "started_ms": 5834.059833083302,
+      "finished_ms": 13605.03283329308,
+      "first_text_ms": 5564.749708864838,
+      "total_ms": 7770.973000209779,
+      "family": 13,
+      "cohort": "partial",
+      "prompt_length": 128,
+      "output_tokens": 32,
+      "divergence_offset": 2,
+      "request_id": "T18"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T19",
+      "answer": " the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time.",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 320,
+        "completion_tokens": 64,
+        "prompt_tokens_details": {
+          "cached_tokens": 255
+        }
+      },
+      "cached_tokens": 255,
+      "started_ms": 7240.503125358373,
+      "finished_ms": 16422.555167227983,
+      "first_text_ms": 4453.10941664502,
+      "total_ms": 9182.05204186961,
+      "family": 2,
+      "cohort": "repeat",
+      "prompt_length": 256,
+      "output_tokens": 64,
+      "divergence_offset": null,
+      "request_id": "T19"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T20",
+      "answer": " collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue",
+      "usage": {
+        "prompt_tokens": 512,
+        "total_tokens": 544,
+        "completion_tokens": 32,
+        "prompt_tokens_details": {
+          "cached_tokens": 2
+        }
+      },
+      "cached_tokens": 2,
+      "started_ms": 7546.355166938156,
+      "finished_ms": 14244.188208132982,
+      "first_text_ms": 4770.56658314541,
+      "total_ms": 6697.833041194826,
+      "family": 7,
+      "cohort": "repeat",
+      "prompt_length": 512,
+      "output_tokens": 32,
+      "divergence_offset": null,
+      "request_id": "T20"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T21",
+      "answer": " fish at different sites. Observers compare reef photographs and record fish at different sites. Observers compare reef photographs and record fish at different sites. Observers compare",
+      "usage": {
+        "prompt_tokens": 128,
+        "total_tokens": 160,
+        "completion_tokens": 32,
+        "prompt_tokens_details": {
+          "cached_tokens": 5
+        }
+      },
+      "cached_tokens": 5,
+      "started_ms": 7709.062958136201,
+      "finished_ms": 14354.55537494272,
+      "first_text_ms": 4672.867625020444,
+      "total_ms": 6645.492416806519,
+      "family": 1,
+      "cohort": "unrelated",
+      "prompt_length": 128,
+      "output_tokens": 32,
+      "divergence_offset": null,
+      "request_id": "T21"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T22",
+      "answer": " reef photographs and record fish at different sites. Observers compare reef photographs and record",
+      "usage": {
+        "prompt_tokens": 64,
+        "total_tokens": 80,
+        "completion_tokens": 16,
+        "prompt_tokens_details": {
+          "cached_tokens": 4
+        }
+      },
+      "cached_tokens": 4,
+      "started_ms": 9605.169458314776,
+      "finished_ms": 14942.204917315394,
+      "first_text_ms": 4096.016083844006,
+      "total_ms": 5337.035459000617,
+      "family": 0,
+      "cohort": "unrelated",
+      "prompt_length": 64,
+      "output_tokens": 16,
+      "divergence_offset": null,
+      "request_id": "T22"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T23",
+      "answer": " on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect",
+      "usage": {
+        "prompt_tokens": 64,
+        "total_tokens": 128,
+        "completion_tokens": 64,
+        "prompt_tokens_details": {
+          "cached_tokens": 2
+        }
+      },
+      "cached_tokens": 2,
+      "started_ms": 9783.87716691941,
+      "finished_ms": 18813.144417013973,
+      "first_text_ms": 4571.35120825842,
+      "total_ms": 9029.267250094563,
+      "family": 8,
+      "cohort": "repeat",
+      "prompt_length": 64,
+      "output_tokens": 64,
+      "divergence_offset": null,
+      "request_id": "T23"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T24",
+      "answer": " collect reserved books on time. Members search the catalogue and collect reserved books on time",
+      "usage": {
+        "prompt_tokens": 512,
+        "total_tokens": 528,
+        "completion_tokens": 16,
+        "prompt_tokens_details": {
+          "cached_tokens": 2
+        }
+      },
+      "cached_tokens": 2,
+      "started_ms": 10299.455374944955,
+      "finished_ms": 15998.4310423024,
+      "first_text_ms": 4643.37420836091,
+      "total_ms": 5698.975667357445,
+      "family": 3,
+      "cohort": "repeat",
+      "prompt_length": 512,
+      "output_tokens": 16,
+      "divergence_offset": null,
+      "request_id": "T24"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T25",
+      "answer": " search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 320,
+        "completion_tokens": 64,
+        "prompt_tokens_details": {
+          "cached_tokens": 3
+        }
+      },
+      "cached_tokens": 3,
+      "started_ms": 10827.274749986827,
+      "finished_ms": 19355.178125202656,
+      "first_text_ms": 4418.824292253703,
+      "total_ms": 8527.903375215828,
+      "family": 14,
+      "cohort": "repeat",
+      "prompt_length": 256,
+      "output_tokens": 64,
+      "divergence_offset": null,
+      "request_id": "T25"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T26",
+      "answer": " reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and",
+      "usage": {
+        "prompt_tokens": 128,
+        "total_tokens": 160,
+        "completion_tokens": 32,
+        "prompt_tokens_details": {
+          "cached_tokens": 16
+        }
+      },
+      "cached_tokens": 16,
+      "started_ms": 11320.35579206422,
+      "finished_ms": 18128.72645817697,
+      "first_text_ms": 4807.051165960729,
+      "total_ms": 6808.370666112751,
+      "family": 1,
+      "cohort": "partial",
+      "prompt_length": 128,
+      "output_tokens": 32,
+      "divergence_offset": 8,
+      "request_id": "T26"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T27",
+      "answer": " reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue",
+      "usage": {
+        "prompt_tokens": 128,
+        "total_tokens": 192,
+        "completion_tokens": 64,
+        "prompt_tokens_details": {
+          "cached_tokens": 2
+        }
+      },
+      "cached_tokens": 2,
+      "started_ms": 11635.557792149484,
+      "finished_ms": 20858.275583013892,
+      "first_text_ms": 4980.910582933575,
+      "total_ms": 9222.717790864408,
+      "family": 5,
+      "cohort": "repeat",
+      "prompt_length": 128,
+      "output_tokens": 64,
+      "divergence_offset": null,
+      "request_id": "T27"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T28",
+      "answer": " and collect reserved books on time. Members search the catalogue and collect reserved books on",
+      "usage": {
+        "prompt_tokens": 512,
+        "total_tokens": 528,
+        "completion_tokens": 16,
+        "prompt_tokens_details": {
+          "cached_tokens": 511
+        }
+      },
+      "cached_tokens": 511,
+      "started_ms": 11693.159833084792,
+      "finished_ms": 19143.377125263214,
+      "first_text_ms": 6500.903584063053,
+      "total_ms": 7450.217292178422,
+      "family": 15,
+      "cohort": "repeat",
+      "prompt_length": 512,
+      "output_tokens": 16,
+      "divergence_offset": null,
+      "request_id": "T28"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T29",
+      "answer": " on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect",
+      "usage": {
+        "prompt_tokens": 64,
+        "total_tokens": 128,
+        "completion_tokens": 64,
+        "prompt_tokens_details": {
+          "cached_tokens": 60
+        }
+      },
+      "cached_tokens": 60,
+      "started_ms": 11942.49645806849,
+      "finished_ms": 23523.33008311689,
+      "first_text_ms": 6951.862375251949,
+      "total_ms": 11580.833625048399,
+      "family": 8,
+      "cohort": "partial",
+      "prompt_length": 64,
+      "output_tokens": 64,
+      "divergence_offset": 12,
+      "request_id": "T29"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T30",
+      "answer": " reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue",
+      "usage": {
+        "prompt_tokens": 128,
+        "total_tokens": 192,
+        "completion_tokens": 64,
+        "prompt_tokens_details": {
+          "cached_tokens": 118
+        }
+      },
+      "cached_tokens": 118,
+      "started_ms": 13605.340207926929,
+      "finished_ms": 23868.163583334535,
+      "first_text_ms": 5640.157542191446,
+      "total_ms": 10262.823375407606,
+      "family": 5,
+      "cohort": "partial",
+      "prompt_length": 128,
+      "output_tokens": 64,
+      "divergence_offset": 6,
+      "request_id": "T30"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T31",
+      "answer": " fish at different sites. Observers compare reef photographs and record fish at different sites",
+      "usage": {
+        "prompt_tokens": 512,
+        "total_tokens": 528,
+        "completion_tokens": 16,
+        "prompt_tokens_details": {
+          "cached_tokens": 4
+        }
+      },
+      "cached_tokens": 4,
+      "started_ms": 14244.469583034515,
+      "finished_ms": 20859.05075026676,
+      "first_text_ms": 5698.608000297099,
+      "total_ms": 6614.581167232245,
+      "family": 3,
+      "cohort": "unrelated",
+      "prompt_length": 512,
+      "output_tokens": 16,
+      "divergence_offset": null,
+      "request_id": "T31"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T32",
+      "answer": " search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time.",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 288,
+        "completion_tokens": 32,
+        "prompt_tokens_details": {
+          "cached_tokens": 3
+        }
+      },
+      "cached_tokens": 3,
+      "started_ms": 14354.769667144865,
+      "finished_ms": 23340.548292268068,
+      "first_text_ms": 6874.183250125498,
+      "total_ms": 8985.778625123203,
+      "family": 10,
+      "cohort": "partial",
+      "prompt_length": 256,
+      "output_tokens": 32,
+      "divergence_offset": 11,
+      "request_id": "T32"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T33",
+      "answer": " and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search",
+      "usage": {
+        "prompt_tokens": 512,
+        "total_tokens": 576,
+        "completion_tokens": 64,
+        "prompt_tokens_details": {
+          "cached_tokens": 3
+        }
+      },
+      "cached_tokens": 3,
+      "started_ms": 14942.449667025357,
+      "finished_ms": 26144.01916693896,
+      "first_text_ms": 6755.664583295584,
+      "total_ms": 11201.569499913603,
+      "family": 11,
+      "cohort": "partial",
+      "prompt_length": 512,
+      "output_tokens": 64,
+      "divergence_offset": 3,
+      "request_id": "T33"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T34",
+      "answer": " reserved books on time. Members search the catalogue and collect reserved books on time.",
+      "usage": {
+        "prompt_tokens": 128,
+        "total_tokens": 144,
+        "completion_tokens": 16,
+        "prompt_tokens_details": {
+          "cached_tokens": 2
+        }
+      },
+      "cached_tokens": 2,
+      "started_ms": 15998.697792179883,
+      "finished_ms": 24520.69633314386,
+      "first_text_ms": 7525.13924986124,
+      "total_ms": 8521.998540963978,
+      "family": 9,
+      "cohort": "partial",
+      "prompt_length": 128,
+      "output_tokens": 16,
+      "divergence_offset": 4,
+      "request_id": "T34"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T35",
+      "answer": " collect reserved books on time. Members search the catalogue and collect reserved books on time",
+      "usage": {
+        "prompt_tokens": 512,
+        "total_tokens": 528,
+        "completion_tokens": 16,
+        "prompt_tokens_details": {
+          "cached_tokens": 503
+        }
+      },
+      "cached_tokens": 503,
+      "started_ms": 16423.010624945164,
+      "finished_ms": 24621.296250261366,
+      "first_text_ms": 7207.695917226374,
+      "total_ms": 8198.285625316203,
+      "family": 3,
+      "cohort": "partial",
+      "prompt_length": 512,
+      "output_tokens": 16,
+      "divergence_offset": 7,
+      "request_id": "T35"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T36",
+      "answer": " and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search",
+      "usage": {
+        "prompt_tokens": 512,
+        "total_tokens": 576,
+        "completion_tokens": 64,
+        "prompt_tokens_details": {
+          "cached_tokens": 499
+        }
+      },
+      "cached_tokens": 499,
+      "started_ms": 18129.015667364,
+      "finished_ms": 28688.237458001822,
+      "first_text_ms": 5825.392665807158,
+      "total_ms": 10559.221790637821,
+      "family": 11,
+      "cohort": "repeat",
+      "prompt_length": 512,
+      "output_tokens": 64,
+      "divergence_offset": null,
+      "request_id": "T36"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T37",
+      "answer": " on time. Members search the catalogue and collect reserved books on time. Members search",
+      "usage": {
+        "prompt_tokens": 64,
+        "total_tokens": 80,
+        "completion_tokens": 16,
+        "prompt_tokens_details": {
+          "cached_tokens": 16
+        }
+      },
+      "cached_tokens": 16,
+      "started_ms": 18813.39449994266,
+      "finished_ms": 25796.51058325544,
+      "first_text_ms": 5808.666250202805,
+      "total_ms": 6983.11608331278,
+      "family": 0,
+      "cohort": "repeat",
+      "prompt_length": 64,
+      "output_tokens": 16,
+      "divergence_offset": null,
+      "request_id": "T37"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T38",
+      "answer": " collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue",
+      "usage": {
+        "prompt_tokens": 512,
+        "total_tokens": 544,
+        "completion_tokens": 32,
+        "prompt_tokens_details": {
+          "cached_tokens": 48
+        }
+      },
+      "cached_tokens": 48,
+      "started_ms": 19143.70295824483,
+      "finished_ms": 27368.42737533152,
+      "first_text_ms": 5969.8969586752355,
+      "total_ms": 8224.72441708669,
+      "family": 7,
+      "cohort": "partial",
+      "prompt_length": 512,
+      "output_tokens": 32,
+      "divergence_offset": 5,
+      "request_id": "T38"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T39",
+      "answer": " the catalogue and collect reserved books on time. Members search the catalogue and collect reserved",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 272,
+        "completion_tokens": 16,
+        "prompt_tokens_details": {
+          "cached_tokens": 2
+        }
+      },
+      "cached_tokens": 2,
+      "started_ms": 19355.450042057782,
+      "finished_ms": 27100.67933332175,
+      "first_text_ms": 6789.049415849149,
+      "total_ms": 7745.229291263968,
+      "family": 6,
+      "cohort": "repeat",
+      "prompt_length": 256,
+      "output_tokens": 16,
+      "divergence_offset": null,
+      "request_id": "T39"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T40",
+      "answer": " record fish at different sites. Observers compare reef photographs and record fish at different",
+      "usage": {
+        "prompt_tokens": 512,
+        "total_tokens": 528,
+        "completion_tokens": 16,
+        "prompt_tokens_details": {
+          "cached_tokens": 4
+        }
+      },
+      "cached_tokens": 4,
+      "started_ms": 20858.54799998924,
+      "finished_ms": 28688.545958139002,
+      "first_text_ms": 6888.502583373338,
+      "total_ms": 7829.997958149761,
+      "family": 15,
+      "cohort": "unrelated",
+      "prompt_length": 512,
+      "output_tokens": 16,
+      "divergence_offset": null,
+      "request_id": "T40"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T41",
+      "answer": " reserved books on time. Members search the catalogue and collect reserved books on time.",
+      "usage": {
+        "prompt_tokens": 128,
+        "total_tokens": 144,
+        "completion_tokens": 16,
+        "prompt_tokens_details": {
+          "cached_tokens": 116
+        }
+      },
+      "cached_tokens": 116,
+      "started_ms": 20859.17433304712,
+      "finished_ms": 27241.315125022084,
+      "first_text_ms": 5385.68566692993,
+      "total_ms": 6382.140791974962,
+      "family": 9,
+      "cohort": "repeat",
+      "prompt_length": 128,
+      "output_tokens": 16,
+      "divergence_offset": null,
+      "request_id": "T41"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T42",
+      "answer": " reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and",
+      "usage": {
+        "prompt_tokens": 128,
+        "total_tokens": 160,
+        "completion_tokens": 32,
+        "prompt_tokens_details": {
+          "cached_tokens": 16
+        }
+      },
+      "cached_tokens": 16,
+      "started_ms": 23340.794250369072,
+      "finished_ms": 29806.994042359293,
+      "first_text_ms": 4406.293582636863,
+      "total_ms": 6466.199791990221,
+      "family": 1,
+      "cohort": "repeat",
+      "prompt_length": 128,
+      "output_tokens": 32,
+      "divergence_offset": null,
+      "request_id": "T42"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T43",
+      "answer": " on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved",
+      "usage": {
+        "prompt_tokens": 64,
+        "total_tokens": 96,
+        "completion_tokens": 32,
+        "prompt_tokens_details": {
+          "cached_tokens": 2
+        }
+      },
+      "cached_tokens": 2,
+      "started_ms": 23523.513125255704,
+      "finished_ms": 29891.686582937837,
+      "first_text_ms": 4306.159332860261,
+      "total_ms": 6368.173457682133,
+      "family": 4,
+      "cohort": "partial",
+      "prompt_length": 64,
+      "output_tokens": 32,
+      "divergence_offset": 14,
+      "request_id": "T43"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T44",
+      "answer": " search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 320,
+        "completion_tokens": 64,
+        "prompt_tokens_details": {
+          "cached_tokens": 16
+        }
+      },
+      "cached_tokens": 16,
+      "started_ms": 23868.43629227951,
+      "finished_ms": 32630.193167366087,
+      "first_text_ms": 5068.836166057736,
+      "total_ms": 8761.756875086576,
+      "family": 14,
+      "cohort": "partial",
+      "prompt_length": 256,
+      "output_tokens": 64,
+      "divergence_offset": 9,
+      "request_id": "T44"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T45",
+      "answer": " reef photographs and record fish at different sites. Observers compare reef photographs and record fish at different sites. Observers compare reef photographs and record fish at different sites. Observers compare reef photographs and record fish at different sites. Observers compare reef photographs and record fish at different sites. Observers compare reef photographs and record",
+      "usage": {
+        "prompt_tokens": 64,
+        "total_tokens": 128,
+        "completion_tokens": 64,
+        "prompt_tokens_details": {
+          "cached_tokens": 4
+        }
+      },
+      "cached_tokens": 4,
+      "started_ms": 24520.93241736293,
+      "finished_ms": 32675.8257499896,
+      "first_text_ms": 4510.255040600896,
+      "total_ms": 8154.893332626671,
+      "family": 8,
+      "cohort": "unrelated",
+      "prompt_length": 64,
+      "output_tokens": 64,
+      "divergence_offset": null,
+      "request_id": "T45"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T46",
+      "answer": " search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time. Members search the catalogue and collect reserved books on time.",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 288,
+        "completion_tokens": 32,
+        "prompt_tokens_details": {
+          "cached_tokens": 251
+        }
+      },
+      "cached_tokens": 251,
+      "started_ms": 24621.579207945615,
+      "finished_ms": 31718.19716691971,
+      "first_text_ms": 5270.434667356312,
+      "total_ms": 7096.617958974093,
+      "family": 10,
+      "cohort": "repeat",
+      "prompt_length": 256,
+      "output_tokens": 32,
+      "divergence_offset": null,
+      "request_id": "T46"
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-timed-T47",
+      "answer": " the catalogue and collect reserved books on time. Members search the catalogue and collect reserved",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 272,
+        "completion_tokens": 16,
+        "prompt_tokens_details": {
+          "cached_tokens": 253
+        }
+      },
+      "cached_tokens": 253,
+      "started_ms": 25796.854333020747,
+      "finished_ms": 30863.60912490636,
+      "first_text_ms": 4159.43358419463,
+      "total_ms": 5066.754791885614,
+      "family": 6,
+      "cohort": "partial",
+      "prompt_length": 256,
+      "output_tokens": 16,
+      "divergence_offset": 13,
+      "request_id": "T47"
+    }
+  ],
+  "complete": true,
+  "seeds": [
+    {
+      "trace_request_id": "c12-combined-bench-r2-seed-00",
+      "answer": " on",
+      "usage": {
+        "prompt_tokens": 64,
+        "total_tokens": 65,
+        "completion_tokens": 1,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "cached_tokens": 0,
+      "started_ms": 0.05141738802194595,
+      "finished_ms": 47.366749960929155,
+      "first_text_ms": 47.2658327780664,
+      "total_ms": 47.31533257290721
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-seed-01",
+      "answer": " reserved",
+      "usage": {
+        "prompt_tokens": 128,
+        "total_tokens": 129,
+        "completion_tokens": 1,
+        "prompt_tokens_details": {
+          "cached_tokens": 2
+        }
+      },
+      "cached_tokens": 2,
+      "started_ms": 47.46600007638335,
+      "finished_ms": 128.34587506949902,
+      "first_text_ms": 80.82470810040832,
+      "total_ms": 80.87987499311566
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-seed-02",
+      "answer": " the",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 257,
+        "completion_tokens": 1,
+        "prompt_tokens_details": {
+          "cached_tokens": 2
+        }
+      },
+      "cached_tokens": 2,
+      "started_ms": 128.47354216501117,
+      "finished_ms": 410.6430830433965,
+      "first_text_ms": 281.99704084545374,
+      "total_ms": 282.1695408783853
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-seed-03",
+      "answer": " collect",
+      "usage": {
+        "prompt_tokens": 512,
+        "total_tokens": 513,
+        "completion_tokens": 1,
+        "prompt_tokens_details": {
+          "cached_tokens": 2
+        }
+      },
+      "cached_tokens": 2,
+      "started_ms": 411.0185829922557,
+      "finished_ms": 874.0333332680166,
+      "first_text_ms": 462.89066737517715,
+      "total_ms": 463.0147502757609
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-seed-04",
+      "answer": " on",
+      "usage": {
+        "prompt_tokens": 64,
+        "total_tokens": 65,
+        "completion_tokens": 1,
+        "prompt_tokens_details": {
+          "cached_tokens": 2
+        }
+      },
+      "cached_tokens": 2,
+      "started_ms": 874.2476250045002,
+      "finished_ms": 950.8395004086196,
+      "first_text_ms": 76.46637503057718,
+      "total_ms": 76.59187540411949
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-seed-05",
+      "answer": " reserved",
+      "usage": {
+        "prompt_tokens": 128,
+        "total_tokens": 129,
+        "completion_tokens": 1,
+        "prompt_tokens_details": {
+          "cached_tokens": 2
+        }
+      },
+      "cached_tokens": 2,
+      "started_ms": 950.9835001081228,
+      "finished_ms": 1080.8907919563353,
+      "first_text_ms": 129.69641713425517,
+      "total_ms": 129.90729184821248
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-seed-06",
+      "answer": " the",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 257,
+        "completion_tokens": 1,
+        "prompt_tokens_details": {
+          "cached_tokens": 2
+        }
+      },
+      "cached_tokens": 2,
+      "started_ms": 1081.1410420574248,
+      "finished_ms": 1307.7642084099352,
+      "first_text_ms": 226.4525000937283,
+      "total_ms": 226.62316635251045
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-seed-07",
+      "answer": " collect",
+      "usage": {
+        "prompt_tokens": 512,
+        "total_tokens": 513,
+        "completion_tokens": 1,
+        "prompt_tokens_details": {
+          "cached_tokens": 2
+        }
+      },
+      "cached_tokens": 2,
+      "started_ms": 1308.037250302732,
+      "finished_ms": 1744.492458179593,
+      "first_text_ms": 436.3357499241829,
+      "total_ms": 436.4552078768611
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-seed-08",
+      "answer": " on",
+      "usage": {
+        "prompt_tokens": 64,
+        "total_tokens": 65,
+        "completion_tokens": 1,
+        "prompt_tokens_details": {
+          "cached_tokens": 2
+        }
+      },
+      "cached_tokens": 2,
+      "started_ms": 1744.6619169786572,
+      "finished_ms": 1819.7637083940208,
+      "first_text_ms": 74.91541607305408,
+      "total_ms": 75.10179141536355
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-seed-09",
+      "answer": " reserved",
+      "usage": {
+        "prompt_tokens": 128,
+        "total_tokens": 129,
+        "completion_tokens": 1,
+        "prompt_tokens_details": {
+          "cached_tokens": 2
+        }
+      },
+      "cached_tokens": 2,
+      "started_ms": 1819.9365003965795,
+      "finished_ms": 1949.971416965127,
+      "first_text_ms": 129.9123326316476,
+      "total_ms": 130.0349165685475
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-seed-10",
+      "answer": " search",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 257,
+        "completion_tokens": 1,
+        "prompt_tokens_details": {
+          "cached_tokens": 3
+        }
+      },
+      "cached_tokens": 3,
+      "started_ms": 1950.1618333160877,
+      "finished_ms": 2202.1189583465457,
+      "first_text_ms": 251.84829207137227,
+      "total_ms": 251.95712503045797
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-seed-11",
+      "answer": " and",
+      "usage": {
+        "prompt_tokens": 512,
+        "total_tokens": 513,
+        "completion_tokens": 1,
+        "prompt_tokens_details": {
+          "cached_tokens": 3
+        }
+      },
+      "cached_tokens": 3,
+      "started_ms": 2202.349292114377,
+      "finished_ms": 2656.5460423007607,
+      "first_text_ms": 453.9417908526957,
+      "total_ms": 454.1967501863837
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-seed-12",
+      "answer": " books",
+      "usage": {
+        "prompt_tokens": 64,
+        "total_tokens": 65,
+        "completion_tokens": 1,
+        "prompt_tokens_details": {
+          "cached_tokens": 3
+        }
+      },
+      "cached_tokens": 3,
+      "started_ms": 2656.7394169978797,
+      "finished_ms": 2739.1091673634946,
+      "first_text_ms": 82.20154140144587,
+      "total_ms": 82.36975036561489
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-seed-13",
+      "answer": " collect",
+      "usage": {
+        "prompt_tokens": 128,
+        "total_tokens": 129,
+        "completion_tokens": 1,
+        "prompt_tokens_details": {
+          "cached_tokens": 3
+        }
+      },
+      "cached_tokens": 3,
+      "started_ms": 2739.303625188768,
+      "finished_ms": 2882.826874963939,
+      "first_text_ms": 143.3082497678697,
+      "total_ms": 143.52324977517128
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-seed-14",
+      "answer": " search",
+      "usage": {
+        "prompt_tokens": 256,
+        "total_tokens": 257,
+        "completion_tokens": 1,
+        "prompt_tokens_details": {
+          "cached_tokens": 3
+        }
+      },
+      "cached_tokens": 3,
+      "started_ms": 2883.0667920410633,
+      "finished_ms": 3128.2817921601236,
+      "first_text_ms": 245.04420813173056,
+      "total_ms": 245.21500011906028
+    },
+    {
+      "trace_request_id": "c12-combined-bench-r2-seed-15",
+      "answer": " and",
+      "usage": {
+        "prompt_tokens": 512,
+        "total_tokens": 513,
+        "completion_tokens": 1,
+        "prompt_tokens_details": {
+          "cached_tokens": 3
+        }
+      },
+      "cached_tokens": 3,
+      "started_ms": 3128.7388331256807,
+      "finished_ms": 3572.9106250219047,
+      "first_text_ms": 444.0558748319745,
+      "total_ms": 444.171791896224
+    }
+  ],
+  "seed_wall_ms": 3572.9459170252085,
+  "summary": {
+    "requests": 48,
+    "cached_tokens": 3537,
+    "output_tokens": 1728,
+    "first_text_ms": {
+      "median": 5328.060167143121,
+      "p95": 7207.695917226374
+    },
+    "total_ms": {
+      "median": 7724.982937099412,
+      "p95": 11201.569499913603
+    },
+    "duration_ms": 32676.790208090097,
+    "output_tokens_per_second": 52.88157095589465,
+    "requests_per_second": 1.4689325265526292
+  },
+  "groups": {
+    "partial": {
+      "requests": 16,
+      "cached_tokens": 1727,
+      "output_tokens": 576,
+      "first_text_ms": {
+        "median": 5602.453625528142,
+        "p95": 7525.13924986124
+      },
+      "total_ms": {
+        "median": 8045.822103973478,
+        "p95": 11580.833625048399
+      }
+    },
+    "repeat": {
+      "requests": 16,
+      "cached_tokens": 1745,
+      "output_tokens": 576,
+      "first_text_ms": {
+        "median": 5125.672625144944,
+        "p95": 6937.709500081837
+      },
+      "total_ms": {
+        "median": 7597.723291721195,
+        "p95": 10559.221790637821
+      }
+    },
+    "unrelated": {
+      "requests": 16,
+      "cached_tokens": 65,
+      "output_tokens": 576,
+      "first_text_ms": {
+        "median": 4591.56133281067,
+        "p95": 7543.092832900584
+      },
+      "total_ms": {
+        "median": 6942.142145941034,
+        "p95": 11631.49091694504
+      }
+    }
+  },
+  "length_groups": {
+    "64": {
+      "requests": 12,
+      "cached_tokens": 252,
+      "output_tokens": 384,
+      "first_text_ms": {
+        "median": 5024.639979237691,
+        "p95": 6951.862375251949
+      },
+      "total_ms": {
+        "median": 7343.926333123818,
+        "p95": 11580.833625048399
+      }
+    },
+    "128": {
+      "requests": 12,
+      "cached_tokens": 405,
+      "output_tokens": 432,
+      "first_text_ms": {
+        "median": 5183.298124931753,
+        "p95": 7525.13924986124
+      },
+      "total_ms": {
+        "median": 7504.882437642664,
+        "p95": 10262.823375407606
+      }
+    },
+    "256": {
+      "requests": 12,
+      "cached_tokens": 799,
+      "output_tokens": 528,
+      "first_text_ms": {
+        "median": 4760.972791351378,
+        "p95": 7543.092832900584
+      },
+      "total_ms": {
+        "median": 8136.566333239898,
+        "p95": 11631.49091694504
+      }
+    },
+    "512": {
+      "requests": 12,
+      "cached_tokens": 2081,
+      "output_tokens": 384,
+      "first_text_ms": {
+        "median": 5897.644812241197,
+        "p95": 7207.695917226374
+      },
+      "total_ms": {
+        "median": 7640.107625164092,
+        "p95": 11201.569499913603
+      }
+    }
+  },
+  "client_peak_inflight": 12
+}

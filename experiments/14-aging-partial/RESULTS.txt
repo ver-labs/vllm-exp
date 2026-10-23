@@ -1,0 +1,50 @@
+Experiment 14: aging frequency retention + exact partial-prefix reuse
+========================================================================
+Both models; four configurations; shifting-prefix and concurrent profiles.
+64 fresh-server GPU runs: 48 untraced timed, 16 traced diagnostics.
+Three timing rounds/configuration. See PROTOCOL.txt for fixed settings.
+
+Batch medians in seconds (lower is better):
+Model          Profile       Stock     Aging   Partial  Combined  vs stock
+Qwen3-0.6B     shift         19.444    19.003    18.660    18.110    -6.86%
+  Combined beat stock in 3/3 paired rounds.
+  Exact combined/stock answer matches by round: [81, 81, 81]
+  Returning-prefix first text: 80.609 -> 41.580 ms (-48.42%).
+Qwen3-0.6B     mixed         16.230    15.044    14.855    15.376    -5.26%
+  Combined beat stock in 1/3 paired rounds.
+  Exact combined/stock answer matches by round: [48, 48, 48]
+Qwen3-1.7B     shift         44.695    45.202    47.544    46.509    +4.06%
+  Combined beat stock in 1/3 paired rounds.
+  Exact combined/stock answer matches by round: [84, 84, 84]
+  Returning-prefix first text: 260.758 -> 98.893 ms (-62.07%).
+Qwen3-1.7B     mixed         33.110    33.759    36.370    33.782    +2.03%
+  Combined beat stock in 1/3 paired rounds.
+  Exact combined/stock answer matches by round: [48, 48, 48]
+
+Interpretation:
+The policies work together and increase useful reuse on shifting traffic.
+More cached tokens do not guarantee lower complete-batch latency.
+Use the individual-policy controls and paired rounds, not only medians.
+No generally faster combined configuration is established by these runs.
+
+Validation:
+All runs used the local source and Apple Metal GPU. Diagnostic checks
+validated allocation budgets, cache API/trace agreement, aging, copies,
+running/waiting queues and zero-reference eviction safety.
+Existing unittest suites: 11 tests passed; 7 partial-prefix tests also
+passed with aging enabled and a four-allocation decay interval.
+Both new scripts pass Ruff lint and formatting checks.
+
+Limits:
+Synthetic traffic; three rounds and incomplete launch-position balance.
+Only a short warmup, not all request shapes prewarmed. Mixed traffic is
+closed-loop with 12 clients, and seed publication is outside the timer.
+Shift is sequential. CPU diagnostic profiles include trace overhead,
+warmup and seeds. Exact answer agreement is not semantic quality scoring.
+Three of 84 small-model shift answers differed with partial reuse; see
+raw requests and paired answer-match counts. No quality parity claimed.
+
+Files:
+comparison.csv: compact results; comparison.json: paired/cohort detail.
+Qwen3-*/PROFILE/RESULTS.txt: individual-policy comparisons.
+evidence-sha256.json: archived raw evidence checksums and original paths.

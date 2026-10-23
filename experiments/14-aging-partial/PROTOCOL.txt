@@ -1,0 +1,54 @@
+Experiment 14: aging frequency retention + exact partial-prefix reuse
+===================================================================
+Design fixed before timing runs, 2026-10-23; this written record was
+saved during the first comparison. No settings were selected from timing results.
+
+Four configurations:
+stock: normal vLLM eviction, 16-token match unit, no partial reuse.
+aging: aging LFU eviction, 16-token match unit, no partial reuse.
+partial: normal eviction, 1-token match unit, exact partial reuse, minimum 0.
+combined: aging LFU plus the same exact partial reuse.
+Aging halves all reuse scores every 64 physical block allocations, including
+active-block scores. Allocation/eviction remains reference-safe. No approximate
+middle-block reuse. All study cache implementations use incremental updates.
+FCFS; chunked prefill enabled; adaptive prefill and skip/continue disabled.
+
+Pinned models:
+Qwen/Qwen3-0.6B c1899de289a04d12100db370d81485cdf75e47ca
+Qwen/Qwen3-1.7B 70d244cc86ccca08cf5af4e1e306ecf908b1ad5e
+Local snapshots, same editable source and Metal backend, no dependency changes.
+
+Mixed profile: original experiment 12 token workload: 48 requests with 16 each
+repeat/partial/unrelated, prompt lengths 64/128/256/512, outputs 16/32/64,
+1,728 measured outputs. Seed 16 source prompts before timed interval, excluded
+from batch timing. 12 closed-loop clients, four running slots, 256 physical
+16-token pages, context 768, token budget 128. Replacement arrivals depend on
+completion; queue/cache histories may differ between policies.
+
+Shift profile: original experiment 09 prompts rendered with the same chat
+template, then sent as explicit token IDs to the completions endpoint. 84
+requests: 12 old-A training, eight cycles of four new-B training, four unique
+cold scans, one B probe. Eight outputs each, 672 measured outputs. Sequential
+client, one running slot, 32 physical pages, context 384, token budget 128.
+One 32-token seed after reset, outside timer, identical across configurations.
+
+One fresh-server traced + host-profiled diagnostic and three fresh-server
+untraced timing runs per configuration/profile/model: 64 server runs total,
+16 diagnostic and 48 timed. Rotate configuration launch order between rounds. Three rounds do not
+fully balance all four launch positions.
+No concurrent GPU servers. One 32-token/one-output warmup, then prefix reset.
+Temperature 0, seed 0, ignore EOS, fixed output count, sync scheduling.
+
+Report full-batch duration/output throughput, median first text, p95 request
+latency, cohort latency, cached tokens and paired round outcomes. Check exact
+text agreement separately (not semantic quality). Do not add separate experiment
+speedups; combined must be compared directly with stock and each component.
+Diagnostic checks: expected policy, active aging/partial mechanisms, local
+scheduler import, Apple GPU log, token budget, partial copies, API cache counts,
+zero live-reference evictions, no preemptions. Diagnostic timings excluded.
+Three rounds are exploratory; do not infer broad statistical significance.
+Host profiling with tracing includes instrumentation, seeds and warmup, and
+cannot be used as uninstrumented scheduler-overhead evidence.
+
+Reproduce each of the four model/profile cases:
+.venv/bin/python src/run_aging_partial.py --model MODEL --profile mixed|shift
