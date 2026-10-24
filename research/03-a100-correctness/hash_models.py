@@ -1,0 +1,63 @@
+"""Hash pinned snapshot files without collecting tokens or general HF cache data."""
+
+import hashlib
+import json
+import subprocess
+from pathlib import Path
+
+work = Path.home() / "vllm-research-20261024"
+lock = json.loads((work / "correctness-kit/model-lock.json").read_text())
+records = []
+for model, spec in lock.items():
+    name = "models--" + model.replace("/", "--")
+    for cache in (work / "model-cache", work / "huggingface/hub"):
+        snapshot = cache / name / "snapshots" / spec["revision"]
+        if not snapshot.is_dir():
+            continue
+        for path in sorted(snapshot.rglob("*")):
+            if not path.is_file():
+                continue
+            with path.open("rb") as stream:
+                digest = hashlib.file_digest(stream, "sha256").hexdigest()
+            records.append(
+                {
+                    "model": model,
+                    "revision": spec["revision"],
+                    "path": str(path.relative_to(work)),
+                    "sha256": digest,
+                    "bytes": path.stat().st_size,
+                }
+            )
+assert any(x["path"].endswith(".safetensors") and "0.6B" in x["model"] for x in records)
+assert any(x["path"].endswith(".safetensors") and "1.7B" in x["model"] for x in records)
+(work / "correctness-model-file-sha256.json").write_text(
+    json.dumps(records, indent=2) + "\n"
+)
+print(f"Hashed {len(records)} pinned snapshot files")
+
+sources = {}
+for name, relative, expected in (
+    ("stock", "source-git", "db9527a46873454610df6dbedf79a36d6bf1a7f6"),
+    ("candidate", "candidate-src", "08d2c99e8fe5117605d0ca8eaf6b6fd07672d822"),
+):
+    source = work / relative
+    commit = subprocess.check_output(
+        ["git", "-C", str(source), "rev-parse", "HEAD"], text=True
+    ).strip()
+    dirty = subprocess.check_output(
+        ["git", "-C", str(source), "status", "--porcelain", "--untracked-files=no"],
+        text=True,
+    )
+    assert commit == expected and not dirty
+    native = source / "vllm/_C_stable_libtorch.abi3.so"
+    with native.open("rb") as stream:
+        digest = hashlib.file_digest(stream, "sha256").hexdigest()
+    assert digest == "c5b2ba47283119cf12b3bdbc8cb79a940fecb4fed38ba71c70cccd84b27e20c5"
+    sources[name] = {
+        "commit": commit,
+        "tracked_dirty": False,
+        "stable_native_sha256": digest,
+    }
+(work / "correctness-source-state.json").write_text(
+    json.dumps(sources, indent=2) + "\n"
+)

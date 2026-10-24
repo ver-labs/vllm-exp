@@ -1,0 +1,138 @@
+"""Verify all raw archive members and retain a small local-review package."""
+
+import hashlib
+import json
+import shutil
+import tarfile
+from pathlib import Path
+
+import torch
+
+torch.set_num_threads(2)
+work = Path.home() / "vllm-research-20261024"
+root = work / "correctness-compact"
+root.mkdir(exist_ok=False)
+archive = work / "correctness-evidence-20261024.tar.gz"
+inventory = json.loads((work / "correctness-file-inventory.json").read_text())
+with archive.open("rb") as stream:
+    archive_sha = hashlib.file_digest(stream, "sha256").hexdigest()
+assert archive_sha == (work / "correctness-archive-sha256.txt").read_text().split()[0]
+verified = []
+with tarfile.open(archive, "r|gz") as bundle:
+    for member in bundle:
+        if not member.isfile() or not member.name.startswith("correctness-results/"):
+            continue
+        spec = inventory[member.name]
+        stream = bundle.extractfile(member)
+        assert member.size == spec["bytes"]
+        if member.name.endswith((".json", ".txt")):
+            data = stream.read()
+            digest = hashlib.sha256(data).hexdigest()
+            relative = Path(member.name).relative_to("correctness-results")
+            destination = root / "evidence" / relative
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            destination.write_bytes(data)
+        else:
+            digest = hashlib.file_digest(stream, "sha256").hexdigest()
+        assert digest == spec["sha256"], member.name
+        verified.append(member.name)
+assert len(verified) == len(inventory)
+
+samples = {}
+confirmation = {
+    "candidate_vectors_checked": 0,
+    "candidate_vectors_byte_different": 0,
+    "kv_cold_hot_pairs_checked": 0,
+    "kv_pairs_byte_different": 0,
+}
+for model in sorted(
+    p for p in (work / "correctness-results/matrix-r2").iterdir() if p.is_dir()
+):
+    baseline = torch.load(
+        model / "stock/raw-logits.pt", weights_only=True, map_location="cpu"
+    )
+    samples[model.name] = {}
+    for arm in ("stock", "off", "partial", "aging", "combined"):
+        logits = torch.load(
+            model / arm / "raw-logits.pt", weights_only=True, map_location="cpu"
+        )
+        if arm != "stock":
+            for label, values in logits.items():
+                for position, value in values.items():
+                    confirmation["candidate_vectors_checked"] += 1
+                    confirmation["candidate_vectors_byte_different"] += int(
+                        not torch.equal(
+                            value.view(torch.uint8),
+                            baseline[label][position].view(torch.uint8),
+                        )
+                    )
+        kv = torch.load(
+            model / arm / "raw-kv.pt", weights_only=True, map_location="cpu"
+        )
+        confirmation["kv_cold_hot_pairs_checked"] += 1
+        confirmation["kv_pairs_byte_different"] += int(
+            not torch.equal(
+                kv["cold-match-31"].view(torch.uint8),
+                kv["hot-match-31"].view(torch.uint8),
+            )
+        )
+        samples[model.name][arm] = {
+            "hot_match31_position64_logits": logits["hot-match-31"][64].clone(),
+            "cold_match31_position64_logits": logits["cold-match-31"][64].clone(),
+            "cold_layer0_prefix31_kv": kv["cold-match-31"][0, :31].clone(),
+            "hot_layer0_prefix31_kv": kv["hot-match-31"][0, :31].clone(),
+        }
+assert confirmation["candidate_vectors_checked"] == 3144
+assert confirmation["candidate_vectors_byte_different"] == 0
+assert confirmation["kv_cold_hot_pairs_checked"] == 10
+assert confirmation["kv_pairs_byte_different"] == 0
+torch.save(samples, root / "selected-raw-vectors.pt")
+(root / "raw-bitwise-confirmation.json").write_text(
+    json.dumps(confirmation, indent=2) + "\n"
+)
+(root / "archive-verification.json").write_text(
+    json.dumps(
+        {
+            "full_archive_sha256": archive_sha,
+            "full_archive_bytes": archive.stat().st_size,
+            "raw_members_sha256_verified": len(verified),
+            "remote_full_archive": str(archive),
+            "complete_raw_archive_included": False,
+            "selection": (
+                "For each final arm: cold/hot match31 first vocabulary-logit "
+                "vector plus layer0 reused-prefix KV; deterministic review "
+                "samples, not the complete dataset"
+            ),
+        },
+        indent=2,
+    )
+    + "\n"
+)
+for name in (
+    "correctness-model-file-sha256.json",
+    "correctness-file-inventory.json",
+    "correctness-source-state.json",
+):
+    shutil.copyfile(work / name, root / name)
+logs = root / "run-logs"
+logs.mkdir()
+for pattern in ("correctness-pilot-*.txt", "correctness-matrix-*.txt"):
+    for path in work.glob(pattern):
+        shutil.copyfile(path, logs / path.name)
+compact = work / "correctness-compact-20261024.tar.gz"
+with tarfile.open(compact, "w:gz", compresslevel=1) as bundle:
+    bundle.add(root, arcname="correctness-compact")
+with compact.open("rb") as stream:
+    digest = hashlib.file_digest(stream, "sha256").hexdigest()
+(work / "correctness-compact-sha256.txt").write_text(f"{digest}  {compact.name}\n")
+print(
+    json.dumps(
+        {
+            "compact_bytes": compact.stat().st_size,
+            "compact_sha256": digest,
+            "full_raw_members_verified": len(verified),
+            "byte_checks": confirmation,
+        },
+        indent=2,
+    )
+)

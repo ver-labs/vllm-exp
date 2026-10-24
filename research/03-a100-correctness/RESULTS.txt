@@ -1,0 +1,59 @@
+A100 model correctness results — 24 October 2026
+================================================
+
+Outcome
+-------
+Both pinned Qwen models passed all five arms in the final matrix, with
+VLLM_BATCH_INVARIANT=1, BF16 and FlashAttention 2 on one A100.
+All 3,144 candidate-versus-stock vocabulary-logit vectors were also independently
+confirmed byte-identical. Ten gathered full-prompt KV cold/hot tensor pairs
+were byte-identical. This is bounded correctness, not serving-speed or quality.
+
+Model / arm results
+-------------------
+Qwen3-0.6B / stock: PASS; vectors=393, max_abs=0, max_rms=0, non_exact=0, copies=0, copy_views=0, preemptions=2
+Qwen3-0.6B / off: PASS; vectors=393, max_abs=0, max_rms=0, non_exact=0, copies=0, copy_views=0, preemptions=2
+Qwen3-0.6B / partial: PASS; vectors=393, max_abs=0, max_rms=0, non_exact=0, copies=10, copy_views=280, preemptions=2
+Qwen3-0.6B / aging: PASS; vectors=393, max_abs=0, max_rms=0, non_exact=0, copies=0, copy_views=0, preemptions=2
+Qwen3-0.6B / combined: PASS; vectors=393, max_abs=0, max_rms=0, non_exact=0, copies=10, copy_views=280, preemptions=2
+Qwen3-1.7B / stock: PASS; vectors=393, max_abs=0, max_rms=0, non_exact=0, copies=0, copy_views=0, preemptions=2
+Qwen3-1.7B / off: PASS; vectors=393, max_abs=0, max_rms=0, non_exact=0, copies=0, copy_views=0, preemptions=2
+Qwen3-1.7B / partial: PASS; vectors=393, max_abs=0, max_rms=0, non_exact=0, copies=10, copy_views=280, preemptions=2
+Qwen3-1.7B / aging: PASS; vectors=393, max_abs=0, max_rms=0, non_exact=0, copies=0, copy_views=0, preemptions=2
+Qwen3-1.7B / combined: PASS; vectors=393, max_abs=0, max_rms=0, non_exact=0, copies=10, copy_views=280, preemptions=2
+
+What passed
+-----------
+Cold recomputation versus prefix reuse; full logits under identical forced
+continuations; separate greedy output-ID agreement; different-context and
+tenant-salt misses; actual copy-value checks in the runner; gathered KV values
+versus recomputation across every layer; cached-block eviction; aging epochs;
+cancellation after a model step; failed and forced live reset; memory-pressure
+preemption; stored/output token preservation; and no leaked block references.
+
+Controls and limits
+-------------------
+The original default non-invariant BF16 stock control exceeded the fixed logit
+tolerance (including max absolute error 0.75). The later invariant matrix does
+not erase this failed gate or establish parity in the default deployment mode.
+A separate built-in batch-invariant control passed without relaxing tolerances.
+Two earlier failures were harness assumptions: legacy runner access and
+requiring positive CoW refs in a valid synchronous execution window. Original
+code versions, failures and corrected ordering checks are preserved.
+
+No frozen engine source was modified. No inference performance measurements
+were taken. Controlled prompts and short greedy checks do not establish
+semantic quality, broad workload reliability, long-context or asynchronous/
+distributed correctness. Read PROTOCOL.txt for exact settings and boundaries.
+
+Evidence
+--------
+Per-arm JSON, logs, comparisons, model/tokenizer pins, source helpers and
+checksums are versioned here. The complete raw logits/KV archive is preserved
+on the GPU cluster; its outer hash and every raw member hash were verified
+there. A compact archive, selected full vocabulary vectors and selected KV
+values are stored locally under ignored .artifacts, with checksums verified
+here. The full large archive was not downloaded over the slow connection.
+See raw-evidence-storage.json for exact locations and hashes. Raw archives are
+not included in a fresh clone; public archival deposition is separate future
+work. Older frozen research-package receipts remain unchanged.

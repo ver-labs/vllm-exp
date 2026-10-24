@@ -1,0 +1,109 @@
+A100 model correctness protocol — 24 October 2026
+================================================
+
+Purpose
+-------
+Validate the historical-release bridge with actual model work before claiming
+any speed or quality improvement. This is an instrumented correctness suite;
+its execution times must not be reported as serving benchmark measurements.
+
+Sources and models
+------------------
+Stock v0.31.0: db9527a46873454610df6dbedf79a36d6bf1a7f6.
+Cache candidate: 08d2c99e8fe5117605d0ca8eaf6b6fd07672d822.
+Model/tokenizer revisions are frozen in model-lock.json for Qwen3-0.6B and 1.7B.
+The environment and official Linux CUDA artifact hashes are recorded in step 2.
+The source checkouts are selected via explicit PYTHONPATH in fresh processes;
+no global editable installation is switched during these tests.
+
+Five arms
+---------
+Stock; candidate flags off; partial-prefix reuse; aged LFU; partial plus aged LFU.
+Fine-match unit is 1 only in partial/combined, native defaults otherwise.
+Physical block size 16, 16 total GPU blocks including the reserved null block.
+The four-allocation LFU half-life is a correctness stress setting, chosen to
+exercise aging transitions quickly; it is not a speed-tuned recommendation.
+All other study policies remain disabled.
+
+Common scope
+------------
+Single A100, BF16 weights and KV, FlashAttention 2, eager execution, synchronous
+scheduling, TP=PP=DCP=PCP=1, no speculative decoding or adapters. The pinned
+release's default V2 GPU runner is used. Max sequence length 192, token budget
+64, three sequences. KV-memory budget is explicit and effective pages are
+asserted. Prompts are fixed token IDs derived from English text; these are
+controlled correctness cases, not representative quality or throughput data.
+
+Numerical controls and a retained failed gate
+--------------------------------------------
+Pilot 1 reached the model but the harness assumed the legacy runner interface.
+Pilot 2 used the default V2 runner and default non-invariant BF16 execution.
+Stock alone exceeded the predeclared cold-versus-prefix-reuse logit tolerance
+at the first full-block hit. The raw result is retained as a failed numerical
+control; it is not attributed to the cache candidate or erased by a later pass.
+
+Pilot 3 separately enabled vLLM's native VLLM_BATCH_INVARIANT=1. The same BF16,
+backend and tolerance then passed the stock suite. The matrix uses that mode
+for every arm to control batch-shape-dependent numerical effects. It does not
+prove parity in default non-invariant deployment settings. Tolerances were
+not relaxed to pass the stock control.
+
+Logit tolerance (declared before the first model pilot): elementwise
+atol=0.0625, rtol=0.005, plus RMS error <=0.02. These engineering gates account
+for reduced-precision rounding; they are not a universal quality guarantee.
+The direct KV comparison added before the matrix uses atol=0.015625,
+rtol=0.005, RMS <=0.005. Raw vectors and KV tensors remain archived for review.
+
+Checks
+------
+1. Fixed continuations: force one predefined token ID at the sampler for four
+   steps and capture full, unmasked vocabulary logits before sampling. This
+   keeps each compared causal context identical. Forced output agreement alone
+   is not evidence of model correctness; the logit-vector checks provide it.
+2. Within-arm cold recomputation versus warm reuse at shared-prefix lengths
+   1, 7, 15, 17, 31, 47 and 63. Cache-hit counts are explicitly asserted.
+3. Different preceding context and different tenant salt must both miss.
+4. Separate unrestricted greedy generation for eight tokens checks actual
+   output ID agreement between recomputation and reuse.
+5. During every real runner copy, snapshot source bytes, verify native protection
+   (retained references when frees are deferred; otherwise synchronous ordering
+   with no intervening allocator call), run the original helper, synchronize and
+   verify destination tensor values exactly. No copy is emulated by the harness.
+6. For the 31-token shared prefix, gather actual valid KV across every layer
+   after prefill and compare all 64 prompt positions to cold recomputation,
+   reporting reused-prefix and recomputed-suffix errors separately. The layout
+   assumptions are asserted for the pinned LBNHC full-attention configuration.
+7. Repeated unique prompts must actually cause cached-block eviction; compare
+   a subsequent request with its cold reference. Aging arms must advance epochs.
+8. Cancel a live borrower after its first model step and partial-copy opportunity;
+   verify subsequent logits and absence of leaked block references.
+9. Reset with live requests must fail normally; forced live reset must succeed,
+   resume correctly and match a fresh reference. Reset clears aging state.
+10. Three concurrent requests in a deliberately small KV pool must trigger real
+    allocation-driven preemption. Stored/output IDs must survive; computed
+    progress resets. Resumed logits match independent cold references.
+11. After each drained batch, all non-null block references must be zero.
+12. Across arms, compare all captured identical-context vectors and output IDs
+    with stock. Record bitwise equality separately from tolerance agreement.
+
+Interpretation limits
+---------------------
+This covers the declared small synchronous configuration and finite cases.
+It does not establish arbitrary async or distributed safety, speculative or
+multimodal compatibility, semantic/task quality, long-context robustness,
+full-native-build compatibility, current-upstream compatibility or a performance
+win. Cancellation is tested between completed synchronous model steps, not in
+mid-kernel asynchronous execution. Native pending-copy safety and actual copy data are checked
+during each real copy. The sync scheduler can release the temporary copy refs
+after its final allocation; no new schedule can allocate until execution finishes.
+The initial matrix incorrectly asserted positive refs in that valid sync case;
+its failed harness assertion is preserved, with the ordering check correcting it. The candidate source is frozen throughout the checks.
+
+Equality-label clarification
+----------------------------
+Exact-equality counters use torch.equal. The generated field names containing
+"bitwise" refer to exact tensor-value equality, not a separate signed-zero/IEEE
+bit-pattern test. For a uint8 storage view this is byte equality; for a BF16
+view it is value equality. Numerical KV recomputation checks use the declared
+tolerances and separately report observed zero errors. This clarification does
+not change the executed code, thresholds or original raw result fields.

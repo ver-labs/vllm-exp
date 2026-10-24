@@ -1,0 +1,433 @@
+"""Instrumented synchronous single-GPU correctness checks; not a benchmark."""
+
+import argparse
+import importlib
+import inspect
+import json
+import os
+import traceback
+from pathlib import Path
+
+os.environ["VLLM_ENABLE_V1_MULTIPROCESSING"] = "0"
+os.environ["VLLM_PLUGINS"] = ""
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--model", required=True)
+    parser.add_argument("--revision", required=True)
+    parser.add_argument("--source", type=Path, required=True)
+    parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--download-dir", required=True)
+    args = parser.parse_args()
+    args.output.mkdir(parents=True, exist_ok=False)
+    report = {
+        "status": "running",
+        "model": args.model,
+        "revision": args.revision,
+        "source": str(args.source),
+        "comparisons": [],
+        "lifecycle": {},
+        "tolerance": {"atol": 0.0625, "rtol": 0.005, "rms_max": 0.02},
+        "scope": (
+            "BF16, FlashAttention2, eager, synchronous, "
+            "TP=PP=DCP=PCP=1; no performance inference"
+        ),
+    }
+    traces = {}
+    try:
+        import torch
+        import vllm
+        from transformers import AutoTokenizer
+        from vllm import LLM, SamplingParams
+
+        assert Path(vllm.__file__).resolve().is_relative_to(args.source.resolve())
+        tokenizer = AutoTokenizer.from_pretrained(args.model, revision=args.revision)
+        text = (
+            "The library stores books in carefully numbered shelves. "
+            "Readers can reserve a book online and collect it at the front desk. "
+            "A request remains in a waiting queue until a copy becomes available. "
+            "Librarians check the catalogue and update each record. "
+        )
+        base = tokenizer.encode(text * 8, add_special_tokens=False)[:64]
+        suffix = tokenizer.encode(
+            (
+                "Astronomers observe distant stars and compare their temperatures "
+                "across the night sky. "
+            )
+            * 8,
+            add_special_tokens=False,
+        )
+        assert len(base) == 64
+        fixed = tokenizer.encode(" the", add_special_tokens=False)[0]
+        targets = {}
+        for match in (1, 7, 15, 17, 31, 47, 63):
+            tail = suffix[: 64 - match]
+            if tail[0] == base[match]:
+                tail[0] = fixed if fixed != base[match] else suffix[-1]
+            assert tail[0] != base[match]
+            targets[f"match-{match}"] = {"tokens": base[:match] + tail, "match": match}
+        targets["different-context"] = {"tokens": [suffix[0]] + base[1:], "match": 0}
+        assert targets["different-context"]["tokens"][0] != base[0]
+        targets["tenant-salt"] = {
+            "tokens": targets["match-31"]["tokens"],
+            "match": 0,
+            "salt": "isolated-tenant",
+        }
+        report["workload"] = {"base": base, "targets": targets, "forced_token": fixed}
+        settings = dict(
+            model=args.model,
+            revision=args.revision,
+            tokenizer_revision=args.revision,
+            download_dir=args.download_dir,
+            dtype="bfloat16",
+            seed=0,
+            max_model_len=192,
+            max_num_seqs=3,
+            max_num_batched_tokens=64,
+            block_size=16,
+            num_gpu_blocks_override=16,
+            kv_cache_memory_bytes=268435456,
+            enable_prefix_caching=True,
+            enable_chunked_prefill=True,
+            async_scheduling=False,
+            enforce_eager=True,
+            distributed_executor_backend="uni",
+            disable_custom_all_reduce=True,
+            attention_config={"backend": "FLASH_ATTN", "flash_attn_version": 2},
+            compilation_config={"mode": 0},
+        )
+        if os.environ.get("STUDY_PARTIAL_PREFIX") == "1":
+            settings["prefix_match_unit"] = 1
+        report["settings"] = settings
+        report["policy_environment"] = {
+            k: v for k, v in os.environ.items() if k.startswith("STUDY_")
+        }
+        llm = LLM(**settings)
+        engine = llm.llm_engine
+        core = engine.engine_core.engine_core
+        scheduler = core.scheduler
+        manager = scheduler.kv_cache_manager
+        pool = manager.block_pool
+        runner = engine.model_executor.driver_worker.worker.model_runner
+        runner_module = importlib.import_module(type(runner).__module__)
+        report["resolved"] = {
+            "scheduler": inspect.getfile(type(scheduler)),
+            "model_class": type(runner.model).__name__,
+            "runner_module": type(runner).__module__,
+            "num_blocks": pool.num_gpu_blocks
+            if hasattr(pool, "num_gpu_blocks")
+            else len(pool.blocks),
+            "kv_cache_shapes": [list(t.shape) for t in runner.kv_caches],
+            "cache_config": str(llm.llm_engine.vllm_config.cache_config),
+        }
+        assert len(pool.blocks) == 16
+        labels, prompts, outputs = {}, {}, {}
+        copies, preemptions = [], []
+        events = {"evictions": 0, "peak_aging_epoch": 0}
+        phase = ["initial"]
+        original_logits = runner.model.compute_logits
+        active_batch = [None]
+        if not hasattr(runner, "input_batch"):
+            original_sample = runner.sample
+
+            def capture_sample(hidden, input_batch, grammar_output):
+                active_batch[0] = list(input_batch.req_ids)
+                try:
+                    return original_sample(hidden, input_batch, grammar_output)
+                finally:
+                    active_batch[0] = None
+
+            runner.sample = capture_sample
+
+        def capture_logits(hidden):
+            logits = original_logits(hidden)
+            req_ids = (
+                active_batch[0]
+                if active_batch[0] is not None
+                else list(runner.input_batch.req_ids)
+            )
+            assert logits is not None and logits.shape[0] == len(req_ids)
+            for row, req_id in enumerate(req_ids):
+                request = scheduler.requests.get(req_id)
+                if request is None or request.num_computed_tokens < request.num_tokens:
+                    continue
+                label = labels[req_id]
+                if label.startswith("warm-") or label.startswith("fill-"):
+                    continue
+                progress = request.num_computed_tokens
+                traces.setdefault(label, {})[progress] = (
+                    logits[row].detach().float().cpu().clone()
+                )
+            return logits
+
+        runner.model.compute_logits = capture_logits
+        original_copy = runner_module.copy_kv_cache_blocks_inplace
+
+        def checked_copy(caches, num_blocks, requests):
+            caches = list(caches)
+            snapshots = []
+            seen = set()
+            for cache in caches:
+                count, remainder = divmod(cache.shape[0], num_blocks)
+                assert remainder == 0
+                storage = cache.untyped_storage()
+                stride = cache.stride(0) * cache.element_size() * count
+                storage_key = (cache.device, storage.data_ptr())
+                if storage.nbytes() == num_blocks * stride:
+                    if storage_key in seen:
+                        continue
+                    seen.add(storage_key)
+                    view = torch.empty(0, dtype=torch.uint8, device=cache.device)
+                    view.set_(storage)
+                    view = view.view(num_blocks, -1)
+                else:
+                    view = cache.unflatten(0, (num_blocks, count))
+                for source, destination in requests:
+                    assert (
+                        pool.blocks[source].ref_cnt > 0
+                        and pool.blocks[destination].ref_cnt > 0
+                    )
+                    snapshots.append((view, source, destination, view[source].clone()))
+            original_copy(caches, num_blocks, requests)
+            torch.cuda.synchronize()
+            for view, source, destination, expected in snapshots:
+                assert torch.equal(view[destination], expected), (source, destination)
+            copies.append(
+                {
+                    "phase": phase[0],
+                    "pairs": [list(x) for x in requests],
+                    "tensor_views_checked": len(snapshots),
+                    "bitwise_equal": True,
+                }
+            )
+
+        runner_module.copy_kv_cache_blocks_inplace = checked_copy
+        original_preempt = scheduler._preempt_request
+
+        def checked_preempt(request, *pos, **kw):
+            tokens = list(request.all_token_ids)
+            generated = list(request.output_token_ids)
+            original_preempt(request, *pos, **kw)
+            assert tokens == list(request.all_token_ids)
+            assert generated == list(request.output_token_ids)
+            assert request.num_computed_tokens == 0
+            preemptions.append(
+                {
+                    "phase": phase[0],
+                    "label": labels.get(request.request_id),
+                    "stored": len(tokens),
+                    "output": len(generated),
+                }
+            )
+
+        scheduler._preempt_request = checked_preempt
+        original_evict = pool._maybe_evict_cached_block
+
+        def checked_evict(block):
+            result = original_evict(block)
+            events["evictions"] += int(result)
+            return result
+
+        pool._maybe_evict_cached_block = checked_evict
+        original_allocate = pool.get_new_blocks
+
+        def checked_allocate(count):
+            blocks = original_allocate(count)
+            policy = getattr(pool, "_study_eviction", None)
+            events["peak_aging_epoch"] = max(
+                events["peak_aging_epoch"], getattr(policy, "epochs", 0)
+            )
+            return blocks
+
+        pool.get_new_blocks = checked_allocate
+
+        def submit(label, tokens, forced=True, limit=4, salt=None):
+            assert label not in prompts
+            prompt = {"prompt_token_ids": list(tokens)}
+            if salt is not None:
+                prompt["cache_salt"] = salt
+            params = SamplingParams(
+                temperature=0,
+                max_tokens=limit,
+                ignore_eos=True,
+                seed=0,
+                allowed_token_ids=[fixed] if forced else None,
+            )
+            internal = engine.add_request(label, prompt, params)
+            labels[internal] = label
+            prompts[label] = list(tokens)
+            return internal
+
+        def tick():
+            for output in engine.step():
+                if output.finished:
+                    outputs[output.request_id] = {
+                        "tokens": list(output.outputs[0].token_ids),
+                        "cached_tokens": output.num_cached_tokens,
+                        "finish_reason": output.outputs[0].finish_reason,
+                    }
+
+        def drain():
+            for _ in range(2500):
+                if not engine.has_unfinished_requests():
+                    break
+                tick()
+            else:
+                raise RuntimeError("No bounded completion; possible scheduler livelock")
+            assert not scheduler.requests
+            assert all(b.ref_cnt == 0 for b in pool.blocks if not b.is_null)
+
+        def run(label, tokens, **kw):
+            submit(label, tokens, **kw)
+            drain()
+            assert label in outputs, (label, list(outputs))
+            return outputs[label]
+
+        def reset():
+            assert engine.reset_prefix_cache()
+            policy = getattr(pool, "_study_eviction", None)
+            if policy is not None:
+                assert not any(policy.reuse_counts)
+                assert policy.epochs == policy.allocated_blocks == 0
+
+        def compare(left, right, greedy=False):
+            record = {
+                "reference": left,
+                "candidate": right,
+                "kind": "greedy" if greedy else "teacher-forced",
+            }
+            a, b = traces[left], traces[right]
+            assert set(a) == set(b), (left, right, list(a), list(b))
+            differences = []
+            for position in sorted(a):
+                delta = a[position] - b[position]
+                rms = float(delta.square().mean().sqrt())
+                maximum = float(delta.abs().max())
+                torch.testing.assert_close(
+                    a[position], b[position], atol=0.0625, rtol=0.005
+                )
+                assert rms <= 0.02, (left, right, position, rms)
+                differences.append(
+                    {
+                        "position": position,
+                        "max_abs": maximum,
+                        "rms": rms,
+                        "argmax_equal": int(a[position].argmax())
+                        == int(b[position].argmax()),
+                    }
+                )
+            record["positions"] = differences
+            record["output_ids_equal"] = (
+                outputs[left]["tokens"] == outputs[right]["tokens"]
+            )
+            assert record["output_ids_equal"], record
+            record["passed"] = True
+            report["comparisons"].append(record)
+
+        for name, target in targets.items():
+            phase[0] = name
+            reset()
+            cold = "cold-" + name
+            hot = "hot-" + name
+            result = run(cold, target["tokens"], salt=target.get("salt"))
+            assert result["cached_tokens"] == 0
+            reset()
+            run("warm-" + name, base)
+            result = run(hot, target["tokens"], salt=target.get("salt"))
+            expected = (
+                target["match"]
+                if os.environ.get("STUDY_PARTIAL_PREFIX") == "1"
+                else target["match"] // 16 * 16
+            )
+            assert result["cached_tokens"] == expected, (name, result, expected)
+            compare(cold, hot)
+        phase[0] = "greedy"
+        reset()
+        run("greedy-cold", targets["match-31"]["tokens"], forced=False, limit=8)
+        reset()
+        run("warm-greedy", base)
+        run("greedy-hot", targets["match-31"]["tokens"], forced=False, limit=8)
+        compare("greedy-cold", "greedy-hot", greedy=True)
+
+        phase[0] = "eviction"
+        reset()
+        before = events["evictions"]
+        for index in range(12):
+            tokens = [1000 + index] + base[1:]
+            run(f"fill-{index}", tokens, limit=1)
+        assert events["evictions"] > before
+        run("after-eviction", targets["match-31"]["tokens"])
+        compare("cold-match-31", "after-eviction")
+        if os.environ.get("STUDY_EVICTION_POLICY") == "aged_lfu":
+            assert events["peak_aging_epoch"] > 0
+        report["lifecycle"]["eviction_observed"] = True
+
+        phase[0] = "cancel-copy-borrower"
+        reset()
+        run("warm-cancel", base)
+        internal = submit("cancel-borrower", targets["match-31"]["tokens"], limit=48)
+        tick()
+        assert internal in scheduler.requests
+        engine.abort_request([internal], internal=True)
+        drain()
+        run("after-cancel", targets["match-31"]["tokens"])
+        compare("cold-match-31", "after-cancel")
+        report["lifecycle"]["cancel_after_model_step_no_refs_leaked"] = True
+
+        phase[0] = "live-reset"
+        reset()
+        internal = submit("reset-live", base)
+        tick()
+        assert internal in scheduler.requests
+        assert not engine.reset_prefix_cache()
+        assert engine.reset_prefix_cache(reset_running_requests=True)
+        drain()
+        reset()
+        run("reset-reference", base)
+        compare("reset-reference", "reset-live")
+        report["lifecycle"]["failed_and_forced_live_reset"] = True
+
+        phase[0] = "pressure-reference"
+        pressure = [[2000 + index] + base[1:] for index in range(3)]
+        for index, tokens in enumerate(pressure):
+            reset()
+            run(f"pressure-ref-{index}", tokens, limit=48)
+        reset()
+        phase[0] = "pressure-concurrent"
+        before = len(preemptions)
+        for index, tokens in enumerate(pressure):
+            submit(f"pressure-hot-{index}", tokens, limit=48)
+        drain()
+        assert len(preemptions) > before, "No pressure preemption observed"
+        for index in range(3):
+            compare(f"pressure-ref-{index}", f"pressure-hot-{index}")
+        report["lifecycle"]["allocation_pressure_preemption_observed"] = True
+        if os.environ.get("STUDY_PARTIAL_PREFIX") == "1":
+            assert copies, "No partial-prefix copy was exercised"
+        report.update(
+            status="passed",
+            outputs=outputs,
+            copies=copies,
+            preemptions=preemptions,
+            events=events,
+        )
+    except Exception:
+        report.update(status="failed", error=traceback.format_exc())
+    finally:
+        for key in ("outputs", "copies", "preemptions", "events"):
+            if key in locals():
+                report[key] = locals()[key]
+        if traces:
+            import torch
+
+            torch.save(traces, args.output / "raw-logits.pt")
+        (args.output / "result.json").write_text(json.dumps(report, indent=2) + "\n")
+        print("CORRECTNESS_RESULT", report["status"], args.output, flush=True)
+        if report["status"] != "passed":
+            print(report.get("error", "unknown failure"), flush=True)
+    return 0 if report["status"] == "passed" else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

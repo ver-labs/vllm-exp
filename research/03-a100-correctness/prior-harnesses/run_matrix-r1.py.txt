@@ -1,0 +1,74 @@
+"""Run serial fresh processes for two models and five correctness arms."""
+
+import json
+import os
+import subprocess
+from pathlib import Path
+
+work = Path.home() / "vllm-research-20261024"
+root = work / "correctness-results/matrix-r1"
+root.mkdir(parents=True, exist_ok=False)
+lock = json.loads((work / "correctness-kit/model-lock.json").read_text())
+records = []
+for model, item in lock.items():
+    for arm in ("stock", "off", "partial", "aging", "combined"):
+        source = work / ("source-git" if arm == "stock" else "candidate-src")
+        destination = root / model.split("/")[-1] / arm
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        env = {k: v for k, v in os.environ.items() if not k.startswith("STUDY_")}
+        env.update(
+            PYTHONPATH=str(source),
+            STUDY_PARTIAL_PREFIX=str(int(arm in ("partial", "combined"))),
+            STUDY_EVICTION_POLICY="aged_lfu"
+            if arm in ("aging", "combined")
+            else "vllm",
+            STUDY_LFU_HALF_LIFE_BLOCKS="4",
+            STUDY_PARTIAL_MIN_TOKENS="0",
+            STUDY_CACHE_IMPL="incremental",
+        )
+        command = [
+            str(work / ".venv-cuda/bin/python"),
+            str(work / "correctness-kit/run_correctness.py"),
+            "--model",
+            model,
+            "--revision",
+            item["revision"],
+            "--source",
+            str(source),
+            "--download-dir",
+            str(work / "model-cache"),
+            "--output",
+            str(destination),
+        ]
+        print("START", model, arm, flush=True)
+        try:
+            with destination.with_suffix(".txt").open("w") as log:
+                completed = subprocess.run(
+                    command, env=env, stdout=log, stderr=subprocess.STDOUT, timeout=900
+                )
+            status = completed.returncode
+        except subprocess.TimeoutExpired:
+            status = "timeout"
+        records.append(
+            {
+                "model": model,
+                "arm": arm,
+                "returncode": status,
+                "output": str(destination),
+            }
+        )
+        (root / "execution.json").write_text(json.dumps(records, indent=2) + "\n")
+        print("END", model, arm, status, flush=True)
+        if status != 0:
+            raise SystemExit(
+                "Correctness gate failed; stop, preserve evidence and investigate."
+            )
+
+subprocess.run(
+    [
+        str(work / ".venv-cuda/bin/python"),
+        str(work / "correctness-kit/compare_arms.py"),
+        str(root),
+    ],
+    check=True,
+)

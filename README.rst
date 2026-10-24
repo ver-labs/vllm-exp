@@ -50,10 +50,13 @@ setup receipts with the setup helpers rather than committing machine paths.
 
 Research status
 ---------------
-The frozen baseline has source and metadata checks. A100 environment, editable
-source installations with official CUDA artifacts, and small native GPU checks
-are recorded in research/02-a100-preflight/RESULTS.txt. Complete native source
-compilation, candidate copy integration, logits, task quality, cancellation,
-forced preemption and current-upstream compatibility remain unvalidated.
-Historical pilot results and corrected candidate results must be reported
-separately. No inference benchmark was run during repository preparation.
+The frozen baseline has source and metadata checks. A100 environment and source
+installation checks are in research/02-a100-preflight/RESULTS.txt. Model-level
+checks for both Qwen sizes pass in the declared synchronous batch-invariant
+configuration; see research/03-a100-correctness/RESULTS.txt for logits, KV copies,
+eviction, cancellation, reset and preemption checks. The default non-invariant
+BF16 stock numerical gate failed and is preserved separately. Task quality,
+broader deployment configurations, complete native source compilation and the
+current-upstream port remain unvalidated. These are correctness checks; no
+inference performance benchmark was run during this research preparation.
+Historical pilot results and corrected candidate results remain separate.

@@ -1,0 +1,400 @@
+START Qwen/Qwen3-0.6B stock
+END Qwen/Qwen3-0.6B stock 0
+START Qwen/Qwen3-0.6B off
+END Qwen/Qwen3-0.6B off 0
+START Qwen/Qwen3-0.6B partial
+END Qwen/Qwen3-0.6B partial 0
+START Qwen/Qwen3-0.6B aging
+END Qwen/Qwen3-0.6B aging 0
+START Qwen/Qwen3-0.6B combined
+END Qwen/Qwen3-0.6B combined 0
+START Qwen/Qwen3-1.7B stock
+END Qwen/Qwen3-1.7B stock 0
+START Qwen/Qwen3-1.7B off
+END Qwen/Qwen3-1.7B off 0
+START Qwen/Qwen3-1.7B partial
+END Qwen/Qwen3-1.7B partial 0
+START Qwen/Qwen3-1.7B aging
+END Qwen/Qwen3-1.7B aging 0
+START Qwen/Qwen3-1.7B combined
+END Qwen/Qwen3-1.7B combined 0
+{
+  "status": "passed",
+  "models": {
+    "Qwen3-0.6B": {
+      "arms": {
+        "stock": {
+          "status": "passed",
+          "vectors_compared": 393,
+          "non_bitwise_vectors": 0,
+          "argmax_differences": 0,
+          "max_abs": 0.0,
+          "max_rms": 0.0,
+          "failures": [],
+          "copy_events": 0,
+          "copy_views_bitwise_checked": 0,
+          "preemption_events": 2,
+          "lifecycle": {
+            "eviction_observed": true,
+            "cancel_after_model_step_no_refs_leaked": true,
+            "failed_and_forced_live_reset": true,
+            "allocation_pressure_preemption_observed": true
+          },
+          "kv_recompute_comparison": {
+            "passed": true,
+            "atol": 0.015625,
+            "rtol": 0.005,
+            "rms_max": 0.005,
+            "regions": [
+              {
+                "region": "reused_prefix",
+                "max_abs": 0.0,
+                "rms": 0.0
+              },
+              {
+                "region": "recomputed_suffix",
+                "max_abs": 0.0,
+                "rms": 0.0
+              }
+            ]
+          }
+        },
+        "off": {
+          "status": "passed",
+          "vectors_compared": 393,
+          "non_bitwise_vectors": 0,
+          "argmax_differences": 0,
+          "max_abs": 0.0,
+          "max_rms": 0.0,
+          "failures": [],
+          "copy_events": 0,
+          "copy_views_bitwise_checked": 0,
+          "preemption_events": 2,
+          "lifecycle": {
+            "eviction_observed": true,
+            "cancel_after_model_step_no_refs_leaked": true,
+            "failed_and_forced_live_reset": true,
+            "allocation_pressure_preemption_observed": true
+          },
+          "kv_recompute_comparison": {
+            "passed": true,
+            "atol": 0.015625,
+            "rtol": 0.005,
+            "rms_max": 0.005,
+            "regions": [
+              {
+                "region": "reused_prefix",
+                "max_abs": 0.0,
+                "rms": 0.0
+              },
+              {
+                "region": "recomputed_suffix",
+                "max_abs": 0.0,
+                "rms": 0.0
+              }
+            ]
+          }
+        },
+        "partial": {
+          "status": "passed",
+          "vectors_compared": 393,
+          "non_bitwise_vectors": 0,
+          "argmax_differences": 0,
+          "max_abs": 0.0,
+          "max_rms": 0.0,
+          "failures": [],
+          "copy_events": 10,
+          "copy_views_bitwise_checked": 280,
+          "preemption_events": 2,
+          "lifecycle": {
+            "eviction_observed": true,
+            "cancel_after_model_step_no_refs_leaked": true,
+            "failed_and_forced_live_reset": true,
+            "allocation_pressure_preemption_observed": true
+          },
+          "kv_recompute_comparison": {
+            "passed": true,
+            "atol": 0.015625,
+            "rtol": 0.005,
+            "rms_max": 0.005,
+            "regions": [
+              {
+                "region": "reused_prefix",
+                "max_abs": 0.0,
+                "rms": 0.0
+              },
+              {
+                "region": "recomputed_suffix",
+                "max_abs": 0.0,
+                "rms": 0.0
+              }
+            ]
+          }
+        },
+        "aging": {
+          "status": "passed",
+          "vectors_compared": 393,
+          "non_bitwise_vectors": 0,
+          "argmax_differences": 0,
+          "max_abs": 0.0,
+          "max_rms": 0.0,
+          "failures": [],
+          "copy_events": 0,
+          "copy_views_bitwise_checked": 0,
+          "preemption_events": 2,
+          "lifecycle": {
+            "eviction_observed": true,
+            "cancel_after_model_step_no_refs_leaked": true,
+            "failed_and_forced_live_reset": true,
+            "allocation_pressure_preemption_observed": true
+          },
+          "kv_recompute_comparison": {
+            "passed": true,
+            "atol": 0.015625,
+            "rtol": 0.005,
+            "rms_max": 0.005,
+            "regions": [
+              {
+                "region": "reused_prefix",
+                "max_abs": 0.0,
+                "rms": 0.0
+              },
+              {
+                "region": "recomputed_suffix",
+                "max_abs": 0.0,
+                "rms": 0.0
+              }
+            ]
+          }
+        },
+        "combined": {
+          "status": "passed",
+          "vectors_compared": 393,
+          "non_bitwise_vectors": 0,
+          "argmax_differences": 0,
+          "max_abs": 0.0,
+          "max_rms": 0.0,
+          "failures": [],
+          "copy_events": 10,
+          "copy_views_bitwise_checked": 280,
+          "preemption_events": 2,
+          "lifecycle": {
+            "eviction_observed": true,
+            "cancel_after_model_step_no_refs_leaked": true,
+            "failed_and_forced_live_reset": true,
+            "allocation_pressure_preemption_observed": true
+          },
+          "kv_recompute_comparison": {
+            "passed": true,
+            "atol": 0.015625,
+            "rtol": 0.005,
+            "rms_max": 0.005,
+            "regions": [
+              {
+                "region": "reused_prefix",
+                "max_abs": 0.0,
+                "rms": 0.0
+              },
+              {
+                "region": "recomputed_suffix",
+                "max_abs": 0.0,
+                "rms": 0.0
+              }
+            ]
+          }
+        }
+      },
+      "model_revision": "c1899de289a04d12100db370d81485cdf75e47ca"
+    },
+    "Qwen3-1.7B": {
+      "arms": {
+        "stock": {
+          "status": "passed",
+          "vectors_compared": 393,
+          "non_bitwise_vectors": 0,
+          "argmax_differences": 0,
+          "max_abs": 0.0,
+          "max_rms": 0.0,
+          "failures": [],
+          "copy_events": 0,
+          "copy_views_bitwise_checked": 0,
+          "preemption_events": 2,
+          "lifecycle": {
+            "eviction_observed": true,
+            "cancel_after_model_step_no_refs_leaked": true,
+            "failed_and_forced_live_reset": true,
+            "allocation_pressure_preemption_observed": true
+          },
+          "kv_recompute_comparison": {
+            "passed": true,
+            "atol": 0.015625,
+            "rtol": 0.005,
+            "rms_max": 0.005,
+            "regions": [
+              {
+                "region": "reused_prefix",
+                "max_abs": 0.0,
+                "rms": 0.0
+              },
+              {
+                "region": "recomputed_suffix",
+                "max_abs": 0.0,
+                "rms": 0.0
+              }
+            ]
+          }
+        },
+        "off": {
+          "status": "passed",
+          "vectors_compared": 393,
+          "non_bitwise_vectors": 0,
+          "argmax_differences": 0,
+          "max_abs": 0.0,
+          "max_rms": 0.0,
+          "failures": [],
+          "copy_events": 0,
+          "copy_views_bitwise_checked": 0,
+          "preemption_events": 2,
+          "lifecycle": {
+            "eviction_observed": true,
+            "cancel_after_model_step_no_refs_leaked": true,
+            "failed_and_forced_live_reset": true,
+            "allocation_pressure_preemption_observed": true
+          },
+          "kv_recompute_comparison": {
+            "passed": true,
+            "atol": 0.015625,
+            "rtol": 0.005,
+            "rms_max": 0.005,
+            "regions": [
+              {
+                "region": "reused_prefix",
+                "max_abs": 0.0,
+                "rms": 0.0
+              },
+              {
+                "region": "recomputed_suffix",
+                "max_abs": 0.0,
+                "rms": 0.0
+              }
+            ]
+          }
+        },
+        "partial": {
+          "status": "passed",
+          "vectors_compared": 393,
+          "non_bitwise_vectors": 0,
+          "argmax_differences": 0,
+          "max_abs": 0.0,
+          "max_rms": 0.0,
+          "failures": [],
+          "copy_events": 10,
+          "copy_views_bitwise_checked": 280,
+          "preemption_events": 2,
+          "lifecycle": {
+            "eviction_observed": true,
+            "cancel_after_model_step_no_refs_leaked": true,
+            "failed_and_forced_live_reset": true,
+            "allocation_pressure_preemption_observed": true
+          },
+          "kv_recompute_comparison": {
+            "passed": true,
+            "atol": 0.015625,
+            "rtol": 0.005,
+            "rms_max": 0.005,
+            "regions": [
+              {
+                "region": "reused_prefix",
+                "max_abs": 0.0,
+                "rms": 0.0
+              },
+              {
+                "region": "recomputed_suffix",
+                "max_abs": 0.0,
+                "rms": 0.0
+              }
+            ]
+          }
+        },
+        "aging": {
+          "status": "passed",
+          "vectors_compared": 393,
+          "non_bitwise_vectors": 0,
+          "argmax_differences": 0,
+          "max_abs": 0.0,
+          "max_rms": 0.0,
+          "failures": [],
+          "copy_events": 0,
+          "copy_views_bitwise_checked": 0,
+          "preemption_events": 2,
+          "lifecycle": {
+            "eviction_observed": true,
+            "cancel_after_model_step_no_refs_leaked": true,
+            "failed_and_forced_live_reset": true,
+            "allocation_pressure_preemption_observed": true
+          },
+          "kv_recompute_comparison": {
+            "passed": true,
+            "atol": 0.015625,
+            "rtol": 0.005,
+            "rms_max": 0.005,
+            "regions": [
+              {
+                "region": "reused_prefix",
+                "max_abs": 0.0,
+                "rms": 0.0
+              },
+              {
+                "region": "recomputed_suffix",
+                "max_abs": 0.0,
+                "rms": 0.0
+              }
+            ]
+          }
+        },
+        "combined": {
+          "status": "passed",
+          "vectors_compared": 393,
+          "non_bitwise_vectors": 0,
+          "argmax_differences": 0,
+          "max_abs": 0.0,
+          "max_rms": 0.0,
+          "failures": [],
+          "copy_events": 10,
+          "copy_views_bitwise_checked": 280,
+          "preemption_events": 2,
+          "lifecycle": {
+            "eviction_observed": true,
+            "cancel_after_model_step_no_refs_leaked": true,
+            "failed_and_forced_live_reset": true,
+            "allocation_pressure_preemption_observed": true
+          },
+          "kv_recompute_comparison": {
+            "passed": true,
+            "atol": 0.015625,
+            "rtol": 0.005,
+            "rms_max": 0.005,
+            "regions": [
+              {
+                "region": "reused_prefix",
+                "max_abs": 0.0,
+                "rms": 0.0
+              },
+              {
+                "region": "recomputed_suffix",
+                "max_abs": 0.0,
+                "rms": 0.0
+              }
+            ]
+          }
+        }
+      },
+      "model_revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e"
+    }
+  },
+  "tolerance": {
+    "atol": 0.0625,
+    "rtol": 0.005,
+    "rms_max": 0.02
+  }
+}
