@@ -6,3 +6,34 @@ __pycache__/
 
 # Local benchmark outputs; indexed and checksummed under experiments/.
 /results/
+
+# Machine-specific setup receipts; regenerate with local setup helpers.
+/configs/editable-setup.json
+/configs/metal-baseline.json
+
+# Generated diagnostics and distribution archives belong outside source control.
+*.log.gz
+**/events-*.jsonl
+**/events-*.jsonl.gz
+**/metrics-*.txt.gz
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+/exports/
+
+# Local model/build files and credentials.
+*.whl
+*.safetensors
+*.so
+*.dylib
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa
+id_ed25519
+.DS_Store
