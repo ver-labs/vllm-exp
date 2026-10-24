@@ -1,0 +1,2114 @@
+diff --git a/tests/v1/core/test_prefix_caching.py b/tests/v1/core/test_prefix_caching.py
+index 027bb67..3e62acc 100644
+--- a/tests/v1/core/test_prefix_caching.py
++++ b/tests/v1/core/test_prefix_caching.py
+@@ -6192,3 +6192,79 @@ def test_get_unhashed_block_ids_all_groups():
+     )
+ 
+     assert blocks.get_unhashed_block_ids_all_groups() == [[1, 4], []]
++
++
++def _study_lfu_pool(policy):
++    import os
++    from unittest.mock import patch
++
++    from vllm.v1.core.block_pool import BlockPool
++
++    with patch.dict(os.environ, {"STUDY_EVICTION_POLICY": policy}):
++        return BlockPool(4, True, 16)
++
++
++def test_study_lfu_preserves_hot_free_block_and_resets_reassigned_count():
++    pool = _study_lfu_pool("lfu")
++    hot, cold, active = pool.get_new_blocks(3)
++    for block, key in [(hot, b"hot"), (cold, b"cold")]:
++        block.set_block_hash(key)
++        pool.cached_block_hash_to_block.insert(key, block)
++    for _ in range(3):
++        pool.touch([hot])
++        pool.free_blocks([hot])
++    pool.free_blocks([hot, cold])
++    assert hot.ref_cnt == cold.ref_cnt == 0 and active.ref_cnt == 1
++    assert pool.get_new_blocks(1) == [cold]
++    assert hot.block_hash == b"hot" and hot.ref_cnt == 0
++    assert pool._study_eviction.reuse_counts[hot.block_id] == 3
++    assert pool._study_eviction.reuse_counts[cold.block_id] == 0
++    # Preservation is a preference, not pinning: hot remains allocatable.
++    assert pool.get_new_blocks(1) == [hot]
++    assert pool._study_eviction.reuse_counts[hot.block_id] == 0
++    assert pool.get_num_free_blocks() == 0
++
++
++def test_study_lfu_uncached_first_stable_ties_and_cache_reset():
++    pool = _study_lfu_pool("lfu")
++    first, second, uncached = pool.get_new_blocks(3)
++    for block in (first, second):
++        key = str(block.block_id).encode()
++        block.set_block_hash(key)
++        pool.cached_block_hash_to_block.insert(key, block)
++    pool.free_blocks([first, second, uncached])
++    assert pool.get_new_blocks(3) == [uncached, first, second]
++    pool.free_blocks([uncached, first, second])
++    assert pool.reset_prefix_cache()
++    assert pool._study_eviction.reuse_counts == [0, 0, 0, 0]
++    assert pool.get_new_blocks(0) == []
++
++
++def test_study_lfu_keeps_deferred_readers_last_resort():
++    pool = _study_lfu_pool("lfu")
++    reader, cached, active = pool.get_new_blocks(3)
++    cached.set_block_hash(b"cached")
++    pool.cached_block_hash_to_block.insert(b"cached", cached)
++    seen = []
++    pool.unpin_blocks([reader], on_reuse=lambda block: seen.append(block.block_id))
++    pool.free_blocks([cached])
++    assert pool.get_new_blocks(1) == [cached]
++    assert seen == []
++    assert pool.get_new_blocks(1) == [reader]
++    assert seen == [reader.block_id] and active.ref_cnt == 1
++
++
++def test_study_lfu_default_keeps_upstream_eviction_order():
++    pool = _study_lfu_pool("vllm")
++    assert pool._study_eviction is None
++    first, second, active = pool.get_new_blocks(3)
++    for block in (first, second):
++        key = str(block.block_id).encode()
++        block.set_block_hash(key)
++        pool.cached_block_hash_to_block.insert(key, block)
++    for _ in range(3):
++        pool.touch([first])
++        pool.free_blocks([first])
++    pool.free_blocks([first, second])
++    assert pool.get_new_blocks(1) == [first]
++    assert active.ref_cnt == 1
+diff --git a/tests/v1/core/test_scheduler.py b/tests/v1/core/test_scheduler.py
+index 91c93ed..e989c52 100644
+--- a/tests/v1/core/test_scheduler.py
++++ b/tests/v1/core/test_scheduler.py
+@@ -7226,3 +7226,209 @@ def test_diffusion_read_deferral_keeps_a_longer_pp_wait():
+     # Deferring this step alone would ask for 6. The PP wait to 7 stands.
+     assert "read" not in scheduler.schedule().num_scheduled_tokens
+     assert read.next_decode_eligible_step == 7
++
++
++def _study_prefix_case():
++    import time
++    from types import SimpleNamespace
++
++    import torch
++
++    from vllm.sampling_params import SamplingParams
++    from vllm.utils.hashing import sha256
++    from vllm.v1.core.kv_cache_manager import KVCacheManager
++    from vllm.v1.core.kv_cache_utils import get_request_block_hasher, init_none_hash
++    from vllm.v1.core.sched.request_queue import FCFSRequestQueue
++    from vllm.v1.kv_cache_interface import (
++        FullAttentionSpec,
++        KVCacheConfig,
++        KVCacheGroupSpec,
++    )
++    from vllm.v1.request import Request
++
++    init_none_hash(sha256)
++    config = KVCacheConfig(
++        num_blocks=16,
++        kv_cache_tensors=[],
++        kv_cache_groups=[
++            KVCacheGroupSpec(
++                ["layer"],
++                FullAttentionSpec(
++                    block_size=16, num_kv_heads=1, head_size=1, dtype=torch.float32
++                ),
++            )
++        ],
++    )
++    manager = KVCacheManager(config, 128, 16, 16)
++    now = time.time()
++
++    def request(label, tokens, age=0.1):
++        return Request(
++            label,
++            tokens,
++            SamplingParams(max_tokens=16),
++            None,
++            arrival_time=now - age,
++            block_hasher=get_request_block_hasher(16, sha256),
++        )
++
++    seed = request("seed", list(range(65)))
++    assert manager.allocate_slots(seed, 64) is not None
++    manager.free(seed)
++    a = request("A", [999] * 65, 0.3)
++    b = request("B", list(range(32)) + [998] * 33, 0.2)
++    c = request("C", list(range(65)), 0.1)
++    queue = FCFSRequestQueue([a, b, c])
++    scheduler = SimpleNamespace(
++        waiting=queue,
++        kv_cache_manager=manager,
++        _study_trace=None,
++    )
++    return scheduler, (a, b, c)
++
++
++def test_study_prefix_policy_real_cache_and_no_pinning():
++    from vllm.v1.core.sched.study_prefix_policy import PrefixAwareWaitingPolicy
++
++    scheduler, (a, b, c) = _study_prefix_case()
++    manager = scheduler.kv_cache_manager
++    pool = manager.block_pool
++
++    def snapshot():
++        return (
++            [
++                (block.block_id, block.ref_cnt, block.block_hash)
++                for block in pool.blocks
++            ],
++            [block.block_id for block in pool.free_block_queue.get_all_free_blocks()],
++        )
++
++    before = snapshot()
++    PrefixAwareWaitingPolicy().promote(scheduler, scheduler.waiting)
++    assert list(scheduler.waiting) == [c, a, b]
++    assert snapshot() == before
++    assert manager.get_computed_blocks(c)[1] == 64
++    # Cache state changes between admissions must affect the next decision.
++    manager.reset_prefix_cache()
++    PrefixAwareWaitingPolicy().promote(scheduler, scheduler.waiting)
++    assert list(scheduler.waiting) == [a, c, b]
++
++
++def test_study_prefix_policy_fcfs_ties_and_wait_safeguard():
++    from vllm.v1.core.sched.study_prefix_policy import PrefixAwareWaitingPolicy
++
++    scheduler, (a, b, c) = _study_prefix_case()
++    policy = PrefixAwareWaitingPolicy()
++    # B and C now have the same reusable prefix. B arrived first.
++    scheduler.waiting.remove(a)
++    c.block_hashes = b.block_hashes.copy()
++    scheduler.waiting.reverse()
++    policy.promote(scheduler, scheduler.waiting)
++    assert list(scheduler.waiting) == [b, c]
++    scheduler.waiting.prepend_request(a)
++    a.arrival_time -= 3
++    policy.promote(scheduler, scheduler.waiting)
++    assert scheduler.waiting.peek_request() is a
++
++
++def test_study_prefix_policy_special_requests_and_lookahead():
++    from vllm.v1.core.sched.request_queue import FCFSRequestQueue
++    from vllm.v1.core.sched.study_prefix_policy import PrefixAwareWaitingPolicy
++    from vllm.v1.request import RequestStatus
++
++    scheduler, (a, b, c) = _study_prefix_case()
++    policy = PrefixAwareWaitingPolicy()
++    for status in (
++        RequestStatus.PREEMPTED,
++        RequestStatus.WAITING_FOR_STRUCTURED_OUTPUT_GRAMMAR,
++    ):
++        a.status = status
++        policy.promote(scheduler, scheduler.waiting)
++        assert list(scheduler.waiting) == [a, b, c]
++    a.status = RequestStatus.WAITING
++    a.num_preemptions = 1
++    policy.promote(scheduler, scheduler.waiting)
++    assert scheduler.waiting.peek_request() is a
++    a.num_preemptions = 0
++    holding_queue = FCFSRequestQueue([a, b, c])
++    policy.promote(scheduler, holding_queue)
++    assert list(holding_queue) == [a, b, c]
++    PrefixAwareWaitingPolicy(lookahead=1).promote(scheduler, scheduler.waiting)
++    assert scheduler.waiting.peek_request() is a
++
++
++def test_study_prefix_policy_opt_in_and_validation():
++    import os
++    from types import SimpleNamespace
++    from unittest.mock import patch
++
++    from vllm.v1.core.sched.request_queue import SchedulingPolicy
++    from vllm.v1.core.sched.study_prefix_policy import PrefixAwareWaitingPolicy
++
++    scheduler, _ = _study_prefix_case()
++    scheduler.kv_cache_config = scheduler.kv_cache_manager.kv_cache_config
++    scheduler.policy = SchedulingPolicy.FCFS
++    scheduler.scheduler_config = SimpleNamespace(async_scheduling=False)
++    scheduler.cache_config = SimpleNamespace(enable_prefix_caching=True)
++    scheduler.connector = None
++    scheduler.lora_config = None
++    scheduler.vllm_config = SimpleNamespace(speculative_config=None)
++    with patch.dict(os.environ, {}, clear=True):
++        assert PrefixAwareWaitingPolicy.from_environment(scheduler) is None
++        os.environ["STUDY_WAITING_POLICY"] = "prefix_first"
++        assert PrefixAwareWaitingPolicy.from_environment(scheduler) is not None
++        scheduler.scheduler_config.async_scheduling = True
++        try:
++            PrefixAwareWaitingPolicy.from_environment(scheduler)
++        except ValueError:
++            pass
++        else:
++            raise AssertionError("Unsupported asynchronous configuration accepted")
++
++
++def test_study_prefix_hybrid_keeps_fixed_head_then_reorders_tail():
++    from copy import copy
++
++    from vllm.v1.core.sched.study_prefix_policy import PrefixAwareWaitingPolicy
++
++    scheduler, (a, b, c) = _study_prefix_case()
++    d, e, f = copy(c), copy(a), copy(b)
++    d.request_id, e.request_id, f.request_id = "D", "E", "F"
++    for request in (d, e, f):
++        scheduler.waiting.add_request(request)
++    policy = PrefixAwareWaitingPolicy(fcfs_head_size=3)
++    order = []
++    for _ in range(6):
++        policy.promote(scheduler, scheduler.waiting)
++        # A failed admission would retry the same protected request.
++        if not order:
++            policy.promote(scheduler, scheduler.waiting)
++        order.append(scheduler.waiting.pop_request().request_id)
++    assert order == ["A", "B", "C", "D", "F", "E"]
++    # A drained cohort allows the next waiting batch its own protected head.
++    for request in (a, c, b):
++        scheduler.waiting.add_request(request)
++    policy.promote(scheduler, scheduler.waiting)
++    assert scheduler.waiting.peek_request() is a
++
++
++def test_study_prefix_hybrid_uses_configured_running_limit():
++    import os
++    from types import SimpleNamespace
++    from unittest.mock import patch
++
++    from vllm.v1.core.sched.request_queue import SchedulingPolicy
++    from vllm.v1.core.sched.study_prefix_policy import PrefixAwareWaitingPolicy
++
++    scheduler, _ = _study_prefix_case()
++    scheduler.kv_cache_config = scheduler.kv_cache_manager.kv_cache_config
++    scheduler.policy = SchedulingPolicy.FCFS
++    scheduler.scheduler_config = SimpleNamespace(async_scheduling=False, max_num_seqs=2)
++    scheduler.cache_config = SimpleNamespace(enable_prefix_caching=True)
++    scheduler.connector = None
++    scheduler.lora_config = None
++    scheduler.vllm_config = SimpleNamespace(speculative_config=None)
++    with patch.dict(os.environ, {"STUDY_WAITING_POLICY": "fcfs_head_prefix"}):
++        policy = PrefixAwareWaitingPolicy.from_environment(scheduler)
++    assert policy.fcfs_head_size == 2
++    assert policy.name == "fcfs_head_prefix"
+diff --git a/vllm/v1/core/block_pool.py b/vllm/v1/core/block_pool.py
+index 664804d..b74864a 100644
+--- a/vllm/v1/core/block_pool.py
++++ b/vllm/v1/core/block_pool.py
+@@ -27,6 +27,7 @@ from vllm.v1.core.kv_cache_utils import (
+     resolve_block_hashes,
+     to_event_extra_keys,
+ )
++from vllm.v1.core.study_cache_eviction import StudyLFUEviction
+ from vllm.v1.request import Request
+ 
+ logger = init_logger(__name__)
+@@ -194,6 +195,13 @@ class BlockPool:
+         # Callbacks for blocks released with ``unpin_blocks`` whose contents
+         # are still being read until the pool reuses them.
+         self._reuse_watchers: dict[int, Callable[[KVCacheBlock], None]] = {}
++        self._study_partial_index = None
++        self._study_eviction = StudyLFUEviction.from_environment(
++            num_gpu_blocks, enable_caching
++        )
++
++    def _study_order(self):
++        return getattr(self._study_eviction, "order", None)
+ 
+     def get_cached_block(
+         self, block_hash: BlockHash, kv_cache_group_ids: list[int]
+@@ -454,6 +462,7 @@ class BlockPool:
+         kv_cache_group_id: int,
+         block_size: int,
+         replace_existing_hashes: bool = False,
++        preserve_existing_hashes: bool = False,
+     ) -> BlockHashWithGroupId | None:
+         """Register a partial prefix-cache entry for an existing block.
+ 
+@@ -481,6 +490,8 @@ class BlockPool:
+                 entry hash itself is always the prefix-chain hash at
+                 ``num_tokens``; ``block_size`` is used to assert that the
+                 entry is partial within the owning cache block.
++            preserve_existing_hashes: Keep shorter valid prefix aliases when
++                appending metadata for the same computed block contents.
+             replace_existing_hashes: Whether the block contents were replaced
+                 and all existing cache entries must be removed before the new
+                 entry is registered.
+@@ -512,7 +523,8 @@ class BlockPool:
+             self._emit_block_removed_events(removed_hashes)
+             already_cached = False
+         elif (
+-            not already_cached
++            not preserve_existing_hashes
++            and not already_cached
+             and block.block_hash is not None
+             and block.block_hash_num_tokens is not None
+             and block.block_hash_num_tokens < num_hash_blocks * self.hash_block_size
+@@ -609,6 +621,10 @@ class BlockPool:
+             ):
+                 removed_hashes.append(block_hash)
+         block.reset_hash()
++        if self._study_partial_index is not None:
++            self._study_partial_index.block_changed(block.block_id)
++        if self._study_order() is not None:
++            self._study_order().refresh(self, block)
+         return removed_hashes
+ 
+     def _emit_block_removed_events(
+@@ -642,6 +658,10 @@ class BlockPool:
+ 
+         if block.block_hash is None:
+             block.set_block_hash(block_hash_with_group_id, num_tokens=num_tokens)
++            if self._study_partial_index is not None:
++                self._study_partial_index.block_changed(block.block_id)
++            if self._study_order() is not None:
++                self._study_order().refresh(self, block)
+         else:
+             self.cached_block_hashes_by_block.setdefault(block.block_id, set()).add(
+                 block_hash_with_group_id
+@@ -681,7 +701,11 @@ class BlockPool:
+         if num_blocks > self.get_num_free_blocks():
+             raise ValueError(f"Cannot get {num_blocks} free blocks from the pool")
+ 
+-        ret: list[KVCacheBlock] = self.free_block_queue.popleft_n(num_blocks)
++        ret: list[KVCacheBlock] = (
++            self.free_block_queue.popleft_n(num_blocks)
++            if self._study_eviction is None
++            else self._study_eviction.select(self, num_blocks)
++        )
+ 
+         if self._reuse_watchers:
+             self._notify_reuse(ret)
+@@ -728,6 +752,8 @@ class BlockPool:
+             if block.ref_cnt == 0:
+                 released.append(block)
+         self.free_block_queue.append_n(released)
++        if self._study_order() is not None:
++            self._study_order().add(self, released)
+ 
+     def _maybe_evict_cached_block(self, block: KVCacheBlock) -> bool:
+         """If a block is cached in `cached_block_hash_to_block`, we reset its hash
+@@ -745,6 +771,10 @@ class BlockPool:
+             self.metrics_collector.on_block_evicted(block)
+ 
+         evicted_hashes = self._remove_cached_block_hashes(block)
++        if self._study_eviction is not None:
++            self._study_eviction.reuse_counts[block.block_id] = 0
++        if self._study_order() is not None:
++            self._study_order().refresh(self, block)
+         if not evicted_hashes:
+             # The block doesn't have hash, eviction is not needed
+             return False
+@@ -762,10 +792,18 @@ class BlockPool:
+ 
+         """
+         for block in blocks:
++            if (
++                self._study_eviction is not None
++                and block.block_hash is not None
++                and not block.is_null
++            ):
++                self._study_eviction.reuse_counts[block.block_id] += 1
+             # ref_cnt=0 means this block is in the free list (i.e. eviction
+             # candidate), so remove it.
+             if block.ref_cnt == 0 and not block.is_null:
+                 self.free_block_queue.remove(block)
++                if self._study_order() is not None:
++                    self._study_order().remove(block)
+             block.ref_cnt += 1
+             if self.metrics_collector:
+                 self.metrics_collector.on_block_accessed(block)
+@@ -804,6 +842,9 @@ class BlockPool:
+         self.free_block_queue.prepend_n(blocks_to_evict_first)
+         # Blocks to reuse last are appended to the end of the free queue.
+         self.free_block_queue.append_n(blocks_to_evict_last)
++        if self._study_order() is not None:
++            self._study_order().add(self, blocks_to_evict_first, front=True)
++            self._study_order().add(self, blocks_to_evict_last)
+         for pool, blocks in other_pools.items():
+             pool.free_blocks(blocks)
+ 
+@@ -854,10 +895,15 @@ class BlockPool:
+                 [self.blocks[block_id] for block_id in list(self._reuse_watchers)]
+             )
+ 
++        if self._study_eviction is not None:
++            self._study_eviction.reuse_counts[:] = [0] * self.num_gpu_blocks
++
+         # Remove all hashes from all blocks.
+         for block in self.blocks:
+             block.reset_hash()
+ 
++        if self._study_order() is not None:
++            self._study_order().rebuild(self)
+         if self.metrics_collector:
+             self.metrics_collector.reset()
+ 
+diff --git a/vllm/v1/core/kv_cache_coordinator.py b/vllm/v1/core/kv_cache_coordinator.py
+index daf0cd1..5eb3339 100644
+--- a/vllm/v1/core/kv_cache_coordinator.py
++++ b/vllm/v1/core/kv_cache_coordinator.py
+@@ -1,5 +1,6 @@
+ # SPDX-License-Identifier: Apache-2.0
+ # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
++import os
+ from abc import ABC, abstractmethod
+ from collections.abc import Sequence
+ from typing import NamedTuple
+@@ -684,8 +685,9 @@ class HybridKVCacheCoordinator(KVCacheCoordinator):
+                     "full-attention, Mamba, and replicated draft groups, got: "
+                     f"{type(spec).__name__}."
+                 )
+-        # Fine-grained hash hits require Mamba "align" and compatible cache
+-        # managers in every group. TP needs hashing finer than the Mamba block;
++        # Fine-grained hits normally require Mamba "align" and compatible
++        # managers. The study flag also permits plain full attention.
++        # TP needs hashing finer than the Mamba block;
+         # DCP accepts equality because it scales the effective full-attention
+         # block instead.
+         has_partial_mamba_group = any(
+@@ -699,8 +701,16 @@ class HybridKVCacheCoordinator(KVCacheCoordinator):
+             )
+             for g in kv_cache_config.kv_cache_groups
+         )
+-        self.enable_partial_hash_hits = (
+-            allow_partial_hash_hits and has_partial_mamba_group
++        self.enable_partial_hash_hits = allow_partial_hash_hits and (
++            has_partial_mamba_group
++            or (
++                os.environ.get("STUDY_PARTIAL_PREFIX", "0") == "1"
++                and all(
++                    type(g.kv_cache_spec) is FullAttentionSpec
++                    for g in kv_cache_config.kv_cache_groups
++                )
++                and hash_block_size < scheduler_block_size
++            )
+         )
+         if self.enable_partial_hash_hits:
+             unsupported_partial_hit_managers = {
+@@ -1040,7 +1050,10 @@ def get_kv_cache_coordinator(
+             metrics_collector=metrics_collector,
+             num_prefill_lookahead=num_prefill_lookahead,
+         )
+-    if len(kv_cache_config.kv_cache_groups) == 1:
++    if (
++        len(kv_cache_config.kv_cache_groups) == 1
++        and hash_block_size == scheduler_block_size
++    ):
+         return UnitaryKVCacheCoordinator(
+             kv_cache_config,
+             max_model_len,
+diff --git a/vllm/v1/core/kv_cache_manager.py b/vllm/v1/core/kv_cache_manager.py
+index 2d39a38..72012be 100644
+--- a/vllm/v1/core/kv_cache_manager.py
++++ b/vllm/v1/core/kv_cache_manager.py
+@@ -16,6 +16,7 @@ from vllm.v1.core.kv_cache_coordinator import (
+ from vllm.v1.core.kv_cache_metrics import KVCacheMetricsCollector
+ from vllm.v1.core.kv_cache_utils import KVCacheBlock, KVCacheBlockCopy
+ from vllm.v1.core.single_type_kv_cache_manager import MambaManager
++from vllm.v1.core.study_partial_prefix import StudyPartialPrefix
+ from vllm.v1.kv_cache_interface import (
+     AttentionSpec,
+     CrossAttentionSpec,
+@@ -195,6 +196,7 @@ class KVCacheManager:
+                     manager.shared_prefix_checkpoint = True
+         self.num_kv_cache_groups = len(kv_cache_config.kv_cache_groups)
+         self.block_pool = self.coordinator.block_pool
++        self._study_partial_prefix = StudyPartialPrefix.from_environment(self)
+         self.retained_hit_group_ids = tuple(
+             manager.kv_cache_group_id
+             for manager in self.coordinator.single_type_managers
+@@ -622,6 +624,8 @@ class KVCacheManager:
+             request: The request to free the blocks.
+ 
+         """
++        if self._study_partial_prefix is not None:
++            self._study_partial_prefix.forget(request.request_id)
+         self.coordinator.free(request.request_id)
+ 
+     def remove_skipped_blocks(
+@@ -656,6 +660,8 @@ class KVCacheManager:
+             The request's blocks in allocation order.
+ 
+         """
++        if self._study_partial_prefix is not None:
++            self._study_partial_prefix.forget(request.request_id)
+         return self.coordinator.pop_blocks_for_free(request.request_id)
+ 
+     def evict_blocks(self, block_ids: set[int]) -> None:
+@@ -679,6 +685,8 @@ class KVCacheManager:
+         """
+         if not self.coordinator.reset_prefix_cache():
+             return False
++        if self._study_partial_prefix is not None:
++            self._study_partial_prefix.reset()
+         if self.log_stats:
+             assert self.prefix_cache_stats is not None
+             self.prefix_cache_stats.reset = True
+diff --git a/vllm/v1/core/kv_cache_utils.py b/vllm/v1/core/kv_cache_utils.py
+index 8fc327f..7cb4909 100644
+--- a/vllm/v1/core/kv_cache_utils.py
++++ b/vllm/v1/core/kv_cache_utils.py
+@@ -748,7 +748,8 @@ def resolve_kv_cache_block_sizes(
+       group's effective block size. Attention groups are scaled by DCP;
+       Mamba groups keep their full per-rank state and are not scaled.
+     - ``hash_block_size`` is the granularity at which ``Request.block_hashes``
+-      is computed. Single group: equals scheduler block size. Multiple groups:
++      is computed. Single full-attention group: explicit prefix_match_unit or scheduler
++      block size. Multiple groups:
+       ``cache_config.prefix_match_unit`` override if set, else the GCD of
+       group block sizes; every group's block size must be divisible by it.
+       Returns the scheduler block size (i.e. disables finer hashing) if block
+@@ -762,6 +763,18 @@ def resolve_kv_cache_block_sizes(
+         if groups and not groups[0].kv_cache_spec.dcp_sharded:
+             dcp = 1
+         bs = cache_config.block_size * dcp
++        requested = cache_config.prefix_match_unit
++        if (
++            groups
++            and type(groups[0].kv_cache_spec) is FullAttentionSpec
++            and cache_config.enable_prefix_caching
++            and requested is not None
++        ):
++            if bs % requested:
++                raise ValueError(
++                    "prefix_match_unit must divide the physical block size"
++                )
++            return bs, requested
+         return bs, bs
+ 
+     group_block_sizes = [
+diff --git a/vllm/v1/core/sched/scheduler.py b/vllm/v1/core/sched/scheduler.py
+index 8b188de..d9c0ab1 100644
+--- a/vllm/v1/core/sched/scheduler.py
++++ b/vllm/v1/core/sched/scheduler.py
+@@ -52,6 +52,10 @@ from vllm.v1.core.sched.request_queue import (
+     SchedulingPolicy,
+     create_request_queue,
+ )
++from vllm.v1.core.sched.study_adaptive_prefill import StudyAdaptivePrefill
++from vllm.v1.core.sched.study_prefix_policy import PrefixAwareWaitingPolicy
++from vllm.v1.core.sched.study_skip_continue import StudySkipContinue
++from vllm.v1.core.sched.study_trace import install_if_enabled
+ from vllm.v1.core.sched.utils import check_stop, remove_all
+ from vllm.v1.engine import EngineCoreEventType, EngineCoreOutput, EngineCoreOutputs
+ from vllm.v1.kv_cache_interface import (
+@@ -411,6 +415,14 @@ class Scheduler(SchedulerInterface):
+         # async KV loads). Their remaining-block reservation gates async loads.
+         self._inflight_prefills: set[Request] = set()
+ 
++        self._study_prefix_policy = PrefixAwareWaitingPolicy.from_environment(self)
++        self._study_skip_continue = StudySkipContinue.from_environment(self)
++        self._study_adaptive_prefill = StudyAdaptivePrefill.from_environment(self)
++        eviction = self.kv_cache_manager.block_pool._study_eviction
++        if eviction is not None and eviction.name == "queue":
++            eviction.bind(self)
++        self._study_trace = install_if_enabled(self)
++
+     def _mamba_block_aligned_split(
+         self,
+         request: Request,
+@@ -587,6 +599,11 @@ class Scheduler(SchedulerInterface):
+             # Do not schedule any requests when paused.
+             token_budget = 0
+ 
++        if self._study_trace is not None:
++            self._study_trace.emit(
++                "TOKEN_BUDGET", remaining=token_budget, input_remaining=input_budget
++            )
++
+         # Encoder-related.
+         scheduled_encoder_inputs: dict[str, list[int]] = {}
+         encoder_compute_budget = self.max_num_encoder_input_tokens
+@@ -625,10 +642,32 @@ class Scheduler(SchedulerInterface):
+                 long_prefill_token_threshold, input_budget // num_eligible_reqs
+             )
+ 
++        if self._study_adaptive_prefill is not None:
++            long_prefill_token_threshold, decoders, age, boosted = (
++                self._study_adaptive_prefill.choose(
++                    self.running, self.waiting, input_budget, time.time()
++                )
++            )
++            if self._study_trace is not None:
++                self._study_trace.emit(
++                    "ADAPTIVE_PREFILL_CAP",
++                    cap=long_prefill_token_threshold,
++                    decoders=decoders,
++                    oldest_prefill_age=age,
++                    age_boost=boosted,
++                )
++
+         # First, schedule the RUNNING requests.
+         req_index = 0
+         while req_index < len(self.running) and token_budget > 0:
+             request = self.running[req_index]
++            if self._study_trace is not None:
++                self._study_trace.emit(
++                    "CONSIDER_RUNNING",
++                    request,
++                    remaining=token_budget,
++                    input_remaining=input_budget,
++                )
+             if input_budget <= draft_slots:
+                 break
+ 
+@@ -824,6 +863,14 @@ class Scheduler(SchedulerInterface):
+             num_scheduled_tokens[request_id] = num_new_tokens
+             token_budget -= num_new_tokens
+             input_budget -= num_new_tokens + draft_slots
++            if self._study_trace is not None:
++                self._study_trace.emit(
++                    "ASSIGN_RUNNING",
++                    request,
++                    positions=num_new_tokens,
++                    remaining=token_budget,
++                    input_remaining=input_budget,
++                )
+             req_index += 1
+ 
+             # Speculative decode related.
+@@ -881,8 +928,23 @@ class Scheduler(SchedulerInterface):
+                     step_skipped_kv_holding.appendleft(request_to_skip)
+                 else:
+                     step_skipped_waiting.appendleft(request_to_skip)
++                if self._study_trace is not None:
++                    self._study_trace.emit(
++                        "SKIP_WAITING", request_to_skip, remaining=token_budget
++                    )
+ 
++            if self._study_skip_continue is not None:
++                self._study_skip_continue.begin_step()
+             while token_budget > 0:
++                if (
++                    self._study_skip_continue is not None
++                    and not self._study_skip_continue.scan_allowed()
++                ):
++                    if self._study_trace is not None:
++                        self._study_trace.emit(
++                            "BACKFILL_SCAN_LIMIT", remaining=token_budget
++                        )
++                    break
+                 # Requests holding KV blocks are always drained first.
+                 request_queue = self.kv_holding_waiting or self.waiting
+                 if not request_queue or input_budget <= draft_slots:
+@@ -891,10 +953,27 @@ class Scheduler(SchedulerInterface):
+                 # in `running` but still hold a model-runner request slot.
+                 num_running = len(self.running) + self.num_waiting_for_streaming_input
+                 if num_running >= self.max_num_active_reqs:
++                    if self._study_trace is not None:
++                        self._study_trace.emit(
++                            "STOP_WAITING_ADMISSION",
++                            reason="active_request_limit",
++                            remaining=token_budget,
++                        )
+                     break
+ 
++                if self._study_prefix_policy is not None:
++                    self._study_prefix_policy.promote(self, request_queue)
+                 request = request_queue.peek_request()
+                 request_id = request.request_id
++                if self._study_skip_continue is not None:
++                    self._study_skip_continue.considered()
++                if self._study_trace is not None:
++                    self._study_trace.emit(
++                        "CONSIDER_WAITING",
++                        request,
++                        remaining=token_budget,
++                        input_remaining=input_budget,
++                    )
+ 
+                 ready_to_schedule = self._handle_blocked_waiting_request(request)
+                 if not ready_to_schedule:
+@@ -1116,8 +1195,32 @@ class Scheduler(SchedulerInterface):
+                         not self.scheduler_config.enable_chunked_prefill
+                         and num_new_tokens > request_token_budget
+                     ):
+-                        # If chunked_prefill is disabled,
+-                        # we can stop the scheduling here.
++                        if (
++                            self._study_skip_continue is not None
++                            and self._study_skip_continue.can_skip(
++                                request, ordinary_waiting=request_queue is self.waiting
++                            )
++                        ):
++                            if self._study_trace is not None:
++                                self._study_trace.emit(
++                                    "BUDGET_BACKFILL_SKIP",
++                                    request,
++                                    needed=num_new_tokens,
++                                    remaining=request_token_budget,
++                                    bypasses=self._study_skip_continue.bypasses[
++                                        request
++                                    ],
++                                )
++                            skip_request(request_queue)
++                            continue
++                        if self._study_trace is not None:
++                            self._study_trace.emit(
++                                "STOP_WAITING_ADMISSION",
++                                request,
++                                reason="unchunked_prompt_exceeds_budget",
++                                needed=num_new_tokens,
++                                remaining=request_token_budget,
++                            )
+                         break
+ 
+                     num_new_tokens = min(num_new_tokens, request_token_budget)
+@@ -1223,6 +1326,14 @@ class Scheduler(SchedulerInterface):
+                 if new_blocks is None:
+                     # The request cannot be scheduled.
+ 
++                    if self._study_trace is not None:
++                        self._study_trace.emit(
++                            "STOP_WAITING_ADMISSION",
++                            request,
++                            reason="kv_allocation_failed",
++                            remaining=token_budget,
++                        )
++
+                     # NOTE: we need to untouch the request from the encode cache
+                     # manager
+                     if request.has_encoder_inputs:
+@@ -1290,6 +1401,8 @@ class Scheduler(SchedulerInterface):
+                 request = request_queue.pop_request()
+                 self.deferred_waiting.discard(request)
+                 self.running.append(request)
++                if self._study_skip_continue is not None:
++                    self._study_skip_continue.admitted(request)
+                 if num_external_computed_tokens > 0:
+                     # load_kv_async is False here
+                     has_sync_kv_loads = True
+@@ -1314,6 +1427,14 @@ class Scheduler(SchedulerInterface):
+                 input_budget -= num_new_tokens + draft_slots
+                 request.status = RequestStatus.RUNNING
+                 request.num_computed_tokens = num_computed_tokens
++                if self._study_trace is not None:
++                    self._study_trace.emit(
++                        "ADMIT_OR_RESUME",
++                        request,
++                        positions=num_new_tokens,
++                        remaining=token_budget,
++                        input_remaining=input_budget,
++                    )
+                 if pad_spec_decode:
+                     assert num_new_tokens == 1 + self.num_spec_tokens
+                     scheduled_spec_decode_tokens[request_id] = [
+@@ -1354,6 +1475,14 @@ class Scheduler(SchedulerInterface):
+         total_num_scheduled_tokens = sum(num_scheduled_tokens.values())
+         assert total_num_scheduled_tokens <= self.max_num_scheduled_tokens
+ 
++        if self._study_trace is not None:
++            self._study_trace.emit(
++                "SCHEDULING_DECISIONS_COMPLETE",
++                remaining=token_budget,
++                input_remaining=input_budget,
++                assigned_positions=num_scheduled_tokens,
++                preempted=[r.request_id for r in preempted_reqs],
++            )
+         assert token_budget >= 0
+         assert input_budget >= 0
+         assert len(self.running) <= self.max_num_running_reqs
+@@ -2043,6 +2172,17 @@ class Scheduler(SchedulerInterface):
+             if output_is_stale and request.drop_stale_output:
+                 continue
+ 
++            if self.kv_cache_manager._study_partial_prefix is not None:
++                if (
++                    self.scheduler_config.async_scheduling
++                    or self.vllm_config.speculative_config
++                ):
++                    raise ValueError(
++                        "Study partial-prefix mode needs synchronous "
++                        "non-speculative execution"
++                    )
++                self.kv_cache_manager._study_partial_prefix.publish(request)
++
+             req_index = model_runner_output.req_id_to_index[req_id]
+             generated_token_ids = (
+                 sampled_token_ids[req_index] if sampled_token_ids else []
+diff --git a/vllm/v1/core/sched/study_adaptive_prefill.py b/vllm/v1/core/sched/study_adaptive_prefill.py
+new file mode 100644
+index 0000000..4235482
+--- /dev/null
++++ b/vllm/v1/core/sched/study_adaptive_prefill.py
+@@ -0,0 +1,38 @@
++# SPDX-License-Identifier: Apache-2.0
++"""Opt-in decoding-load prefill cap for the local study."""
++
++import os
++from itertools import chain
++
++
++class StudyAdaptivePrefill:
++    @classmethod
++    def from_environment(cls, scheduler):
++        if os.environ.get("STUDY_ADAPTIVE_PREFILL") != "1":
++            return None
++        if not scheduler.scheduler_config.enable_chunked_prefill:
++            raise ValueError("Adaptive prefill requires chunked prefill")
++        if scheduler._study_skip_continue is not None:
++            raise ValueError("Adaptive prefill requires skip/continue disabled")
++        if scheduler.adaptive_long_prefill_threshold:
++            raise ValueError("Choose either study or existing adaptive prefill")
++        return cls()
++
++    def choose(self, running, waiting, budget, now):
++        decoders = sum(
++            r.num_output_tokens > 0 and r.num_computed_tokens >= r.num_prompt_tokens
++            for r in running
++        )
++        oldest_age = max(
++            (
++                max(0.0, now - r.arrival_time)
++                for r in chain(running, waiting)
++                if r.num_computed_tokens < r.num_prompt_tokens
++            ),
++            default=0.0,
++        )
++        cap = max(16, budget // (1 + 2 * decoders))
++        age_boost = oldest_age >= 0.75
++        if age_boost:
++            cap = max(cap, 64)
++        return min(budget, cap), decoders, oldest_age, age_boost
+diff --git a/vllm/v1/core/sched/study_prefix_policy.py b/vllm/v1/core/sched/study_prefix_policy.py
+new file mode 100644
+index 0000000..6ced283
+--- /dev/null
++++ b/vllm/v1/core/sched/study_prefix_policy.py
+@@ -0,0 +1,175 @@
++# SPDX-License-Identifier: Apache-2.0
++"""Experimental prefix-first admission for the local full-attention study."""
++
++import math
++import os
++import time
++from dataclasses import dataclass, field
++from itertools import islice
++
++from vllm.logger import init_logger
++from vllm.v1.core.sched.request_queue import SchedulingPolicy
++from vllm.v1.kv_cache_interface import FullAttentionSpec
++from vllm.v1.request import RequestStatus
++
++logger = init_logger(__name__)
++
++
++@dataclass(frozen=True)
++class PrefixAwareWaitingPolicy:
++    max_wait_s: float = 2.0
++    lookahead: int = 16
++    fcfs_head_size: int = 0
++    _cohort_ids: set[str] = field(default_factory=set, init=False, compare=False)
++    _protected_ids: set[str] = field(default_factory=set, init=False, compare=False)
++
++    @property
++    def name(self):
++        return "fcfs_head_prefix" if self.fcfs_head_size else "prefix_first"
++
++    @classmethod
++    def from_environment(cls, scheduler):
++        policy = os.environ.get("STUDY_WAITING_POLICY", "fcfs")
++        if policy == "fcfs":
++            return None
++        if policy not in ("prefix_first", "fcfs_head_prefix"):
++            raise ValueError(
++                "STUDY_WAITING_POLICY must be fcfs, prefix_first, or fcfs_head_prefix"
++            )
++        groups = scheduler.kv_cache_config.kv_cache_groups
++        if (
++            scheduler.policy != SchedulingPolicy.FCFS
++            or scheduler.scheduler_config.async_scheduling
++            or not scheduler.cache_config.enable_prefix_caching
++            or scheduler.connector is not None
++            or scheduler.lora_config is not None
++            or scheduler.vllm_config.speculative_config is not None
++            or len(groups) != 1
++            or type(groups[0].kv_cache_spec) is not FullAttentionSpec
++        ):
++            raise ValueError(
++                "prefix_first study policy requires synchronous FCFS, prefix "
++                "caching, one full-attention group, no connector/LoRA/speculation"
++            )
++        result = cls(
++            max_wait_s=float(os.environ.get("STUDY_PREFIX_MAX_WAIT_S", "2.0")),
++            lookahead=int(os.environ.get("STUDY_PREFIX_LOOKAHEAD", "16")),
++            fcfs_head_size=(
++                scheduler.scheduler_config.max_num_seqs
++                if policy == "fcfs_head_prefix"
++                else 0
++            ),
++        )
++        if not math.isfinite(result.max_wait_s) or result.max_wait_s <= 0:
++            raise ValueError("STUDY_PREFIX_MAX_WAIT_S must be finite and positive")
++        if result.lookahead < 1:
++            raise ValueError("STUDY_PREFIX_LOOKAHEAD must be positive")
++        logger.info(
++            "Study waiting policy: %s; FCFS ties; max_wait_s=%s; "
++            "lookahead=%s; protected_head=%s. "
++            "Preempted/KV-holding/blocked requests retain precedence.",
++            result.name,
++            result.max_wait_s,
++            result.lookahead,
++            result.fcfs_head_size,
++        )
++        return result
++
++    @staticmethod
++    def eligible(request):
++        return (
++            request.status == RequestStatus.WAITING
++            and request.num_computed_tokens == 0
++            and request.num_preemptions == 0
++            and request.num_output_tokens == 0
++            and request.num_stale_output_tokens == 0
++            and not request.has_encoder_inputs
++            and request.sampling_params is not None
++        )
++
++    def promote(self, scheduler, queue):
++        """Promote one candidate; normal admission checks still run afterward."""
++        if queue is not scheduler.waiting or not queue:
++            return
++        candidates = []
++        for request in islice(queue, self.lookahead):
++            # Do not move a fresh request across an existing special request.
++            if not self.eligible(request):
++                break
++            candidates.append(request)
++        if not candidates:
++            return
++
++        if self.fcfs_head_size:
++            waiting_ids = {request.request_id for request in queue}
++            self._cohort_ids.intersection_update(waiting_ids)
++            self._protected_ids.intersection_update(waiting_ids)
++            if not self._cohort_ids:
++                # A cohort is the waiting snapshot, not a sliding protected head.
++                self._cohort_ids.update(waiting_ids)
++                self._protected_ids.update(
++                    request.request_id
++                    for request in islice(candidates, self.fcfs_head_size)
++                )
++
++        now = time.time()
++        oldest = min(candidates, key=lambda request: request.arrival_time)
++        trace = scheduler._study_trace
++        protected = [
++            request
++            for request in candidates
++            if request.request_id in self._protected_ids
++        ]
++        if protected:
++            selected = protected[0]
++            reason = "protected_fcfs_head"
++            selected_score = None
++        elif now - oldest.arrival_time >= self.max_wait_s:
++            selected = oldest
++            reason = "waiting_time_safeguard"
++            selected_score = None
++        else:
++            kv = scheduler.kv_cache_manager
++            selected = None
++            selected_score = -1
++            for request in candidates:
++                score = 0
++                if kv.prefix_cache_lookup_enabled(request):
++                    # Query the coordinator directly: no touching/pinning,
++                    # admission statistics, or BlockStored events for probes.
++                    _, score, _ = kv.coordinator.find_longest_cache_hit(
++                        request.block_hashes, max(0, request.num_tokens - 1)
++                    )
++                if trace is not None:
++                    trace.emit(
++                        "PREFIX_CANDIDATE",
++                        request,
++                        role="scoring_probe",
++                        cached_tokens=score,
++                        waited_ms=round((now - request.arrival_time) * 1000, 3),
++                    )
++                if (
++                    selected is None
++                    or score > selected_score
++                    or (
++                        score == selected_score
++                        and request.arrival_time < selected.arrival_time
++                    )
++                ):
++                    selected, selected_score = request, score
++            reason = "cached_prefix_then_fcfs"
++
++        original_head = queue.peek_request()
++        if selected is not original_head:
++            queue.remove_request(selected)
++            queue.prepend_request(selected)
++        if trace is not None:
++            trace.emit(
++                "PREFIX_SELECTED",
++                selected,
++                reason=reason,
++                cached_tokens=selected_score,
++                candidates=len(candidates),
++                previous_head=original_head.request_id,
++                reordered=selected is not original_head,
++            )
+diff --git a/vllm/v1/core/sched/study_skip_continue.py b/vllm/v1/core/sched/study_skip_continue.py
+new file mode 100644
+index 0000000..ba2fb67
+--- /dev/null
++++ b/vllm/v1/core/sched/study_skip_continue.py
+@@ -0,0 +1,88 @@
++# SPDX-License-Identifier: Apache-2.0
++"""Bounded, opt-in backfill around an oversized unchunked waiting prompt."""
++
++import math
++import os
++import time
++from weakref import WeakKeyDictionary
++
++from vllm.v1.core.sched.request_queue import SchedulingPolicy
++from vllm.v1.request import RequestStatus
++
++
++class StudySkipContinue:
++    @classmethod
++    def from_environment(cls, scheduler):
++        if os.environ.get("STUDY_SKIP_CONTINUE", "0") != "1":
++            return None
++        if (
++            scheduler.policy != SchedulingPolicy.FCFS
++            or scheduler.scheduler_config.enable_chunked_prefill
++            or scheduler.scheduler_config.async_scheduling
++            or scheduler.scheduler_config.long_prefill_token_threshold
++            or scheduler.connector is not None
++            or scheduler.lora_config is not None
++            or scheduler.vllm_config.speculative_config is not None
++            or scheduler.is_encoder_decoder
++            or scheduler._study_prefix_policy is not None
++        ):
++            raise ValueError(
++                "Study skip/continue requires plain synchronous unchunked FCFS"
++            )
++        return cls(
++            int(os.environ.get("STUDY_SKIP_LOOKAHEAD", "16")),
++            int(os.environ.get("STUDY_SKIP_MAX_BYPASSES", "4")),
++            float(os.environ.get("STUDY_SKIP_MAX_WAIT_S", "30")),
++        )
++
++    def __init__(self, lookahead=16, max_bypasses=4, max_wait_s=30):
++        if (
++            lookahead < 1
++            or max_bypasses < 1
++            or not math.isfinite(max_wait_s)
++            or max_wait_s <= 0
++        ):
++            raise ValueError("Study skip limits must be finite and positive")
++        self.lookahead, self.max_bypasses, self.max_wait_s = (
++            lookahead,
++            max_bypasses,
++            max_wait_s,
++        )
++        self.bypasses = WeakKeyDictionary()
++        self.begin_step()
++
++    def begin_step(self):
++        self.scanning = False
++        self.examined = 0
++
++    def scan_allowed(self):
++        return not self.scanning or self.examined < self.lookahead
++
++    def considered(self):
++        if self.scanning:
++            self.examined += 1
++
++    def can_skip(self, request, *, ordinary_waiting, now=None):
++        now = time.time() if now is None else now
++        eligible = (
++            ordinary_waiting
++            and request.status == RequestStatus.WAITING
++            and request.num_computed_tokens == 0
++            and request.num_preemptions == 0
++            and request.num_output_tokens == 0
++            and request.num_stale_output_tokens == 0
++            and not request.has_encoder_inputs
++        )
++        if (
++            not eligible
++            or self.bypasses.get(request, 0) >= self.max_bypasses
++            or now - request.arrival_time >= self.max_wait_s
++        ):
++            return False
++        if not self.scanning:
++            self.scanning, self.examined = True, 1
++        self.bypasses[request] = self.bypasses.get(request, 0) + 1
++        return True
++
++    def admitted(self, request):
++        self.bypasses.pop(request, None)
+diff --git a/vllm/v1/core/sched/study_trace.py b/vllm/v1/core/sched/study_trace.py
+new file mode 100644
+index 0000000..68f9493
+--- /dev/null
++++ b/vllm/v1/core/sched/study_trace.py
+@@ -0,0 +1,352 @@
++# SPDX-License-Identifier: Apache-2.0
++"""Opt-in, local-study observation of scheduler and block-pool decisions."""
++
++import functools
++import inspect
++import json
++import os
++import sys
++import time
++from contextvars import ContextVar
++from pathlib import Path
++
++
++def install_if_enabled(scheduler):
++    """Install instance-local observers only when explicitly requested."""
++    from vllm.v1.core.study_cache_profile import install
++
++    install(scheduler)
++    if os.environ.get("VLLM_STUDY_TRACE") != "1":
++        return None
++    return SchedulerTrace(scheduler)
++
++
++class SchedulerTrace:
++    def __init__(self, scheduler):
++        self.scheduler = scheduler
++        self.pool = scheduler.kv_cache_manager.block_pool
++        self.step = 0
++        self.sequence = 0
++        self.active = ContextVar("study_request", default=None)
++        self.enabled = True
++        folder = Path(os.environ.get("VLLM_STUDY_TRACE_DIR", "results/scheduler-trace"))
++        folder.mkdir(parents=True, exist_ok=True)
++        self.path = folder / f"events-{os.getpid()}-{time.time_ns()}.jsonl"
++        self.sink = self.path.open("x", buffering=1)
++        self._install()
++        eviction = self.pool._study_eviction
++        if getattr(eviction, "name", None) == "aged_lfu":
++            eviction.on_decay = lambda **details: self.emit(
++                "CACHE_FREQUENCY_DECAY", **details
++            )
++        self.emit(
++            "TRACE_READY",
++            scheduler_source=inspect.getfile(type(scheduler)),
++            trace_file=str(self.path.resolve()),
++            max_running=scheduler.max_num_running_reqs,
++            max_active=scheduler.max_num_active_reqs,
++            token_budget_limit=scheduler.max_num_scheduled_tokens,
++            input_budget_limit=scheduler.scheduler_config.max_num_batched_tokens,
++            policy=str(scheduler.policy),
++            waiting_policy=(
++                scheduler._study_prefix_policy.name
++                if getattr(scheduler, "_study_prefix_policy", None) is not None
++                else "fcfs"
++            ),
++            eviction_policy=(
++                self.pool._study_eviction.name
++                if getattr(self.pool, "_study_eviction", None) is not None
++                else "vllm"
++            ),
++            aging_half_life_blocks=getattr(
++                self.pool._study_eviction, "half_life_blocks", None
++            ),
++            skip_continue=getattr(scheduler, "_study_skip_continue", None) is not None,
++            chunked_prefill=scheduler.scheduler_config.enable_chunked_prefill,
++            prefix_caching=scheduler.cache_config.enable_prefix_caching,
++            block_size=scheduler.block_size,
++            status_names=[status.name for status in self._statuses()],
++        )
++
++    @staticmethod
++    def _statuses():
++        from vllm.v1.request import RequestStatus
++
++        return RequestStatus
++
++    @staticmethod
++    def block(block):
++        return {
++            "id": block.block_id,
++            "refs": block.ref_cnt,
++            "cached": block.block_hash is not None,
++            "null": block.is_null,
++            "reuse_count": (
++                block.pool._study_eviction.reuse_counts[block.block_id]
++                if block.pool is not None
++                and getattr(block.pool, "_study_eviction", None) is not None
++                else None
++            ),
++        }
++
++    def request(self, request):
++        return {
++            "id": request.request_id,
++            "status": request.status.name,
++            "prompt": request.num_prompt_tokens,
++            "output": request.num_output_tokens,
++            "stored": request.num_tokens,
++            "computed": request.num_computed_tokens,
++            "in_flight": request.num_in_flight_tokens,
++            "preemptions": request.num_preemptions,
++            "blocks": [
++                [self.block(block) for block in group]
++                for group in self.scheduler.kv_cache_manager.get_blocks(
++                    request.request_id
++                ).blocks
++            ],
++        }
++
++    def free_head(self):
++        result = []
++        block = self.pool.free_block_queue.fake_free_list_head.next_free_block
++        while block is not None and block.block_id != -1 and len(result) < 16:
++            result.append(self.block(block))
++            block = block.next_free_block
++        return result
++
++    def emit(self, event, request=None, **details):
++        """Tracing failures disable the sink without changing engine results."""
++        if not self.enabled:
++            return
++        try:
++            self.sequence += 1
++            scheduler = self.scheduler
++            current = request if request is not None else self.active.get()
++            row = {
++                "seq": self.sequence,
++                "time_ns": time.time_ns(),
++                "monotonic_ns": time.monotonic_ns(),
++                "pid": os.getpid(),
++                "step": self.step,
++                "event": event,
++                "free_blocks": self.pool.get_num_free_blocks(),
++                "free_queue_head": self.free_head(),
++                "free_queue_head_limit": 16,
++                "running": [self.request(r) for r in scheduler.running],
++                "waiting": [self.request(r) for r in scheduler.waiting],
++                "kv_holding_waiting": [
++                    self.request(r) for r in scheduler.kv_holding_waiting
++                ],
++                "deferred_waiting": [
++                    self.request(r)
++                    for r in sorted(
++                        scheduler.deferred_waiting, key=lambda r: r.request_id
++                    )
++                ],
++                **details,
++            }
++            if current is not None:
++                row["request"] = self.request(current)
++            self.sink.write(json.dumps(row, default=str) + "\n")
++            if os.environ.get("VLLM_STUDY_TRACE_STDOUT", "1") == "1":
++                short = {
++                    key: value
++                    for key, value in row.items()
++                    if key
++                    not in (
++                        "running",
++                        "waiting",
++                        "kv_holding_waiting",
++                        "deferred_waiting",
++                    )
++                }
++                for queue in (
++                    "running",
++                    "waiting",
++                    "kv_holding_waiting",
++                    "deferred_waiting",
++                ):
++                    short[queue] = [r["id"] + ":" + r["status"] for r in row[queue]]
++                print("STUDY_TRACE " + json.dumps(short, default=str), flush=True)
++        except Exception as exc:
++            self._disable(exc)
++
++    def _disable(self, exc):
++        self.enabled = False
++        print(f"STUDY_TRACE_DISABLED {exc!r}", file=sys.stderr)
++
++    def capture(self, callback, default=None):
++        if not self.enabled:
++            return default
++        try:
++            return callback()
++        except Exception as exc:
++            self._disable(exc)
++            return default
++
++    def _wrap(self, target, name, event, request_arg=False, after=None):
++        original = getattr(target, name)
++        signature = inspect.signature(original)
++
++        @functools.wraps(original)
++        def observed(*args, **kwargs):
++            request = args[0] if request_arg and args else kwargs.get("request")
++            token = self.active.set(request) if request is not None else None
++            if event == "SCHEDULE":
++                self.step += 1
++            before = self.capture(lambda: self.request(request)) if request else None
++            retained_ids = (
++                self.capture(lambda: tuple(request.all_token_ids))
++                if event == "PREEMPT"
++                else None
++            )
++            arguments = self.capture(
++                lambda: signature.bind(*args, **kwargs).arguments, {}
++            )
++            extra = {}
++            for key in (
++                "num_new_tokens",
++                "num_new_computed_tokens",
++                "num_lookahead_tokens",
++                "full_sequence_must_fit",
++                "reserved_blocks",
++                "num_blocks",
++            ):
++                if key in arguments:
++                    extra[key] = arguments[key]
++            self.emit(event + "_BEGIN", request, **extra)
++            try:
++                result = original(*args, **kwargs)
++                extra = {"before": before} if before is not None else {}
++                if after is not None:
++                    extra.update(self.capture(lambda: after(result), {}))
++                if event == "PREEMPT" and retained_ids is not None:
++                    extra["token_ids_retained"] = self.capture(
++                        lambda: tuple(request.all_token_ids) == retained_ids
++                    )
++                self.emit(event + "_END", request, **extra)
++                return result
++            except Exception as exc:
++                self.emit(event + "_ERROR", request, error=repr(exc))
++                raise
++            finally:
++                if token is not None:
++                    self.active.reset(token)
++
++        setattr(target, name, observed)
++
++    def _install(self):
++        scheduler = self.scheduler
++        kv = scheduler.kv_cache_manager
++        self._wrap(
++            scheduler,
++            "schedule",
++            "SCHEDULE",
++            after=lambda output: {
++                "assigned_positions": output.num_scheduled_tokens,
++                "assigned_total": output.total_num_scheduled_tokens,
++                "kv_block_copies": [
++                    {"source": c.src_block_id, "destination": c.dst_block_id}
++                    for c in (output.kv_cache_block_copies or [])
++                ],
++                "computed_counter_phase": "optimistic scheduling bookkeeping",
++            },
++        )
++        self._wrap(scheduler, "update_from_output", "RESULT_HANDLING")
++        for name, event in (
++            ("add_request", "ENQUEUE"),
++            ("_preempt_request", "PREEMPT"),
++            ("_free_request", "FINISH"),
++            ("_update_request_with_output", "APPEND_OUTPUT"),
++        ):
++            self._wrap(scheduler, name, event, request_arg=True)
++        self._wrap(
++            scheduler,
++            "_handle_blocked_waiting_request",
++            "READINESS",
++            request_arg=True,
++            after=lambda ready: {"ready": ready},
++        )
++        self._wrap(
++            kv,
++            "get_computed_blocks",
++            "PREFIX_LOOKUP",
++            request_arg=True,
++            after=lambda result: {
++                "hit_tokens": result[1],
++                "hit_blocks": [
++                    [self.block(b) for b in group] for group in result[0].blocks
++                ],
++            },
++        )
++        self._wrap(
++            kv,
++            "allocate_slots",
++            "ALLOCATE",
++            request_arg=True,
++            after=lambda result: {
++                "success": result is not None,
++                "new_blocks": None
++                if result is None
++                else [[self.block(b) for b in group] for group in result.blocks],
++            },
++        )
++        self._wrap(kv, "free", "RELEASE_REQUEST", request_arg=True)
++        self._wrap(
++            self.pool,
++            "get_new_blocks",
++            "ALLOCATE_PHYSICAL",
++            after=lambda blocks: {"allocated": [self.block(b) for b in blocks]},
++        )
++        self._observe_refs("touch", "CLAIM_CACHED_BLOCKS", iterable=False)
++        self._observe_refs("free_blocks", "RELEASE_REFERENCES", iterable=True)
++
++        original = self.pool._maybe_evict_cached_block
++
++        @functools.wraps(original)
++        def evict(block):
++            before = self.capture(lambda: self.block(block))
++            old_hash = self.capture(
++                lambda: str(block.block_hash) if block.block_hash is not None else None
++            )
++            result = original(block)
++            if result:
++                self.emit(
++                    "EVICT_CACHED_BLOCK",
++                    before=before,
++                    after=self.capture(lambda: self.block(block)),
++                    old_hash=old_hash,
++                )
++            return result
++
++        self.pool._maybe_evict_cached_block = evict
++
++    def _observe_refs(self, name, event, iterable):
++        original = getattr(self.pool, name)
++
++        @functools.wraps(original)
++        def observed(blocks):
++            seen = []
++            before = []
++
++            def record(source):
++                for block in source:
++                    seen.append(block)
++                    before.append(self.capture(lambda block=block: self.block(block)))
++                    yield block
++
++            # Keep iterable release lazy: do not consume or reorder it early.
++            source = record(blocks) if iterable else blocks
++            if not iterable:
++                seen.extend(blocks)
++                before.extend(self.capture(lambda b=b: self.block(b)) for b in blocks)
++            result = original(source)
++            self.emit(
++                event,
++                before=before,
++                after=self.capture(lambda: [self.block(b) for b in seen], []),
++            )
++            return result
++
++        setattr(self.pool, name, observed)
+diff --git a/vllm/v1/core/single_type_kv_cache_manager.py b/vllm/v1/core/single_type_kv_cache_manager.py
+index a097c9e..9223ae9 100644
+--- a/vllm/v1/core/single_type_kv_cache_manager.py
++++ b/vllm/v1/core/single_type_kv_cache_manager.py
+@@ -470,6 +470,9 @@ class SingleTypeKVCacheManager(ABC):
+         assert req_blocks[block_idx] is source_block
+         assert not source_block.is_null and source_block.ref_cnt > 0
+         req_blocks[block_idx] = cow_block
++        partial = self.block_pool._study_partial_index
++        if partial is not None:
++            partial.dirty.setdefault(request_id, set()).add(block_idx)
+         self._pending_cow_copies.append((source_block, cow_block))
+         cow_block.ref_cnt += 1
+ 
+@@ -817,6 +820,9 @@ class FullAttentionManager(SingleTypeKVCacheManager):
+                 len(block_hashes),
+             )
+             for fine_idx in range(max_partial_idx - 1, first_partial_idx - 1, -1):
++                additional = (fine_idx + 1) * alignment_tokens - hit_length
++                if additional < getattr(block_pool, "_study_partial_min_tokens", 0):
++                    break
+                 cached_tail = block_pool.get_cached_block(
+                     block_hashes[fine_idx], kv_cache_group_ids
+                 )
+@@ -859,7 +865,8 @@ class FullAttentionManager(SingleTypeKVCacheManager):
+         hash_block_size = self.block_pool.hash_block_size
+         if self.block_size == hash_block_size:
+             return
+-        self._cache_partial_tail_block(request, num_tokens)
++        if not getattr(self.block_pool, "_study_partial_prefix_enabled", False):
++            self._cache_partial_tail_block(request, num_tokens)
+ 
+     def _cache_partial_tail_block(
+         self,
+diff --git a/vllm/v1/core/study_aging_eviction.py b/vllm/v1/core/study_aging_eviction.py
+new file mode 100644
+index 0000000..c118e08
+--- /dev/null
++++ b/vllm/v1/core/study_aging_eviction.py
+@@ -0,0 +1,49 @@
++# SPDX-License-Identifier: Apache-2.0
++"""Opt-in LFU with globally consistent allocation-clock decay."""
++
++import os
++
++from vllm.logger import init_logger
++from vllm.v1.core.study_cache_eviction import StudyLFUEviction
++
++logger = init_logger(__name__)
++
++
++class StudyAgingLFUEviction(StudyLFUEviction):
++    name = "aged_lfu"
++
++    def __init__(self, num_blocks):
++        super().__init__(num_blocks)
++        self.half_life_blocks = int(os.environ.get("STUDY_LFU_HALF_LIFE_BLOCKS", "64"))
++        if self.half_life_blocks < 1:
++            raise ValueError("STUDY_LFU_HALF_LIFE_BLOCKS must be positive")
++        self.allocated_blocks = 0
++        self.epochs = 0
++        self.on_decay = None
++        logger.info(
++            "Study cache eviction: aged_lfu; halve all counts every %s "
++            "physical block allocations; free-queue ties",
++            self.half_life_blocks,
++        )
++
++    def select(self, pool, num_blocks):
++        if num_blocks == 0:
++            return []
++        self.allocated_blocks += num_blocks
++        epoch = self.allocated_blocks // self.half_life_blocks
++        elapsed = epoch - self.epochs
++        if elapsed:
++            before = self.reuse_counts.copy() if self.on_decay is not None else None
++            self.reuse_counts[:] = [count >> elapsed for count in self.reuse_counts]
++            self.epochs = epoch
++            if self.order is not None:
++                self.order.rebuild(pool)
++            if self.on_decay is not None:
++                self.on_decay(
++                    allocated_blocks=self.allocated_blocks,
++                    epoch=epoch,
++                    elapsed_epochs=elapsed,
++                    counts_before=before,
++                    counts_after=self.reuse_counts.copy(),
++                )
++        return super().select(pool, num_blocks)
+diff --git a/vllm/v1/core/study_cache_eviction.py b/vllm/v1/core/study_cache_eviction.py
+new file mode 100644
+index 0000000..e066c56
+--- /dev/null
++++ b/vllm/v1/core/study_cache_eviction.py
+@@ -0,0 +1,80 @@
++# SPDX-License-Identifier: Apache-2.0
++"""Opt-in LFU comparison for the local prefix-cache eviction study."""
++
++from __future__ import annotations
++
++import os
++from typing import TYPE_CHECKING
++
++from vllm.logger import init_logger
++from vllm.v1.core.study_free_order import StudyFreeOrder
++
++if TYPE_CHECKING:
++    from vllm.v1.core.block_pool import BlockPool
++
++logger = init_logger(__name__)
++
++
++class StudyLFUEviction:
++    name = "lfu"
++
++    def __init__(self, num_blocks: int):
++        self.reuse_counts = [0] * num_blocks
++        self.order = (
++            StudyFreeOrder(self)
++            if os.environ.get("STUDY_CACHE_IMPL", "incremental") == "incremental"
++            and self.name in ("lfu", "aged_lfu")
++            else None
++        )
++
++    @classmethod
++    def from_environment(cls, num_blocks: int, enable_caching: bool):
++        policy = os.environ.get("STUDY_EVICTION_POLICY", "vllm")
++        if policy == "vllm":
++            return None
++        if policy == "aged_lfu":
++            if not enable_caching:
++                raise ValueError("Aging LFU requires prefix caching")
++            from vllm.v1.core.study_aging_eviction import StudyAgingLFUEviction
++
++            return StudyAgingLFUEviction(num_blocks)
++        if policy == "queue":
++            if not enable_caching:
++                raise ValueError("Queue retention requires prefix caching")
++            from vllm.v1.core.study_queue_eviction import StudyQueueEviction
++
++            return StudyQueueEviction(num_blocks)
++        if policy != "lfu":
++            raise ValueError(
++                "STUDY_EVICTION_POLICY must be vllm, lfu, aged_lfu, or queue"
++            )
++        if not enable_caching:
++            raise ValueError("Study LFU eviction requires prefix caching")
++        logger.info(
++            "Study cache eviction: lfu; uncached first, then least reused; "
++            "free-queue-order ties; counts reset on reassignment; no aging"
++        )
++        return cls(num_blocks)
++
++    def select(self, pool: BlockPool, num_blocks: int):
++        if num_blocks == 0:
++            return []
++        if self.order is not None:
++            return self.order.select(pool, num_blocks)
++        # Stable sorting retains upstream eviction order for equal scores.
++        # Deferred-reader blocks retain their upstream last-resort priority.
++        candidates = pool.free_block_queue.get_all_free_blocks()
++        candidates.sort(
++            key=lambda block: (
++                block.block_id in pool._reuse_watchers,
++                block.block_hash is not None,
++                self.reuse_counts[block.block_id]
++                if block.block_hash is not None
++                else 0,
++            )
++        )
++        selected = candidates[:num_blocks]
++        for block in selected:
++            assert block.ref_cnt == 0 and not block.is_null
++            pool.free_block_queue.remove(block)
++        return selected
+diff --git a/vllm/v1/core/study_cache_profile.py b/vllm/v1/core/study_cache_profile.py
+new file mode 100644
+index 0000000..4cad36f
+--- /dev/null
++++ b/vllm/v1/core/study_cache_profile.py
+@@ -0,0 +1,75 @@
++# SPDX-License-Identifier: Apache-2.0
++"""Opt-in aggregate CPU timings; no per-step serialization."""
++
++import functools
++import json
++import os
++import queue
++import threading
++import time
++from pathlib import Path
++
++
++def install(scheduler):
++    if os.environ.get("STUDY_CACHE_PROFILE") != "1":
++        return
++    totals = {}
++    pool = scheduler.kv_cache_manager.block_pool
++    partial = scheduler.kv_cache_manager._study_partial_prefix
++    snapshots = queue.SimpleQueue()
++    idle_updates = 0
++
++    def writer():
++        path = Path(os.environ["VLLM_STUDY_TRACE_DIR"]) / "cpu-profile.json"
++        while True:
++            snapshot = snapshots.get()
++            temporary = path.with_suffix(".tmp")
++            temporary.write_text(json.dumps(snapshot, indent=2) + "\n")
++            temporary.replace(path)
++
++    threading.Thread(target=writer, daemon=True).start()
++
++    def snapshot():
++        order = getattr(pool._study_eviction, "order", None)
++        snapshots.put(
++            dict(
++                implementation=os.environ.get("STUDY_CACHE_IMPL", "incremental"),
++                timings={key: value.copy() for key, value in totals.items()},
++                partial_blocks_visited=getattr(partial, "visited_blocks", 0),
++                order_rebuilds=getattr(order, "rebuilds", 0),
++                idle_updates=idle_updates,
++                includes_warmup=True,
++                clock="perf_counter_ns (host elapsed, no GPU synchronization)",
++            )
++        )
++
++    def wrap(obj, name, label):
++        original = getattr(obj, name)
++        totals[label] = dict(calls=0, ns=0)
++
++        @functools.wraps(original)
++        def timed(*args, **kwargs):
++            nonlocal idle_updates
++            started = time.perf_counter_ns()
++            try:
++                return original(*args, **kwargs)
++            finally:
++                totals[label]["ns"] += time.perf_counter_ns() - started
++                totals[label]["calls"] += 1
++                if (
++                    label == "update_from_output"
++                    and not scheduler.running
++                    and not scheduler.waiting
++                ):
++                    idle_updates += 1
++                    snapshot()
++
++        setattr(obj, name, timed)
++
++    wrap(scheduler, "_free_request", "request_finish")
++    wrap(scheduler, "schedule", "schedule")
++    wrap(scheduler, "update_from_output", "update_from_output")
++    if partial is not None:
++        wrap(partial, "publish", "partial_publish")
++    if pool._study_eviction is not None:
++        wrap(pool._study_eviction, "select", "eviction_select")
+diff --git a/vllm/v1/core/study_free_order.py b/vllm/v1/core/study_free_order.py
+new file mode 100644
+index 0000000..5f68f6a
+--- /dev/null
++++ b/vllm/v1/core/study_free_order.py
+@@ -0,0 +1,82 @@
++# SPDX-License-Identifier: Apache-2.0
++"""Incremental LFU victim ordering with upstream free-queue tie order."""
++
++import heapq
++
++
++class StudyFreeOrder:
++    def __init__(self, policy):
++        self.policy = policy
++        self.positions = {}
++        self.entries = {}
++        self.heap = []
++        self.front = 0
++        self.back = 0
++        self.serial = 0
++        self.initialized = False
++        self.rebuilds = 0
++
++    def key(self, pool, block):
++        cached = block.block_hash is not None
++        return (
++            block.block_id in pool._reuse_watchers,
++            cached,
++            self.policy.reuse_counts[block.block_id] if cached else 0,
++            self.positions[block.block_id],
++        )
++
++    def refresh(self, pool, block):
++        if block.block_id not in self.positions:
++            return
++        self.serial += 1
++        entry = (*self.key(pool, block), self.serial, block.block_id)
++        self.entries[block.block_id] = entry
++        heapq.heappush(self.heap, entry)
++
++    def remove(self, block):
++        self.positions.pop(block.block_id, None)
++        self.entries.pop(block.block_id, None)
++
++    def add(self, pool, blocks, front=False):
++        if not self.initialized:
++            return
++        if front:
++            self.front -= len(blocks)
++            start = self.front
++        else:
++            start = self.back
++            self.back += len(blocks)
++        for index, block in enumerate(blocks):
++            self.positions[block.block_id] = start + index
++            self.refresh(pool, block)
++
++    def rebuild(self, pool):
++        blocks = pool.free_block_queue.get_all_free_blocks()
++        self.positions = {b.block_id: i for i, b in enumerate(blocks)}
++        self.front, self.back = 0, len(blocks)
++        self.entries.clear()
++        self.heap.clear()
++        for block in blocks:
++            self.serial += 1
++            entry = (*self.key(pool, block), self.serial, block.block_id)
++            self.entries[block.block_id] = entry
++            self.heap.append(entry)
++        heapq.heapify(self.heap)
++        self.initialized = True
++        self.rebuilds += 1
++
++    def select(self, pool, num_blocks):
++        if not self.initialized or len(self.heap) > 4 * len(pool.blocks):
++            self.rebuild(pool)
++        selected = []
++        while len(selected) < num_blocks:
++            entry = heapq.heappop(self.heap)
++            block_id = entry[-1]
++            if self.entries.get(block_id) != entry:
++                continue
++            block = pool.blocks[block_id]
++            assert block.ref_cnt == 0 and not block.is_null
++            self.remove(block)
++            pool.free_block_queue.remove(block)
++            selected.append(block)
++        return selected
+diff --git a/vllm/v1/core/study_partial_prefix.py b/vllm/v1/core/study_partial_prefix.py
+new file mode 100644
+index 0000000..ca8dbea
+--- /dev/null
++++ b/vllm/v1/core/study_partial_prefix.py
+@@ -0,0 +1,123 @@
++# SPDX-License-Identifier: Apache-2.0
++"""Opt-in indexing of computed interior prompt-prefix boundaries."""
++
++import os
++
++from vllm.v1.kv_cache_interface import FullAttentionSpec
++
++
++class StudyPartialPrefix:
++    @classmethod
++    def from_environment(cls, cache_manager):
++        if os.environ.get("STUDY_PARTIAL_PREFIX", "0") != "1":
++            return None
++        managers = cache_manager.coordinator.single_type_managers
++        if (
++            not cache_manager.enable_caching
++            or cache_manager.use_eagle
++            or len(managers) != 1
++            or type(managers[0].kv_cache_spec) is not FullAttentionSpec
++            or managers[0].dcp_world_size != 1
++            or managers[0].pcp_world_size != 1
++            or cache_manager.block_pool.hash_block_size >= managers[0].block_size
++        ):
++            raise ValueError(
++                "Study partial-prefix indexing needs fine-grained, "
++                "single-device, single-group full attention"
++            )
++        minimum = int(os.environ.get("STUDY_PARTIAL_MIN_TOKENS", "0"))
++        if not 0 <= minimum <= managers[0].block_size:
++            raise ValueError("Partial minimum must be between zero and block size")
++        cache_manager.block_pool._study_partial_min_tokens = minimum
++        cache_manager.block_pool._study_partial_prefix_enabled = True
++        return cls(managers[0])
++
++    def __init__(self, manager):
++        self.manager = manager
++        self.progress = {}
++        self.valid = {}
++        self.dirty = {}
++        self.owners = {}
++        self.visited_blocks = 0
++        self.incremental = (
++            os.environ.get("STUDY_CACHE_IMPL", "incremental") == "incremental"
++        )
++        if self.incremental:
++            manager.block_pool._study_partial_index = self
++
++    def publish(self, request):
++        """Called only after this request's model work has completed."""
++        manager = self.manager
++        pool = manager.block_pool
++        unit, size = pool.hash_block_size, manager.block_size
++        valid = min(request.num_computed_tokens, request.num_prompt_tokens)
++        history = self.progress.setdefault(request.request_id, {})
++        blocks = manager.req_to_blocks[request.request_id]
++        if self.incremental:
++            previous_valid = self.valid.get(request.request_id, 0)
++            if valid < previous_valid:
++                self.forget(request.request_id)
++                history = self.progress.setdefault(request.request_id, {})
++                previous_valid = 0
++            indices = self.dirty.pop(request.request_id, set())
++            if valid > previous_valid:
++                indices.update(
++                    range(previous_valid // size, (valid + size - 1) // size)
++                )
++            indices = sorted(i for i in indices if i < len(blocks))
++            self.valid[request.request_id] = valid
++        else:
++            indices = range(len(blocks))
++        for index in indices:
++            self.visited_blocks += 1
++            block = blocks[index]
++            start = index * size
++            end = min(valid, start + size - unit)
++            if end <= start:
++                break
++            signature = (block.block_id, block.block_hash)
++            previous, boundary = history.get(index, (None, start))
++            if self.incremental:
++                owner = (request.request_id, index)
++                if previous is not None and previous[0] != block.block_id:
++                    self.owners[previous[0]].discard(owner)
++                    if not self.owners[previous[0]]:
++                        del self.owners[previous[0]]
++                self.owners.setdefault(block.block_id, set()).add(owner)
++            if previous != signature:
++                boundary = start
++            if not block.is_null:
++                for position in range(boundary + unit, end + 1, unit):
++                    pool.cache_partial_block(
++                        request,
++                        block,
++                        position,
++                        manager.kv_cache_group_id,
++                        size,
++                        preserve_existing_hashes=True,
++                    )
++                history[index] = (
++                    (block.block_id, block.block_hash),
++                    end // unit * unit,
++                )
++
++    def block_changed(self, block_id):
++        for request_id, index in self.owners.get(block_id, ()):
++            self.dirty.setdefault(request_id, set()).add(index)
++
++    def forget(self, request_id):
++        for index, (signature, _) in self.progress.pop(request_id, {}).items():
++            if self.incremental:
++                owners = self.owners.get(signature[0])
++                if owners is not None:
++                    owners.discard((request_id, index))
++                    if not owners:
++                        del self.owners[signature[0]]
++        self.valid.pop(request_id, None)
++        self.dirty.pop(request_id, None)
++
++    def reset(self):
++        self.progress.clear()
++        self.valid.clear()
++        self.dirty.clear()
++        self.owners.clear()
+diff --git a/vllm/v1/core/study_queue_eviction.py b/vllm/v1/core/study_queue_eviction.py
+new file mode 100644
+index 0000000..c42d71c
+--- /dev/null
++++ b/vllm/v1/core/study_queue_eviction.py
+@@ -0,0 +1,124 @@
++# SPDX-License-Identifier: Apache-2.0
++"""Opt-in soft retention of exact prefixes demanded by the waiting queue."""
++
++import os
++import time
++from collections import Counter
++from itertools import islice
++
++from vllm.logger import init_logger
++from vllm.v1.core.sched.request_queue import SchedulingPolicy
++from vllm.v1.core.sched.study_prefix_policy import PrefixAwareWaitingPolicy
++from vllm.v1.core.study_cache_eviction import StudyLFUEviction
++from vllm.v1.kv_cache_interface import FullAttentionSpec
++
++logger = init_logger(__name__)
++
++
++class StudyQueueEviction(StudyLFUEviction):
++    name = "queue"
++
++    def __init__(self, num_blocks):
++        super().__init__(num_blocks)
++        self.lookahead = int(os.environ.get("STUDY_QUEUE_LOOKAHEAD", "16"))
++        if self.lookahead < 1:
++            raise ValueError("STUDY_QUEUE_LOOKAHEAD must be positive")
++        self.scheduler = None
++
++    def bind(self, scheduler):
++        groups = scheduler.kv_cache_config.kv_cache_groups
++        kv = scheduler.kv_cache_manager
++        if (
++            scheduler.policy != SchedulingPolicy.FCFS
++            or scheduler.scheduler_config.async_scheduling
++            or scheduler.connector is not None
++            or scheduler.lora_config is not None
++            or scheduler.vllm_config.speculative_config is not None
++            or scheduler._study_prefix_policy is not None
++            or scheduler._study_skip_continue is not None
++            or kv._study_partial_prefix is not None
++            or len(groups) != 1
++            or type(groups[0].kv_cache_spec) is not FullAttentionSpec
++            or kv.coordinator.dcp_world_size != 1
++            or kv.coordinator.pcp_world_size != 1
++        ):
++            raise ValueError(
++                "Queue retention needs synchronous FCFS, one full-attention "
++                "group, no connector/LoRA/speculation or other study policies"
++            )
++        self.scheduler = scheduler
++        logger.info(
++            "Study cache eviction: queue; lookahead=%s; soft zero-ref "
++            "retention; free-queue ties; admission remains FCFS",
++            self.lookahead,
++        )
++
++    def collect_demand(self):
++        """Read current contiguous hits without touching or pinning blocks."""
++        if self.scheduler is None:
++            raise RuntimeError("Queue retention has not been bound to the scheduler")
++        kv = self.scheduler.kv_cache_manager
++        demand = Counter()
++        probes = []
++        for request in islice(self.scheduler.waiting, self.lookahead):
++            if not PrefixAwareWaitingPolicy.eligible(request):
++                continue
++            if not kv.prefix_cache_lookup_enabled(request):
++                continue
++            groups, tokens, _ = kv.coordinator.find_longest_cache_hit(
++                request.block_hashes, max(0, request.num_tokens - 1)
++            )
++            ids = {
++                block.block_id
++                for block in groups[0]
++                if not block.is_null and block.ref_cnt == 0
++            }
++            demand.update(ids)
++            probes.append((request.request_id, tokens, sorted(ids)))
++        return demand, probes
++
++    def select(self, pool, num_blocks):
++        if num_blocks == 0:
++            return []
++        trace = getattr(self.scheduler, "_study_trace", None)
++        started = time.perf_counter_ns() if trace is not None else None
++        # Refresh at allocation, so admissions, frees and evictions cannot leave
++        # stale page identities in a retained snapshot.
++        demand, probes = self.collect_demand()
++        candidates = pool.free_block_queue.get_all_free_blocks()
++        buckets = [[[] for _ in range(self.lookahead + 1)] for _ in range(2)]
++        for block in candidates:
++            watcher = int(block.block_id in pool._reuse_watchers)
++            buckets[watcher][demand[block.block_id]].append(block)
++        selected = []
++        for watcher_buckets in buckets:
++            for bucket in watcher_buckets:
++                selected.extend(bucket[: num_blocks - len(selected)])
++                if len(selected) == num_blocks:
++                    break
++            if len(selected) == num_blocks:
++                break
++        assert len(selected) == num_blocks
++        for block in selected:
++            assert block.ref_cnt == 0 and not block.is_null
++            pool.free_block_queue.remove(block)
++        if trace is not None:
++            selected_ids = {block.block_id for block in selected}
++            trace.emit(
++                "QUEUE_CACHE_RETENTION",
++                lookahead=self.lookahead,
++                probes=[
++                    dict(request_id=r, hit_tokens=t, free_hit_blocks=b)
++                    for r, t, b in probes
++                ],
++                demand=dict(demand),
++                selected_blocks=[block.block_id for block in selected],
++                selected_demanded=sum(block.block_id in demand for block in selected),
++                retained_instead_of_upstream=[
++                    block.block_id
++                    for block in candidates[:num_blocks]
++                    if block.block_id in demand and block.block_id not in selected_ids
++                ],
++                selection_ns=time.perf_counter_ns() - started,
++            )
++        return selected
