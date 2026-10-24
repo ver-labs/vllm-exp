@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "prepared_date": "2026-10-24",
+  "official_repository": "https://github.com/vllm-project/vllm.git",
+  "base": {
+    "tag": "v0.31.0",
+    "commit": "db9527a46873454610df6dbedf79a36d6bf1a7f6",
+    "tag_verified_via": "git ls-remote origin refs/tags/v0.31.0",
+    "scope": "Pinned historical release bridge; not current upstream",
+    "local_path": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/.artifacts/research-baselines/stock-v0.31.0"
+  },
+  "candidate": {
+    "commit": "08d2c99e8fe5117605d0ca8eaf6b6fd07672d822",
+    "parent": "db9527a46873454610df6dbedf79a36d6bf1a7f6",
+    "local_path": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/.artifacts/research-baselines/candidate-v0.31.0",
+    "branch": "research/cache-baseline-20261024",
+    "patch": "candidate.patch",
+    "patch_sha256": "fe60990b610c63fd5d89a76cd57f1a20ca0899f3b285f2b646e7005efe7f72c3",
+    "changed_files": [
+      "vllm/v1/core/block_pool.py",
+      "vllm/v1/core/kv_cache_coordinator.py",
+      "vllm/v1/core/kv_cache_manager.py",
+      "vllm/v1/core/kv_cache_utils.py",
+      "vllm/v1/core/sched/scheduler.py",
+      "vllm/v1/core/single_type_kv_cache_manager.py",
+      "vllm/v1/core/study_aging_eviction.py",
+      "vllm/v1/core/study_cache_eviction.py",
+      "vllm/v1/core/study_free_order.py",
+      "vllm/v1/core/study_partial_prefix.py"
+    ],
+    "deliberate_differences_from_pilot": [
+      "Selected cache features only; no scheduler reordering, skip/continue, adaptive prefill, queue retention, trace or CPU profiler.",
+      "Native hashing/coordinator semantics preserved when partial mode is disabled.",
+      "Successful reset clears frequency counts, allocation clock, aging epoch and publication metadata. Native free-queue order is preserved; reset is not a new allocator."
+    ]
+  },
+  "upstream_reference": {
+    "commit": "717cf843426ce85dbb7170aff7d7a833ad7d3c09",
+    "commit_date": "2026-10-24",
+    "local_path": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/.artifacts/research-baselines/upstream-20261024",
+    "purpose": "Clean contemporary capability reference, source audited only",
+    "candidate_patch_applies": false,
+    "port_required_for_contemporary_comparison": true
+  },
+  "pilot": {
+    "commit": "e997aba05543a127cb09d8a4c3b917f307357807",
+    "local_path": "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/vllm-src",
+    "modified": false
+  },
+  "unchanged_native_cuda_files": {
+    "vllm/v1/worker/gpu_model_runner.py": "bb903dffcb5a6e5b8a477daf0854b3812e135349d61fc20c6133f91cd3c9752a",
+    "vllm/v1/worker/gpu/model_runner.py": "725c47114e148ade3a26b4cc9c5f7295588fdd387afc3cb5fdb2d16513a1bb5c",
+    "vllm/v1/worker/utils.py": "df38390808195cf36ca6e1e85c4e10e8a8d858e349e310463471b56210976f26"
+  },
+  "local_cpu_native_bootstrap": [
+    {
+      "relative_path": "vllm/_C.abi3.so",
+      "sha256": "e817fde6cdca588254846e4b30a7d4729e3c7ddf560752e1734f22a1a3084d42",
+      "purpose": "Mac CPU metadata imports only; never a CUDA build artifact"
+    },
+    {
+      "relative_path": "vllm/_rust_tool_parser.abi3.so",
+      "sha256": "6425891e01c92c056cc2d2d4e33feddac5be56c3f15f928e50fdd3a977dcb2b9",
+      "purpose": "Mac CPU metadata imports only; never a CUDA build artifact"
+    },
+    {
+      "relative_path": "vllm/fs_io_C.abi3.so",
+      "sha256": "2c4d85ce864fd7531aa284499cec13fbbf78b9d4b77942a7b98e03744ad1255c",
+      "purpose": "Mac CPU metadata imports only; never a CUDA build artifact"
+    },
+    {
+      "relative_path": "vllm/spinloop.abi3.so",
+      "sha256": "6ab441e1c58c2ba4c5f73700c38c0bdb1414517480b50206feb728252bd0e75b",
+      "purpose": "Mac CPU metadata imports only; never a CUDA build artifact"
+    },
+    {
+      "relative_path": "vllm/_version.py",
+      "sha256": "b2ed697338f4a6ca2fed3c7904f2d5f539202a681a765a6e9f4a64a46ef40a73",
+      "purpose": "Mac CPU metadata imports only; never a CUDA build artifact"
+    }
+  ],
+  "validation": {
+    "cpu_metadata": true,
+    "cuda_runtime": false,
+    "cuda_build": false,
+    "cuda_tensor_copies": false,
+    "model_logits": false,
+    "task_quality": false,
+    "gpu_benchmarks": false
+  },
+  "constraints": [
+    "Single GPU, full attention, one KV cache group, TP=PP=DCP=PCP=1.",
+    "Prefix caching on; synchronous scheduling; no speculative decoding.",
+    "No new model, CUDA, Triton or dependency installation during this preparation.",
+    "Metadata-only import uses existing Mac release native binaries via ignored symlinks; NVIDIA must use a real CUDA build."
+  ]
+}

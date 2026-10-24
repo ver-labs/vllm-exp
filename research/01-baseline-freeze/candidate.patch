@@ -1,0 +1,708 @@
+diff --git a/vllm/v1/core/block_pool.py b/vllm/v1/core/block_pool.py
+index 664804d..f291e98 100644
+--- a/vllm/v1/core/block_pool.py
++++ b/vllm/v1/core/block_pool.py
+@@ -27,6 +27,7 @@ from vllm.v1.core.kv_cache_utils import (
+     resolve_block_hashes,
+     to_event_extra_keys,
+ )
++from vllm.v1.core.study_cache_eviction import StudyLFUEviction
+ from vllm.v1.request import Request
+ 
+ logger = init_logger(__name__)
+@@ -194,6 +195,13 @@ class BlockPool:
+         # Callbacks for blocks released with ``unpin_blocks`` whose contents
+         # are still being read until the pool reuses them.
+         self._reuse_watchers: dict[int, Callable[[KVCacheBlock], None]] = {}
++        self._study_partial_index = None
++        self._study_eviction = StudyLFUEviction.from_environment(
++            num_gpu_blocks, enable_caching
++        )
++
++    def _study_order(self):
++        return getattr(self._study_eviction, "order", None)
+ 
+     def get_cached_block(
+         self, block_hash: BlockHash, kv_cache_group_ids: list[int]
+@@ -454,6 +462,7 @@ class BlockPool:
+         kv_cache_group_id: int,
+         block_size: int,
+         replace_existing_hashes: bool = False,
++        preserve_existing_hashes: bool = False,
+     ) -> BlockHashWithGroupId | None:
+         """Register a partial prefix-cache entry for an existing block.
+ 
+@@ -481,6 +490,8 @@ class BlockPool:
+                 entry hash itself is always the prefix-chain hash at
+                 ``num_tokens``; ``block_size`` is used to assert that the
+                 entry is partial within the owning cache block.
++            preserve_existing_hashes: Keep shorter valid prefix aliases when
++                appending metadata for the same computed block contents.
+             replace_existing_hashes: Whether the block contents were replaced
+                 and all existing cache entries must be removed before the new
+                 entry is registered.
+@@ -512,7 +523,8 @@ class BlockPool:
+             self._emit_block_removed_events(removed_hashes)
+             already_cached = False
+         elif (
+-            not already_cached
++            not preserve_existing_hashes
++            and not already_cached
+             and block.block_hash is not None
+             and block.block_hash_num_tokens is not None
+             and block.block_hash_num_tokens < num_hash_blocks * self.hash_block_size
+@@ -609,6 +621,10 @@ class BlockPool:
+             ):
+                 removed_hashes.append(block_hash)
+         block.reset_hash()
++        if self._study_partial_index is not None:
++            self._study_partial_index.block_changed(block.block_id)
++        if self._study_order() is not None:
++            self._study_order().refresh(self, block)
+         return removed_hashes
+ 
+     def _emit_block_removed_events(
+@@ -642,6 +658,10 @@ class BlockPool:
+ 
+         if block.block_hash is None:
+             block.set_block_hash(block_hash_with_group_id, num_tokens=num_tokens)
++            if self._study_partial_index is not None:
++                self._study_partial_index.block_changed(block.block_id)
++            if self._study_order() is not None:
++                self._study_order().refresh(self, block)
+         else:
+             self.cached_block_hashes_by_block.setdefault(block.block_id, set()).add(
+                 block_hash_with_group_id
+@@ -681,7 +701,11 @@ class BlockPool:
+         if num_blocks > self.get_num_free_blocks():
+             raise ValueError(f"Cannot get {num_blocks} free blocks from the pool")
+ 
+-        ret: list[KVCacheBlock] = self.free_block_queue.popleft_n(num_blocks)
++        ret: list[KVCacheBlock] = (
++            self.free_block_queue.popleft_n(num_blocks)
++            if self._study_eviction is None
++            else self._study_eviction.select(self, num_blocks)
++        )
+ 
+         if self._reuse_watchers:
+             self._notify_reuse(ret)
+@@ -728,6 +752,8 @@ class BlockPool:
+             if block.ref_cnt == 0:
+                 released.append(block)
+         self.free_block_queue.append_n(released)
++        if self._study_order() is not None:
++            self._study_order().add(self, released)
+ 
+     def _maybe_evict_cached_block(self, block: KVCacheBlock) -> bool:
+         """If a block is cached in `cached_block_hash_to_block`, we reset its hash
+@@ -745,6 +771,10 @@ class BlockPool:
+             self.metrics_collector.on_block_evicted(block)
+ 
+         evicted_hashes = self._remove_cached_block_hashes(block)
++        if self._study_eviction is not None:
++            self._study_eviction.reuse_counts[block.block_id] = 0
++        if self._study_order() is not None:
++            self._study_order().refresh(self, block)
+         if not evicted_hashes:
+             # The block doesn't have hash, eviction is not needed
+             return False
+@@ -762,10 +792,18 @@ class BlockPool:
+ 
+         """
+         for block in blocks:
++            if (
++                self._study_eviction is not None
++                and block.block_hash is not None
++                and not block.is_null
++            ):
++                self._study_eviction.reuse_counts[block.block_id] += 1
+             # ref_cnt=0 means this block is in the free list (i.e. eviction
+             # candidate), so remove it.
+             if block.ref_cnt == 0 and not block.is_null:
+                 self.free_block_queue.remove(block)
++                if self._study_order() is not None:
++                    self._study_order().remove(block)
+             block.ref_cnt += 1
+             if self.metrics_collector:
+                 self.metrics_collector.on_block_accessed(block)
+@@ -804,6 +842,9 @@ class BlockPool:
+         self.free_block_queue.prepend_n(blocks_to_evict_first)
+         # Blocks to reuse last are appended to the end of the free queue.
+         self.free_block_queue.append_n(blocks_to_evict_last)
++        if self._study_order() is not None:
++            self._study_order().add(self, blocks_to_evict_first, front=True)
++            self._study_order().add(self, blocks_to_evict_last)
+         for pool, blocks in other_pools.items():
+             pool.free_blocks(blocks)
+ 
+@@ -854,10 +895,15 @@ class BlockPool:
+                 [self.blocks[block_id] for block_id in list(self._reuse_watchers)]
+             )
+ 
++        if self._study_eviction is not None:
++            self._study_eviction.reset()
++
+         # Remove all hashes from all blocks.
+         for block in self.blocks:
+             block.reset_hash()
+ 
++        if self._study_order() is not None:
++            self._study_order().rebuild(self)
+         if self.metrics_collector:
+             self.metrics_collector.reset()
+ 
+diff --git a/vllm/v1/core/kv_cache_coordinator.py b/vllm/v1/core/kv_cache_coordinator.py
+index daf0cd1..bceed03 100644
+--- a/vllm/v1/core/kv_cache_coordinator.py
++++ b/vllm/v1/core/kv_cache_coordinator.py
+@@ -1,5 +1,6 @@
+ # SPDX-License-Identifier: Apache-2.0
+ # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
++import os
+ from abc import ABC, abstractmethod
+ from collections.abc import Sequence
+ from typing import NamedTuple
+@@ -684,8 +685,9 @@ class HybridKVCacheCoordinator(KVCacheCoordinator):
+                     "full-attention, Mamba, and replicated draft groups, got: "
+                     f"{type(spec).__name__}."
+                 )
+-        # Fine-grained hash hits require Mamba "align" and compatible cache
+-        # managers in every group. TP needs hashing finer than the Mamba block;
++        # Fine-grained hits normally require Mamba "align" and compatible
++        # managers. The study flag also permits plain full attention.
++        # TP needs hashing finer than the Mamba block;
+         # DCP accepts equality because it scales the effective full-attention
+         # block instead.
+         has_partial_mamba_group = any(
+@@ -699,8 +701,16 @@ class HybridKVCacheCoordinator(KVCacheCoordinator):
+             )
+             for g in kv_cache_config.kv_cache_groups
+         )
+-        self.enable_partial_hash_hits = (
+-            allow_partial_hash_hits and has_partial_mamba_group
++        self.enable_partial_hash_hits = allow_partial_hash_hits and (
++            has_partial_mamba_group
++            or (
++                os.environ.get("STUDY_PARTIAL_PREFIX", "0") == "1"
++                and all(
++                    type(g.kv_cache_spec) is FullAttentionSpec
++                    for g in kv_cache_config.kv_cache_groups
++                )
++                and hash_block_size < scheduler_block_size
++            )
+         )
+         if self.enable_partial_hash_hits:
+             unsupported_partial_hit_managers = {
+@@ -1040,7 +1050,13 @@ def get_kv_cache_coordinator(
+             metrics_collector=metrics_collector,
+             num_prefill_lookahead=num_prefill_lookahead,
+         )
+-    if len(kv_cache_config.kv_cache_groups) == 1:
++    if (
++        len(kv_cache_config.kv_cache_groups) == 1
++        and (
++            os.environ.get("STUDY_PARTIAL_PREFIX", "0") != "1"
++            or hash_block_size == scheduler_block_size
++        )
++    ):
+         return UnitaryKVCacheCoordinator(
+             kv_cache_config,
+             max_model_len,
+diff --git a/vllm/v1/core/kv_cache_manager.py b/vllm/v1/core/kv_cache_manager.py
+index 2d39a38..72012be 100644
+--- a/vllm/v1/core/kv_cache_manager.py
++++ b/vllm/v1/core/kv_cache_manager.py
+@@ -16,6 +16,7 @@ from vllm.v1.core.kv_cache_coordinator import (
+ from vllm.v1.core.kv_cache_metrics import KVCacheMetricsCollector
+ from vllm.v1.core.kv_cache_utils import KVCacheBlock, KVCacheBlockCopy
+ from vllm.v1.core.single_type_kv_cache_manager import MambaManager
++from vllm.v1.core.study_partial_prefix import StudyPartialPrefix
+ from vllm.v1.kv_cache_interface import (
+     AttentionSpec,
+     CrossAttentionSpec,
+@@ -195,6 +196,7 @@ class KVCacheManager:
+                     manager.shared_prefix_checkpoint = True
+         self.num_kv_cache_groups = len(kv_cache_config.kv_cache_groups)
+         self.block_pool = self.coordinator.block_pool
++        self._study_partial_prefix = StudyPartialPrefix.from_environment(self)
+         self.retained_hit_group_ids = tuple(
+             manager.kv_cache_group_id
+             for manager in self.coordinator.single_type_managers
+@@ -622,6 +624,8 @@ class KVCacheManager:
+             request: The request to free the blocks.
+ 
+         """
++        if self._study_partial_prefix is not None:
++            self._study_partial_prefix.forget(request.request_id)
+         self.coordinator.free(request.request_id)
+ 
+     def remove_skipped_blocks(
+@@ -656,6 +660,8 @@ class KVCacheManager:
+             The request's blocks in allocation order.
+ 
+         """
++        if self._study_partial_prefix is not None:
++            self._study_partial_prefix.forget(request.request_id)
+         return self.coordinator.pop_blocks_for_free(request.request_id)
+ 
+     def evict_blocks(self, block_ids: set[int]) -> None:
+@@ -679,6 +685,8 @@ class KVCacheManager:
+         """
+         if not self.coordinator.reset_prefix_cache():
+             return False
++        if self._study_partial_prefix is not None:
++            self._study_partial_prefix.reset()
+         if self.log_stats:
+             assert self.prefix_cache_stats is not None
+             self.prefix_cache_stats.reset = True
+diff --git a/vllm/v1/core/kv_cache_utils.py b/vllm/v1/core/kv_cache_utils.py
+index 8fc327f..a72c1ff 100644
+--- a/vllm/v1/core/kv_cache_utils.py
++++ b/vllm/v1/core/kv_cache_utils.py
+@@ -748,7 +748,8 @@ def resolve_kv_cache_block_sizes(
+       group's effective block size. Attention groups are scaled by DCP;
+       Mamba groups keep their full per-rank state and are not scaled.
+     - ``hash_block_size`` is the granularity at which ``Request.block_hashes``
+-      is computed. Single group: equals scheduler block size. Multiple groups:
++      is computed. Single full-attention group: explicit prefix_match_unit or scheduler
++      block size. Multiple groups:
+       ``cache_config.prefix_match_unit`` override if set, else the GCD of
+       group block sizes; every group's block size must be divisible by it.
+       Returns the scheduler block size (i.e. disables finer hashing) if block
+@@ -762,6 +763,19 @@ def resolve_kv_cache_block_sizes(
+         if groups and not groups[0].kv_cache_spec.dcp_sharded:
+             dcp = 1
+         bs = cache_config.block_size * dcp
++        requested = cache_config.prefix_match_unit
++        if (
++            os.environ.get("STUDY_PARTIAL_PREFIX", "0") == "1"
++            and groups
++            and type(groups[0].kv_cache_spec) is FullAttentionSpec
++            and cache_config.enable_prefix_caching
++            and requested is not None
++        ):
++            if bs % requested:
++                raise ValueError(
++                    "prefix_match_unit must divide the physical block size"
++                )
++            return bs, requested
+         return bs, bs
+ 
+     group_block_sizes = [
+diff --git a/vllm/v1/core/sched/scheduler.py b/vllm/v1/core/sched/scheduler.py
+index 8b188de..26a64cd 100644
+--- a/vllm/v1/core/sched/scheduler.py
++++ b/vllm/v1/core/sched/scheduler.py
+@@ -2043,6 +2043,17 @@ class Scheduler(SchedulerInterface):
+             if output_is_stale and request.drop_stale_output:
+                 continue
+ 
++            if self.kv_cache_manager._study_partial_prefix is not None:
++                if (
++                    self.scheduler_config.async_scheduling
++                    or self.vllm_config.speculative_config
++                ):
++                    raise ValueError(
++                        "Study partial-prefix mode needs synchronous "
++                        "non-speculative execution"
++                    )
++                self.kv_cache_manager._study_partial_prefix.publish(request)
++
+             req_index = model_runner_output.req_id_to_index[req_id]
+             generated_token_ids = (
+                 sampled_token_ids[req_index] if sampled_token_ids else []
+diff --git a/vllm/v1/core/single_type_kv_cache_manager.py b/vllm/v1/core/single_type_kv_cache_manager.py
+index a097c9e..9223ae9 100644
+--- a/vllm/v1/core/single_type_kv_cache_manager.py
++++ b/vllm/v1/core/single_type_kv_cache_manager.py
+@@ -470,6 +470,9 @@ class SingleTypeKVCacheManager(ABC):
+         assert req_blocks[block_idx] is source_block
+         assert not source_block.is_null and source_block.ref_cnt > 0
+         req_blocks[block_idx] = cow_block
++        partial = self.block_pool._study_partial_index
++        if partial is not None:
++            partial.dirty.setdefault(request_id, set()).add(block_idx)
+         self._pending_cow_copies.append((source_block, cow_block))
+         cow_block.ref_cnt += 1
+ 
+@@ -817,6 +820,9 @@ class FullAttentionManager(SingleTypeKVCacheManager):
+                 len(block_hashes),
+             )
+             for fine_idx in range(max_partial_idx - 1, first_partial_idx - 1, -1):
++                additional = (fine_idx + 1) * alignment_tokens - hit_length
++                if additional < getattr(block_pool, "_study_partial_min_tokens", 0):
++                    break
+                 cached_tail = block_pool.get_cached_block(
+                     block_hashes[fine_idx], kv_cache_group_ids
+                 )
+@@ -859,7 +865,8 @@ class FullAttentionManager(SingleTypeKVCacheManager):
+         hash_block_size = self.block_pool.hash_block_size
+         if self.block_size == hash_block_size:
+             return
+-        self._cache_partial_tail_block(request, num_tokens)
++        if not getattr(self.block_pool, "_study_partial_prefix_enabled", False):
++            self._cache_partial_tail_block(request, num_tokens)
+ 
+     def _cache_partial_tail_block(
+         self,
+diff --git a/vllm/v1/core/study_aging_eviction.py b/vllm/v1/core/study_aging_eviction.py
+new file mode 100644
+index 0000000..6dc8c82
+--- /dev/null
++++ b/vllm/v1/core/study_aging_eviction.py
+@@ -0,0 +1,55 @@
++# SPDX-License-Identifier: Apache-2.0
++"""Opt-in LFU with globally consistent allocation-clock decay."""
++
++import os
++
++from vllm.logger import init_logger
++from vllm.v1.core.study_cache_eviction import StudyLFUEviction
++
++logger = init_logger(__name__)
++
++
++class StudyAgingLFUEviction(StudyLFUEviction):
++    name = "aged_lfu"
++
++    def __init__(self, num_blocks):
++        super().__init__(num_blocks)
++        self.half_life_blocks = int(os.environ.get("STUDY_LFU_HALF_LIFE_BLOCKS", "64"))
++        if self.half_life_blocks < 1:
++            raise ValueError("STUDY_LFU_HALF_LIFE_BLOCKS must be positive")
++        self.allocated_blocks = 0
++        self.epochs = 0
++        self.on_decay = None
++        logger.info(
++            "Study cache eviction: aged_lfu; halve all counts every %s "
++            "physical block allocations; free-queue ties",
++            self.half_life_blocks,
++        )
++
++    def reset(self):
++        """Start a new allocation epoch after a successful pool reset."""
++        super().reset()
++        self.allocated_blocks = 0
++        self.epochs = 0
++
++    def select(self, pool, num_blocks):
++        if num_blocks == 0:
++            return []
++        self.allocated_blocks += num_blocks
++        epoch = self.allocated_blocks // self.half_life_blocks
++        elapsed = epoch - self.epochs
++        if elapsed:
++            before = self.reuse_counts.copy() if self.on_decay is not None else None
++            self.reuse_counts[:] = [count >> elapsed for count in self.reuse_counts]
++            self.epochs = epoch
++            if self.order is not None:
++                self.order.rebuild(pool)
++            if self.on_decay is not None:
++                self.on_decay(
++                    allocated_blocks=self.allocated_blocks,
++                    epoch=epoch,
++                    elapsed_epochs=elapsed,
++                    counts_before=before,
++                    counts_after=self.reuse_counts.copy(),
++                )
++        return super().select(pool, num_blocks)
+diff --git a/vllm/v1/core/study_cache_eviction.py b/vllm/v1/core/study_cache_eviction.py
+new file mode 100644
+index 0000000..3540a5b
+--- /dev/null
++++ b/vllm/v1/core/study_cache_eviction.py
+@@ -0,0 +1,76 @@
++# SPDX-License-Identifier: Apache-2.0
++"""Opt-in LFU comparison for the local prefix-cache eviction study."""
++
++from __future__ import annotations
++
++import os
++from typing import TYPE_CHECKING
++
++from vllm.logger import init_logger
++from vllm.v1.core.study_free_order import StudyFreeOrder
++
++if TYPE_CHECKING:
++    from vllm.v1.core.block_pool import BlockPool
++
++logger = init_logger(__name__)
++
++
++class StudyLFUEviction:
++    name = "lfu"
++
++    def __init__(self, num_blocks: int):
++        self.reuse_counts = [0] * num_blocks
++        self.order = (
++            StudyFreeOrder(self)
++            if os.environ.get("STUDY_CACHE_IMPL", "incremental") == "incremental"
++            and self.name in ("lfu", "aged_lfu")
++            else None
++        )
++
++    @classmethod
++    def from_environment(cls, num_blocks: int, enable_caching: bool):
++        policy = os.environ.get("STUDY_EVICTION_POLICY", "vllm")
++        if policy == "vllm":
++            return None
++        if policy == "aged_lfu":
++            if not enable_caching:
++                raise ValueError("Aging LFU requires prefix caching")
++            from vllm.v1.core.study_aging_eviction import StudyAgingLFUEviction
++
++            return StudyAgingLFUEviction(num_blocks)
++        if policy != "lfu":
++            raise ValueError("STUDY_EVICTION_POLICY must be vllm, lfu, or aged_lfu")
++        if not enable_caching:
++            raise ValueError("Study LFU eviction requires prefix caching")
++        logger.info(
++            "Study cache eviction: lfu; uncached first, then least reused; "
++            "free-queue-order ties; counts reset on reassignment; no aging"
++        )
++        return cls(num_blocks)
++
++    def reset(self):
++        """Clear frequency state after a successful pool reset."""
++        self.reuse_counts[:] = [0] * len(self.reuse_counts)
++
++    def select(self, pool: BlockPool, num_blocks: int):
++        if num_blocks == 0:
++            return []
++        if self.order is not None:
++            return self.order.select(pool, num_blocks)
++        # Stable sorting retains upstream eviction order for equal scores.
++        # Deferred-reader blocks retain their upstream last-resort priority.
++        candidates = pool.free_block_queue.get_all_free_blocks()
++        candidates.sort(
++            key=lambda block: (
++                block.block_id in pool._reuse_watchers,
++                block.block_hash is not None,
++                self.reuse_counts[block.block_id]
++                if block.block_hash is not None
++                else 0,
++            )
++        )
++        selected = candidates[:num_blocks]
++        for block in selected:
++            assert block.ref_cnt == 0 and not block.is_null
++            pool.free_block_queue.remove(block)
++        return selected
+diff --git a/vllm/v1/core/study_free_order.py b/vllm/v1/core/study_free_order.py
+new file mode 100644
+index 0000000..5f68f6a
+--- /dev/null
++++ b/vllm/v1/core/study_free_order.py
+@@ -0,0 +1,82 @@
++# SPDX-License-Identifier: Apache-2.0
++"""Incremental LFU victim ordering with upstream free-queue tie order."""
++
++import heapq
++
++
++class StudyFreeOrder:
++    def __init__(self, policy):
++        self.policy = policy
++        self.positions = {}
++        self.entries = {}
++        self.heap = []
++        self.front = 0
++        self.back = 0
++        self.serial = 0
++        self.initialized = False
++        self.rebuilds = 0
++
++    def key(self, pool, block):
++        cached = block.block_hash is not None
++        return (
++            block.block_id in pool._reuse_watchers,
++            cached,
++            self.policy.reuse_counts[block.block_id] if cached else 0,
++            self.positions[block.block_id],
++        )
++
++    def refresh(self, pool, block):
++        if block.block_id not in self.positions:
++            return
++        self.serial += 1
++        entry = (*self.key(pool, block), self.serial, block.block_id)
++        self.entries[block.block_id] = entry
++        heapq.heappush(self.heap, entry)
++
++    def remove(self, block):
++        self.positions.pop(block.block_id, None)
++        self.entries.pop(block.block_id, None)
++
++    def add(self, pool, blocks, front=False):
++        if not self.initialized:
++            return
++        if front:
++            self.front -= len(blocks)
++            start = self.front
++        else:
++            start = self.back
++            self.back += len(blocks)
++        for index, block in enumerate(blocks):
++            self.positions[block.block_id] = start + index
++            self.refresh(pool, block)
++
++    def rebuild(self, pool):
++        blocks = pool.free_block_queue.get_all_free_blocks()
++        self.positions = {b.block_id: i for i, b in enumerate(blocks)}
++        self.front, self.back = 0, len(blocks)
++        self.entries.clear()
++        self.heap.clear()
++        for block in blocks:
++            self.serial += 1
++            entry = (*self.key(pool, block), self.serial, block.block_id)
++            self.entries[block.block_id] = entry
++            self.heap.append(entry)
++        heapq.heapify(self.heap)
++        self.initialized = True
++        self.rebuilds += 1
++
++    def select(self, pool, num_blocks):
++        if not self.initialized or len(self.heap) > 4 * len(pool.blocks):
++            self.rebuild(pool)
++        selected = []
++        while len(selected) < num_blocks:
++            entry = heapq.heappop(self.heap)
++            block_id = entry[-1]
++            if self.entries.get(block_id) != entry:
++                continue
++            block = pool.blocks[block_id]
++            assert block.ref_cnt == 0 and not block.is_null
++            self.remove(block)
++            pool.free_block_queue.remove(block)
++            selected.append(block)
++        return selected
+diff --git a/vllm/v1/core/study_partial_prefix.py b/vllm/v1/core/study_partial_prefix.py
+new file mode 100644
+index 0000000..c454b9e
+--- /dev/null
++++ b/vllm/v1/core/study_partial_prefix.py
+@@ -0,0 +1,124 @@
++# SPDX-License-Identifier: Apache-2.0
++"""Opt-in indexing of computed interior prompt-prefix boundaries."""
++
++import os
++
++from vllm.v1.kv_cache_interface import FullAttentionSpec
++
++
++class StudyPartialPrefix:
++    @classmethod
++    def from_environment(cls, cache_manager):
++        if os.environ.get("STUDY_PARTIAL_PREFIX", "0") != "1":
++            return None
++        managers = cache_manager.coordinator.single_type_managers
++        if (
++            not cache_manager.enable_caching
++            or cache_manager.use_eagle
++            or len(managers) != 1
++            or type(managers[0].kv_cache_spec) is not FullAttentionSpec
++            or managers[0].dcp_world_size != 1
++            or managers[0].pcp_world_size != 1
++            or cache_manager.block_pool.hash_block_size >= managers[0].block_size
++        ):
++            raise ValueError(
++                "Study partial-prefix indexing needs fine-grained, "
++                "single-device, single-group full attention"
++            )
++        minimum = int(os.environ.get("STUDY_PARTIAL_MIN_TOKENS", "0"))
++        if not 0 <= minimum <= managers[0].block_size:
++            raise ValueError("Partial minimum must be between zero and block size")
++        cache_manager.block_pool._study_partial_min_tokens = minimum
++        cache_manager.block_pool._study_partial_prefix_enabled = True
++        return cls(managers[0])
++
++    def __init__(self, manager):
++        self.manager = manager
++        self.progress = {}
++        self.valid = {}
++        self.dirty = {}
++        self.owners = {}
++        self.visited_blocks = 0
++        self.incremental = (
++            os.environ.get("STUDY_CACHE_IMPL", "incremental") == "incremental"
++        )
++        if self.incremental:
++            manager.block_pool._study_partial_index = self
++
++    def publish(self, request):
++        """Called only after this request's model work has completed."""
++        manager = self.manager
++        pool = manager.block_pool
++        unit, size = pool.hash_block_size, manager.block_size
++        valid = min(request.num_computed_tokens, request.num_prompt_tokens)
++        history = self.progress.setdefault(request.request_id, {})
++        blocks = manager.req_to_blocks[request.request_id]
++        if self.incremental:
++            previous_valid = self.valid.get(request.request_id, 0)
++            if valid < previous_valid:
++                self.forget(request.request_id)
++                history = self.progress.setdefault(request.request_id, {})
++                previous_valid = 0
++            indices = self.dirty.pop(request.request_id, set())
++            if valid > previous_valid:
++                indices.update(
++                    range(previous_valid // size, (valid + size - 1) // size)
++                )
++            indices = sorted(i for i in indices if i < len(blocks))
++            self.valid[request.request_id] = valid
++        else:
++            indices = range(len(blocks))
++        for index in indices:
++            self.visited_blocks += 1
++            block = blocks[index]
++            start = index * size
++            end = min(valid, start + size - unit)
++            if end <= start:
++                break
++            signature = (block.block_id, block.block_hash)
++            previous, boundary = history.get(index, (None, start))
++            if self.incremental:
++                owner = (request.request_id, index)
++                if previous is not None and previous[0] != block.block_id:
++                    self.owners[previous[0]].discard(owner)
++                    if not self.owners[previous[0]]:
++                        del self.owners[previous[0]]
++                self.owners.setdefault(block.block_id, set()).add(owner)
++            if previous != signature:
++                boundary = start
++            if not block.is_null:
++                for position in range(boundary + unit, end + 1, unit):
++                    pool.cache_partial_block(
++                        request,
++                        block,
++                        position,
++                        manager.kv_cache_group_id,
++                        size,
++                        preserve_existing_hashes=True,
++                    )
++                history[index] = (
++                    (block.block_id, block.block_hash),
++                    end // unit * unit,
++                )
++
++    def block_changed(self, block_id):
++        for request_id, index in self.owners.get(block_id, ()):
++            self.dirty.setdefault(request_id, set()).add(index)
++
++    def forget(self, request_id):
++        for index, (signature, _) in self.progress.pop(request_id, {}).items():
++            if self.incremental:
++                owners = self.owners.get(signature[0])
++                if owners is not None:
++                    owners.discard((request_id, index))
++                    if not owners:
++                        del self.owners[signature[0]]
++        self.valid.pop(request_id, None)
++        self.dirty.pop(request_id, None)
++
++    def reset(self):
++        self.visited_blocks = 0
++        self.progress.clear()
++        self.valid.clear()
++        self.dirty.clear()
++        self.owners.clear()

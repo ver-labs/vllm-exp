@@ -1,0 +1,10 @@
+feature,stock_v0.31.0,isolated_candidate,upstream_20261024,evidence_level
+Causal-prefix identity,Native parent/token/extra-key hash,Unchanged native identity,Unchanged concept; pinned source anchor,Source + metadata negative controls
+Single full-attention matching,Native 16-token hash/hit unit; explicit 1 ignored,Flags off matches native; partial mode enables hash unit 1,Incompatible single-group match unit explicitly rejected,Release metadata probes; current source audit
+Partial-tail lookup and private copies,Already native in eligible cache paths,Native lookup/ownership with dirty-index notification,Native eligible partial-tail machinery remains,Source audit; refs metadata only; GPU tensors unvalidated
+Interior prompt-boundary publication,Native final eligible prompt boundary; intermediate aliases skipped,Adds computed interior boundaries and alias preservation,Native tail function still skips intermediate hashes,Source + 31/32 versus 16/32 metadata probe
+Cache eviction,Native free queue and in-use protections,Opt-in LFU/aging; uncached first then frequency; native ties,Native baseline; no study LFU,Source + ownership/aging tests
+Aging clock,No study allocation clock,Global decay every 64 physical allocations including CoW,No study allocation clock,Metadata tests; performance unmeasured
+Reset contract,Native KV reset; free-queue order retained,Also clear scores/clock/epoch/index; failed reset preserves state,Native KV reset; source only,3 new reset tests + legacy negative control
+CUDA copies,Native GPU runner and copy helper,Runner/helper source bytes unchanged,Separate current path,Source hashes only; CUDA execution pending
+Scheduling,Native scheduler; FCFS/chunking fixed by future config,Post-result publication hook; no other study scheduling,Current native scheduler,Patch scope only; no serving benchmark

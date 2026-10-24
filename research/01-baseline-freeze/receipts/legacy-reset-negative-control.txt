@@ -1,0 +1,40 @@
+{"expected_failure": true, "source_commit": "e997aba05543a127cb09d8a4c3b917f307357807", "command": ["/Users/nandanadileep/projects/vllm/vllm/vllm-exp/.venv/bin/python", "-m", "unittest", "discover", "-s", "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/research/01-baseline-freeze/tests", "-p", "test_reset_contract.py", "-v"]}
+STDOUT
+
+STDERR
+objc[7044]: Class AVFFrameReceiver is implemented in both /opt/homebrew/Cellar/ffmpeg/8.1.2/lib/libavdevice.62.3.102.dylib (0x11baec328) and /Users/nandanadileep/projects/vllm/vllm/vllm-exp/.venv/lib/python3.12/site-packages/cv2/.dylibs/libavdevice.61.3.100.dylib (0x11bbe43a8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+objc[7044]: Class AVFAudioReceiver is implemented in both /opt/homebrew/Cellar/ffmpeg/8.1.2/lib/libavdevice.62.3.102.dylib (0x11baec378) and /Users/nandanadileep/projects/vllm/vllm/vllm-exp/.venv/lib/python3.12/site-packages/cv2/.dylibs/libavdevice.61.3.100.dylib (0x11bbe43f8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+test_combined_reset_removes_publication_metadata_and_clock (test_reset_contract.ResetContractTests.test_combined_reset_removes_publication_metadata_and_clock) ... FAIL
+test_failed_reset_preserves_live_ownership_and_policy_state (test_reset_contract.ResetContractTests.test_failed_reset_preserves_live_ownership_and_policy_state) ... Failed to reset prefix cache because some blocks (5) are not freed yet
+ok
+test_successful_reset_restarts_the_allocation_epoch (test_reset_contract.ResetContractTests.test_successful_reset_restarts_the_allocation_epoch) ... FAIL
+
+======================================================================
+FAIL: test_combined_reset_removes_publication_metadata_and_clock (test_reset_contract.ResetContractTests.test_combined_reset_removes_publication_metadata_and_clock)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/research/01-baseline-freeze/tests/test_reset_contract.py", line 70, in test_combined_reset_removes_publication_metadata_and_clock
+    self.assertEqual(index.visited_blocks, 0)
+AssertionError: 2 != 0
+
+======================================================================
+FAIL: test_successful_reset_restarts_the_allocation_epoch (test_reset_contract.ResetContractTests.test_successful_reset_restarts_the_allocation_epoch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/nandanadileep/projects/vllm/vllm/vllm-exp/research/01-baseline-freeze/tests/test_reset_contract.py", line 27, in test_successful_reset_restarts_the_allocation_epoch
+    self.assertEqual((policy.allocated_blocks, policy.epochs), (0, 0))
+AssertionError: Tuples differ: (5, 1) != (0, 0)
+
+First differing element 0:
+5
+0
+
+- (5, 1)
++ (0, 0)
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.008s
+
+FAILED (failures=2)
+
+EXIT 1

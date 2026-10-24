@@ -1,0 +1,67 @@
+{
+  "scope": "Historical release bridge only",
+  "common": {
+    "prefix_caching": true,
+    "chunked_prefill": true,
+    "async_scheduling": false,
+    "tensor_parallel_size": 1,
+    "pipeline_parallel_size": 1,
+    "decode_context_parallel_size": 1,
+    "prefill_context_parallel_size": 1,
+    "physical_block_size": 16,
+    "model_revision": null,
+    "kv_cache_bytes": null,
+    "attention_backend": null
+  },
+  "arms": [
+    {
+      "name": "stock",
+      "engine_commit": "db9527a46873454610df6dbedf79a36d6bf1a7f6",
+      "prefix_match_unit": null,
+      "study_environment": {}
+    },
+    {
+      "name": "aging",
+      "engine_commit": "08d2c99e8fe5117605d0ca8eaf6b6fd07672d822",
+      "prefix_match_unit": null,
+      "study_environment": {
+        "STUDY_PARTIAL_PREFIX": "0",
+        "STUDY_EVICTION_POLICY": "aged_lfu",
+        "STUDY_LFU_HALF_LIFE_BLOCKS": "64",
+        "STUDY_PARTIAL_MIN_TOKENS": "0",
+        "STUDY_CACHE_IMPL": "incremental"
+      }
+    },
+    {
+      "name": "partial",
+      "engine_commit": "08d2c99e8fe5117605d0ca8eaf6b6fd07672d822",
+      "prefix_match_unit": 1,
+      "study_environment": {
+        "STUDY_PARTIAL_PREFIX": "1",
+        "STUDY_EVICTION_POLICY": "vllm",
+        "STUDY_LFU_HALF_LIFE_BLOCKS": "64",
+        "STUDY_PARTIAL_MIN_TOKENS": "0",
+        "STUDY_CACHE_IMPL": "incremental"
+      }
+    },
+    {
+      "name": "combined",
+      "engine_commit": "08d2c99e8fe5117605d0ca8eaf6b6fd07672d822",
+      "prefix_match_unit": 1,
+      "study_environment": {
+        "STUDY_PARTIAL_PREFIX": "1",
+        "STUDY_EVICTION_POLICY": "aged_lfu",
+        "STUDY_LFU_HALF_LIFE_BLOCKS": "64",
+        "STUDY_PARTIAL_MIN_TOKENS": "0",
+        "STUDY_CACHE_IMPL": "incremental"
+      }
+    }
+  ],
+  "benchmark_ready": false,
+  "blocking_checks": [
+    "A100 environment and CUDA build",
+    "Numerical KV/logit and lifecycle stress validation",
+    "Current-upstream baseline/port",
+    "Weights, tokenizer, backend, memory and arrival-trace locks"
+  ]
+}
