@@ -1,3 +1,6 @@
+Executed results: see RESULTS.txt and validation-a100.json.
+The preparation notes below describe the original preflight plan.
+
 A100 environment and CUDA compatibility preflight
 ================================================
 Prepared 24 October 2026. This kit installs nothing and downloads no models.

@@ -1,0 +1,26 @@
+{"tree": "/nethome/sbagathi3/vllm-research-20261024/candidate-src", "command": ["-m", "unittest", "discover", "-s", "/nethome/sbagathi3/vllm-research-20261024/validation-kit/tests", "-v"], "settings": {}}
+STDOUT
+
+STDERR
+test_decay_uses_allocated_blocks_and_applies_to_every_count (test_aging_lfu.AgingLFUTests.test_decay_uses_allocated_blocks_and_applies_to_every_count) ... ok
+test_factory_is_opt_in_and_rejects_invalid_interval (test_aging_lfu.AgingLFUTests.test_factory_is_opt_in_and_rejects_invalid_interval) ... ok
+test_multiple_epochs_are_applied_together_and_zero_allocations_do_not_age (test_aging_lfu.AgingLFUTests.test_multiple_epochs_are_applied_together_and_zero_allocations_do_not_age) ... ok
+test_stale_hot_score_can_fall_below_a_recently_used_score (test_aging_lfu.AgingLFUTests.test_stale_hot_score_can_fall_below_a_recently_used_score) ... ok
+test_configuration_resolves_one_token_matching_with_four_token_pages (test_partial_prefix.PartialPrefixTests.test_configuration_resolves_one_token_matching_with_four_token_pages) ... ok
+test_disabled_index_keeps_full_block_matching_and_deferred_free_cleans_up (test_partial_prefix.PartialPrefixTests.test_disabled_index_keeps_full_block_matching_and_deferred_free_cleans_up) ... ok
+test_eviction_and_reset_remove_every_interior_alias (test_partial_prefix.PartialPrefixTests.test_eviction_and_reset_remove_every_interior_alias) ... ok
+test_only_completed_kv_is_published_then_seven_tokens_hit (test_partial_prefix.PartialPrefixTests.test_only_completed_kv_is_published_then_seven_tokens_hit) ... ok
+test_partial_hit_gets_private_tail_and_retains_copy_endpoints (test_partial_prefix.PartialPrefixTests.test_partial_hit_gets_private_tail_and_retains_copy_endpoints) ... ok
+test_partial_to_full_promotion_restores_shorter_aliases (test_partial_prefix.PartialPrefixTests.test_partial_to_full_promotion_restores_shorter_aliases) ... ok
+test_all_offsets_match_rounded_savings_and_only_accepted_hits_copy (test_partial_threshold.ThresholdTests.test_all_offsets_match_rounded_savings_and_only_accepted_hits_copy) ... ok
+test_combined_reset_removes_publication_metadata_and_clock (test_reset_contract.ResetContractTests.test_combined_reset_removes_publication_metadata_and_clock) ... ok
+test_failed_reset_preserves_live_ownership_and_policy_state (test_reset_contract.ResetContractTests.test_failed_reset_preserves_live_ownership_and_policy_state) ... Failed to reset prefix cache because some blocks (5) are not freed yet
+ok
+test_successful_reset_restarts_the_allocation_epoch (test_reset_contract.ResetContractTests.test_successful_reset_restarts_the_allocation_epoch) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.051s
+
+OK
+
+EXIT 0

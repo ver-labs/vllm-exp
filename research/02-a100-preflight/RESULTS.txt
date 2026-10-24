@@ -1,0 +1,63 @@
+A100 preflight results — 24 October 2026
+========================================
+
+The allocated-A100 environment and editable source-install route passed the
+checks below. This is a compatibility milestone, not a serving benchmark or
+end-to-end validation of the cache candidate.
+
+Environment
+-----------
+NVIDIA A100-PCIE-40GB, 40960 MiB, capability 8.0, driver 610.57.04.
+Compute node: frozone1, RHEL 9.8, glibc 2.34; login node uses a different OS.
+Python 3.12.15; torch 2.13.0+cu130; Triton 3.7.1.
+Existing CUDA 13.2.86 compiler explicitly selected for the C++20 SM80 smoke.
+PyTorch and official vLLM native artifacts use CUDA 13.0. These are distinct
+compiler/runtime receipts; no native vLLM rebuild with CUDA 13.2 was attempted.
+
+Passed
+------
+* Fresh GPU/driver discovery inside Slurm allocation.
+* C++20 SM80 compilation, kernel launch, synchronization and host copy.
+* PyTorch FP16 and BF16 matrix multiplication.
+* Editable builds of exact pinned stock and cache-only candidate sources,
+  using the same SHA256-verified official v0.31.0 Linux CUDA wheel.
+* Both checkouts: stable native import, FP16/BF16 RMS normalization, KV-cache
+  insertion and full device-block copies. The stable extension hashes match.
+* Five metadata probes and 14 tests in each of two modes (28 executions),
+  repeated using the Linux CUDA environment. Stock and flags-off metadata match.
+* Source provenance, unchanged tracked source files and dependency consistency.
+
+Boundaries
+----------
+This route reuses the release's precompiled Linux native components, which is
+appropriate for the ten Python-only candidate changes. It does not establish
+that the complete native vLLM source compiles on this host. The small SM80 kernel
+is a genuine compiler check, not a substitute for a complete native rebuild.
+Generic cache insertion/copy checks do not validate the candidate's private-tail
+copy scheduling, alias lifecycle or model-runner integration. Actual model
+logits, quality, cancellation, forced preemption and serving performance remain
+next-stage work. No model weights were downloaded and no inference benchmark ran.
+
+Preservation and retries
+------------------------
+Job 174880 prepared the environment; 174882 completed the source/native checks.
+Job 174881 stopped because the helper expected legacy vllm._C; this release uses
+vllm._C_stable_libtorch. The corrected helper and initial failure are preserved.
+The first metadata launch preceded transfer completion and could not find its
+script; that failed launch is retained separately from the successful rerun.
+Original Mac baseline checksums and receipts remain unchanged.
+
+Isolated cluster workspace
+--------------------------
+~/vllm-research-20261024/ contains .venv-cuda, source-git (stock), candidate-src,
+the exact official wheel and receipts. The shared dependency environment now
+imports candidate-src because it was the second serial editable install. Do not
+assume it currently imports stock. No system packages or shell profiles changed.
+The scripts here preserve the executed setup in a fresh dedicated workspace;
+they are not an instruction to overwrite or rerun setup over an existing run.
+
+See validation-a100.json and package-sha256.json for the structured checks,
+limits, artifact provenance and receipt integrity.
+
+Exact executed helper sources are retained under executed-helpers/. The Python
+helpers at this directory root were subsequently formatted for repository style.

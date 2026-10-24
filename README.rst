@@ -50,7 +50,10 @@ setup receipts with the setup helpers rather than committing machine paths.
 
 Research status
 ---------------
-The research baseline has source and CPU metadata checks. Actual KV tensor
-copies, model quality, NVIDIA execution and current-upstream compatibility still
-need validation. Historical pilot results and corrected candidate results must
-be reported separately. No new inference benchmark was run during cleanup.
+The frozen baseline has source and metadata checks. A100 environment, editable
+source installations with official CUDA artifacts, and small native GPU checks
+are recorded in research/02-a100-preflight/RESULTS.txt. Complete native source
+compilation, candidate copy integration, logits, task quality, cancellation,
+forced preemption and current-upstream compatibility remain unvalidated.
+Historical pilot results and corrected candidate results must be reported
+separately. No inference benchmark was run during repository preparation.

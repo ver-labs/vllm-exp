@@ -1,0 +1,47 @@
+{
+  "date": "2026-10-24",
+  "gpu": "NVIDIA A100-PCIE-40GB",
+  "memory_mib": 40960,
+  "driver_version": "610.57.04",
+  "compute_capability": [
+    8,
+    0
+  ],
+  "compute_node_os": "RHEL 9.8; glibc 2.34",
+  "python": "3.12.15",
+  "torch": "2.13.0+cu130",
+  "torch_cuda_runtime": "13.0",
+  "cuda_compiler": "13.2.86 (existing system toolkit, explicit path)",
+  "source_install_route": "editable source with exact official v0.31.0 Linux CUDA wheel native artifacts",
+  "wheel": {
+    "filename": "vllm-0.31.0-cp38-abi3-manylinux_2_28_x86_64.whl",
+    "url": "https://files.pythonhosted.org/packages/e1/98/841d1328827dc082492fcbb0f57bdf6a9d35aa0df52bd47b75be3f504804/vllm-0.31.0-cp38-abi3-manylinux_2_28_x86_64.whl",
+    "sha256": "39132b433967f0962d03d8a5f633b9bee6b32708f566c7d5637b79f8d0ef3433",
+    "bytes": 320555825
+  },
+  "checks": {
+    "fresh_a100_allocation": true,
+    "cpp20_sm80_compile_and_launch": true,
+    "torch_fp16_bf16_matmul": true,
+    "stock_editable_build": true,
+    "candidate_editable_build": true,
+    "stock_candidate_native_operator_smokes": true,
+    "stable_cuda_extension_hashes_match": true,
+    "source_tracked_files_unchanged": true,
+    "dependency_check": true,
+    "metadata_probes": 5,
+    "metadata_test_executions": 28,
+    "stock_matches_disabled_candidate_metadata_probe": true
+  },
+  "not_validated": [
+    "Recompiling all vLLM C++/CUDA/Rust code from source",
+    "Candidate-specific partial KV copy integration in the model runner",
+    "End-to-end logits or task quality",
+    "Cancellation and forced-preemption integration",
+    "Model serving, performance or throughput",
+    "Current-upstream port or other GPU configurations"
+  ],
+  "environment_currently_imports": "candidate checkout; stock was built/tested serially in the same isolated dependency environment",
+  "system_software_modified": false,
+  "gpu_model_benchmarks_run": false
+}
