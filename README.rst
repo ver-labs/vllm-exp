@@ -57,6 +57,11 @@ configuration; see research/03-a100-correctness/RESULTS.txt for logits, KV copie
 eviction, cancellation, reset and preemption checks. The default non-invariant
 BF16 stock numerical gate failed and is preserved separately. Task quality,
 broader deployment configurations, complete native source compilation and the
-current-upstream port remain unvalidated. These are correctness checks; no
-inference performance benchmark was run during this research preparation.
+current-upstream port remain unvalidated. A controlled A100 latency/throughput benchmark is now saved in
+research/04-a100-benchmarks/INTERPRETATION.txt and RESULTS.txt: 50 fresh-engine
+runs across both models, with five paired repeats and matching output token IDs.
+It does not establish a throughput speedup; partial reuse worsens first-token
+latency on the shared-prefix workloads despite extra cache hits. The benchmark
+uses synthetic short prompts, concurrency three, 16 KV pages and eager
+batch-invariant mode; it is not a peak-throughput or production claim.
 Historical pilot results and corrected candidate results remain separate.

@@ -1,0 +1,104 @@
+A100 latency and throughput benchmark — 26 October 2026
+======================================================
+
+Primary question
+----------------
+In the already-validated synchronous configuration, how do partial reuse, aged
+LFU, and their combination change token-ID engine latency and achieved output
+throughput relative to the exact stock release? The disabled candidate is a
+control for source-install overhead or unintended flags-off differences.
+
+Scope and fixed settings
+------------------------
+The same two immutable Qwen model/tokenizer revisions and source commits from
+research step 3 are used. BF16, VLLM_BATCH_INVARIANT=1, FlashAttention 2, eager
+execution, synchronous scheduling, TP=PP=DCP=PCP=1, no speculative decoding.
+16-token physical pages, 16 total KV pages including null, max length 192,
+64-token iteration budget, three admitted requests, 256 MiB configured KV budget
+with explicit 16-page override. Effective pages are checked at runtime. Aging
+half-life remains FOUR allocations, matching correctness stress validation;
+this is an aggressive experimental setting, not a claimed optimal default.
+Fine matching is 1 token only for partial and combined; minimum extra hit is 0.
+No model/scheduler/copy/logit correctness hooks are installed in timed runs.
+Native request statistics are enabled equally for all arms. Detokenization is
+disabled: these are in-process token-ID engine timings, not HTTP/application
+latencies. Cold model loading, engine initialization and warmup are excluded.
+
+Workloads fixed before the stock measurement pilot
+-------------------------------------------------
+Each profile has 96 fixed 64-token prompts, 32 greedy output tokens per request,
+ignore_eos=True, and closed-loop concurrency 3 with no think time. Actual output
+counts are asserted. The client admits the next FCFS request when a slot opens;
+requests waiting outside this admission window are not included in latency.
+The workloads are generated from fixed English text and controlled token-ID
+changes; they are synthetic mechanism tests, not production traffic.
+
+partial_reuse: a shared 63-token document prefix with a unique final prompt
+  token. One untimed source request seeds the prefix cache before timing.
+popularity_shift: three 32-request phases, hot A then hot B then return to A;
+  every fifth request instead uses a distinct first token. A is seeded untimed.
+unique_control: distinct first tokens prevent cross-request causal-prefix reuse.
+  Self-reuse during preemption remains possible and native cache counters may
+  include it. This profile starts without an untimed document seed.
+
+Warmup, reset and isolation
+--------------------------
+Each arm/repeat runs in a fresh process with a newly loaded engine. Before
+measurement, seven reset/seed/reuse pairs cover fine hit boundaries,
+followed by a separate three-request batch for mixed decode and preemption. Between profiles, prefix-cache reset is
+asserted and aging counters must be zero. Reset retains native free-list order;
+profiles are separate empty-cache episodes within an engine, not independent
+new allocators. Profile order rotates identically for all arms within a repeat.
+The model weights/kernel caches remain warm. No model/candidate tuning follows
+inspection of comparative timings.
+
+Repetition and ordering
+-----------------------
+Five repetitions for each of five arms on each model: 50 fresh engine runs,
+150 timed profiles and 14,400 timed requests (460,800 requested output tokens).
+Cyclic arm order gives each arm every within-model position once. Model order
+alternates between repeats. All 50 runs share one Slurm A100 allocation; the
+GPU UUID must match across runs. Model and source hashes, resolved dependencies,
+hardware telemetry and raw per-request data are preserved. A stock-only
+measurement pilot validates timestamps/statistics and is excluded from effects.
+
+Metrics
+-------
+TTFT: submission immediately before engine.add_request to first nonempty token
+  result returned by engine.step; includes engine queuing and input handling.
+Total latency: the same submission to final returned token/result.
+TPOT: (last token arrival - first token arrival)/(output token count - 1).
+Throughput: actual completed output tokens / first-submission-to-last-finish
+  makespan; request throughput uses completed requests / the same makespan.
+Report mean and p50/p95 request latencies; p99 is exploratory with this sample.
+Request timestamps use perf_counter_ns. Each sampling step must expose at most
+one new token per request, preventing misleading inter-token measurements.
+Cached-token and preemption counts use native request outputs/statistics.
+Full output token IDs are checked across paired arms after timing. Any output
+mismatch invalidates the corresponding performance comparison for investigation.
+
+Analysis
+--------
+For each model/profile report the median across five run-level metrics, plus
+paired per-repeat improvements over stock. Positive improvement means lower
+latency or higher throughput. Bootstrap 95% intervals resample the FIVE paired
+repetitions, not individual requests, and wins/5 are reported. With five repeats
+intervals are coarse; small effects or overlapping intervals are inconclusive.
+Do not treat all individual tokens/requests as independent experimental repeats.
+
+Interpretation boundaries
+-------------------------
+This is achieved throughput at concurrency THREE in a deliberately small KV
+pool, with eager batch-invariant execution. It is not peak A100/vLLM capacity,
+a default-BF16 benchmark, an open-loop SLO capacity study, or evidence of a
+universal speedup. Default non-invariant BF16 numerical parity was not validated
+in step 3, so it is not silently substituted as the primary speed configuration.
+An additional workload/load/memory/backend sweep and realistic text datasets
+remain necessary before a broad serving-performance claim.
+
+Startup pilot note: the first stock pilot failed before measurement because
+offline HF resolution selected a tokenizer-only cache. Subsequent runs use a
+complete local snapshot assembled from the 17 hash-verified files already pinned
+in step 3. The model revisions/weights are unchanged. The allocated device is
+a full-size A100 PCIe 40 GB MIG 7g.40gb instance on frozone4; all repeated
+comparisons use the same UUID and the same instance.

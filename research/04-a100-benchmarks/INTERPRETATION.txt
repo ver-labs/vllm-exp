@@ -1,0 +1,85 @@
+Interpretation — A100 benchmark, 26 October 2026
+================================================
+
+No throughput speedup over stock is established in this fixed test. All 24
+candidate-versus-stock throughput intervals either cross zero or are negative.
+The most consistent policy effect is worse first-token latency with partial
+reuse, despite caching 15 additional prompt tokens on eligible shared hits.
+
+Combined policy versus stock (paired median percent improvement; + is better)
+---------------------------------------------------------------------------
+Model       Workload           Throughput     p95 E2E       p50 TTFT
+Qwen3-0.6B   partial_reuse         -1.45%        -1.42%       -15.09%
+Qwen3-0.6B   popularity_shift      -1.39%        -1.41%       -13.74%
+Qwen3-0.6B   unique_control        -0.52%        -0.48%        -1.86%
+Qwen3-1.7B   partial_reuse         +0.07%        +0.05%       -14.58%
+Qwen3-1.7B   popularity_shift      -0.46%        -0.23%       -12.71%
+Qwen3-1.7B   unique_control        +0.31%        +0.18%        -0.79%
+
+Partial reuse
+-------------
+On partial_reuse, native cached-token counts rise from 4,608 to 6,048 across
+96 requests (48 to 63 per prompt, +31.25%). On popularity_shift they rise from
+3,600 to 4,710. The output work and output token IDs remain identical. Yet
+partial/combined p50 TTFT is consistently worse on these two workloads for both
+models: approximately 12–16%, with all five paired repeats losing. Absolute
+TTFT rises roughly from 22–23 ms to 25–26 ms. This supports the narrower result
+"extra cache hits did not pay off here." It does not isolate a cause: lookup,
+bookkeeping, copies, and changed execution shapes are plausible contributors;
+this measurement contains no component-level timing to attribute the cost.
+
+Throughput / end-to-end latency
+-------------------------------
+For 0.6B, partial and combined lose throughput and p95 E2E in all five repeats
+on every profile. Throughput median changes are roughly -0.5% to -1.5%. For
+1.7B, the throughput effects are small and their intervals span zero. The
+candidate-off controls also show run variation; they remain essential to
+interpreting small source-versus-stock differences. Ratio-of-median numbers
+can differ in sign from median paired effects; CSV and figures use the latter.
+
+Aging
+-----
+Aging alone does not establish a throughput improvement on either model.
+Native cache/preemption counts are identical to stock in every profile, so
+this workload does not demonstrate a retention benefit. One small isolated
+p95-latency result (1.7B unique_control, +0.44%) has a positive repeat-bootstrap
+interval, but there is no corresponding established throughput gain and no
+multiplicity correction across the many exploratory comparisons. This is not
+evidence of a broad improvement. Half-life four allocations is an aggressive
+correctness-stress value, not an optimized policy. These results do not test
+all aging parameters or traffic patterns.
+
+What this establishes
+---------------------
+50 fresh engines, five balanced paired repeats, 150 timed profiles, 14,400
+requests and 460,800 actual output tokens completed. All generated token IDs
+matched stock across arms and repeats; the full archive and all 177 members
+were SHA256 verified. Independent local analysis reproduced the cluster JSON,
+CSV and text summary byte for byte. Earlier frozen research packages are
+unchanged. All comparisons used the same allocated GPU UUID.
+
+These are synthetic 64-token prompts and 32-token outputs at concurrency three,
+with a deliberately tiny 16-page KV pool, BF16 batch-invariant eager execution
+on a full-size A100 40 GB MIG instance. This is achieved token-ID engine
+performance; it excludes HTTP, model loading, detokenization and requests
+waiting outside the admission window. It is not peak A100 capacity, default
+vLLM performance, a production SLO study, or a general result about all KV reuse.
+
+Next research decision
+----------------------
+Do not claim a combined-policy speedup from this experiment. The next separate
+protocol should test the reuse break-even point across prompt lengths, saved
+prefix lengths, KV budgets and offered loads, with component profiling to
+explain overhead. Aging needs traffic where eviction choices actually differ.
+No settings were changed or selectively rerun after these timings were seen.
+
+Files
+-----
+RESULTS.txt: absolute metrics and all effects, with coarse 95% intervals.
+comparison.csv: every arm/model/profile/metric comparison.
+figures/: throughput, p95 E2E and p50 TTFT effects versus stock.
+evidence/matrix-r1/: raw per-request records, plan, execution and summary.
+executed-code/: exact executed sources retained as text; runnable helpers were
+formatted after execution. No scientific measurement code or data changed.
+raw-evidence-storage.json: full archive location, checksum and retained paths.
+PROTOCOL.txt: settings, workload design, timing definitions and limitations.
