@@ -65,3 +65,10 @@ latency on the shared-prefix workloads despite extra cache hits. The benchmark
 uses synthetic short prompts, concurrency three, 16 KV pages and eager
 batch-invariant mode; it is not a peak-throughput or production claim.
 Historical pilot results and corrected candidate results remain separate.
+
+Diagnostic profiling
+--------------------
+research/05-a100-profiling/INTERPRETATION.txt records stock, features-off and
+partial-reuse CPU/CUDA diagnostics on both models. They identify extra copy
+dispatch, publication and one-query attention-path tensor copies; they do not
+establish a new speedup. Raw traces are preserved in the cluster archive.

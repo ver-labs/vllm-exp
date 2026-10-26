@@ -1,0 +1,94 @@
+A100 profiling interpretation — 26 October 2026
+================================================
+
+Finding: partial reuse saves scheduled token computations, but adds host work
+and changes the first-forward execution path. The extra work is visible in
+both models. Cache lookup itself is small in this configuration. No engine
+optimization was applied during this profiling task.
+
+Shared-prefix workload: stock versus partial reuse
+--------------------------------------------------
+Each prompt has 64 tokens; stock reuses 48, partial reuses 63. New prompt work
+falls from 16 to 1 token per request. Across 96 requests and 32 generated tokens
+each, scheduled positions fall from 4,512 to 3,072, but both still execute 1,024
+model steps. This is less token work, not fewer model invocations.
+
+CPU probes (means; one diagnostic pass per arm/model):
+
+Qwen3-0.6B
+  Add request: 0.166 -> 0.281 ms/request.
+  Prefix lookup: 0.011 -> 0.024 ms/request.
+  KV copy dispatch: 0.923 ms/call, 32 calls / 96 copied block pairs.
+  Partial publication: 0.624 ms/request over the entire request; 0.0195 ms/call.
+  First-forward GPU events: 395 -> 479.
+  First-forward aten::clone calls: 56 -> 112.
+  First-forward aten::copy_ calls: 57 -> 141.
+  First-forward actual GPU event time: 5.621 -> 6.363 ms/batch.
+  KV-copy actual GPU event time: 0.340 ms/batch (separate from model-forward events).
+
+Qwen3-1.7B
+  Add request: 0.164 -> 0.275 ms/request.
+  Prefix lookup: 0.011 -> 0.023 ms/request.
+  KV copy dispatch: 0.921 ms/call, 32 calls / 96 copied block pairs.
+  Partial publication: 0.692 ms/request over the entire request; 0.0216 ms/call.
+  First-forward GPU events: 395 -> 479.
+  First-forward aten::clone calls: 56 -> 112.
+  First-forward aten::copy_ calls: 57 -> 141.
+  First-forward actual GPU event time: 9.829 -> 12.016 ms/batch.
+  KV-copy actual GPU event time: 0.341 ms/batch (separate from model-forward events).
+
+The GPU figures are one short traced three-request batch, not repeat medians or
+causal time decompositions. Tracing perturbs execution; do not promote these
+differences to a new speed benchmark. Host spans and device time overlap and
+cannot be added. The measured 0.92 ms is host copy-dispatch wall time; it is
+not pure memory-transfer time. Publication totals include decode-time calls.
+
+Where the extra model work appears
+---------------------------------
+The first forward in both models has 84 extra tensor-copy kernels. In the
+follow-up ancestry inspection of the 0.6B shared-prefix traces, stock has 56
+clones under reshape. Partial has those 56 plus 56 more under
+vllm::unified_attention_with_output -> _vllm_fa2_C::varlen_fwd -> aten::reshape.
+This points to an attention/layout path triggered by the shorter query. It
+does not prove which source-line change can safely remove the copies. Python
+stacks and tensor shapes were not recorded, and no FA2 implementation fix
+was tested. The source-mode/backend constraints remain relevant.
+
+What to work on next
+--------------------
+1. Inspect the one-query FA2 layout path and the extra reshape/clone operations.
+   It is a stronger target than lookup in this sample. Any fix must preserve
+   the validated logits/KV behavior. Do not claim all copies are redundant.
+2. Separately reduce KV-copy dispatch overhead: reuse stable metadata/views
+   or batch/fuse copying where safe. The source is the inherited native helper,
+   activated by fine reuse; changing it is a new experiment and correctness gate.
+3. Then examine input hashing and partial-index publication. The measured
+   request-ingestion increase is real within these captures, but its exact
+   internal cause is not isolated by the existing probes.
+4. Re-run the same five-repeat stock/off/partial benchmark after ONE change.
+   Keep prior results immutable. Only then test longer prompts and other KV
+   budgets to locate a break-even point. No speedup is established by profiling.
+
+Validation and scope
+--------------------
+Six fresh engines (stock, features-off, partial; two models), three workloads,
+control + CPU + trace modes: 54 diagnostic workload passes. Each control/CPU
+pass uses 96 requests; trace uses the first three. All 3,510 diagnostic request
+outputs match the original frozen stock token IDs. Eighteen CPU/CUDA traces
+have actual kernel/memory events mapped to their CPU launches. GPU annotation
+ranges are excluded from active-device timing; the raw torch operator table
+contains both CPU and GPU ranges with duplicate names and must not be used
+as an untyped name-to-time map.
+
+CPU/control elapsed differences range from -0.77% to +0.54% in these single
+passes. That is a consistency check, not a measured bound on probe overhead.
+No repeat-level intervals or significance claims follow from this diagnostic.
+Phase04 remains the five-repeat speed evidence. These runs use its synthetic
+short prompts, eager BF16 batch-invariant mode, concurrency three and 16 KV
+pages. They do not establish behavior in default/production serving settings.
+
+All evidence is retained: compact records and analyzed tables are versioned;
+full compressed raw traces and logs are in the sealed cluster archive recorded
+in raw-evidence-storage.json. The prior frozen research packages are unchanged.
+Exact executed measurement/analysis scripts are under executed-code/. The
+clone-ancestry follow-up and plotting are separate local postprocessing.

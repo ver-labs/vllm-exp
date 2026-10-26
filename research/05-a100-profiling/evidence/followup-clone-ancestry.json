@@ -1,0 +1,34 @@
+[
+  {
+    "trace": "stock-initial.trace.json.gz",
+    "sha256": "59f95f9f09fff1667f743700cb44c565ec560d0fa9dec63529a031189e747504",
+    "first_forward_clone_ancestors": [
+      {
+        "ancestors": [
+          "aten::reshape"
+        ],
+        "clones": 56
+      }
+    ]
+  },
+  {
+    "trace": "partial-initial.trace.json.gz",
+    "sha256": "14e445123b910f7bc4bed9e277c4265bef5714a230dff2c98face022d818b4e6",
+    "first_forward_clone_ancestors": [
+      {
+        "ancestors": [
+          "aten::reshape"
+        ],
+        "clones": 56
+      },
+      {
+        "ancestors": [
+          "vllm::unified_attention_with_output",
+          "_vllm_fa2_C::varlen_fwd",
+          "aten::reshape"
+        ],
+        "clones": 56
+      }
+    ]
+  }
+]

@@ -1,0 +1,161 @@
+A100 diagnostic profiling — 26 October 2026
+==========================================
+
+One diagnostic engine per model/arm, not a repeated performance benchmark.
+CPU totals below are host wall time across a whole request, divided by 96.
+Inclusive spans overlap; do not sum them. They include waits and probe cost.
+GPU trace scope totals overlap too and cover only the first three requests.
+The prior phase04 paired benchmark remains the performance evidence.
+
+
+Qwen3-0.6B / partial_reuse
+stock: control/probed TTFT 22.484/22.579 ms; probe elapsed change -0.12%; copy pairs 0; scheduled tokens 4512
+  engine.add_request: inclusive 0.1661 / exclusive 0.1661 ms/request; 1.00 calls/request
+  scheduler.schedule: inclusive 1.6485 / exclusive 0.9334 ms/request; 10.67 calls/request
+  cache_manager.get_computed_blocks: inclusive 0.0110 / exclusive 0.0110 ms/request; 1.00 calls/request
+  model.forward: inclusive 221.6867 / exclusive 221.6867 ms/request; 10.67 calls/request
+  runner.sample_tokens: inclusive 5.5023 / exclusive 1.7589 ms/request; 10.67 calls/request
+  TRACE study/model.forward: host 321.7510 / device 68.2161 ms/request
+off: control/probed TTFT 22.428/22.376 ms; probe elapsed change -0.63%; copy pairs 0; scheduled tokens 4512
+  engine.add_request: inclusive 0.1678 / exclusive 0.1678 ms/request; 1.00 calls/request
+  scheduler.schedule: inclusive 1.6458 / exclusive 0.9406 ms/request; 10.67 calls/request
+  cache_manager.get_computed_blocks: inclusive 0.0111 / exclusive 0.0111 ms/request; 1.00 calls/request
+  model.forward: inclusive 219.5209 / exclusive 219.5209 ms/request; 10.67 calls/request
+  runner.sample_tokens: inclusive 5.4923 / exclusive 1.7376 ms/request; 10.67 calls/request
+  TRACE study/model.forward: host 317.6550 / device 68.1393 ms/request
+partial: control/probed TTFT 25.403/25.572 ms; probe elapsed change +0.12%; copy pairs 96; scheduled tokens 3072
+  engine.add_request: inclusive 0.2808 / exclusive 0.2808 ms/request; 1.00 calls/request
+  scheduler.schedule: inclusive 1.2889 / exclusive 0.6997 ms/request; 10.67 calls/request
+  cache_manager.get_computed_blocks: inclusive 0.0236 / exclusive 0.0236 ms/request; 1.00 calls/request
+  partial_index.publish: inclusive 0.6237 / exclusive 0.4398 ms/request; 32.00 calls/request
+  copy.dispatch: inclusive 0.3077 / exclusive 0.3077 ms/request; 0.33 calls/request
+  model.forward: inclusive 218.8295 / exclusive 218.8295 ms/request; 10.67 calls/request
+  runner.sample_tokens: inclusive 5.4781 / exclusive 1.7354 ms/request; 10.67 calls/request
+  TRACE study/copy.dispatch: host 0.6293 / device 0.1134 ms/request
+  TRACE study/model.forward: host 317.3641 / device 68.3703 ms/request
+
+Qwen3-0.6B / popularity_shift
+stock: control/probed TTFT 22.699/22.544 ms; probe elapsed change -0.77%; copy pairs 0; scheduled tokens 5549
+  engine.add_request: inclusive 0.2000 / exclusive 0.2000 ms/request; 1.00 calls/request
+  scheduler.schedule: inclusive 1.6488 / exclusive 0.9318 ms/request; 10.92 calls/request
+  cache_manager.get_computed_blocks: inclusive 0.0158 / exclusive 0.0158 ms/request; 1.16 calls/request
+  model.forward: inclusive 225.3893 / exclusive 225.3893 ms/request; 10.92 calls/request
+  runner.sample_tokens: inclusive 5.6148 / exclusive 1.7872 ms/request; 10.92 calls/request
+  TRACE study/model.forward: host 316.3445 / device 97.5871 ms/request
+off: control/probed TTFT 22.349/22.339 ms; probe elapsed change -0.29%; copy pairs 0; scheduled tokens 5549
+  engine.add_request: inclusive 0.2027 / exclusive 0.2027 ms/request; 1.00 calls/request
+  scheduler.schedule: inclusive 1.6766 / exclusive 0.9466 ms/request; 10.92 calls/request
+  cache_manager.get_computed_blocks: inclusive 0.0162 / exclusive 0.0162 ms/request; 1.16 calls/request
+  model.forward: inclusive 223.2597 / exclusive 223.2597 ms/request; 10.92 calls/request
+  runner.sample_tokens: inclusive 5.6531 / exclusive 1.7648 ms/request; 10.92 calls/request
+  TRACE study/model.forward: host 313.6929 / device 97.3961 ms/request
+partial: control/probed TTFT 24.966/25.161 ms; probe elapsed change +0.07%; copy pairs 74; scheduled tokens 4439
+  engine.add_request: inclusive 0.3027 / exclusive 0.3027 ms/request; 1.00 calls/request
+  scheduler.schedule: inclusive 1.3876 / exclusive 0.7374 ms/request; 10.92 calls/request
+  cache_manager.get_computed_blocks: inclusive 0.0340 / exclusive 0.0340 ms/request; 1.16 calls/request
+  partial_index.publish: inclusive 0.7575 / exclusive 0.4890 ms/request; 32.22 calls/request
+  copy.dispatch: inclusive 0.5278 / exclusive 0.5278 ms/request; 0.58 calls/request
+  model.forward: inclusive 222.6921 / exclusive 222.6921 ms/request; 10.92 calls/request
+  runner.sample_tokens: inclusive 5.5741 / exclusive 1.7760 ms/request; 10.92 calls/request
+  TRACE study/copy.dispatch: host 0.6470 / device 0.2022 ms/request
+  TRACE study/model.forward: host 311.1924 / device 96.3069 ms/request
+
+Qwen3-0.6B / unique_control
+stock: control/probed TTFT 44.123/44.343 ms; probe elapsed change +0.44%; copy pairs 0; scheduled tokens 9149
+  engine.add_request: inclusive 0.2282 / exclusive 0.2282 ms/request; 1.00 calls/request
+  scheduler.schedule: inclusive 2.9518 / exclusive 1.4718 ms/request; 15.53 calls/request
+  cache_manager.get_computed_blocks: inclusive 0.3695 / exclusive 0.3695 ms/request; 14.09 calls/request
+  model.forward: inclusive 321.4919 / exclusive 321.4919 ms/request; 15.53 calls/request
+  runner.sample_tokens: inclusive 8.0395 / exclusive 2.5613 ms/request; 15.53 calls/request
+  TRACE study/model.forward: host 474.1620 / device 140.2730 ms/request
+off: control/probed TTFT 43.682/43.492 ms; probe elapsed change -0.67%; copy pairs 0; scheduled tokens 9149
+  engine.add_request: inclusive 0.2197 / exclusive 0.2197 ms/request; 1.00 calls/request
+  scheduler.schedule: inclusive 2.9085 / exclusive 1.4538 ms/request; 15.53 calls/request
+  cache_manager.get_computed_blocks: inclusive 0.3678 / exclusive 0.3678 ms/request; 14.09 calls/request
+  model.forward: inclusive 315.8894 / exclusive 315.8894 ms/request; 15.53 calls/request
+  runner.sample_tokens: inclusive 7.9679 / exclusive 2.5132 ms/request; 15.53 calls/request
+  TRACE study/model.forward: host 467.4236 / device 139.7604 ms/request
+partial: control/probed TTFT 43.645/44.022 ms; probe elapsed change +0.31%; copy pairs 0; scheduled tokens 9149
+  engine.add_request: inclusive 0.3273 / exclusive 0.3273 ms/request; 1.00 calls/request
+  scheduler.schedule: inclusive 2.6615 / exclusive 1.1401 ms/request; 15.53 calls/request
+  cache_manager.get_computed_blocks: inclusive 0.5786 / exclusive 0.5786 ms/request; 14.09 calls/request
+  partial_index.publish: inclusive 1.2392 / exclusive 0.6773 ms/request; 32.99 calls/request
+  model.forward: inclusive 313.3271 / exclusive 313.3271 ms/request; 15.53 calls/request
+  runner.sample_tokens: inclusive 7.8831 / exclusive 2.5090 ms/request; 15.53 calls/request
+  TRACE study/model.forward: host 469.5366 / device 138.6685 ms/request
+
+Qwen3-1.7B / partial_reuse
+stock: control/probed TTFT 23.213/23.121 ms; probe elapsed change -0.55%; copy pairs 0; scheduled tokens 4512
+  engine.add_request: inclusive 0.1637 / exclusive 0.1637 ms/request; 1.00 calls/request
+  scheduler.schedule: inclusive 1.4225 / exclusive 0.8024 ms/request; 10.67 calls/request
+  cache_manager.get_computed_blocks: inclusive 0.0110 / exclusive 0.0110 ms/request; 1.00 calls/request
+  model.forward: inclusive 224.6369 / exclusive 224.6369 ms/request; 10.67 calls/request
+  runner.sample_tokens: inclusive 5.5879 / exclusive 1.7673 ms/request; 10.67 calls/request
+  TRACE study/model.forward: host 327.2845 / device 127.8735 ms/request
+off: control/probed TTFT 22.539/22.614 ms; probe elapsed change +0.01%; copy pairs 0; scheduled tokens 4512
+  engine.add_request: inclusive 0.1629 / exclusive 0.1629 ms/request; 1.00 calls/request
+  scheduler.schedule: inclusive 1.4247 / exclusive 0.8073 ms/request; 10.67 calls/request
+  cache_manager.get_computed_blocks: inclusive 0.0111 / exclusive 0.0111 ms/request; 1.00 calls/request
+  model.forward: inclusive 218.4190 / exclusive 218.4190 ms/request; 10.67 calls/request
+  runner.sample_tokens: inclusive 5.4440 / exclusive 1.7262 ms/request; 10.67 calls/request
+  TRACE study/model.forward: host 320.5007 / device 127.8650 ms/request
+partial: control/probed TTFT 26.445/26.786 ms; probe elapsed change -0.56%; copy pairs 96; scheduled tokens 3072
+  engine.add_request: inclusive 0.2752 / exclusive 0.2752 ms/request; 1.00 calls/request
+  scheduler.schedule: inclusive 1.1429 / exclusive 0.6170 ms/request; 10.67 calls/request
+  cache_manager.get_computed_blocks: inclusive 0.0235 / exclusive 0.0235 ms/request; 1.00 calls/request
+  partial_index.publish: inclusive 0.6922 / exclusive 0.4787 ms/request; 32.00 calls/request
+  copy.dispatch: inclusive 0.3071 / exclusive 0.3071 ms/request; 0.33 calls/request
+  model.forward: inclusive 222.7635 / exclusive 222.7635 ms/request; 10.67 calls/request
+  runner.sample_tokens: inclusive 5.5457 / exclusive 1.7471 ms/request; 10.67 calls/request
+  TRACE study/copy.dispatch: host 0.6242 / device 0.1138 ms/request
+  TRACE study/model.forward: host 326.4333 / device 128.6535 ms/request
+
+Qwen3-1.7B / popularity_shift
+stock: control/probed TTFT 23.346/23.419 ms; probe elapsed change +0.45%; copy pairs 0; scheduled tokens 5549
+  engine.add_request: inclusive 0.1909 / exclusive 0.1909 ms/request; 1.00 calls/request
+  scheduler.schedule: inclusive 1.3849 / exclusive 0.7817 ms/request; 10.92 calls/request
+  cache_manager.get_computed_blocks: inclusive 0.0164 / exclusive 0.0164 ms/request; 1.16 calls/request
+  model.forward: inclusive 229.9231 / exclusive 229.9231 ms/request; 10.92 calls/request
+  runner.sample_tokens: inclusive 5.7639 / exclusive 1.8251 ms/request; 10.92 calls/request
+  TRACE study/model.forward: host 321.4058 / device 147.2923 ms/request
+off: control/probed TTFT 22.802/22.877 ms; probe elapsed change +0.40%; copy pairs 0; scheduled tokens 5549
+  engine.add_request: inclusive 0.1866 / exclusive 0.1866 ms/request; 1.00 calls/request
+  scheduler.schedule: inclusive 1.4395 / exclusive 0.7971 ms/request; 10.92 calls/request
+  cache_manager.get_computed_blocks: inclusive 0.0166 / exclusive 0.0166 ms/request; 1.16 calls/request
+  model.forward: inclusive 222.8142 / exclusive 222.8142 ms/request; 10.92 calls/request
+  runner.sample_tokens: inclusive 5.5839 / exclusive 1.7715 ms/request; 10.92 calls/request
+  TRACE study/model.forward: host 312.5288 / device 150.2894 ms/request
+partial: control/probed TTFT 26.105/26.144 ms; probe elapsed change -0.49%; copy pairs 74; scheduled tokens 4439
+  engine.add_request: inclusive 0.2957 / exclusive 0.2957 ms/request; 1.00 calls/request
+  scheduler.schedule: inclusive 1.1490 / exclusive 0.6098 ms/request; 10.92 calls/request
+  cache_manager.get_computed_blocks: inclusive 0.0357 / exclusive 0.0357 ms/request; 1.16 calls/request
+  partial_index.publish: inclusive 0.7580 / exclusive 0.4972 ms/request; 32.22 calls/request
+  copy.dispatch: inclusive 0.5282 / exclusive 0.5282 ms/request; 0.58 calls/request
+  model.forward: inclusive 226.6698 / exclusive 226.6698 ms/request; 10.92 calls/request
+  runner.sample_tokens: inclusive 5.6616 / exclusive 1.7837 ms/request; 10.92 calls/request
+  TRACE study/copy.dispatch: host 0.6540 / device 0.2022 ms/request
+  TRACE study/model.forward: host 317.4784 / device 151.5901 ms/request
+
+Qwen3-1.7B / unique_control
+stock: control/probed TTFT 45.707/45.512 ms; probe elapsed change -0.40%; copy pairs 0; scheduled tokens 9149
+  engine.add_request: inclusive 0.2113 / exclusive 0.2113 ms/request; 1.00 calls/request
+  scheduler.schedule: inclusive 2.5781 / exclusive 1.2942 ms/request; 15.53 calls/request
+  cache_manager.get_computed_blocks: inclusive 0.3174 / exclusive 0.3174 ms/request; 14.09 calls/request
+  model.forward: inclusive 324.2995 / exclusive 324.2995 ms/request; 15.53 calls/request
+  runner.sample_tokens: inclusive 8.1474 / exclusive 2.5758 ms/request; 15.53 calls/request
+  TRACE study/model.forward: host 487.1830 / device 213.5121 ms/request
+off: control/probed TTFT 44.521/44.840 ms; probe elapsed change +0.54%; copy pairs 0; scheduled tokens 9149
+  engine.add_request: inclusive 0.2135 / exclusive 0.2135 ms/request; 1.00 calls/request
+  scheduler.schedule: inclusive 2.5680 / exclusive 1.2676 ms/request; 15.53 calls/request
+  cache_manager.get_computed_blocks: inclusive 0.3241 / exclusive 0.3241 ms/request; 14.09 calls/request
+  model.forward: inclusive 317.8179 / exclusive 317.8179 ms/request; 15.53 calls/request
+  runner.sample_tokens: inclusive 8.0179 / exclusive 2.5474 ms/request; 15.53 calls/request
+  TRACE study/model.forward: host 471.4367 / device 194.8428 ms/request
+partial: control/probed TTFT 45.396/45.558 ms; probe elapsed change -0.14%; copy pairs 0; scheduled tokens 9149
+  engine.add_request: inclusive 0.3196 / exclusive 0.3196 ms/request; 1.00 calls/request
+  scheduler.schedule: inclusive 2.2783 / exclusive 0.9934 ms/request; 15.53 calls/request
+  cache_manager.get_computed_blocks: inclusive 0.4692 / exclusive 0.4692 ms/request; 14.09 calls/request
+  partial_index.publish: inclusive 1.2453 / exclusive 0.6882 ms/request; 32.99 calls/request
+  model.forward: inclusive 318.9966 / exclusive 318.9966 ms/request; 15.53 calls/request
+  runner.sample_tokens: inclusive 8.0223 / exclusive 2.5284 ms/request; 15.53 calls/request
+  TRACE study/model.forward: host 481.9581 / device 218.7789 ms/request

@@ -1,0 +1,41 @@
+A100 stock versus partial-reuse diagnostics — 26 October 2026
+===========================================================
+
+Goal: explain the first-token latency regression observed in phase04, before
+changing any policy. The same frozen source/model revisions, workload hashes,
+BF16 batch-invariant eager settings, 16 KV pages and concurrency three apply.
+The engine source remains unchanged. Process-local wrappers exist only inside
+diagnostic scopes and are removed afterward. No CUDA synchronization is added
+inside the measured stream. Standard profiler startup/stop synchronization may
+occur outside the stream; initialization, warmup, reset and seed are excluded.
+
+Six fresh engines: 0.6B stock/off/partial; 1.7B partial/off/stock. All on one GPU
+allocation. Each engine runs control, CPU, trace modes, with cache reset and
+the original document seed before each profile. Mode order is fixed, so these
+diagnostic passes do not estimate new paired performance effects. The prior
+five-repeat uninstrumented benchmark remains the speed evidence. Control/CPU
+use the same 96 requests per workload; trace captures the first three only.
+All output token IDs must match the previously frozen stock result for the
+corresponding request. Never merge profiler timings into phase04 benchmark.
+
+CPU spans: engine add_request and step, scheduler schedule/update, cache lookup,
+allocation/full and partial publication/free, partial-index operations, runner
+preparation/sampling/execution, model.forward and the actual GPU copy dispatcher.
+Calls, inclusive wall time and exclusive-of-instrumented-child wall time are
+collected with perf_counter_ns. These are host wall times, not CPU utilization
+or pure kernel durations. They can include waits; GPU work is asynchronous.
+Wrapper overhead remains and is assessed against the uninstrumented control;
+inclusive spans overlap and must not be added together. Exclusive spans still
+contain uninstrumented child work and some probe overhead.
+
+Separate torch.profiler CPU/CUDA traces attach the same named scopes and save
+operator aggregates plus compressed Chrome traces. Kernel/device attribution
+must come from device events, rather than Python dispatch durations. Aggregated
+parent device totals overlap; stream overlap and launch gaps require inspecting
+the timeline. The short trace does not represent the full popularity shift or
+steady-state distribution, and profiler overhead prevents direct speed claims.
+
+Per-step scheduled query lengths, token counts and copy-pair counts distinguish
+changes in model workload from lookup/publication overhead. CUDA events must be
+present. Results retain failures, raw records, source/native hashes and traces.
+No code or parameter optimization will occur before these diagnostics finish.
