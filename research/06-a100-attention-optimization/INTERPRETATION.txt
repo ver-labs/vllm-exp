@@ -1,0 +1,123 @@
+Attention-copy optimization: interpretation
+==========================================
+
+The guarded attention change improves throughput and p95 total request latency
+over stock on both models in every tested workload. The additional benefit of
+partial reuse over attention-only is not established. First-token latency does
+not show a consistent improvement for attention-only; partial reuse remains
+slower than stock for first-token latency on the shared-prefix workloads.
+
+What changed
+------------
+The patch selects the ordinary causal FA2 path for guarded one-query paged GQA
+by retaining right window zero. With one last-position query, this window has
+the same attention semantics as the unrestricted right window. It bypasses
+query-head regrouping and associated layout copies. Query bounds, model
+weights, KV contents, cache policy and native binaries are unchanged. The
+flag also applies during eligible decode steps, not only partial-hit prefill.
+It is an experimental routing policy, not a universally optimal default.
+
+Comparison with stock
+---------------------
+All percentages below are medians of five paired-repeat changes. Positive is
+better: higher output throughput, lower p95 total latency. They are not ratios
+of the separately reported absolute medians. Workload names are synthetic tests.
+
+Model / workload           Attention throughput   Combined throughput   Attention p95 E2E   Combined p95 E2E
+Qwen3-0.6B / partial_reuse: +7.54% / +7.06% / +7.05% / +6.52%
+Qwen3-0.6B / popularity_shift: +6.37% / +6.23% / +6.14% / +5.92%
+Qwen3-0.6B / unique_control: +6.79% / +6.43% / +6.27% / +6.15%
+Qwen3-1.7B / partial_reuse: +7.11% / +5.52% / +6.38% / +5.32%
+Qwen3-1.7B / popularity_shift: +6.00% / +5.26% / +5.71% / +5.16%
+Qwen3-1.7B / unique_control: +5.99% / +5.65% / +5.78% / +5.37%
+
+Attention-only throughput wins all five repeats in all six model/workload
+cells (+5.99% to +7.54% versus stock). Its p95 E2E improvement ranges from
++5.71% to +7.05%. All corresponding coarse 95% repeat-bootstrap intervals are
+positive. Combined partial+attention also wins every repeat in all six cells:
++5.26% to +7.06% throughput and +5.16% to +6.52% p95 E2E improvement.
+
+Isolating the contribution
+--------------------------
+Attention versus features-off controls establishes the gain independently of
+cache policy: +5.66% to +7.72% throughput, all five repeats winning in every
+cell. Partial+attention versus old partial gives +5.32% to +7.28%, again all
+five winning in every cell. The implementation change helped the old partial
+variant too. Cached-token and preemption counts match within all 60 paired
+workload comparisons for these two contrasts.
+
+Extra partial reuse versus attention-only: paired throughput effect [95% interval]
+  Qwen3-0.6B / partial_reuse: -0.53% [-1.86, +0.67], wins 1/5
+  Qwen3-0.6B / popularity_shift: -0.04% [-1.74, +0.15], wins 2/5
+  Qwen3-0.6B / unique_control: +0.05% [-1.50, +0.57], wins 3/5
+  Qwen3-1.7B / partial_reuse: -1.18% [-2.37, +2.40], wins 2/5
+  Qwen3-1.7B / popularity_shift: -0.69% [-2.16, +1.93], wins 1/5
+  Qwen3-1.7B / unique_control: -1.21% [-1.85, +1.76], wins 2/5
+
+Every interval for extra partial reuse spans zero. We therefore cannot claim
+a cache-policy throughput improvement from the combined variant. The simpler
+attention-only variant has the strongest current evidence.
+
+First-token latency
+-------------------
+Attention-only median TTFT is approximately unchanged versus stock. Combined
+partial+attention reduces the earlier partial variant's TTFT penalty, but
+remains about 6–9% worse than stock on the two shared-prefix workloads. Decode
+and total latency improve without establishing a general first-token gain.
+The lookup/ingestion, publication and required KV-copy costs remain separate
+optimization opportunities. These results do not identify them as the next
+best change in every workload.
+
+Correctness and mechanism checks
+--------------------------------
+48 BF16/FP16 attention cases pass against original FA2 and an FP32 reference,
+with unchanged tolerances. Noncausal, sliding-window and alibi fallbacks pass.
+The direct output-buffer attention test reduces clones from two to zero.
+Both optimized variants pass the previous model logits/KV/copy/reset/cancel/
+preemption lifecycle checks on both Qwen sizes. All 1,572 non-stock tested logit
+vectors have exact value equality with the frozen stock references (torch.equal,
+max absolute/RMS error zero; no new claim about raw signed-zero byte patterns).
+All 14,400 timed benchmark output sequences match stock across arms/repeats.
+
+Separate post-benchmark model traces confirm the mechanism on both sizes:
+first-forward clones 112 -> 56 and tensor-copy kernels 141 -> 57. Those 56 clones
+and 84 copy kernels were physically removed; other model copies and necessary
+KV-cache copies remain. The traces were outside the timed benchmark and are
+not included in speed estimates.
+
+Measurement reliability and limits
+----------------------------------
+50 fresh engines, five balanced paired repeats, 150 timed profiles, 14,400
+requests and 460,800 actual output tokens on one A100 40 GB full-size MIG
+instance. Source/native/model/workload hashes, settings and policy flags were
+verified. Independent local analysis exactly reproduces all five cluster
+summary/CSV/text artifacts, including the isolated upgrade comparisons. Earlier
+research packages remain unchanged. Exact executed source copies are preserved.
+
+These are in-process token-ID measurements: 64-token synthetic prompts, 32-token
+outputs, closed-loop concurrency three, 16 KV pages, BF16 batch-invariant FA2,
+eager synchronous execution. Loading, detokenization, HTTP and waiting outside
+admission are excluded. This does not establish peak A100 capacity, default
+CUDA-graph behavior, long-context performance, production SLO capacity or an
+optimal routing policy for all GQA models. Five-repeat intervals are coarse,
+and comparisons are exploratory without multiplicity correction. No settings
+were tuned or runs selectively repeated after the comparative timings were seen.
+
+Practical conclusion
+--------------------
+We have demonstrated a bounded attention execution improvement, not a general
+cache-algorithm speedup. Preserve this candidate and its results. The next
+separate evaluation should test longer contexts, more KV memory, larger batches
+and production execution modes with correctness gates; the native regrouping
+path may be preferable elsewhere. Novelty and current-upstream applicability
+remain to be established before a research or production claim.
+
+Artifacts
+---------
+RESULTS.txt and comparison.csv: all absolute metrics and stock contrasts.
+upgrade-comparison.csv: controls isolating attention and cache contributions.
+figures/: stock throughput/E2E/TTFT and isolated throughput contrasts.
+PROTOCOL.txt and attention.patch: fixed design and guarded code change.
+evidence/: per-request results, correctness gates and model-copy verification.
+executed-code/: exact runtime/analysis copies; local helpers may be formatted
+after execution. raw-evidence-storage.json locates sealed tensor/log archives.

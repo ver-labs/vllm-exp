@@ -1,0 +1,108 @@
+"""Verify model-level clone reduction after, and separately from, timed runs."""
+
+import json
+import os
+import subprocess
+import sys
+from pathlib import Path
+
+from trace_metrics import analyze_trace
+
+
+def copy_count(event):
+    return sum(
+        v["calls"] for k, v in event["kernels"].items() if "direct_copy_kernel" in k
+    )
+
+
+work = Path.home() / "vllm-research-20261024"
+kit = work / "attention-proof-kit-20261026"
+root = work / "attention-copy-proof-20261026"
+root.mkdir(exist_ok=False)
+assert (
+    json.loads(
+        (work / "attention-results-20261026/benchmark/summary.json").read_text()
+    )["status"]
+    == "passed"
+)
+old = json.loads((work / "profiling-results-20261026/profile-summary.json").read_text())
+lock = json.loads((work / "benchmark-kit-20261026/model-lock.json").read_text())
+checks = {}
+for model, pin in lock.items():
+    name = model.split("/")[-1]
+    destination = root / name
+    env = {k: v for k, v in os.environ.items() if not k.startswith("STUDY_")}
+    env.update(
+        PYTHONPATH=str(work / "attention-src"),
+        STUDY_PARTIAL_PREFIX="1",
+        STUDY_EVICTION_POLICY="vllm",
+        STUDY_LFU_HALF_LIFE_BLOCKS="4",
+        STUDY_PARTIAL_MIN_TOKENS="0",
+        STUDY_CACHE_IMPL="incremental",
+        STUDY_FA2_SINGLE_QUERY_CAUSAL="1",
+    )
+    command = [
+        sys.executable,
+        str(kit / "run_copy_proof.py"),
+        "--model",
+        model,
+        "--revision",
+        pin["revision"],
+        "--source",
+        str(work / "attention-src"),
+        "--output",
+        str(destination),
+        "--repeat",
+        "0",
+        "--arm",
+        "partial_attention",
+    ]
+    with (root / (name + ".log")).open("w") as log:
+        subprocess.run(
+            command,
+            env=env,
+            stdout=log,
+            stderr=subprocess.STDOUT,
+            timeout=1200,
+            check=True,
+        )
+    report = json.loads((destination / "result.json").read_text())
+    assert report["status"] == "passed"
+    stock = json.loads(
+        (
+            work
+            / "benchmark-results-20261026/matrix-r1"
+            / name
+            / "repeat-1/stock/result.json"
+        ).read_text()
+    )
+    assert stock["workload_sha256"] == report["workload_sha256"]
+    gold = {
+        r["id"]: r["output_token_ids"]
+        for r in stock["profiles"]["partial_reuse"]["requests"]
+    }
+    rows = report["profiles"]["trace/partial_reuse"]["requests"]
+    assert len(rows) == 3 and all(r["output_token_ids"] == gold[r["id"]] for r in rows)
+    actual = analyze_trace(destination / "trace-partial_reuse.trace.json.gz")
+    (destination / "attributed-kernels.json").write_text(
+        json.dumps(actual, indent=2) + "\n"
+    )
+    first = actual["scopes"]["study/model.forward"]["per_call"][0]
+    before = old[name]["partial"]["partial_reuse"]["trace_first_model_forward"]
+    assert (
+        first["cpu_ops"].get("aten::clone", 0) == before["cpu_ops"]["aten::clone"] - 56
+    )
+    assert copy_count(first) == copy_count(before) - 84
+    checks[name] = {
+        "status": "passed",
+        "output_parity": True,
+        "clones_before": before["cpu_ops"]["aten::clone"],
+        "clones_after": first["cpu_ops"].get("aten::clone", 0),
+        "copy_kernels_before": copy_count(before),
+        "copy_kernels_after": copy_count(first),
+        "note": "Short diagnostic only; not timing evidence.",
+    }
+    print("MODEL_COPY_PROOF_PASSED", name, checks[name], flush=True)
+(root / "validation.json").write_text(
+    json.dumps({"status": "passed", "models": checks}, indent=2) + "\n"
+)

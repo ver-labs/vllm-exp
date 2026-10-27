@@ -72,3 +72,13 @@ research/05-a100-profiling/INTERPRETATION.txt records stock, features-off and
 partial-reuse CPU/CUDA diagnostics on both models. They identify extra copy
 dispatch, publication and one-query attention-path tensor copies; they do not
 establish a new speedup. Raw traces are preserved in the cluster archive.
+
+Attention-copy optimization
+---------------------------
+research/06-a100-attention-optimization/INTERPRETATION.txt records a guarded FA2
+routing change validated on both models. In the declared small synthetic eager
+benchmark, attention-only improves throughput by roughly 6–7.5% and p95 total
+latency by 5.7–7%, with all five repeats winning in every workload. Additional
+partial reuse does not establish a gain over attention-only. First-token latency
+is largely unchanged for attention-only. The results are limited to the tested
+configuration and do not establish a production or general cache-policy speedup.

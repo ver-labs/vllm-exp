@@ -1,0 +1,55 @@
+{
+  "status": "passed",
+  "fresh_engines": 50,
+  "timed_profiles": 150,
+  "timed_requests": 14400,
+  "actual_output_tokens": 460800,
+  "correctness_nonstock_vectors": 1572,
+  "same_gpu_uuid": "2c08eadd-dd10-f5ae-b33d-fc88bad301c0",
+  "outputs_match_stock": true,
+  "all_compact_members_verified": 179,
+  "settings_flags_coverage_and_provenance_checked": true,
+  "prior_package_hashes_verified": {
+    "01-baseline-freeze": 27,
+    "02-a100-preflight": 84,
+    "03-a100-correctness": 68,
+    "04-a100-benchmarks": 99,
+    "05-a100-profiling": 97
+  },
+  "model_copy_proof": {
+    "status": "passed",
+    "models": {
+      "Qwen3-0.6B": {
+        "status": "passed",
+        "output_parity": true,
+        "clones_before": 112,
+        "clones_after": 56,
+        "copy_kernels_before": 141,
+        "copy_kernels_after": 57,
+        "note": "Short diagnostic only; not timing evidence."
+      },
+      "Qwen3-1.7B": {
+        "status": "passed",
+        "output_parity": true,
+        "clones_before": 112,
+        "clones_after": 56,
+        "copy_kernels_before": 141,
+        "copy_kernels_after": 57,
+        "note": "Short diagnostic only; not timing evidence."
+      }
+    }
+  },
+  "copy_proof_archive_sha256": "a8a39cd30ee5c994a4f20d09ed154579315c1bdaee87f065e29105500f853e3e",
+  "independent_local_analysis_replay": {
+    "summary.json": true,
+    "comparison.csv": true,
+    "RESULTS.txt": true,
+    "upgrade-comparison.json": true,
+    "upgrade-comparison.csv": true
+  },
+  "cache_and_preemption_counts_unchanged_in_attention_contrasts": 60,
+  "local_helper_lint": "ruff 0.14.0 E,F,I passed",
+  "launcher_shell_syntax_passed": true,
+  "figures_visually_inspected": true,
+  "raw_byte_logit_equivalence_claimed": false
+}

@@ -1,0 +1,46 @@
+Guarded FA2 single-query attention-copy experiment
+=================================================
+
+Change: retain right causal window zero for FA2 single-query causal paged GQA,
+instead of the equivalent unrestricted right window used for a last-position
+query. This selects the native ordinary causal path and avoids its GQA-group
+reshape/swap path. Query lengths, KV data, native binaries and cache decisions
+are unchanged. It is a guarded experimental routing policy, not a generally
+optimal FlashAttention default. It can affect decode and one-token prefill.
+
+The guard requires causal attention, exactly one query per sequence, paged KV,
+GQA, head size divisible by eight, no alibi, dropout zero and no requested
+sliding window. Multiquery, noncausal, MHA, alibi and local-window cases retain
+the original path. Tests cover numerical results and fallback routing. Source
+and binary hashes are preserved. No full native rebuild is needed or claimed.
+
+Required gate: 48 direct BF16/FP16 cases versus original FA2 and an FP32 reference,
+fallback tests, attention clone reduction, then both models with attention-only
+and partial+attention under the previous full logits/KV/copy/lifecycle suite.
+Use unchanged tolerances and hash-verified frozen stock references. Any failure
+stops before speed measurement. Numerical differences must be reported even if
+within the fixed tolerances. Full greedy benchmark IDs must still match stock.
+
+Performance plan fixed before observing new comparative timings:
+  stock: official frozen source, native full-block prefix caching.
+  off: original candidate, study features off.
+  partial: original candidate, fine partial prefix reuse only.
+  attention: candidate plus this patch, fine reuse off, routing flag on.
+  partial_attention: candidate plus patch, fine reuse and routing flag on.
+All aging/other policy features are off. The standalone attention arm is vital:
+an attention improvement is not automatically a cache-policy improvement.
+
+Both pinned Qwen models, five paired balanced repeats, fresh engine per arm:
+50 engines, 150 timed profiles, 14,400 requests, 460,800 output tokens. Reuse
+the exact phase04 benchmark client, workload hashes, warmup, mode, telemetry,
+three profiles, seed/reset behavior and 16-page/concurrency-three settings.
+Arms cycle through all five positions; model order alternates; profile order
+rotates identically within each repeat. All timed runs share one allocated GPU.
+No profiler, correctness wrapper or new synchronization is in the timed loop.
+
+Report stock comparisons plus attention versus off, partial_attention versus
+partial, and partial_attention versus attention. Use the same paired-repeat
+median and n=5 bootstrap intervals. Keep every run and regression. Do not tune
+or selectively rerun after inspecting comparative timings. Figures apply to
+short synthetic prompts with eager batch-invariant BF16, not production/default
+serving or peak A100 capacity. Novelty and broader generalization are not proven.

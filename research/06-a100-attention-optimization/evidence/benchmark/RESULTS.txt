@@ -1,0 +1,142 @@
+A100 attention-copy optimization: latency/throughput results
+=================================================
+
+Five balanced paired repeats; fresh engine per arm/repeat; all runs on one
+A100 40 GB full-size MIG instance. BF16, batch-invariant mode, eager, concurrency
+three, 16 total KV pages. These are token-ID engine timings, not HTTP latency
+or peak vLLM capacity. 14,400 requests / 460,800 actual generated tokens.
+All generated token IDs matched stock across paired arms and repetitions.
+
+Effects are paired repeat medians; positive means improvement. 95% bootstrap
+intervals resample five repeats and are coarse. Intervals including zero
+do not establish an improvement. No default-BF16 or production claim follows.
+
+Qwen3-0.6B / partial_reuse
+--------------------------
+stock: 128.79 output tok/s; 4.025 req/s; E2E p50/p95 744.79/750.95 ms; TTFT p50/p95 22.44/22.81 ms; TPOT p50 23.30 ms
+off: 128.47 output tok/s; 4.015 req/s; E2E p50/p95 747.23/752.03 ms; TTFT p50/p95 22.57/23.05 ms; TPOT p50 23.37 ms
+  Throughput improvement: -0.11% [95% interval -0.63, +0.02], wins 1/5
+  p95 latency improvement: -0.40% [95% interval -0.53, +0.24], wins 1/5
+  p50 TTFT improvement: -0.68% [95% interval -0.82, -0.49], wins 0/5
+partial: 128.33 output tok/s; 4.010 req/s; E2E p50/p95 748.09/751.95 ms; TTFT p50/p95 25.64/26.29 ms; TPOT p50 23.30 ms
+  Throughput improvement: -0.24% [95% interval -1.69, +0.68], wins 2/5
+  p95 latency improvement: +0.00% [95% interval -1.44, +0.61], wins 3/5
+  p50 TTFT improvement: -14.14% [95% interval -16.01, -13.55], wins 0/5
+attention: 138.25 output tok/s; 4.320 req/s; E2E p50/p95 694.39/698.03 ms; TTFT p50/p95 22.48/22.83 ms; TPOT p50 21.68 ms
+  Throughput improvement: +7.54% [95% interval +6.35, +8.46], wins 5/5
+  p95 latency improvement: +7.05% [95% interval +5.82, +7.82], wins 5/5
+  p50 TTFT improvement: +0.40% [95% interval -0.99, +0.45], wins 3/5
+partial_attention: 137.52 output tok/s; 4.298 req/s; E2E p50/p95 697.75/700.52 ms; TTFT p50/p95 24.07/24.68 ms; TPOT p50 21.73 ms
+  Throughput improvement: +7.06% [95% interval +5.42, +7.89], wins 5/5
+  p95 latency improvement: +6.52% [95% interval +5.32, +7.39], wins 5/5
+  p50 TTFT improvement: -7.25% [95% interval -8.44, -6.54], wins 0/5
+Native cached-token / preemption count medians: stock 4608/0, off 4608/0, partial 6048/0, attention 4608/0, partial_attention 6048/0
+
+Qwen3-0.6B / popularity_shift
+-----------------------------
+stock: 126.38 output tok/s; 3.949 req/s; E2E p50/p95 743.21/769.06 ms; TTFT p50/p95 22.46/44.64 ms; TPOT p50 23.25 ms
+off: 125.62 output tok/s; 3.926 req/s; E2E p50/p95 748.96/772.67 ms; TTFT p50/p95 22.66/44.88 ms; TPOT p50 23.41 ms
+  Throughput improvement: -0.60% [95% interval -1.28, -0.34], wins 0/5
+  p95 latency improvement: -0.44% [95% interval -1.35, -0.19], wins 0/5
+  p50 TTFT improvement: -0.83% [95% interval -1.45, -0.25], wins 0/5
+partial: 125.44 output tok/s; 3.920 req/s; E2E p50/p95 750.24/774.24 ms; TTFT p50/p95 25.38/46.65 ms; TPOT p50 23.37 ms
+  Throughput improvement: -1.27% [95% interval -1.90, -0.31], wins 0/5
+  p95 latency improvement: -1.43% [95% interval -2.01, -0.41], wins 0/5
+  p50 TTFT improvement: -13.63% [95% interval -14.74, -12.15], wins 0/5
+attention: 135.21 output tok/s; 4.225 req/s; E2E p50/p95 695.53/718.37 ms; TTFT p50/p95 22.47/44.61 ms; TPOT p50 21.68 ms
+  Throughput improvement: +6.37% [95% interval +5.95, +7.59], wins 5/5
+  p95 latency improvement: +6.14% [95% interval +5.38, +6.91], wins 5/5
+  p50 TTFT improvement: -0.49% [95% interval -0.84, +0.32], wins 2/5
+partial_attention: 134.58 output tok/s; 4.205 req/s; E2E p50/p95 698.81/723.02 ms; TTFT p50/p95 23.83/46.15 ms; TPOT p50 21.76 ms
+  Throughput improvement: +6.23% [95% interval +5.71, +6.88], wins 5/5
+  p95 latency improvement: +5.92% [95% interval +5.01, +6.41], wins 5/5
+  p50 TTFT improvement: -6.46% [95% interval -7.22, -5.71], wins 0/5
+Native cached-token / preemption count medians: stock 3600/1, off 3600/1, partial 4710/1, attention 3600/1, partial_attention 4710/1
+
+Qwen3-0.6B / unique_control
+---------------------------
+stock: 89.16 output tok/s; 2.786 req/s; E2E p50/p95 1071.79/1094.67 ms; TTFT p50/p95 43.83/44.77 ms; TPOT p50 33.16 ms
+off: 88.74 output tok/s; 2.773 req/s; E2E p50/p95 1077.25/1097.30 ms; TTFT p50/p95 44.18/45.02 ms; TPOT p50 33.31 ms
+  Throughput improvement: -0.41% [95% interval -1.04, -0.01], wins 0/5
+  p95 latency improvement: -0.38% [95% interval -0.94, -0.17], wins 0/5
+  p50 TTFT improvement: -0.74% [95% interval -1.16, -0.15], wins 0/5
+partial: 88.99 output tok/s; 2.781 req/s; E2E p50/p95 1073.99/1094.78 ms; TTFT p50/p95 44.37/45.29 ms; TPOT p50 33.23 ms
+  Throughput improvement: +0.01% [95% interval -1.17, +1.05], wins 3/5
+  p95 latency improvement: -0.03% [95% interval -1.04, +1.02], wins 2/5
+  p50 TTFT improvement: -1.16% [95% interval -2.39, +0.24], wins 1/5
+attention: 95.19 output tok/s; 2.975 req/s; E2E p50/p95 1002.25/1023.72 ms; TTFT p50/p95 43.89/44.67 ms; TPOT p50 30.91 ms
+  Throughput improvement: +6.79% [95% interval +5.83, +7.49], wins 5/5
+  p95 latency improvement: +6.27% [95% interval +5.60, +7.14], wins 5/5
+  p50 TTFT improvement: -0.04% [95% interval -0.63, +0.82], wins 1/5
+partial_attention: 94.88 output tok/s; 2.965 req/s; E2E p50/p95 1005.62/1026.44 ms; TTFT p50/p95 44.39/45.19 ms; TPOT p50 31.00 ms
+  Throughput improvement: +6.43% [95% interval +5.23, +7.54], wins 5/5
+  p95 latency improvement: +6.15% [95% interval +5.03, +7.19], wins 5/5
+  p50 TTFT improvement: -0.50% [95% interval -2.56, +0.09], wins 1/5
+Native cached-token / preemption count medians: stock 0/93, off 0/93, partial 0/93, attention 0/93, partial_attention 0/93
+
+Qwen3-1.7B / partial_reuse
+--------------------------
+stock: 124.66 output tok/s; 3.896 req/s; E2E p50/p95 770.15/775.39 ms; TTFT p50/p95 22.98/23.39 ms; TPOT p50 24.11 ms
+off: 125.23 output tok/s; 3.913 req/s; E2E p50/p95 767.00/770.92 ms; TTFT p50/p95 22.83/23.30 ms; TPOT p50 24.00 ms
+  Throughput improvement: +0.78% [95% interval +0.11, +1.93], wins 5/5
+  p95 latency improvement: +0.73% [95% interval +0.04, +2.05], wins 5/5
+  p50 TTFT improvement: +0.67% [95% interval -0.16, +1.92], wins 3/5
+partial: 124.38 output tok/s; 3.887 req/s; E2E p50/p95 771.71/775.51 ms; TTFT p50/p95 26.30/26.93 ms; TPOT p50 24.04 ms
+  Throughput improvement: -0.23% [95% interval -2.26, +0.80], wins 2/5
+  p95 latency improvement: -0.02% [95% interval -2.26, +0.74], wins 2/5
+  p50 TTFT improvement: -14.37% [95% interval -16.91, -14.00], wins 0/5
+attention: 133.72 output tok/s; 4.179 req/s; E2E p50/p95 717.35/723.20 ms; TTFT p50/p95 22.97/23.49 ms; TPOT p50 22.39 ms
+  Throughput improvement: +7.11% [95% interval +5.42, +8.07], wins 5/5
+  p95 latency improvement: +6.38% [95% interval +5.09, +7.31], wins 5/5
+  p50 TTFT improvement: -0.44% [95% interval -2.03, +0.58], wins 2/5
+partial_attention: 133.03 output tok/s; 4.157 req/s; E2E p50/p95 721.60/725.64 ms; TTFT p50/p95 24.78/25.31 ms; TPOT p50 22.47 ms
+  Throughput improvement: +5.52% [95% interval +4.83, +7.95], wins 5/5
+  p95 latency improvement: +5.32% [95% interval +4.89, +7.37], wins 5/5
+  p50 TTFT improvement: -9.07% [95% interval -10.37, -6.89], wins 0/5
+Native cached-token / preemption count medians: stock 4608/0, off 4608/0, partial 6048/0, attention 4608/0, partial_attention 6048/0
+
+Qwen3-1.7B / popularity_shift
+-----------------------------
+stock: 121.50 output tok/s; 3.797 req/s; E2E p50/p95 774.38/797.84 ms; TTFT p50/p95 23.35/46.16 ms; TPOT p50 24.20 ms
+off: 123.19 output tok/s; 3.850 req/s; E2E p50/p95 763.44/788.31 ms; TTFT p50/p95 23.10/45.73 ms; TPOT p50 23.86 ms
+  Throughput improvement: +1.24% [95% interval -0.04, +1.81], wins 4/5
+  p95 latency improvement: +1.13% [95% interval +0.12, +2.02], wins 5/5
+  p50 TTFT improvement: +0.96% [95% interval +0.56, +1.91], wins 5/5
+partial: 120.66 output tok/s; 3.771 req/s; E2E p50/p95 779.99/804.03 ms; TTFT p50/p95 26.25/47.59 ms; TPOT p50 24.31 ms
+  Throughput improvement: -0.71% [95% interval -2.57, +1.25], wins 1/5
+  p95 latency improvement: -0.83% [95% interval -2.58, +0.99], wins 1/5
+  p50 TTFT improvement: -12.96% [95% interval -14.05, -10.29], wins 0/5
+attention: 130.05 output tok/s; 4.064 req/s; E2E p50/p95 723.18/746.43 ms; TTFT p50/p95 23.33/46.17 ms; TPOT p50 22.54 ms
+  Throughput improvement: +6.00% [95% interval +5.72, +7.57], wins 5/5
+  p95 latency improvement: +5.71% [95% interval +5.29, +7.27], wins 5/5
+  p50 TTFT improvement: -0.03% [95% interval -1.46, +1.26], wins 2/5
+partial_attention: 129.95 output tok/s; 4.061 req/s; E2E p50/p95 723.52/747.45 ms; TTFT p50/p95 24.48/47.34 ms; TPOT p50 22.52 ms
+  Throughput improvement: +5.26% [95% interval +3.91, +7.76], wins 5/5
+  p95 latency improvement: +5.16% [95% interval +4.04, +6.97], wins 5/5
+  p50 TTFT improvement: -5.98% [95% interval -8.03, -3.98], wins 0/5
+Native cached-token / preemption count medians: stock 3600/1, off 3600/1, partial 4710/1, attention 3600/1, partial_attention 4710/1
+
+Qwen3-1.7B / unique_control
+---------------------------
+stock: 85.94 output tok/s; 2.686 req/s; E2E p50/p95 1112.11/1133.93 ms; TTFT p50/p95 45.32/45.97 ms; TPOT p50 34.42 ms
+off: 86.50 output tok/s; 2.703 req/s; E2E p50/p95 1102.54/1125.34 ms; TTFT p50/p95 45.00/45.75 ms; TPOT p50 34.11 ms
+  Throughput improvement: +0.98% [95% interval -0.18, +1.85], wins 4/5
+  p95 latency improvement: +1.04% [95% interval -0.36, +1.85], wins 4/5
+  p50 TTFT improvement: +0.84% [95% interval -0.29, +1.75], wins 4/5
+partial: 85.47 output tok/s; 2.671 req/s; E2E p50/p95 1115.45/1138.58 ms; TTFT p50/p95 45.89/46.60 ms; TPOT p50 34.49 ms
+  Throughput improvement: -0.61% [95% interval -2.36, +2.16], wins 2/5
+  p95 latency improvement: -0.41% [95% interval -2.30, +2.22], wins 2/5
+  p50 TTFT improvement: -1.72% [95% interval -3.31, +1.51], wins 1/5
+attention: 91.69 output tok/s; 2.865 req/s; E2E p50/p95 1041.99/1061.79 ms; TTFT p50/p95 45.28/45.97 ms; TPOT p50 32.17 ms
+  Throughput improvement: +5.99% [95% interval +5.08, +7.63], wins 5/5
+  p95 latency improvement: +5.78% [95% interval +4.91, +7.06], wins 5/5
+  p50 TTFT improvement: -0.35% [95% interval -1.36, +1.15], wins 2/5
+partial_attention: 91.20 output tok/s; 2.850 req/s; E2E p50/p95 1045.27/1066.19 ms; TTFT p50/p95 45.81/46.51 ms; TPOT p50 32.24 ms
+  Throughput improvement: +5.65% [95% interval +3.81, +7.43], wins 5/5
+  p95 latency improvement: +5.37% [95% interval +3.64, +6.94], wins 5/5
+  p50 TTFT improvement: -1.47% [95% interval -3.28, +0.44], wins 1/5
+Native cached-token / preemption count medians: stock 0/93, off 0/93, partial 0/93, attention 0/93, partial_attention 0/93
+
+See PROTOCOL.txt, comparison.csv, raw per-request records and summary.json.
+Workloads, model hashes, source pins, repeated-run order and output parity
+checks are retained. Speed results apply only to this declared test scope.
