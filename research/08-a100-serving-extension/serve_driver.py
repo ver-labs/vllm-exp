@@ -1,0 +1,362 @@
+"""Run correctness-gated fresh HTTP servers serially on one allocated A100."""
+
+import argparse
+import hashlib
+import json
+import os
+import signal
+import subprocess
+import sys
+import time
+import traceback
+from pathlib import Path
+from urllib.request import Request, urlopen
+
+from http_workload import call, compare_gate, one, wave
+
+ROOT = Path(__file__).resolve().parent
+WORK = Path.home() / "vllm-research-20261024"
+OUT = WORK / "serving-extension-results-20261103"
+MODELS = ("Qwen3-0.6B", "Qwen3-1.7B", "SmolLM3-3B")
+MODES = ("default_graph", "invariant_fa2_graph")
+BASE = "http://127.0.0.1:8093"
+CORE_DIGEST = "c5b2ba47283119cf12b3bdbc8cb79a940fecb4fed38ba71c70cccd84b27e20c5"
+FA2_DIGEST = "db8b4687ba2824445e40b574886408a010596e7bfa1fbe1af4d4cf8d40af8cf9"
+
+
+def write(path, value):
+    path.write_text(json.dumps(value, indent=2) + "\n")
+
+
+def model_path(model):
+    folder = (
+        "serving-extension-assets-20261103"
+        if model == "SmolLM3-3B"
+        else "benchmark-models-20261026"
+    )
+    return WORK / folder / model
+
+
+def inputs(model):
+    from transformers import AutoTokenizer
+
+    tokenizer = AutoTokenizer.from_pretrained(model_path(model), local_files_only=True)
+    sample = json.loads((ROOT / "wildchat-sample.json").read_text())
+    vocab_size = json.loads((model_path(model) / "config.json").read_text())[
+        "vocab_size"
+    ]
+
+    def tokenize(rows):
+        result = []
+        for row in rows:
+            tokens = tokenizer.apply_chat_template(
+                [{"role": "user", "content": row["text"]}],
+                tokenize=True,
+                return_dict=False,
+                add_generation_prompt=True,
+                enable_thinking=False,
+            )
+            if 8 <= len(tokens) <= 3500:
+                result.append(
+                    {"id": row["id"], "tokens": tokens, "vocab_size": vocab_size}
+                )
+        return result
+
+    evaluation, warmup = tokenize(sample["evaluation"]), tokenize(sample["warmup"])
+    assert len(evaluation) >= 96 and len(warmup) >= 16
+    return {"evaluation": evaluation[:96], "warmup": warmup[:16]}
+
+
+def env_for(arm, mode):
+    env = {
+        k: v
+        for k, v in os.environ.items()
+        if not k.startswith("STUDY_")
+        and k not in ("VLLM_BATCH_INVARIANT", "VLLM_ENABLE_V1_MULTIPROCESSING")
+    }
+    env.update(
+        VLLM_SERVER_DEV_MODE="1",
+        PYTHONPATH=str(WORK / ("source-git" if arm == "stock" else "attention-src")),
+        STUDY_PARTIAL_PREFIX="0",
+        STUDY_EVICTION_POLICY="vllm",
+        STUDY_CACHE_IMPL="incremental",
+        STUDY_FA2_SINGLE_QUERY_CAUSAL=str(int(arm == "attention")),
+    )
+    if mode == "invariant_fa2_graph":
+        env["VLLM_BATCH_INVARIANT"] = "1"
+    return env
+
+
+def metrics(path):
+    with urlopen(BASE + "/metrics", timeout=30) as response:
+        path.write_bytes(response.read())
+
+
+def reset():
+    with urlopen(
+        Request(BASE + "/reset_prefix_cache", method="POST"), timeout=60
+    ) as response:
+        assert response.status == 200
+        assert json.loads(response.read())["success"] is True
+
+
+def session(model, mode, arm, dest, bank, gate=False, repeat=0):
+    dest.mkdir(parents=True, exist_ok=False)
+    cmd = [
+        sys.executable,
+        "-m",
+        "vllm.entrypoints.cli.main",
+        "serve",
+        str(model_path(model)),
+        "--served-model-name",
+        "study",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8093",
+        "--dtype",
+        "bfloat16",
+        "--seed",
+        "0",
+        "--max-model-len",
+        "4096",
+        "--max-num-seqs",
+        "16",
+        "--max-num-batched-tokens",
+        "2048",
+        "--kv-cache-memory-bytes",
+        str(8 * 1024**3),
+        "--max-logprobs",
+        "-1",
+    ]
+    if mode == "invariant_fa2_graph":
+        cmd += ["--attention-config", '{"backend":"FLASH_ATTN","flash_attn_version":2}']
+    write(
+        dest / "launch.json",
+        {
+            "command": cmd,
+            "mode": mode,
+            "arm": arm,
+            "environment": {
+                k: v
+                for k, v in env_for(arm, mode).items()
+                if k.startswith(("STUDY_", "VLLM_"))
+            },
+        },
+    )
+    result = {
+        "status": "running",
+        "model": model,
+        "mode": mode,
+        "arm": arm,
+        "repeat": repeat,
+        "gate": gate,
+        "cases": {},
+    }
+    result["gpu"] = subprocess.check_output(
+        ["nvidia-smi", "--query-gpu=uuid,name,driver_version", "--format=csv"],
+        text=True,
+    )
+    with (dest / "server.log").open("w") as log:
+        proc = subprocess.Popen(
+            cmd,
+            env=env_for(arm, mode),
+            stdout=log,
+            stderr=subprocess.STDOUT,
+            start_new_session=True,
+        )
+        try:
+            for _ in range(1200):
+                if proc.poll() is not None:
+                    raise RuntimeError(f"Server exited {proc.returncode}")
+                try:
+                    call(BASE, "/health")
+                    break
+                except (OSError, ValueError):
+                    time.sleep(1)
+            else:
+                raise TimeoutError("Server startup exceeded 20 minutes")
+            log.flush()
+            logtext = (dest / "server.log").read_text()
+            assert (
+                "Capturing CUDA graphs" in logtext
+                or "Graph capturing finished" in logtext
+            ), "No CUDA graph capture evidence"
+            if gate:
+                rows = []
+                for item in bank["evaluation"][:8]:
+                    reset()
+                    rows.append(one(BASE, item, limit=4, gate=True))
+                write(dest / "full-logprobs.json", rows)
+                reset()
+                result["natural"] = wave(
+                    BASE, bank["evaluation"][:8], 8, 128, natural=True
+                )
+            else:
+                cases = [(3, 32), (16, 32), (3, 128), (16, 128)]
+                offset = repeat % 4
+                for concurrency, output in cases[offset:] + cases[:offset]:
+                    name = f"C{concurrency}-O{output}"
+                    reset()
+                    wave(BASE, bank["warmup"][:concurrency], concurrency, output)
+                    reset()
+                    metrics(dest / f"{name}-metrics-before.txt")
+                    result["cases"][name] = wave(
+                        BASE, bank["evaluation"], concurrency, output
+                    )
+                    metrics(dest / f"{name}-metrics-after.txt")
+                    write(dest / "result.json", result)
+                    print("SERVING_CELL", model, mode, arm, repeat, name, flush=True)
+            result["status"] = "passed"
+        except Exception:  # noqa: BLE001 -- persist failed experimental evidence
+            result.update(status="failed", error=traceback.format_exc())
+        finally:
+            os.killpg(proc.pid, signal.SIGTERM) if proc.poll() is None else None
+            try:
+                proc.wait(timeout=30)
+            except subprocess.TimeoutExpired:
+                os.killpg(proc.pid, signal.SIGKILL)
+                proc.wait()
+    write(dest / "result.json", result)
+    if result["status"] != "passed":
+        raise RuntimeError(result.get("error"))
+    return result
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--gate", action="store_true")
+    parser.add_argument("--workload-dir", type=Path)
+    args = parser.parse_args()
+    OUT.mkdir(exist_ok=True)
+    root = OUT / ("gate" if args.gate else "matrix")
+    root.mkdir(exist_ok=False)
+    snapshot = root / "executed-kit"
+    snapshot.mkdir()
+    for path in ROOT.iterdir():
+        if path.is_file() and (
+            path.suffix in (".py", ".sh") or path.name in ("PROTOCOL.txt", "pins.json")
+        ):
+            (snapshot / (path.name + ".txt")).write_bytes(path.read_bytes())
+    banks = (
+        {
+            model: (
+                json.loads((args.workload_dir / f"{model}-workload.json").read_text())
+                if args.workload_dir
+                else inputs(model)
+            )
+            for model in MODELS
+        }
+        if args.gate
+        else {
+            model: json.loads((OUT / "gate" / f"{model}-workload.json").read_text())
+            for model in MODELS
+        }
+    )
+    for model, bank in banks.items():
+        write(root / f"{model}-workload.json", bank)
+    states = {}
+    for arm, folder, commit in (
+        ("stock", "source-git", "db9527a46873454610df6dbedf79a36d6bf1a7f6"),
+        ("attention", "attention-src", "ee6e17c5cc817efd06f3a3340b82a49f586321f2"),
+    ):
+        source = WORK / folder
+        actual = subprocess.check_output(
+            ["git", "-C", str(source), "rev-parse", "HEAD"], text=True
+        ).strip()
+        assert actual == commit
+        assert not subprocess.check_output(
+            ["git", "-C", str(source), "status", "--porcelain", "--untracked-files=no"],
+            text=True,
+        )
+        native = {}
+        for path in (
+            "vllm/_C_stable_libtorch.abi3.so",
+            "vllm/vllm_flash_attn/_vllm_fa2_C.abi3.so",
+        ):
+            with (source / path).open("rb") as handle:
+                native[path] = hashlib.file_digest(handle, "sha256").hexdigest()
+        states[arm] = {"commit": commit, "native": native}
+        probe_code = (
+            "import json,pathlib,os,vllm; "
+            "p=pathlib.Path(vllm.__file__).resolve(); "
+            "assert p.is_relative_to(pathlib.Path(os.environ['PYTHONPATH'])); "
+            "print(json.dumps({'vllm_file':str(p)}))"
+        )
+        probe = subprocess.check_output(
+            [
+                sys.executable,
+                "-c",
+                probe_code,
+            ],
+            env=env_for(arm, "default_graph"),
+            text=True,
+        )
+        states[arm]["import_probe"] = json.loads(probe.splitlines()[-1])
+    assert states["stock"]["native"] == states["attention"]["native"]
+    assert states["stock"]["native"] == {
+        "vllm/_C_stable_libtorch.abi3.so": CORE_DIGEST,
+        "vllm/vllm_flash_attn/_vllm_fa2_C.abi3.so": FA2_DIGEST,
+    }
+    write(root / "source-state.json", states)
+    write(
+        root / "kit-sha256.json",
+        {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in ROOT.glob("*.py")},
+    )
+    validation = {}
+    if args.gate:
+        for model in MODELS:
+            for mode in MODES:
+                key = f"{model}/{mode}"
+                try:
+                    results = {}
+                    for arm in ("stock", "attention"):
+                        dest = root / model / mode / arm
+                        results[arm] = session(
+                            model, mode, arm, dest, banks[model], gate=True
+                        )
+                    before = json.loads(
+                        (root / key / "stock/full-logprobs.json").read_text()
+                    )
+                    after = json.loads(
+                        (root / key / "attention/full-logprobs.json").read_text()
+                    )
+                    validation[key] = compare_gate(before, after)
+                    assert [
+                        r["token_ids"] for r in results["stock"]["natural"]["requests"]
+                    ] == [
+                        r["token_ids"]
+                        for r in results["attention"]["natural"]["requests"]
+                    ], "Natural output mismatch"
+                except Exception:  # noqa: BLE001 -- persist failed experimental evidence
+                    validation[key] = {
+                        "status": "failed",
+                        "error": traceback.format_exc(),
+                    }
+                write(root / "validation.json", validation)
+                print("SERVING_GATE", key, validation[key]["status"], flush=True)
+    else:
+        gates = json.loads((OUT / "gate/validation.json").read_text())
+        plan = []
+        for repeat in range(6):
+            for model in MODELS[repeat % 3 :] + MODELS[: repeat % 3]:
+                for mode in MODES[repeat % 2 :] + MODES[: repeat % 2]:
+                    if gates[f"{model}/{mode}"]["status"] != "passed":
+                        continue
+                    arms = (
+                        ("stock", "attention")
+                        if repeat % 2 == 0
+                        else ("attention", "stock")
+                    )
+                    for arm in arms:
+                        plan.append((model, mode, arm, repeat))
+        write(root / "plan.json", plan)
+        assert plan, "No passing model/mode gates"
+        for model, mode, arm, repeat in plan:
+            dest = root / model / mode / f"repeat-{repeat + 1}" / arm
+            session(model, mode, arm, dest, banks[model], repeat=repeat)
+    print("SERVING_DRIVER_COMPLETE", root, flush=True)
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,40 @@
+Untimed default-mode controls — 3 November 2026
+=============================================
+
+These explanatory controls were added after the first numerical failures and
+before performance measurement. They do not reverse the preregistered timing
+exclusions. One fresh stock repeat and one same-source feature-disabled server
+were run per model on the identical saved inputs, with graphs enabled.
+
+Cold four-step full-distribution check:
+  Stock versus stock-repeat: all32 API log-probability vectors exactly equal
+    for each of the three models (96/96 in total).
+  Stock versus features-off: both Qwen models differ, including prefill;
+    SmolLM3 is equal in all32 vectors.
+  Features-off versus optimized: prefill vectors are equal in every model.
+    Decode differences remain: 23/32 total vectors exactly equal for each Qwen
+    size, 20/32 for SmolLM3. Same-history maximum RMS is .1798, .2803 and .1007,
+    respectively. Every model fails the fixed API distribution limits.
+
+This separates two observations. Qwen's cross-source prefill differences cannot
+be attributed solely to a guard active only at single-query decode. Their
+underlying source/compilation cause is not isolated further. However, the
+same-source flag comparison independently shows default-mode decode numerical
+differences, so the default-mode exclusion is not explained away by that
+cross-source confound.
+
+Natural-response exact token-sequence matches out of eight pairs:
+                              Qwen0.6B   Qwen1.7B   SmolLM3
+  stock versus stock-repeat       4          8          8
+  stock versus features-off       2          2          6
+  features-off versus optimized   3          3          2
+
+Variable batching/arrivals can change default-mode greedy sequences even when
+repeating stock. These small, unlabelled natural-response samples are not
+task-accuracy scores or an estimate of a general quality regression. Full
+per-step diagnostics distinguish matched histories from histories that have
+already diverged. No speed claims are made from these untimed controls.
+
+The validated batch-invariant graph mode remains exactly equal for all96
+checked full distributions and all24 natural response pairs. Only that mode
+is admitted to the primary six-repeat latency/throughput matrix.

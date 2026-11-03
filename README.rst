@@ -91,3 +91,12 @@ Six paired repeats show a throughput gain in all 18 cells (about 1.8–8.0%), wi
 smaller gains at the 2048-token/C16 corner. P95 total latency also improves; TTFT
 does not improve consistently. This uses ample KV capacity and zero cache hits/
 preemptions, preserving the declared BF16 batch-invariant eager A100 scope.
+
+Serving and model-family validation
+-----------------------------------
+research/08-a100-serving-extension/LITERATURE-AND-NOVELTY.txt reviews close
+prior work on the packed-GQA output-copy path and limits the novelty claim.
+The separate CUDA-graph HTTP study uses pinned WildChat prompts and adds
+SmolLM3-3B. Its three controlled graph-mode numerical gates pass; repeated measurements
+are pending. See STATE.txt. Default BF16 numerical failures remain excluded
+from timings; untimed controls distinguish baseline and routing variability.

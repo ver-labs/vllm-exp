@@ -1,0 +1,42 @@
+Completed correctness checks — 3 November 2026
+============================================
+
+All six model/mode pairs reached ready with CUDA-graph capture evidence on the
+frozen A100 build. Startup compatibility is distinct from numerical equivalence.
+
+Controlled batch-invariant FA2 CUDA graphs:
+  Qwen3-0.6B: 32/32 full API log-probability vectors equal in value; 8/8 natural
+    response pairs have identical generated token IDs.
+  Qwen3-1.7B: 32/32 vectors equal; 8/8 natural pairs identical.
+  SmolLM3-3B: 32/32 vectors equal; 8/8 natural pairs identical.
+These are API log-probability values, not raw logits or a byte-level
+hidden-state claim. They establish equivalence on the checked prompts, not
+general task accuracy. All three pairs are eligible for the timed matrix.
+
+Default BF16 graph modes failed the fixed numerical gate:
+  Qwen3-0.6B: 0/32 vectors exactly equal; same-history maximum RMS .1743;
+    3/8 natural response pairs identical. One four-step sequence also differs.
+  Qwen3-1.7B: 0/32 exactly equal; same-history maximum RMS .5038;
+    4/8 natural pairs identical. Four-step sequences match.
+  SmolLM3-3B: 20/32 exactly equal; same-history maximum RMS .1007;
+    2/8 natural pairs identical. Four-step sequences match.
+The fixed log-probability limits are RMS .02, atol .0625 and rtol .005. They
+reuse the numerical settings of the earlier raw-logit test on a different
+observable, as declared in the protocol. Do not use differences
+after generated histories diverge as teacher-forced numerical errors. Full
+per-step diagnostics label whether histories still match.
+
+Both Qwen pairs differ even on prefill vectors, where the one-query guard is
+inactive. Extra untimed stock-repeat and same-source features-off controls are
+running to distinguish baseline/compiler variation from the routing flag.
+A failed gate or different answer is not, by itself, a measured task-quality
+regression. The primary default-mode exclusions remain unchanged.
+
+Additional native gate:
+  24 cases: GQA ratio4 and MHA; batch3/8/16; context512/3500; query1/2.
+  All output/LSE and FP32-reference checks passed at the preserved limits.
+  Fallback checks passed. Direct attention CPU clone count fell from2 to0.
+  This is a native-call check, not a measured model-level CUDA-graph clone count.
+
+The repeated latency/throughput matrix is pending completion. No new speedup
+is claimed in this validation report. Phases01–07 remain unchanged.

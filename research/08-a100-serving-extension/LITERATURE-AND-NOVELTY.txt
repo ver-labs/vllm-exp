@@ -1,0 +1,106 @@
+Literature and upstream review — 3 November 2026
+===============================================
+
+Finding
+-------
+The copying problem and the packed-GQA decode path are known. Our existing
+evidence supports a reproducible performance case study of a guarded routing
+choice on a frozen vLLM/FA2 stack. It does not establish a new attention
+algorithm, a new KV-cache algorithm, priority over prior work, or applicability
+to all current serving defaults.
+
+Closest implementation work
+---------------------------
+1. Dao-AILab/flash-attention PR3066, opened 21 October 2026, proposes writing a
+   caller-provided output buffer directly on the same varlen single-query GQA
+   path. It explicitly identifies the output reshape copy and changes output
+   strides while retaining grouped-query packing. Our change instead avoids
+   the packed path under a narrow guard, so it also changes the compute route.
+   This is close prior work and an important alternative comparator. Its
+   reported GPU results are the author's claims, not measurements reproduced
+   in our repository. It was open when inspected. No duplicate PR is proposed.
+   https://github.com/Dao-AILab/flash-attention/pull/3066
+
+2. The original vLLM-fork PR32 and full commit
+   04325b6798bcc326c86fb35af62d05a9c8c8eceb were independently fetched. It merged
+   on 2 December 2024 and explicitly documents the redundant reshape clone,
+   uses a temporary output, then copies into the caller's output view. Our
+   pinned source already contains this copy-back implementation. This
+   establishes that the issue predates our study; we must not claim discovery
+   of the copy. The full original commit metadata/diff is saved in upstream/.
+   https://github.com/vllm-project/flash-attention/pull/32
+   https://github.com/vllm-project/flash-attention/commit/04325b6798bcc326c86fb35af62d05a9c8c8eceb
+
+3. vllm-project/flash-attention PR87 fixes LSE layout in a split-KV case. This
+   concerns correctness of regrouped softmax statistics, not our end-to-end
+   routing performance claim. It motivates retaining LSE/reference tests.
+   https://github.com/vllm-project/flash-attention/pull/87
+
+4. vllm-project/vllm PR61129 caches transpose/split tensor views of the KV store.
+   Its claimed target is repeated view construction, not materializing the
+   single-query Q/output layout copies measured in phase05. Related overhead
+   work should be cited rather than conflated with our mechanism.
+   https://github.com/vllm-project/vllm/pull/61129
+
+Source status
+-------------
+Current vLLM main was frozen at a900ac810ecaedc0c2c5e9a8887e353cf1a5c350.
+Its CMake dependency is b273a02621d3c94bc747df67204f591b67f38fae in the
+vllm-project FlashAttention fork. That exact dependency retains the one-query
+head-group transpose/reshape and output-copy logic; main of the fork retains
+the mechanism too. The source describes packing as an intended optimization.
+Presence of this code does not prove that a selected modern backend executes
+it, nor that our patch wins with current native binaries. Those require actual
+dispatch and timing evidence. Our GPU executable remains the frozen v0.31.0
+source/native stack; current-main runtime compatibility has not been tested.
+
+Immutable source URLs, fetched contents, commit metadata, SHA256s and query
+responses are saved in upstream/. Broad searches are paginated only to the
+first100 results and are explicitly incomplete. Exact-symbol queries are more
+focused. An absence in those results would not prove novelty.
+
+Research context
+----------------
+GQA (Ainslie et al., EMNLP2023) reduces the KV-head count between MHA and MQA.
+We retain pretrained models and do not propose or train a new attention form.
+https://arxiv.org/abs/2305.13245
+
+FlashAttention-2 (Dao, ICLR2024) optimizes attention parallelism and work
+partitioning. We reuse its native implementation rather than introduce a new
+attention kernel.
+https://arxiv.org/abs/2307.08691
+
+Flash-Decoding (Dao, Haziza, Massa, Sizov, 2023) parallelizes decoding over KV
+chunks; FlashDecoding++ (Hong et al., 2023/2024) studies softmax, flat GEMMs and
+hardware-dependent dataflow. These establish that decode execution choices
+and their hardware/shape tradeoffs are existing research areas. Their reported
+speedups use different stacks and cannot be compared numerically to ours.
+https://pytorch.org/blog/flash-decoding/
+https://arxiv.org/abs/2311.01282
+
+PagedAttention (Kwon et al., SOSP2023) manages paged KV storage and sharing.
+Our isolated attention experiments leave cache policy unchanged, so the
+attention-copy result must not be framed as a new cache eviction/reuse method.
+https://arxiv.org/abs/2309.06180
+
+Claim we can currently defend
+----------------------------
+On the declared frozen A100 BF16 batch-invariant eager FA2 configuration, a
+guarded bypass of the packed one-query GQA path reduced measured copies and
+improved throughput in the tested Qwen workloads. The longer-prompt/concurrency
+sweep showed about1.8–8.0% improvement with matching generated IDs; TTFT gains
+were not consistent. This is an empirical implementation result with explicit
+limits. A publication should explain why the existing fast path loses here,
+compare close alternatives, and report cases where the bypass is neutral or
+slower. Default serving, new-family results, task quality and current-upstream
+runtime claims remain pending until their separate evidence is available.
+
+Publication assessment
+----------------------
+An engineering article/case study is already plausible with the existing
+reproducible evidence and proper prior-work attribution. A research paper's
+novelty is not established by the review. A stronger research contribution
+could be a measured, general cost model or adaptive choice between packed and
+ordinary decode paths, evaluated against both current default backends and
+the direct-output alternative on held-out shapes/hardware. That is a possible
+future question, not a completed contribution or promised acceptance.

@@ -1,0 +1,32 @@
+Serving extension status — 3 November 2026
+========================================
+
+Literature/source review saved in LITERATURE-AND-NOVELTY.txt. The copying issue
+has close prior work; a new algorithm/priority claim is not established.
+
+Frozen protocol, public source snapshots, dataset attribution and exact model/
+dataset revisions are saved in this directory. Both prior Qwen models and the
+additional SmolLM3-3B snapshot are staged on the A100 cluster.
+
+Current Slurm chain:
+  201998: HTTP CUDA-graph numerical/output gates, complete.
+  202009: all-vector diagnostics plus ratio4 native FP32 gate, complete.
+  202212: untimed stock-repeat/features-off explanatory controls, complete.
+  202010: fixed six-repeat HTTP matrix, running; 3h wall limit.
+
+Only model/mode combinations passing the numerical AND natural-output gate
+may run in the timed matrix. Failed modes remain documented and excluded.
+The matrix automatically summarizes and archives completed evidence. Jobs run
+on the cluster independently of the local SSH window.
+
+All three default BF16 graph modes exceeded the declared log-probability
+tolerance. All three invariant FA2 graph modes passed: all96 full API
+log-probability vectors equal in value and all24 natural response pairs match.
+The additional24 native reference/fallback checks passed. See VALIDATION.txt.
+Explanatory controls are in DEFAULT-CONTROLS.txt. Performance outcomes remain
+pending. These numerical
+observations are not latency conclusions or a task-accuracy measurement.
+
+Prepared on local branch research/a100-serving-extension-20261103. No changes
+were pushed. All605 prior package hashes from phases01–07 remain unchanged.
+PREFLIGHT-NOTES.txt distinguishes harness/API corrections from model failures.

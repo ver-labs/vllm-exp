@@ -1,0 +1,113 @@
+{
+  "sha": "1dc8232fe209e2c48b1d3e677f26d68e4b856212",
+  "node_id": "C_kwDOHXVlhNoAKDFkYzgyMzJmZTIwOWUyYzQ4YjFkM2U2NzdmMjZkNjhlNGI4NTYyMTI",
+  "commit": {
+    "author": {
+      "name": "liangel-02",
+      "email": "liangel@meta.com",
+      "date": "2026-11-02T19:43:07Z"
+    },
+    "committer": {
+      "name": "GitHub",
+      "email": "noreply@github.com",
+      "date": "2026-11-02T19:43:07Z"
+    },
+    "message": "[mla] expose kernel cta choice for autotuning (#3091)\n\nflash_attn_func and flash_attn_varlen_func take config (FwdConfig, or MlaFwdConfig\nwith qv) and pass it to _flash_attn_fwd, so autotuning can pick the MLA kernel\n(MlaFwdConfig.kernel: 2cta / 1cta / 1cta_kb64) through the public entry points.\nAs in benchmarks/fwd_config_bench.py, a candidate starts from what config=None\nselects; validate_mla_fwd_config rejects kernels that cannot run the call.",
+    "tree": {
+      "sha": "c2666295c9faa061f6a764be2b3dc0797437c671",
+      "url": "https://api.github.com/repos/Dao-AILab/flash-attention/git/trees/c2666295c9faa061f6a764be2b3dc0797437c671"
+    },
+    "url": "https://api.github.com/repos/Dao-AILab/flash-attention/git/commits/1dc8232fe209e2c48b1d3e677f26d68e4b856212",
+    "comment_count": 0,
+    "verification": {
+      "verified": true,
+      "reason": "valid",
+      "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJq6OfLCRC1aQ7uu5UhlAAAZ6QQAKbUWoO+ZiApIH351v5v4XXa\nu1hzXBh8XxZTrluFF2FtLNUhlw/A60XG0Qoc/SgmzJ8mMiZ2WwN61uhroL9dFuAO\newJrsXIdR94zIvDGfeWcYIjQcEv+X2HUAKdeqJGUpKChBhHKFsZbhU4SCTWUJ5Ve\n/O1oJRzhXZnCIDwwV4Vv0AjQq3Fc26YSKMqcKb4aF5defMN3ZozT+P7N5zD248Xz\npviC5BcXBCv1dplbQNtVpnIUMLx7owZA/s7DkXMX6VNVJ2Ios9z2h+k1XBgSw2MK\njgs13/nWL6sx9PWPr1ag0G9tsXHAern8LkmLVt2GP0GXkxaXVEmuY2AamyJhWSIL\nyF2egnS62F6cY9uEII1QHaObZ4JI0Sb0QehzMQxTdTc6vZu7GJ/FibeByM7A3ROe\nPq6nve01KVs0Pz9veMZobzkD1Tp2p9vlLGmaquWO/bheL0GPjEVTk+mOjOYhrGJb\nMVgwABdsPQbP6c/tcx6k1wlvIzDkMvJ3UU6n1eLB1Hfgil/3p3XpZHBfZwbePpzs\n5Y+d05wXQFWBaWD/qbY0tXWAZ5pacBDjh9b5SeL4LzvBnLss1SDa70Qr0GIsXQ8v\neE2wXy++r2E05huMed0pZxtaxlb/oLNX1njZRisUQ9mJp+7Z4Cz66M1xpFWd5K7n\nCgmsF2uPPDtT/gTWjtAq\n=nSwc\n-----END PGP SIGNATURE-----\n",
+      "payload": "tree c2666295c9faa061f6a764be2b3dc0797437c671\nparent 54b044c8cf897dfcc2577a665559d1bfda0bfc80\nauthor liangel-02 <liangel@meta.com> 1793648587 -0500\ncommitter GitHub <noreply@github.com> 1793648587 -0800\n\n[mla] expose kernel cta choice for autotuning (#3091)\n\nflash_attn_func and flash_attn_varlen_func take config (FwdConfig, or MlaFwdConfig\nwith qv) and pass it to _flash_attn_fwd, so autotuning can pick the MLA kernel\n(MlaFwdConfig.kernel: 2cta / 1cta / 1cta_kb64) through the public entry points.\nAs in benchmarks/fwd_config_bench.py, a candidate starts from what config=None\nselects; validate_mla_fwd_config rejects kernels that cannot run the call.",
+      "verified_at": "2026-11-02T19:43:07Z"
+    }
+  },
+  "url": "https://api.github.com/repos/Dao-AILab/flash-attention/commits/1dc8232fe209e2c48b1d3e677f26d68e4b856212",
+  "html_url": "https://github.com/Dao-AILab/flash-attention/commit/1dc8232fe209e2c48b1d3e677f26d68e4b856212",
+  "comments_url": "https://api.github.com/repos/Dao-AILab/flash-attention/commits/1dc8232fe209e2c48b1d3e677f26d68e4b856212/comments",
+  "author": {
+    "login": "liangel-02",
+    "id": 224883113,
+    "node_id": "U_kgDODWdxqQ",
+    "avatar_url": "https://avatars.githubusercontent.com/u/224883113?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/liangel-02",
+    "html_url": "https://github.com/liangel-02",
+    "followers_url": "https://api.github.com/users/liangel-02/followers",
+    "following_url": "https://api.github.com/users/liangel-02/following{/other_user}",
+    "gists_url": "https://api.github.com/users/liangel-02/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/liangel-02/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/liangel-02/subscriptions",
+    "organizations_url": "https://api.github.com/users/liangel-02/orgs",
+    "repos_url": "https://api.github.com/users/liangel-02/repos",
+    "events_url": "https://api.github.com/users/liangel-02/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/liangel-02/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+  },
+  "committer": {
+    "login": "web-flow",
+    "id": 19864447,
+    "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+    "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/web-flow",
+    "html_url": "https://github.com/web-flow",
+    "followers_url": "https://api.github.com/users/web-flow/followers",
+    "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+    "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+    "organizations_url": "https://api.github.com/users/web-flow/orgs",
+    "repos_url": "https://api.github.com/users/web-flow/repos",
+    "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/web-flow/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+  },
+  "parents": [
+    {
+      "sha": "54b044c8cf897dfcc2577a665559d1bfda0bfc80",
+      "url": "https://api.github.com/repos/Dao-AILab/flash-attention/commits/54b044c8cf897dfcc2577a665559d1bfda0bfc80",
+      "html_url": "https://github.com/Dao-AILab/flash-attention/commit/54b044c8cf897dfcc2577a665559d1bfda0bfc80"
+    }
+  ],
+  "stats": {
+    "total": 93,
+    "additions": 87,
+    "deletions": 6
+  },
+  "files": [
+    {
+      "sha": "d587fa6847db7e5104a73eb005184e27b77d797f",
+      "filename": "flash_attn/cute/interface.py",
+      "status": "modified",
+      "additions": 20,
+      "deletions": 6,
+      "changes": 26,
+      "blob_url": "https://github.com/Dao-AILab/flash-attention/blob/1dc8232fe209e2c48b1d3e677f26d68e4b856212/flash_attn%2Fcute%2Finterface.py",
+      "raw_url": "https://github.com/Dao-AILab/flash-attention/raw/1dc8232fe209e2c48b1d3e677f26d68e4b856212/flash_attn%2Fcute%2Finterface.py",
+      "contents_url": "https://api.github.com/repos/Dao-AILab/flash-attention/contents/flash_attn%2Fcute%2Finterface.py?ref=1dc8232fe209e2c48b1d3e677f26d68e4b856212",
+      "patch": "@@ -3321,6 +3321,7 @@ def forward(\n         return_lse: bool = False,\n         gather_bwd_recompute_p: bool = False,\n         gather_bwd_token_chunk: Optional[int] = None,\n+        config: FwdConfig | MlaFwdConfig | None = None,\n     ):\n         aux_scalars = tuple(aux_scalars) if aux_scalars else None\n         shared_kv = k is v\n@@ -3351,6 +3352,7 @@ def forward(\n             return_lse=return_lse,\n             gather_kv_indices=gather_kv_indices,\n             gather_bwd_recompute_p=gather_bwd_recompute_p,\n+            config=config,\n         )\n         ctx.save_for_backward(q, k, v, qv, out, lse, p, row_max, o_lo, gather_kv_indices, learnable_sink, *(aux_tensors or ()))\n         ctx.gather_bwd_recompute_p = gather_bwd_recompute_p\n@@ -3398,9 +3400,9 @@ def backward(ctx, dout, dlse):\n                 o_lo=o_lo,\n             )\n             if ctx.shared_kv:\n-                return dqv, dv, None, None, None, None, None, None, dsink, *((None,) * 14)\n+                return dqv, dv, None, None, None, None, None, None, dsink, *((None,) * 15)\n             else:\n-                return dq, dk, dv, dqv, None, None, None, None, dsink, *((None,) * 14)\n+                return dq, dk, dv, dqv, None, None, None, None, dsink, *((None,) * 15)\n         else:\n             bwd_result = _flash_attn_bwd(\n                 q,\n@@ -3429,7 +3431,7 @@ def backward(ctx, dout, dlse):\n                 dsink = None\n             else:\n                 dq, dk, dv, dsink = bwd_result\n-            return dq, dk, dv, None, None, None, None, None, dsink, *((None,) * 14)\n+            return dq, dk, dv, None, None, None, None, None, dsink, *((None,) * 15)\n \n \n class FlashAttnVarlenFunc(torch.autograd.Function):\n@@ -3469,6 +3471,7 @@ def forward(\n         disable_scheduler_metadata: bool = False,\n         gather_bwd_recompute_p: bool = False,\n         gather_bwd_token_chunk: Optional[int] = None,\n+        config: FwdConfig | MlaFwdConfig | None = None,\n     ):\n         aux_scalars = tuple(aux_scalars) if aux_scalars else None\n         shared_kv = k is v\n@@ -3510,6 +3513,7 @@ def forward(\n             seqlen_k_per_split=seqlen_k_per_split,\n             disable_scheduler_metadata=disable_scheduler_metadata,\n             gather_bwd_recompute_p=gather_bwd_recompute_p,\n+            config=config,\n         )\n         ctx.save_for_backward(\n             q,\n@@ -3583,9 +3587,9 @@ def backward(ctx, dout, dlse):\n                 o_lo=o_lo,\n             )\n             if ctx.shared_kv:\n-                return dqv, dv, None, None, *((None,) * 12), dsink, *((None,) * 16)\n+                return dqv, dv, None, None, *((None,) * 12), dsink, *((None,) * 17)\n             else:\n-                return dq, dk, dv, dqv, *((None,) * 12), dsink, *((None,) * 16)\n+                return dq, dk, dv, dqv, *((None,) * 12), dsink, *((None,) * 17)\n         else:\n             bwd_result = _flash_attn_bwd(\n                 q,\n@@ -3619,7 +3623,7 @@ def backward(ctx, dout, dlse):\n                 dsink = None\n             else:\n                 dq, dk, dv, dsink = bwd_result\n-            return dq, dk, dv, None, *((None,) * 12), dsink, *((None,) * 16)\n+            return dq, dk, dv, None, *((None,) * 12), dsink, *((None,) * 17)\n \n \n def _validate_gather_bwd_kwargs(\n@@ -3683,6 +3687,7 @@ def flash_attn_func(\n     return_lse: bool = False,\n     gather_bwd_recompute_p: bool = False,\n     gather_bwd_token_chunk: Optional[int] = None,\n+    config: FwdConfig | MlaFwdConfig | None = None,\n ):\n     gather_bwd_token_chunk = _validate_gather_bwd_kwargs(\n         gather_kv_indices, gather_bwd_recompute_p, gather_bwd_token_chunk\n@@ -3725,6 +3730,7 @@ def flash_attn_func(\n         return_lse,\n         gather_bwd_recompute_p,\n         gather_bwd_token_chunk,\n+        config,\n     )\n \n \n@@ -3762,6 +3768,7 @@ def flash_attn_varlen_func(\n     disable_scheduler_metadata: bool = False,\n     gather_bwd_recompute_p: bool = False,\n     gather_bwd_token_chunk: Optional[int] = None,\n+    config: FwdConfig | MlaFwdConfig | None = None,\n ):\n     \"\"\"\n     Tensor arguments:\n@@ -3827,6 +3834,12 @@ def flash_attn_varlen_func(\n         gather_bwd_recompute_p, making the whole backward transient bounded by the chunk.\n         Must be a positive int (anything else raises); requires varlen or batch 1 (warns\n         and runs unchunked otherwise). Small launch-overhead cost. None disables.\n+\n+    config: explicit forward config (FwdConfig, or MlaFwdConfig with qv), as _flash_attn_fwd\n+        takes it; e.g. MlaFwdConfig.kernel picks the 2CTA or 1CTA MLA kernel. Validated against\n+        the call (raises if it cannot run it), then used as given: it decides the kernel, tiles\n+        and split count in place of num_splits and FLASH_ATTENTION_MLA_1CTA. None (default)\n+        selects one. The backward is unaffected.\n     \"\"\"\n     gather_bwd_token_chunk = _validate_gather_bwd_kwargs(\n         gather_kv_indices, gather_bwd_recompute_p, gather_bwd_token_chunk\n@@ -3865,6 +3878,7 @@ def flash_attn_varlen_func(\n         disable_scheduler_metadata,\n         gather_bwd_recompute_p,\n         gather_bwd_token_chunk,\n+        config,\n     )\n \n "
+    },
+    {
+      "sha": "279f9b54e0a5932248ae85c8acb9c64b89c90d86",
+      "filename": "tests/cute/test_flash_attn_mla.py",
+      "status": "modified",
+      "additions": 67,
+      "deletions": 0,
+      "changes": 67,
+      "blob_url": "https://github.com/Dao-AILab/flash-attention/blob/1dc8232fe209e2c48b1d3e677f26d68e4b856212/tests%2Fcute%2Ftest_flash_attn_mla.py",
+      "raw_url": "https://github.com/Dao-AILab/flash-attention/raw/1dc8232fe209e2c48b1d3e677f26d68e4b856212/tests%2Fcute%2Ftest_flash_attn_mla.py",
+      "contents_url": "https://api.github.com/repos/Dao-AILab/flash-attention/contents/tests%2Fcute%2Ftest_flash_attn_mla.py?ref=1dc8232fe209e2c48b1d3e677f26d68e4b856212",
+      "patch": "@@ -913,6 +913,73 @@ def __setitem__(self, key, value):\n     assert err <= 2 * err_pt + 1e-3, (err, err_pt)\n \n \n+@pytest.mark.parametrize(\"api, kernel\", [(\"func\", \"1cta\"), (\"varlen\", \"2cta\")])\n+@maybe_fake_tensor_mode(USE_FAKE_TENSOR)\n+def test_flash_attn_mla_explicit_config(api, kernel, monkeypatch):\n+    \"\"\"An explicit MlaFwdConfig picks the MLA forward kernel through both public entry points,\n+    ahead of FLASH_ATTENTION_MLA_1CTA, which is set to the other kernel here. As in\n+    benchmarks/fwd_config_bench.py, the config starts from what config=None selects: the same\n+    inputs with the route forced to the wanted kernel.\"\"\"\n+    if not IS_SM100:\n+        pytest.skip()\n+    from functools import partial\n+    from unittest import mock\n+\n+    import flash_attn.cute.interface as fa_interface\n+\n+    monkeypatch.setenv(\"FLASH_ATTENTION_MLA_1CTA\", \"0\" if kernel == \"1cta\" else \"1\")\n+    b, s_q, s_k, h = 2, 1, 1000, 16\n+    kw, _ = _mla_inputs(b, s_q, s_k, h, has_qk=True)\n+    if api == \"func\":\n+        run = partial(flash_attn_func, **kw, causal=True)\n+    else:\n+        cu_q = torch.arange(0, b + 1, device=\"cuda\", dtype=torch.int32) * s_q\n+        cu_k = torch.arange(0, b + 1, device=\"cuda\", dtype=torch.int32) * s_k\n+        run = partial(\n+            flash_attn_varlen_func,\n+            *(kw[name].flatten(0, 1) for name in (\"q\", \"k\", \"v\")),\n+            qv=kw[\"qv\"].flatten(0, 1), cu_seqlens_q=cu_q, cu_seqlens_k=cu_k,\n+            max_seqlen_q=s_q, max_seqlen_k=s_k, causal=True,\n+        )\n+    selected, select = [], fa_interface.select_mla_fwd_config\n+\n+    def capture(inputs):\n+        selected.append((select(inputs), inputs))\n+        return selected[-1][0]\n+\n+    with mock.patch.object(fa_interface, \"select_mla_fwd_config\", capture):\n+        out_default, _ = run()\n+    default, inputs = selected[0]\n+    config = select(inputs._replace(mla_1cta_override=kernel == \"1cta\"))\n+    assert (default.kernel == \"2cta\") == (kernel == \"1cta\"), default\n+    assert (config.kernel == \"2cta\") == (kernel == \"2cta\"), config\n+\n+    real_cache = fa_interface._flash_attn_fwd.compile_cache\n+    keys = []\n+\n+    class Spy:\n+        def __contains__(self, key):\n+            keys.append(key)\n+            return key in real_cache\n+\n+        def __getitem__(self, key):\n+            return real_cache[key]\n+\n+        def __setitem__(self, key, value):\n+            real_cache[key] = value\n+\n+    monkeypatch.setattr(fa_interface._flash_attn_fwd, \"compile_cache\", Spy())\n+    out, _ = run(config=config)\n+    monkeypatch.setattr(fa_interface._flash_attn_fwd, \"compile_cache\", real_cache)\n+    # The compile key leads with the config the kernel specializes on.\n+    codegen = fa_interface.fwd_codegen_config(config)\n+    assert keys and all(key[0] == codegen for key in keys), keys\n+    if is_fake_mode():\n+        return\n+    # The 1CTA and 2CTA kernels agree to bf16 rounding.\n+    _assert_mla_fwd_close(out, out_default, what=f\"{api} {kernel}\")\n+\n+\n @pytest.mark.parametrize(\n     \"route\",\n     ["
+    }
+  ]
+}

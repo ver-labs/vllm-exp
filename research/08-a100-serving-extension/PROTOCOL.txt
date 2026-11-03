@@ -1,0 +1,85 @@
+Serving and model-family extension — frozen 3 November 2026
+=========================================================
+
+Question: does the previously validated FA2 routing change retain its benefit
+with CUDA graphs and HTTP serving, and on an unrelated GQA model with human
+prompts? This phase is separate from the completed eager synthetic study.
+
+Literature/source review: pin current vLLM and both FlashAttention repositories,
+inspect the actual dependency revision, and distinguish known GQA, Flash-
+Decoding, PagedAttention and layout optimizations from our measured case study.
+An unsuccessful search is not proof of novelty. No new kernel is claimed.
+
+Models: the two previously pinned Qwen3 models and HuggingFaceTB/SmolLM3-3B at
+the revision in pins.json. Stock v0.31.0 and attention-src are unchanged; all
+cache study policies are disabled. Current upstream is reviewed, not silently
+substituted for the frozen executable baseline.
+
+Workload: first 512 qualifying first user turns from the first pinned WildChat
+shard: English, nonempty, no toxic/redacted flag, 80–20000 characters. First32
+are warmup only; remaining480 evaluation only. Per model, apply its native chat
+template with thinking disabled, keep complete prompts of 8–3500 tokens, choose
+first96 qualifying evaluation rows. No token truncation or synthetic extension.
+One model-specific frozen sample is shared across its arms/repeats. This is a
+convenience sample of real prompts, not a representative population estimate.
+SmolLM3's template includes the current date; the gate saves its rendered token
+IDs and the matrix reads those saved IDs rather than regenerating the template.
+The dataset and license are attributed; do not publish unrelated metadata.
+
+Execution modes:
+  default_graph: batch-invariance unset; backend, compilation and scheduling
+    defaults retained; eager flag absent. Record actual resolved behavior.
+  invariant_fa2_graph: VLLM_BATCH_INVARIANT=1 and FA2 fixed, graphs enabled,
+    all other serving defaults retained. This is a controlled diagnostic mode,
+    not described as default production serving.
+All modes: BF16 TP1, max_model_len4096, max_num_seqs16, KV budget8GiB,
+iteration budget2048, chunked prefill, APC enabled. No physical block override.
+API loopback completions with pretokenized native chat prompts; tokenization
+excluded but HTTP, streaming, detokenization and client processing included.
+The loopback-only development API is enabled solely to reset prefix cache;
+every reset must return success=true. This is a benchmark control, not a
+recommended public server exposure.
+
+Gate before timing each model/mode: fresh stock and optimized servers; first8
+evaluation prompts at C1, four output steps, full vocabulary log probabilities
+returned (untimed). Compare identical token identities/vocabulary sets, exact
+greedy outputs, max abs/RMS and closeness using unchanged numerical limits
+atol.0625/rtol.005/RMS.02. These are normalized log probabilities, not raw logits;
+do not call them raw-logit or byte-exact evidence. Also compare eight natural
+EOS-aware responses up to128 output tokens at C8. Preserve failures; skip the
+corresponding timed model/mode rather than changing tolerances or backend.
+Native mathematical correctness was already gated in phases06–07.
+An additional 24-case native gate covers SmolLM3's GQA ratio4, batches3/8/16,
+contexts512/3500, one/two query tokens and MHA controls against FP32 attention.
+It reuses the previous fallback and clone checks and must pass before timing.
+
+Timed grid: concurrency3/16 by output cap32/128; ignoreEOS to fix generated work.
+96 requests/cell, six paired repeats, AB/BA alternating with model/mode order
+rotating. Fresh server per arm/repeat, full concurrency warmup before eachcell,
+reset prefix cache outside timing. HTTP streaming counts actual token IDs and
+records coalesced chunks explicitly (TPOT uses first/last-token chunk times,
+not a fabricated per-token timestamp). Snapshot Prometheus counters before/after.
+Record actual APC/preemption and do not assume zero. Run stock and optimized
+serially on same allocated GPU, never simultaneously.
+
+Primary outputs: actual output tokens/s, requests/s, p50/p95 end-to-end latency,
+TTFT and TPOT. Save per-request output IDs, workload/config/source hashes,
+resolved server logs, failures, metrics and GPU information. Validate output IDs
+within paired cells; if any differ, flag comparability and do not summarize that
+cell as an output-equivalent speedup. Six paired repeat bootstrap (5000 draws,
+seed20261103); report all cells and intervals, not pooled-request significance.
+These are finite closed-loop results, not open-loop SLO or peak-capacity claims.
+
+Run a compatibility/gate pilot first; it is not benchmark evidence. Follow with
+the frozen repeated grid only for passing modes. A failed graph startup is an
+observed incompatibility, never relabeled as a completed default-mode benchmark.
+Do not tune the guard or workload after speed results are inspected.
+
+Exploratory addendum after the numerical gates, before any timed measurements:
+all three default BF16 comparisons failed the declared tolerance. Both Qwen
+models also differ at prefill, where the one-query guard should be inactive.
+Run one extra stock server and one same-source features-off server/model to
+separate baseline/compiler variability from the routing flag. Compare full
+probabilities and natural outputs on the same frozen inputs. These controls
+are untimed, descriptive and not balanced performance evidence. They cannot
+reverse the preregistered default-mode exclusions or change numerical limits.

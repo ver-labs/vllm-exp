@@ -1,0 +1,43 @@
+Reproducing the extension
+========================
+
+This kit targets the RHEL compute-node environment verified in phase02, with
+source-git and attention-src at the exact source/native hashes checked by
+serve_driver.py. It does not build current-main native binaries. Follow the
+earlier environment records for the frozen CUDA wheel and editable source
+setup. Launch GPU work through Slurm, not on the Ubuntu login node.
+
+The initial run stages SmolLM3 at pins.json's immutable Hugging Face revision.
+stage_workload.py produces a deterministic sample of the pinned WildChat shard
+using a separate tool environment with PyArrow and huggingface_hub; it does not
+install packages into the frozen GPU environment. Dataset and license notices
+are in upstream/ and the sample JSON. Model/assets and raw full distributions
+are preserved separately from the compact public research package.
+
+For exact-input execution replay, use the saved *-workload.json token manifests,
+including the date rendered by SmolLM3's chat template. In a fresh study output
+workspace run serve_driver.py --gate --workload-dir PATH_TO_SAVED_MANIFESTS.
+Do not regenerate SmolLM3's template at a different date and call it the same
+workload. The timed matrix always loads the gate's saved token IDs.
+
+run_gate.sh enables only the loopback server controls needed by the protocol.
+Only passing model/mode gates are admitted to run_matrix.sh. run_native_gate.sh
+adds full-vector diagnostics and a native ratio4/long-context reference check.
+Run these stages serially on an exclusively allocated A100; the submitted jobs
+use dependencies so timing cannot overlap the validation/profiling steps.
+The study output directory must be new. Existing evidence is never overwritten.
+
+The matrix starts fresh stock and optimized servers in alternating AB/BA order
+for six paired repeats. Compilation, loading, tokenization, warmup and reset
+are excluded from timing. Actual HTTP request timings and generated IDs are
+retained. Failed numerical modes are not timed, even if a few greedy outputs
+match. A numerical gate failure is not itself a measured task-accuracy loss.
+
+summarize.py ROOT replays the analysis from saved results using NumPy, without
+GPU or model downloads. archive_results.py produces a full and compact archive
+with member hashes; compact omits full probability tensors serialized as JSON.
+The active job stdout is excluded while being written; completed logs remain.
+
+No attention/source tuning is performed after comparative timings are seen.
+The current upstream review is static evidence; current-main runtime behavior
+and the related direct-output-stride patch are not benchmarked by this kit.

@@ -1,0 +1,32 @@
+Preflight harness corrections — 3 November 2026
+=============================================
+
+No timed requests were executed in these preparation attempts. Preserve them
+separately from numerical gate results and benchmark evidence.
+
+201981: canceled during preparation to remove an unsupported logging CLI flag;
+the default already disables request logging. The original transferred kit
+archive is preserved remotely under prelaunch-r0.
+
+201991: workload adapter failed before server startup. Installed Transformers
+defaults apply_chat_template(return_dict=True), so counting its dictionary keys
+as token length rejected all prompts. Explicit return_dict=False fixes the
+adapter without changing the intended input text or template.
+
+201992: canceled before ready to enable the cache-reset development endpoint
+on the loopback-only server. It is absent when development APIs are disabled.
+Later attempts require a successful JSON success=true response for each reset.
+
+201994: stock default-graph server reached ready, ran the requests, and shut
+down normally; a diagnostic stack attempt missed the already exited process.
+The API response for logprobs=-1 contained empty top_logprobs maps: this release
+accepts -1 in sampling but its completion response formatter filters entries
+with num_output_top_logprobs >= index. No full-distribution check could pass
+the gate's explicit vocabulary-size assertion. The attempt and dependent
+benchmark201996 were canceled to use explicit config.vocab_size instead.
+Stock successful startup/output records remain under preflight-logprob-api-r3.
+
+These are harness/API compatibility findings, not numerical failures of the
+attention optimization. The attention source, native libraries and numerical
+tolerances were never changed. No incomplete probability map is accepted as
+correctness evidence. The canceled benchmark never reached its timing phase.
