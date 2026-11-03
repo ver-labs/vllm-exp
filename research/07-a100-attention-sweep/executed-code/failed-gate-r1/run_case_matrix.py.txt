@@ -1,0 +1,186 @@
+"""Fixed long-prompt/concurrency cases, with a separate numerical-gate mode."""
+
+import argparse
+import hashlib
+import inspect
+import json
+import os
+import subprocess
+import traceback
+from pathlib import Path
+
+from sweep_common import OUTPUT, PAGES, engine_settings, stream, workload
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--model", required=True)
+    parser.add_argument("--revision", required=True)
+    parser.add_argument("--source", type=Path, required=True)
+    parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--repeat", type=int, default=0)
+    parser.add_argument("--arm", required=True)
+    parser.add_argument("--gate", action="store_true")
+    args = parser.parse_args()
+    args.output.mkdir(parents=True, exist_ok=False)
+    report = {
+        "status": "running",
+        "model": args.model,
+        "revision": args.revision,
+        "arm": args.arm,
+        "repeat": args.repeat,
+        "gate": args.gate,
+        "cases": {},
+    }
+    traces = {}
+    try:
+        import torch
+        import vllm
+        from transformers import AutoTokenizer
+        from vllm import LLM
+
+        assert os.environ["VLLM_BATCH_INVARIANT"] == "1"
+        assert Path(vllm.__file__).resolve().is_relative_to(args.source.resolve())
+        work = Path.home() / "vllm-research-20261024"
+        local_model = work / "benchmark-models-20261026" / args.model.split("/")[-1]
+        tokenizer = AutoTokenizer.from_pretrained(local_model, local_files_only=True)
+        inputs = workload(tokenizer)
+        raw = json.dumps(inputs, sort_keys=True).encode()
+        (args.output / "workload.json").write_bytes(raw)
+        report["workload_sha256"] = hashlib.sha256(raw).hexdigest()
+        report["settings"] = engine_settings(local_model)
+        report["policy_environment"] = {
+            k: v for k, v in os.environ.items() if k.startswith("STUDY_")
+        }
+        llm = LLM(**report["settings"])
+        engine = llm.llm_engine
+        core = engine.engine_core.engine_core
+        scheduler = core.scheduler
+        pool = scheduler.kv_cache_manager.block_pool
+        runner = engine.model_executor.driver_worker.worker.model_runner
+        assert len(pool.blocks) == PAGES
+        assert (PAGES - 1) * 16 > (2048 + OUTPUT) * 16
+        props = torch.cuda.get_device_properties(0)
+        assert "A100" in props.name and torch.cuda.get_device_capability(0) == (8, 0)
+        report["device"] = {
+            "name": props.name,
+            "uuid": str(props.uuid),
+            "memory_bytes": props.total_memory,
+            "hostname": os.uname().nodename,
+            "slurm_job": os.environ.get("SLURM_JOB_ID"),
+        }
+        report["resolved"] = {
+            "vllm_path": vllm.__file__,
+            "runner": inspect.getfile(type(runner)),
+            "cache_config": str(engine.vllm_config.cache_config),
+            "torch": torch.__version__,
+            "cuda": torch.version.cuda,
+        }
+
+        def telemetry():
+            return subprocess.check_output(
+                [
+                    "nvidia-smi",
+                    "--query-gpu=uuid,name,driver_version,clocks.sm,clocks.mem,temperature.gpu,power.draw",
+                    "--format=csv",
+                ],
+                text=True,
+            )
+
+        report["gpu_before"] = telemetry()
+        capture = [False]
+        if args.gate:
+            original_sample = runner.sample
+            original_logits = runner.model.compute_logits
+            active_ids = [None]
+
+            def sample(hidden, input_batch, grammar_output):
+                active_ids[0] = list(input_batch.req_ids)
+                try:
+                    return original_sample(hidden, input_batch, grammar_output)
+                finally:
+                    active_ids[0] = None
+
+            def logits(hidden):
+                values = original_logits(hidden)
+                if capture[0]:
+                    ids = active_ids[0]
+                    assert values is not None and len(ids) == values.shape[0]
+                    for row, request_id in enumerate(ids):
+                        request = scheduler.requests.get(request_id)
+                        if (
+                            request is None
+                            or request.num_computed_tokens < request.num_tokens
+                        ):
+                            continue
+                        traces.setdefault(request_id, {})[
+                            request.num_computed_tokens
+                        ] = values[row].detach().float().cpu().clone()
+                return values
+
+            runner.sample = sample
+            runner.model.compute_logits = logits
+        order = list(inputs["cases"])
+        offset = (args.repeat * 2) % len(order)
+        order = order[offset:] + order[:offset]
+        if args.gate:
+            order = ["L64-C3", "L512-C8", "L2048-C16"]
+        report["case_order"] = order
+        for case in order:
+            info = inputs["cases"][case]
+            concurrency = info["concurrency"]
+            assert engine.reset_prefix_cache()
+            stream(
+                engine,
+                pool,
+                inputs["warmups"][case],
+                concurrency,
+                limit=4 if args.gate else OUTPUT,
+            )
+            assert engine.reset_prefix_cache()
+            torch.cuda.synchronize()
+            items = (
+                inputs["profiles"][case][:concurrency]
+                if args.gate
+                else inputs["profiles"][case]
+            )
+            capture[0] = args.gate
+            result = stream(
+                engine,
+                pool,
+                items,
+                concurrency,
+                measure=not args.gate,
+                limit=4 if args.gate else OUTPUT,
+            )
+            capture[0] = False
+            assert all(
+                (r["cached_tokens"] or 0) == 0 and r["preemptions"] == 0
+                for r in result["requests"]
+            )
+            report["cases"][case] = {**info, **result}
+            (args.output / "result.json").write_text(
+                json.dumps(report, indent=2) + "\n"
+            )
+            print("SWEEP_CASE", args.model, args.arm, args.repeat, case, flush=True)
+        if args.gate:
+            for case, data in report["cases"].items():
+                for row in data["requests"]:
+                    assert set(traces[row["id"]]) == set(
+                        range(data["prompt_tokens"], data["prompt_tokens"] + 4)
+                    )
+            torch.save(traces, args.output / "raw-logits.pt")
+            report["logit_vectors"] = sum(len(x) for x in traces.values())
+        report["gpu_after"] = telemetry()
+        report["status"] = "passed"
+    except Exception:
+        report.update(status="failed", error=traceback.format_exc())
+    (args.output / "result.json").write_text(json.dumps(report, indent=2) + "\n")
+    print("SWEEP_RESULT", report["status"], args.output, flush=True)
+    if report["status"] != "passed":
+        print(report["error"], flush=True)
+    return int(report["status"] != "passed")
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

@@ -1,0 +1,76 @@
+Attention optimization: longer prompts and higher concurrency — 27 October 2026
+=============================================================================
+
+Question: does the guarded FA2 one-query routing optimization retain a benefit
+as prompt length and closed-loop concurrency increase? The implementation and
+both pinned Qwen models are unchanged from research phase06. No new tuning is
+allowed after comparative measurements are inspected.
+
+Fixed primary grid
+------------------
+Prompt lengths: 64, 512, 2048 tokens. Concurrency: 3, 8, 16. Nine cells/model.
+96 distinct prompts per cell; 32 greedy generated tokens each; ignore_eos=True.
+The body is tokenized repeated English text; a unique ordinary first token per
+request prevents any shared causal prefix. Warmup tokens are disjoint too.
+This is a synthetic execution-shape study, not representative task quality.
+Native prefix caching remains enabled, but cached-token counts must be zero.
+
+Arms: stock frozen release, original candidate features off, attention-only.
+All partial reuse, aging and other study policies are off. All six permutations
+of the three arm orders are used once, with model order alternating. Six paired
+repeats give each arm each position twice. A fresh engine runs each model/arm/
+repeat: 36 engines, 324 timed cells, 31,104 requests, 995,328 output tokens.
+Case order rotates by two positions per repeat, identically for all arms.
+All timed engines share a GPU UUID. Each cell has one full-concurrency warmup
+wave, followed by cache reset and synchronization outside the measurement.
+Warmup, engine loading, tokenization and validation are excluded from timings.
+
+Memory and execution settings
+-----------------------------
+BF16 batch-invariant, FlashAttention2, eager synchronous execution, TP=1.
+max_model_len=2304, max_num_seqs=16, iteration token budget=2048, chunked prefill
+enabled. 4096 total physical 16-token KV pages (including null), with an 8 GiB
+configured KV budget. Actual page capacity is asserted and exceeds the maximum
+live requirement of 16*(2048+32) tokens. The override determines effective KV
+allocation; the configured budget is not the actual bytes allocated.
+Preemptions must be zero: the experiment separates attention/load effects from
+KV capacity pressure. Unused cached blocks may still be evicted normally.
+All settings except the attention flag/source are identical across paired arms.
+
+These settings differ from phase06's small-memory experiment, including token
+budget, max length and KV capacity. Even the 64-token/concurrency-three anchor
+is a new large-memory configuration; do not directly compare its absolute speed
+with the old tiny-pool benchmark or attribute that difference to attention.
+
+Correctness gate
+----------------
+Before timing, extend the native attention tests to BF16 batches 3/8/16 and KV
+contexts 512/2112, with MHA/GQA and one/two queries: 24 cases against old FA2 and
+an FP32 reference. Preserve the phase06 fallback and clone-reduction checks.
+Then run both models, stock and optimized, on 64/C3, 512/C8 and 2048/C16, using
+four greedy outputs per request. Compare 108 full logit vectors/model, output
+IDs and context positions. Keep atol=.0625, rtol=.005, RMS<=.02 from the original
+model gate; record any non-exact values. Gate cache hits/preemptions must be zero.
+Any failure stops speed measurement and remains preserved for investigation.
+During the uninstrumented benchmark all complete output sequences must match
+stock across arms and repeats. Numerical gate hooks are never installed in the
+timed processes. Exact code, source/native/model/workload hashes are retained.
+
+Metrics and interpretation
+--------------------------
+TTFT, total request latency, average per-request TPOT, output tokens/s and
+requests/s use the phase04 engine-level streaming timing definitions. Timings
+include queuing after client admission, exclude waiting outside the concurrency
+window, HTTP and detokenization. Count actual generated IDs and assert the
+TTFT + (N-1)*TPOT timing identity. p50/p95 are primary, p99 exploratory.
+Report per-cell medians and paired repeat effects versus stock and versus the
+features-off control. Use a fixed-seed 5000-resample percentile bootstrap over
+six paired repeats, not individual requests. Intervals remain coarse; preserve
+all cells, regressions and intervals spanning zero. No multiplicity correction
+or universal claim is implied. This finite closed-loop test does not estimate
+open-loop SLO capacity or peak serving throughput.
+
+Output/gate failures and OOMs must not be silently removed or replaced by a
+smaller workload. Do not change the attention guard or switch backend after
+seeing the sweep. Default CUDA graphs, other model families, 4K+ prompts,
+production arrivals and memory-pressure sweeps remain separate future studies.

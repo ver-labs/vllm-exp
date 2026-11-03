@@ -82,3 +82,12 @@ latency by 5.7–7%, with all five repeats winning in every workload. Additional
 partial reuse does not establish a gain over attention-only. First-token latency
 is largely unchanged for attention-only. The results are limited to the tested
 configuration and do not establish a production or general cache-policy speedup.
+
+Attention length/load sweep
+---------------------------
+research/07-a100-attention-sweep/INTERPRETATION.txt extends the same attention
+change to prompt lengths 64/512/2048 and concurrency 3/8/16 on both Qwen models.
+Six paired repeats show a throughput gain in all 18 cells (about 1.8–8.0%), with
+smaller gains at the 2048-token/C16 corner. P95 total latency also improves; TTFT
+does not improve consistently. This uses ample KV capacity and zero cache hits/
+preemptions, preserving the declared BF16 batch-invariant eager A100 scope.

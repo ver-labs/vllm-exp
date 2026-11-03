@@ -1,0 +1,81 @@
+{
+  "status": "passed",
+  "fresh_engines": 36,
+  "timed_cells": 324,
+  "timed_requests": 31104,
+  "actual_output_tokens": 995328,
+  "same_gpu_uuid": "2c08eadd-dd10-f5ae-b33d-fc88bad301c0",
+  "compact_members_verified": 120,
+  "source_model_flags_settings_and_runtime_hashes_verified": true,
+  "cache_hits_and_preemptions_zero": true,
+  "extended_gate": {
+    "status": "passed",
+    "models": {
+      "Qwen/Qwen3-0.6B": {
+        "vectors": 108,
+        "non_exact_value_vectors": 0,
+        "max_abs": 0.0,
+        "max_rms": 0.0,
+        "outputs_match": true
+      },
+      "Qwen/Qwen3-1.7B": {
+        "vectors": 108,
+        "non_exact_value_vectors": 0,
+        "max_abs": 0.0,
+        "max_rms": 0.0,
+        "outputs_match": true
+      }
+    },
+    "same_gpu_uuid": "2c08eadd-dd10-f5ae-b33d-fc88bad301c0",
+    "tolerance": {
+      "atol": 0.0625,
+      "rtol": 0.005,
+      "rms": 0.02
+    }
+  },
+  "attention_cases": 24,
+  "prior_package_hashes_verified": {
+    "01-baseline-freeze": 27,
+    "02-a100-preflight": 84,
+    "03-a100-correctness": 68,
+    "04-a100-benchmarks": 99,
+    "05-a100-profiling": 97,
+    "06-a100-attention-optimization": 126
+  },
+  "failed_gate_r1_preserved": true,
+  "independent_local_analysis_replay": {
+    "summary.json": true,
+    "comparison.csv": true,
+    "RESULTS.txt": true
+  },
+  "effect_classification_vs_stock": {
+    "output_tokens_per_s": {
+      "positive_interval": 18,
+      "negative_interval": 0,
+      "interval_spans_zero": 0,
+      "six_wins": 18
+    },
+    "latency_ms.p95": {
+      "positive_interval": 18,
+      "negative_interval": 0,
+      "interval_spans_zero": 0,
+      "six_wins": 18
+    },
+    "ttft_ms.p50": {
+      "positive_interval": 1,
+      "negative_interval": 1,
+      "interval_spans_zero": 16,
+      "six_wins": 0
+    },
+    "tpot_ms.p50": {
+      "positive_interval": 18,
+      "negative_interval": 0,
+      "interval_spans_zero": 0,
+      "six_wins": 18
+    }
+  },
+  "local_helper_lint": "ruff 0.14.0 E,F,I passed",
+  "shell_syntax_checks_passed": true,
+  "figures_visually_inspected": true,
+  "raw_byte_logit_equivalence_claimed": false
+}

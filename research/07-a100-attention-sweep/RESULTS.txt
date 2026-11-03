@@ -1,0 +1,242 @@
+Longer-prompt / higher-concurrency attention sweep
+==================================================
+
+Six balanced paired repeats; unique requests; zero cache hits/preemptions.
+BF16 batch-invariant FA2 eager, token budget 2048, 4096 KV pages, max16 sequences.
+31,104 measured requests / 995,328 actual output tokens. All IDs match stock.
+Effects are paired-repeat medians. Positive means improvement. Coarse 95%
+Intervals resample six repeats; no multiple-comparison correction. Not SLO capacity.
+
+Qwen3-0.6B / L64-C3
+stock: 127.92 tok/s; p95 E2E 756.11 ms; TTFT p50/p95 22.80/23.28 ms; TPOT p50 23.50 ms
+off: 127.51 tok/s; p95 E2E 757.93 ms; TTFT p50/p95 22.89/23.28 ms; TPOT p50 23.55 ms
+attention: 137.35 tok/s; p95 E2E 702.63 ms; TTFT p50/p95 22.78/23.26 ms; TPOT p50 21.81 ms
+  vs stock, output_tokens_per_s: +7.51% [+6.15, +8.66], wins 6/6
+  vs stock, latency_ms.p95: +7.16% [+5.91, +8.00], wins 6/6
+  vs stock, ttft_ms.p50: +0.16% [-0.94, +1.05], wins 4/6
+  vs stock, tpot_ms.p50: +7.17% [+6.08, +8.22], wins 6/6
+  vs off, output_tokens_per_s: +7.41% [+6.42, +7.88], wins 6/6
+  vs off, latency_ms.p95: +7.16% [+6.12, +7.42], wins 6/6
+  vs off, ttft_ms.p50: -0.11% [-0.47, +0.54], wins 3/6
+  vs off, tpot_ms.p50: +7.05% [+6.29, +7.53], wins 6/6
+
+Qwen3-0.6B / L64-C8
+stock: 339.11 tok/s; p95 E2E 757.97 ms; TTFT p50/p95 23.37/24.17 ms; TPOT p50 23.59 ms
+off: 340.25 tok/s; p95 E2E 755.21 ms; TTFT p50/p95 23.15/23.84 ms; TPOT p50 23.50 ms
+attention: 365.93 tok/s; p95 E2E 703.41 ms; TTFT p50/p95 23.22/23.93 ms; TPOT p50 21.81 ms
+  vs stock, output_tokens_per_s: +7.81% [+6.49, +8.38], wins 6/6
+  vs stock, latency_ms.p95: +7.13% [+6.09, +7.70], wins 6/6
+  vs stock, ttft_ms.p50: +0.38% [+0.07, +1.32], wins 5/6
+  vs stock, tpot_ms.p50: +7.50% [+6.16, +7.95], wins 6/6
+  vs off, output_tokens_per_s: +7.35% [+6.02, +8.07], wins 6/6
+  vs off, latency_ms.p95: +6.95% [+5.55, +7.32], wins 6/6
+  vs off, ttft_ms.p50: +0.06% [-1.29, +0.77], wins 3/6
+  vs off, tpot_ms.p50: +6.99% [+5.89, +7.55], wins 6/6
+
+Qwen3-0.6B / L64-C16
+stock: 677.13 tok/s; p95 E2E 758.93 ms; TTFT p50/p95 24.28/25.31 ms; TPOT p50 23.58 ms
+off: 678.17 tok/s; p95 E2E 757.48 ms; TTFT p50/p95 24.22/25.28 ms; TPOT p50 23.53 ms
+attention: 724.68 tok/s; p95 E2E 709.89 ms; TTFT p50/p95 24.19/25.28 ms; TPOT p50 21.95 ms
+  vs stock, output_tokens_per_s: +7.02% [+6.03, +8.41], wins 6/6
+  vs stock, latency_ms.p95: +6.58% [+5.48, +7.78], wins 6/6
+  vs stock, ttft_ms.p50: +0.40% [-0.91, +1.62], wins 4/6
+  vs stock, tpot_ms.p50: +6.78% [+6.00, +7.96], wins 6/6
+  vs off, output_tokens_per_s: +7.20% [+6.12, +7.72], wins 6/6
+  vs off, latency_ms.p95: +6.55% [+5.74, +7.35], wins 6/6
+  vs off, ttft_ms.p50: +0.18% [-0.62, +0.96], wins 4/6
+  vs off, tpot_ms.p50: +6.86% [+5.95, +7.41], wins 6/6
+
+Qwen3-0.6B / L512-C3
+stock: 127.58 tok/s; p95 E2E 755.78 ms; TTFT p50/p95 23.22/23.71 ms; TPOT p50 23.52 ms
+off: 127.49 tok/s; p95 E2E 756.53 ms; TTFT p50/p95 23.22/23.73 ms; TPOT p50 23.54 ms
+attention: 137.56 tok/s; p95 E2E 702.66 ms; TTFT p50/p95 23.14/23.64 ms; TPOT p50 21.78 ms
+  vs stock, output_tokens_per_s: +7.96% [+6.25, +9.05], wins 6/6
+  vs stock, latency_ms.p95: +7.03% [+5.85, +8.17], wins 6/6
+  vs stock, ttft_ms.p50: +0.31% [-1.00, +1.63], wins 3/6
+  vs stock, tpot_ms.p50: +7.56% [+6.08, +8.51], wins 6/6
+  vs off, output_tokens_per_s: +7.36% [+6.65, +8.21], wins 6/6
+  vs off, latency_ms.p95: +6.70% [+5.97, +7.50], wins 6/6
+  vs off, ttft_ms.p50: -0.10% [-0.50, +0.62], wins 3/6
+  vs off, tpot_ms.p50: +7.01% [+6.45, +7.74], wins 6/6
+
+Qwen3-0.6B / L512-C8
+stock: 337.59 tok/s; p95 E2E 779.33 ms; TTFT p50/p95 23.80/49.31 ms; TPOT p50 23.55 ms
+off: 337.51 tok/s; p95 E2E 778.98 ms; TTFT p50/p95 23.78/49.24 ms; TPOT p50 23.55 ms
+attention: 361.50 tok/s; p95 E2E 727.94 ms; TTFT p50/p95 23.81/49.31 ms; TPOT p50 21.93 ms
+  vs stock, output_tokens_per_s: +7.49% [+5.01, +7.98], wins 6/6
+  vs stock, latency_ms.p95: +6.71% [+4.17, +7.55], wins 6/6
+  vs stock, ttft_ms.p50: -0.11% [-1.19, +0.50], wins 3/6
+  vs stock, tpot_ms.p50: +7.29% [+4.89, +7.68], wins 6/6
+  vs off, output_tokens_per_s: +6.80% [+5.94, +7.50], wins 6/6
+  vs off, latency_ms.p95: +6.10% [+5.15, +6.89], wins 6/6
+  vs off, ttft_ms.p50: -0.34% [-0.75, +0.34], wins 2/6
+  vs off, tpot_ms.p50: +6.61% [+5.87, +7.24], wins 6/6
+
+Qwen3-0.6B / L512-C16
+stock: 651.56 tok/s; p95 E2E 826.59 ms; TTFT p50/p95 25.88/85.25 ms; TPOT p50 23.86 ms
+off: 652.58 tok/s; p95 E2E 824.23 ms; TTFT p50/p95 25.91/85.79 ms; TPOT p50 23.82 ms
+attention: 691.84 tok/s; p95 E2E 779.56 ms; TTFT p50/p95 26.14/85.46 ms; TPOT p50 22.41 ms
+  vs stock, output_tokens_per_s: +6.60% [+4.58, +7.14], wins 6/6
+  vs stock, latency_ms.p95: +5.92% [+3.90, +6.25], wins 6/6
+  vs stock, ttft_ms.p50: -1.19% [-1.50, +0.15], wins 1/6
+  vs stock, tpot_ms.p50: +6.45% [+4.69, +6.79], wins 6/6
+  vs off, output_tokens_per_s: +5.75% [+5.32, +6.84], wins 6/6
+  vs off, latency_ms.p95: +5.08% [+4.36, +5.79], wins 6/6
+  vs off, ttft_ms.p50: -0.57% [-1.20, -0.28], wins 0/6
+  vs off, tpot_ms.p50: +5.56% [+5.28, +6.65], wins 6/6
+
+Qwen3-0.6B / L2048-C3
+stock: 121.07 tok/s; p95 E2E 797.09 ms; TTFT p50/p95 51.71/59.22 ms; TPOT p50 23.82 ms
+off: 121.23 tok/s; p95 E2E 796.11 ms; TTFT p50/p95 51.63/59.25 ms; TPOT p50 23.77 ms
+attention: 129.20 tok/s; p95 E2E 746.15 ms; TTFT p50/p95 51.66/59.30 ms; TPOT p50 22.21 ms
+  vs stock, output_tokens_per_s: +6.78% [+5.74, +7.55], wins 6/6
+  vs stock, latency_ms.p95: +6.33% [+5.67, +6.94], wins 6/6
+  vs stock, ttft_ms.p50: +0.14% [-0.41, +0.55], wins 3/6
+  vs stock, tpot_ms.p50: +6.84% [+5.82, +7.43], wins 6/6
+  vs off, output_tokens_per_s: +6.35% [+5.53, +7.41], wins 6/6
+  vs off, latency_ms.p95: +6.10% [+5.17, +6.91], wins 6/6
+  vs off, ttft_ms.p50: +0.02% [-0.49, +0.43], wins 3/6
+  vs off, tpot_ms.p50: +6.39% [+5.62, +7.36], wins 6/6
+
+Qwen3-0.6B / L2048-C8
+stock: 300.89 tok/s; p95 E2E 897.26 ms; TTFT p50/p95 62.82/125.65 ms; TPOT p50 25.02 ms
+off: 301.49 tok/s; p95 E2E 896.35 ms; TTFT p50/p95 62.99/126.20 ms; TPOT p50 24.95 ms
+attention: 315.71 tok/s; p95 E2E 859.77 ms; TTFT p50/p95 63.00/125.48 ms; TPOT p50 23.74 ms
+  vs stock, output_tokens_per_s: +4.83% [+4.03, +5.48], wins 6/6
+  vs stock, latency_ms.p95: +4.16% [+3.56, +5.22], wins 6/6
+  vs stock, ttft_ms.p50: -0.28% [-0.61, +0.03], wins 1/6
+  vs stock, tpot_ms.p50: +4.93% [+4.21, +5.45], wins 6/6
+  vs off, output_tokens_per_s: +4.55% [+4.08, +5.06], wins 6/6
+  vs off, latency_ms.p95: +4.07% [+3.30, +4.77], wins 6/6
+  vs off, ttft_ms.p50: -0.05% [-0.66, +0.38], wins 3/6
+  vs off, tpot_ms.p50: +4.55% [+4.16, +5.27], wins 6/6
+
+Qwen3-0.6B / L2048-C16
+stock: 514.03 tok/s; p95 E2E 1247.00 ms; TTFT p50/p95 68.20/377.32 ms; TPOT p50 28.21 ms
+off: 513.38 tok/s; p95 E2E 1247.89 ms; TTFT p50/p95 68.26/377.28 ms; TPOT p50 28.25 ms
+attention: 529.53 tok/s; p95 E2E 1225.35 ms; TTFT p50/p95 68.41/377.07 ms; TPOT p50 27.41 ms
+  vs stock, output_tokens_per_s: +2.98% [+2.49, +3.29], wins 6/6
+  vs stock, latency_ms.p95: +1.79% [+1.71, +1.99], wins 6/6
+  vs stock, ttft_ms.p50: -0.25% [-0.52, -0.06], wins 1/6
+  vs stock, tpot_ms.p50: +2.78% [+2.47, +3.10], wins 6/6
+  vs off, output_tokens_per_s: +2.87% [+2.53, +3.36], wins 6/6
+  vs off, latency_ms.p95: +1.75% [+1.45, +2.29], wins 6/6
+  vs off, ttft_ms.p50: -0.16% [-0.64, +0.12], wins 1/6
+  vs off, tpot_ms.p50: +2.87% [+2.47, +3.22], wins 6/6
+
+Qwen3-1.7B / L64-C3
+stock: 127.80 tok/s; p95 E2E 756.71 ms; TTFT p50/p95 22.95/23.38 ms; TPOT p50 23.52 ms
+off: 126.47 tok/s; p95 E2E 763.42 ms; TTFT p50/p95 23.14/23.53 ms; TPOT p50 23.74 ms
+attention: 136.54 tok/s; p95 E2E 707.28 ms; TTFT p50/p95 23.02/23.40 ms; TPOT p50 21.94 ms
+  vs stock, output_tokens_per_s: +6.42% [+5.09, +8.43], wins 6/6
+  vs stock, latency_ms.p95: +6.12% [+4.16, +7.80], wins 6/6
+  vs stock, ttft_ms.p50: -0.58% [-2.42, +1.04], wins 2/6
+  vs stock, tpot_ms.p50: +6.35% [+5.09, +8.06], wins 6/6
+  vs off, output_tokens_per_s: +7.29% [+5.80, +9.45], wins 6/6
+  vs off, latency_ms.p95: +6.79% [+4.79, +8.41], wins 6/6
+  vs off, ttft_ms.p50: +0.39% [-1.89, +1.63], wins 4/6
+  vs off, tpot_ms.p50: +7.03% [+5.71, +8.87], wins 6/6
+
+Qwen3-1.7B / L64-C8
+stock: 340.00 tok/s; p95 E2E 757.59 ms; TTFT p50/p95 23.46/24.13 ms; TPOT p50 23.50 ms
+off: 337.39 tok/s; p95 E2E 762.51 ms; TTFT p50/p95 23.58/24.35 ms; TPOT p50 23.68 ms
+attention: 363.05 tok/s; p95 E2E 710.61 ms; TTFT p50/p95 23.60/24.23 ms; TPOT p50 21.97 ms
+  vs stock, output_tokens_per_s: +6.46% [+5.29, +8.02], wins 6/6
+  vs stock, latency_ms.p95: +6.16% [+4.63, +7.28], wins 6/6
+  vs stock, ttft_ms.p50: -0.36% [-1.94, +0.39], wins 3/6
+  vs stock, tpot_ms.p50: +6.30% [+5.32, +7.61], wins 6/6
+  vs off, output_tokens_per_s: +7.31% [+6.76, +8.76], wins 6/6
+  vs off, latency_ms.p95: +6.70% [+5.91, +7.78], wins 6/6
+  vs off, ttft_ms.p50: -0.28% [-1.10, +1.11], wins 2/6
+  vs off, tpot_ms.p50: +6.99% [+6.67, +8.30], wins 6/6
+
+Qwen3-1.7B / L64-C16
+stock: 665.95 tok/s; p95 E2E 770.69 ms; TTFT p50/p95 31.00/32.05 ms; TPOT p50 23.71 ms
+off: 665.21 tok/s; p95 E2E 772.82 ms; TTFT p50/p95 31.01/31.98 ms; TPOT p50 23.81 ms
+attention: 712.00 tok/s; p95 E2E 721.47 ms; TTFT p50/p95 30.97/32.02 ms; TPOT p50 22.18 ms
+  vs stock, output_tokens_per_s: +6.87% [+5.87, +8.04], wins 6/6
+  vs stock, latency_ms.p95: +6.51% [+4.67, +8.01], wins 6/6
+  vs stock, ttft_ms.p50: +0.14% [-0.60, +0.55], wins 3/6
+  vs stock, tpot_ms.p50: +6.63% [+5.74, +7.69], wins 6/6
+  vs off, output_tokens_per_s: +7.73% [+6.62, +8.93], wins 6/6
+  vs off, latency_ms.p95: +6.64% [+6.18, +8.24], wins 6/6
+  vs off, ttft_ms.p50: +0.25% [-0.39, +0.33], wins 4/6
+  vs off, tpot_ms.p50: +7.55% [+6.47, +8.70], wins 6/6
+
+Qwen3-1.7B / L512-C3
+stock: 125.10 tok/s; p95 E2E 772.49 ms; TTFT p50/p95 38.07/38.66 ms; TPOT p50 23.53 ms
+off: 124.32 tok/s; p95 E2E 776.23 ms; TTFT p50/p95 38.14/38.72 ms; TPOT p50 23.68 ms
+attention: 134.19 tok/s; p95 E2E 721.41 ms; TTFT p50/p95 38.13/38.71 ms; TPOT p50 21.84 ms
+  vs stock, output_tokens_per_s: +7.34% [+5.95, +7.70], wins 6/6
+  vs stock, latency_ms.p95: +6.66% [+5.57, +7.19], wins 6/6
+  vs stock, ttft_ms.p50: -0.10% [-0.52, +0.17], wins 1/6
+  vs stock, tpot_ms.p50: +7.25% [+5.98, +7.53], wins 6/6
+  vs off, output_tokens_per_s: +7.99% [+6.81, +9.08], wins 6/6
+  vs off, latency_ms.p95: +7.16% [+6.44, +8.28], wins 6/6
+  vs off, ttft_ms.p50: -0.01% [-0.21, +0.33], wins 3/6
+  vs off, tpot_ms.p50: +7.81% [+6.71, +8.79], wins 6/6
+
+Qwen3-1.7B / L512-C8
+stock: 312.04 tok/s; p95 E2E 853.98 ms; TTFT p50/p95 46.84/83.74 ms; TPOT p50 24.84 ms
+off: 311.54 tok/s; p95 E2E 857.76 ms; TTFT p50/p95 46.94/84.13 ms; TPOT p50 24.92 ms
+attention: 330.34 tok/s; p95 E2E 811.35 ms; TTFT p50/p95 46.84/84.21 ms; TPOT p50 23.36 ms
+  vs stock, output_tokens_per_s: +5.64% [+4.98, +7.87], wins 6/6
+  vs stock, latency_ms.p95: +4.82% [+3.26, +6.36], wins 6/6
+  vs stock, ttft_ms.p50: +0.00% [-0.33, +0.53], wins 3/6
+  vs stock, tpot_ms.p50: +5.76% [+4.74, +8.08], wins 6/6
+  vs off, output_tokens_per_s: +6.29% [+5.37, +7.39], wins 6/6
+  vs off, latency_ms.p95: +5.21% [+4.24, +6.50], wins 6/6
+  vs off, ttft_ms.p50: +0.02% [-0.11, +0.78], wins 4/6
+  vs off, tpot_ms.p50: +6.21% [+5.42, +7.33], wins 6/6
+
+Qwen3-1.7B / L512-C16
+stock: 562.07 tok/s; p95 E2E 1003.32 ms; TTFT p50/p95 52.02/178.25 ms; TPOT p50 26.94 ms
+off: 559.24 tok/s; p95 E2E 1007.14 ms; TTFT p50/p95 52.27/178.58 ms; TPOT p50 26.99 ms
+attention: 590.24 tok/s; p95 E2E 962.82 ms; TTFT p50/p95 52.07/178.34 ms; TPOT p50 25.54 ms
+  vs stock, output_tokens_per_s: +5.38% [+4.17, +6.46], wins 6/6
+  vs stock, latency_ms.p95: +4.24% [+3.14, +5.78], wins 6/6
+  vs stock, ttft_ms.p50: +0.01% [-0.66, +0.46], wins 3/6
+  vs stock, tpot_ms.p50: +5.66% [+3.98, +6.61], wins 6/6
+  vs off, output_tokens_per_s: +5.71% [+4.49, +7.04], wins 6/6
+  vs off, latency_ms.p95: +4.40% [+3.54, +6.03], wins 6/6
+  vs off, ttft_ms.p50: +0.10% [-0.43, +0.79], wins 3/6
+  vs off, tpot_ms.p50: +5.53% [+4.46, +7.10], wins 6/6
+
+Qwen3-1.7B / L2048-C3
+stock: 109.41 tok/s; p95 E2E 881.83 ms; TTFT p50/p95 81.74/117.11 ms; TPOT p50 25.59 ms
+off: 108.78 tok/s; p95 E2E 885.86 ms; TTFT p50/p95 81.84/117.47 ms; TPOT p50 25.77 ms
+attention: 115.35 tok/s; p95 E2E 836.70 ms; TTFT p50/p95 81.78/117.45 ms; TPOT p50 24.15 ms
+  vs stock, output_tokens_per_s: +5.17% [+3.75, +6.32], wins 6/6
+  vs stock, latency_ms.p95: +4.99% [+3.08, +6.13], wins 6/6
+  vs stock, ttft_ms.p50: -0.08% [-1.32, +0.15], wins 2/6
+  vs stock, tpot_ms.p50: +5.39% [+4.33, +6.52], wins 6/6
+  vs off, output_tokens_per_s: +5.38% [+5.02, +7.08], wins 6/6
+  vs off, latency_ms.p95: +5.06% [+4.35, +6.44], wins 6/6
+  vs off, ttft_ms.p50: +0.03% [-0.92, +0.42], wins 3/6
+  vs off, tpot_ms.p50: +5.76% [+5.36, +7.27], wins 6/6
+
+Qwen3-1.7B / L2048-C8
+stock: 236.17 tok/s; p95 E2E 1197.40 ms; TTFT p50/p95 122.25/248.99 ms; TPOT p50 30.62 ms
+off: 234.98 tok/s; p95 E2E 1196.48 ms; TTFT p50/p95 122.03/249.02 ms; TPOT p50 30.82 ms
+attention: 244.01 tok/s; p95 E2E 1160.59 ms; TTFT p50/p95 122.38/249.68 ms; TPOT p50 29.51 ms
+  vs stock, output_tokens_per_s: +3.48% [+2.70, +4.07], wins 6/6
+  vs stock, latency_ms.p95: +2.73% [+1.59, +3.48], wins 6/6
+  vs stock, ttft_ms.p50: -0.02% [-0.30, +0.20], wins 3/6
+  vs stock, tpot_ms.p50: +3.81% [+2.89, +4.56], wins 6/6
+  vs off, output_tokens_per_s: +3.88% [+3.36, +4.76], wins 6/6
+  vs off, latency_ms.p95: +3.00% [+1.96, +3.27], wins 6/6
+  vs off, ttft_ms.p50: -0.24% [-0.43, +0.16], wins 1/6
+  vs off, tpot_ms.p50: +4.32% [+3.53, +5.26], wins 6/6
+
+Qwen3-1.7B / L2048-C16
+stock: 347.10 tok/s; p95 E2E 2029.28 ms; TTFT p50/p95 127.93/738.50 ms; TPOT p50 41.67 ms
+off: 347.08 tok/s; p95 E2E 2031.42 ms; TTFT p50/p95 127.87/739.53 ms; TPOT p50 41.68 ms
+attention: 352.93 tok/s; p95 E2E 2008.06 ms; TTFT p50/p95 128.16/738.49 ms; TPOT p50 41.01 ms
+  vs stock, output_tokens_per_s: +1.76% [+1.36, +1.93], wins 6/6
+  vs stock, latency_ms.p95: +0.98% [+0.83, +1.13], wins 6/6
+  vs stock, ttft_ms.p50: -0.05% [-0.52, +0.28], wins 3/6
+  vs stock, tpot_ms.p50: +1.70% [+1.32, +1.87], wins 6/6
+  vs off, output_tokens_per_s: +1.88% [+1.65, +3.11], wins 6/6
+  vs off, latency_ms.p95: +1.16% [+1.01, +1.71], wins 6/6
+  vs off, ttft_ms.p50: -0.00% [-0.32, +0.40], wins 3/6
+  vs off, tpot_ms.p50: +1.71% [+1.55, +2.63], wins 6/6

@@ -1,0 +1,135 @@
+Longer-prompt / higher-concurrency attention sweep: interpretation
+================================================================
+Protocol prepared 27 October; executed 3 November 2026.
+
+Conclusion
+----------
+The same guarded attention optimization retained a throughput and total-latency
+benefit across every tested prompt-length/concurrency cell on both models. All
+six throughput repeats win in all 18 cells, with positive coarse 95% paired-
+repeat bootstrap intervals. Gains are smaller at the longest/highest-load corner.
+This extends the earlier result to 2048-token prompts and concurrency 16 in the
+declared eager configuration; it does not establish arbitrary-load behavior.
+
+Throughput versus stock
+----------------------
+Paired median percentage improvements; each row lists concurrency 3 / 8 / 16.
+
+Qwen3-0.6B
+    64 prompt tokens: +7.51% / +7.81% / +7.02%
+   512 prompt tokens: +7.96% / +7.49% / +6.60%
+  2048 prompt tokens: +6.78% / +4.83% / +2.98%
+
+Qwen3-1.7B
+    64 prompt tokens: +6.42% / +6.46% / +6.87%
+   512 prompt tokens: +7.34% / +5.64% / +5.38%
+  2048 prompt tokens: +5.17% / +3.48% / +1.76%
+
+At 2048 tokens, throughput gain declines as concurrency rises from 3 to 8 to16:
+0.6B: +6.78% -> +4.83% -> +2.98%; 1.7B: +5.17% -> +3.48% -> +1.76%.
+Prompt length alone is not monotonically related to the gain in the full grid;
+for example some 512-token cells improve more than 64-token cells.
+
+Both high-load endpoints remain positive:
+  0.6B / 2048 / C16: +2.98% throughput [95% +2.49, +3.29].
+  1.7B / 2048 / C16: +1.76% throughput [95% +1.36, +1.93].
+All attention-versus-features-off throughput intervals are positive too, and
+all six repeats win in every cell of that contrast. The result is not explained
+by the source-install control alone. All arm/model/cell metrics are retained.
+
+Latency
+-------
+P95 total request latency improves in every cell, with positive intervals:
+  0.6B: reductions from 1.79% to 7.16%.
+  1.7B: reductions from 0.98% to 6.66%.
+The median average time per output token improves in all 18 cells (about
+1.70% to 7.56%), with positive intervals. These are request-level averages
+between first and last output tokens, not kernel-only timings or a distribution
+of individual inter-token gaps.
+
+First-token latency has no consistent improvement. Sixteen of 18 TTFT intervals
+span zero. Two small isolated results are 0.6B/64/C8 +0.38% and 0.6B/2048/C16
+-0.25%; the latter is a small first-token regression. Comparisons are exploratory
+without multiplicity correction, so these do not support a broad TTFT claim.
+The plotted negative TTFT cells and all uncertain intervals are preserved.
+
+What this experiment isolates
+-----------------------------
+The phase06 attention source is unchanged: the guarded causal right window
+avoids the native one-query GQA head regrouping/layout-copy path. Source and
+native binary hashes match the frozen candidates. Partial reuse and aging are
+off. Native prefix caching is enabled, but unique first tokens prevent cache
+hits; all 324 measured cells have zero cached tokens and zero preemptions.
+4096 physical KV pages provide enough capacity for all live requests. This is
+attention execution under load, not a cache-policy or memory-pressure study.
+
+All paired arms share 2048 iteration-token budget, max length 2304, max 16 running
+sequences, 4096 total 16-token pages and an 8 GiB configured cache budget. The
+page override determines actual allocation. Model/kernel caches are warmed
+per cell, then prefix cache is reset outside measurement. These settings differ
+from the earlier tiny-pool study. Absolute speed changes between studies cannot
+be attributed solely to the attention optimization, including the 64/C3 anchor.
+
+Longer prefills and more concurrent requests change the fraction and shape of
+work eligible for the one-query path. This experiment does not profile those
+costs separately, so it does not establish a causal explanation for diminishing
+gains or a context/load threshold at which the original route becomes preferable.
+
+Validation and reproducibility
+-------------------------------
+24 extended BF16 attention cases cover batches 3/8/16, contexts 512/2112, MHA/GQA
+and one/two queries versus original FA2 and an FP32 reference. Fallback routing
+and clone reduction tests pass. Long-context model gates compare 108 full logit
+vectors per model against stock: all 216 optimized vectors have exact value
+equality (torch.equal; max absolute/RMS zero), with identical output IDs and
+unchanged tolerances. No new raw signed-zero byte-equivalence claim is made.
+
+36 fresh timed engines, 324 cells, 31,104 requests and 995,328 actual generated
+output tokens complete; every output sequence matches stock across arms and
+repeats. All timed engines share one A100 40 GB full-size MIG UUID. Six arm
+permutations balance every arm position twice; model order alternates, and
+case order rotates identically across paired arms. Each case contains 96 requests
+and 32 greedy outputs/request; warmup and all gate hooks are excluded from timing.
+
+The first validation run stopped after a stock model completed its gate cases
+because the logit hook keyed captures by internal engine IDs and looked them
+up by external workload IDs. No numerical mismatch was observed in that attempt.
+The gate-only fix uses the engine.add_request return value to map IDs, as in
+the earlier harness. Failed-run evidence and its original code are preserved
+under evidence/failed-gate-r1 and executed-code/failed-gate-r1. Its dependent
+benchmark job was canceled before starting. The corrected gate passed before
+any speed data was collected; the optimization and tolerances were unchanged.
+
+All 120 compact archive members are individually SHA256-verified. Settings, flags,
+source/native/model/workload and executed-runtime hashes are checked. Earlier
+research package hashes remain unchanged. Independent local analysis recreates
+summary.json, comparison.csv and RESULTS.txt byte for byte. Full raw logits and
+verbose logs remain in the sealed cluster archive; per-request and analyzed
+records are retained locally. Exact executed driver/analysis copies are saved
+before local helper formatting.
+
+Limits and next scope
+---------------------
+Positive evidence is limited to the two related Qwen sizes, synthetic repeated-
+text prompts with unique first tokens,32-token outputs, BF16 batch-invariant
+FA2 eager synchronous A100 execution and the tested load/memory grid. These
+are engine token-ID closed-loop timings, excluding HTTP, detokenization, loading
+and queueing before client admission. They are not open-loop SLO capacity,
+peak production throughput or proof about every attention backend/model family.
+
+Six-repeat percentile intervals describe repeat variation within one allocation;
+no multiple-comparison correction or independent-hardware replication is
+claimed. No attention settings were tuned or runs selectively repeated after
+comparative timings were inspected. A next separately specified study could
+cover 4K+ prompts, higher concurrency, default CUDA graphs and another model
+family, with memory sizing and correctness checks repeated for that scope.
+Current-upstream applicability and novelty remain unestablished.
+
+Artifacts
+---------
+PROTOCOL.txt: fixed plan and timing/statistical definitions.
+RESULTS.txt / comparison.csv: all absolute metrics and stock/control contrasts.
+figures/: every-cell throughput, total latency, TTFT, TPOT and control heatmaps.
+evidence/: timed requests, numerical gates, failed harness run and manifests.
+executed-code/: exact executed sources. raw-evidence-storage.json: archives.
+package-sha256.json: final local evidence-package checksums.
