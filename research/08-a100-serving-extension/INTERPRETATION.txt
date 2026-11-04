@@ -1,0 +1,116 @@
+Attention routing with graphs and human prompts — verified 4 November 2026
+========================================================================
+
+The improvement persists at concurrency 3, at about 1.8–3.2% throughput. At
+concurrency 16 the benefit largely disappears, with a small repeatable SmolLM3
+regression. Evidence supports a conditional deterministic-serving optimization.
+It does not establish a general-purpose vLLM speedup or a novel attention
+algorithm.
+
+Throughput versus stock
+----------------------
+Values are the median paired improvement across six fresh-server repeats.
+Brackets are 95% bootstrap intervals; positive means faster. C is client
+concurrency, O is the fixed output-token count.
+
+Model          C3/O32                 C3/O128
+Qwen3-0.6B     +2.91[+2.78,+2.95]%     +3.16[+3.08,+3.25]%
+Qwen3-1.7B     +1.84[+1.77,+1.92]%     +2.05[+1.75,+2.06]%
+SmolLM3-3B     +1.81[+1.78,+1.86]%     +2.00[+1.97,+2.11]%
+
+Model          C16/O32                C16/O128
+Qwen3-0.6B     +0.18[-1.42,+1.42]%     -0.26[-0.80,+0.07]%
+Qwen3-1.7B     +0.19[-0.37,+1.01]%     -0.16[-0.33,+0.14]%
+SmolLM3-3B     -0.61[-1.35,+0.24]%     -0.63[-0.86,-0.40]%
+
+All six low-concurrency cells win in 6/6 repeats with positive intervals.
+Five of six high-concurrency intervals include zero. SmolLM3 C16/O128 loses
+in 6/6 repeats. These finite-workload intervals reflect repeat variation, not
+uncertainty over the population of human prompts. No multiplicity adjustment
+or universal improvement claim is implied.
+
+Latency
+-------
+P95 total request latency decreases by about 1.5–2.8% at concurrency 3, with
+positive intervals in all six cells. At concurrency 16 there is no consistent
+benefit. Qwen3-0.6B C16/O128 has a repeatable p95 latency increase of 0.76%
+(improvement interval [-1.35,-0.21]%). Median per-output-token latency also
+regresses in the long-output/C16 settings for Qwen3-1.7B and SmolLM3.
+
+First-token latency has no consistent improvement: 11 of 12 p95 intervals cross
+zero. The sole positive interval is wide. Avoid a general TTFT claim.
+Full per-cell absolute values, paired effects and all seven metric families
+are in comparison.csv and summary.json. Displayed per-arm medians need not
+produce the median paired percentage when divided.
+
+What was measured
+-----------------
+36 fresh servers, 144 timed cells, 13,824 requests and 1,105,920 actual output
+token IDs. All measured sequences match stock across arms AND repeats.
+Timing/count identities were independently checked, and the analysis replayed
+byte-for-byte on the Mac. Every after-snapshot preemption counter is zero.
+The compact archive's 530 members were individually checked against its manifest.
+
+Same 96 held-out WildChat first-turn human prompts in each model, with native
+chat templates, thinking disabled and complete inputs retained. Prompt lengths
+range 27–3300 tokens for Qwen and 82–3333 for SmolLM3; medians 83 and 139. This is
+a short-heavy English convenience sample. Outputs are forced to 32/128 tokens
+with EOS ignored, so this is controlled generated work with real prompts.
+Separate natural-response gates permit EOS and use eight prompts/model.
+
+Frozen vLLM v0.31.0 stock versus the attention study source, on an A100 PCIe 40GB
+allocation. BF16, batch-invariant FA2, CUDA graphs/compilation enabled, TP 1,
+default serving scheduling, max sequence length 4096, token budget 2048,
+max_num_seqs 16 and 8GiB configured KV memory. All cache-study policies are off;
+native prefix caching and chunked prefill are on. Actual KV capacity depends
+on the model. This is ample-memory serving, not a preemption stress test.
+
+Loopback HTTP completion requests use frozen pretokenized chat inputs. Request
+timings include connection/stream handling and detokenization; tokenization
+and payload construction precede each request timer. Throughput uses complete
+workload makespan, including client dispatch. Unscheduled client tasks are
+outside the per-request latency window. Streaming chunks may coalesce tokens;
+TPOT uses observed first/last token-chunk times. This is a closed-loop finite
+test, not peak throughput, open-loop SLO capacity, or internet application latency.
+
+Fresh servers, alternating AB/BA, rotating model/case order, full-concurrency
+warmup and successful cache resets precede timing. Loading, compilation,
+warmup and numerical instrumentation are excluded from timed windows. These
+settings differ from the earlier eager synthetic studies; their absolute
+numbers do not isolate the effect of enabling CUDA graphs.
+
+Numerical and source limits
+---------------------------
+All three batch-invariant graph pairs pass: 96 full API log-probability vectors
+equal in value, 24/24 natural response pairs identical. The additional 24 native
+ratio 4/long-context FP32-reference and fallback checks pass; direct native CPU
+clone count changes from 2 to 0. Whole-model graph replay copy counts were not
+profiled in this phase.
+
+All three default BF16 graph comparisons exceed the fixed API distribution
+limits and remain excluded from timing. Untimed stock-repeat/features-off
+controls distinguish baseline/source variation and same-source decode drift.
+These failures and different natural texts are not task-accuracy scores.
+See VALIDATION.txt and DEFAULT-CONTROLS.txt for all observations.
+
+The routing guard changes automatic split-KV availability along with copies.
+Batch invariance already forces a single split in the pinned backend. The
+observed default-mode differences above one 128-token KV tile are consistent
+with a changed reduction path, but actual per-call split counts were not
+instrumented. See NATIVE-SPLIT-KV-NOTE.txt. A pure-copy causal attribution of
+every end-to-end effect is not established.
+
+Publication scope
+-----------------
+The original output-copy workaround predates this study (December 2024), and
+an open October 2026 native output-stride PR addresses closely related work.
+Current upstream source retains the relevant path; current-main runtime and
+that alternative patch were not benchmarked. Full primary-source review,
+immutable commits and source hashes are in LITERATURE-AND-NOVELTY.txt/upstream/.
+
+An engineering article can present the reproducible profiling journey,
+conditional gains, neutral/regressing cases and numerical limits. Research
+novelty remains unestablished. Broader claims would require an independently
+motivated contribution and comparisons with close alternatives, representative
+arrival/task workloads and task-level quality checks. No automatic production
+deployment claim follows from these results.

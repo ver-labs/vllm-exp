@@ -94,9 +94,11 @@ preemptions, preserving the declared BF16 batch-invariant eager A100 scope.
 
 Serving and model-family validation
 -----------------------------------
-research/08-a100-serving-extension/LITERATURE-AND-NOVELTY.txt reviews close
-prior work on the packed-GQA output-copy path and limits the novelty claim.
-The separate CUDA-graph HTTP study uses pinned WildChat prompts and adds
-SmolLM3-3B. Its three controlled graph-mode numerical gates pass; repeated measurements
-are pending. See STATE.txt. Default BF16 numerical failures remain excluded
-from timings; untimed controls distinguish baseline and routing variability.
+research/08-a100-serving-extension/INTERPRETATION.txt records the completed
+CUDA-graph HTTP study on both Qwen models and SmolLM3-3B, using the same 96
+WildChat prompts and six paired repeats. In validated batch-invariant FA2 mode,
+throughput improves about 1.8–3.2% at concurrency 3; concurrency 16 is mostly
+neutral, with a 0.63% SmolLM3 long-output regression. All 13,824 timed sequences
+match across arms and repeats. Default BF16 numerical gates fail and are
+excluded from timing. The source review identifies split-KV tradeoffs and
+close prior work; a general speedup or new attention algorithm is unestablished.

@@ -41,3 +41,12 @@ The active job stdout is excluded while being written; completed logs remain.
 No attention/source tuning is performed after comparative timings are seen.
 The current upstream review is static evidence; current-main runtime behavior
 and the related direct-output-stride patch are not benchmarked by this kit.
+
+Public package layout: the original compact evidence is mapped under evidence/;
+executed source snapshots are under executed-code/. raw-evidence-storage.json
+maps original archive member names to canonical paths and lists archive-only
+members. All member hashes and both archive hashes are retained. To replay
+summary generation, point summarize.py at an output root containing gate/ and
+matrix/, or use the sealed compact archive in a temporary directory. Run
+verify_results.py ROOT --output /tmp/verification.json to independently check
+token parity, counts and timing identities without a GPU.

@@ -27,8 +27,7 @@ after generated histories diverge as teacher-forced numerical errors. Full
 per-step diagnostics label whether histories still match.
 
 Both Qwen pairs differ even on prefill vectors, where the one-query guard is
-inactive. Extra untimed stock-repeat and same-source features-off controls are
-running to distinguish baseline/compiler variation from the routing flag.
+inactive. Extra untimed stock-repeat and same-source features-off controls were run to distinguish baseline/compiler variation from the routing flag.
 A failed gate or different answer is not, by itself, a measured task-quality
 regression. The primary default-mode exclusions remain unchanged.
 
@@ -38,5 +37,5 @@ Additional native gate:
   Fallback checks passed. Direct attention CPU clone count fell from2 to0.
   This is a native-call check, not a measured model-level CUDA-graph clone count.
 
-The repeated latency/throughput matrix is pending completion. No new speedup
-is claimed in this validation report. Phases01–07 remain unchanged.
+The repeated latency/throughput matrix is complete. Its scoped performance
+conclusions are in INTERPRETATION.txt. Phases01–07 remain unchanged.

@@ -1,0 +1,40 @@
+Routing changes KV splitting as well as copies
+============================================
+
+The executable release's external FlashAttention dependency is commit
+9cd61de38763d712bb6ce56e2a02cc2bf718c89f. In its flash_api.cpp, the grouped
+single-query branch calls set_params_splitkv(). The alternative paged-KV
+branch accepts at most one split. The study's right-window routing guard
+bypasses the grouping branch, so it also removes that automatic multi-split
+choice in this version. This matters for both performance and floating-point
+reduction order; the intervention should be described as a routing change.
+
+The pinned vLLM FlashAttention backend sets max_num_splits=1 when batch
+invariance is enabled. Consequently, the validated deterministic mode has
+already removed the multi-split alternative. Our checked distributions remain
+equal there. This is an execution-mode-specific observation, not a general
+guarantee of identical BF16 arithmetic for the routing guard.
+
+Observed in the untimed same-source default controls: all non-exact vectors
+occurred during decode, with context lengths above128 tokens. Both Qwen sizes
+had9 non-exact vectors; SmolLM3 had12. All prefill vectors matched in these
+same-source comparisons. For the tested head size128, the frozen native split
+logic uses KV tiles of128 tokens. This alignment is consistent with a changed
+split/reduction path once more than one tile contributes. Actual per-call
+split counts were not instrumented, so the correlation does not establish a
+complete causal decomposition of every numerical or timing difference.
+
+The Qwen stock-versus-features-off prefill differences are a separate
+cross-source observation; their underlying cause remains unisolated. The
+same-source flag comparison localizes additional differences to decode.
+
+Possible next implementation question, not part of the running experiment:
+restrict bypass to explicit single-split cases, or avoid layout copies while
+retaining the grouped/split kernel path. The related native output-stride PR
+is a relevant alternative. Neither change has been implemented or benchmarked
+in this phase. The existing guard and experiment have remained frozen.
+
+Primary source references:
+https://github.com/vllm-project/flash-attention/blob/9cd61de38763d712bb6ce56e2a02cc2bf718c89f/csrc/flash_attn/flash_api.cpp
+https://github.com/vllm-project/vllm/blob/db9527a46873454610df6dbedf79a36d6bf1a7f6/vllm/v1/attention/backends/flash_attn.py
+https://github.com/Dao-AILab/flash-attention/pull/3066

@@ -1,0 +1,39 @@
+{
+  "command": [
+    "/nethome/sbagathi3/vllm-research-20261024/.venv-cuda/bin/python",
+    "-m",
+    "vllm.entrypoints.cli.main",
+    "serve",
+    "/nethome/sbagathi3/vllm-research-20261024/serving-extension-assets-20261103/SmolLM3-3B",
+    "--served-model-name",
+    "study",
+    "--host",
+    "127.0.0.1",
+    "--port",
+    "8093",
+    "--dtype",
+    "bfloat16",
+    "--seed",
+    "0",
+    "--max-model-len",
+    "4096",
+    "--max-num-seqs",
+    "16",
+    "--max-num-batched-tokens",
+    "2048",
+    "--kv-cache-memory-bytes",
+    "8589934592",
+    "--max-logprobs",
+    "-1"
+  ],
+  "mode": "default_graph",
+  "arm": "off",
+  "environment": {
+    "VLLM_PLUGINS": "",
+    "VLLM_SERVER_DEV_MODE": "1",
+    "STUDY_PARTIAL_PREFIX": "0",
+    "STUDY_EVICTION_POLICY": "vllm",
+    "STUDY_CACHE_IMPL": "incremental",
+    "STUDY_FA2_SINGLE_QUERY_CAUSAL": "0"
+  }
+}

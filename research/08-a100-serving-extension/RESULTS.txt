@@ -1,0 +1,25 @@
+CUDA-graph HTTP serving extension
+================================
+
+Gate Qwen3-0.6B/default_graph: failed
+Gate Qwen3-0.6B/invariant_fa2_graph: passed
+Gate Qwen3-1.7B/default_graph: failed
+Gate Qwen3-1.7B/invariant_fa2_graph: passed
+Gate SmolLM3-3B/default_graph: failed
+Gate SmolLM3-3B/invariant_fa2_graph: passed
+
+Positive percentages mean improvement. Intervals use six paired repeats.
+Output mismatches invalidate an output-equivalent speed claim.
+
+Qwen3-0.6B invariant_fa2_graph C3-O32: +2.91% [+2.78, +2.95], 6/6 wins; IDs match=True
+Qwen3-0.6B invariant_fa2_graph C16-O32: +0.18% [-1.42, +1.42], 3/6 wins; IDs match=True
+Qwen3-0.6B invariant_fa2_graph C3-O128: +3.16% [+3.08, +3.25], 6/6 wins; IDs match=True
+Qwen3-0.6B invariant_fa2_graph C16-O128: -0.26% [-0.80, +0.07], 1/6 wins; IDs match=True
+Qwen3-1.7B invariant_fa2_graph C3-O32: +1.84% [+1.77, +1.92], 6/6 wins; IDs match=True
+Qwen3-1.7B invariant_fa2_graph C16-O32: +0.19% [-0.37, +1.01], 4/6 wins; IDs match=True
+Qwen3-1.7B invariant_fa2_graph C3-O128: +2.05% [+1.75, +2.06], 6/6 wins; IDs match=True
+Qwen3-1.7B invariant_fa2_graph C16-O128: -0.16% [-0.33, +0.14], 2/6 wins; IDs match=True
+SmolLM3-3B invariant_fa2_graph C3-O32: +1.81% [+1.78, +1.86], 6/6 wins; IDs match=True
+SmolLM3-3B invariant_fa2_graph C16-O32: -0.61% [-1.35, +0.24], 1/6 wins; IDs match=True
+SmolLM3-3B invariant_fa2_graph C3-O128: +2.00% [+1.97, +2.11], 6/6 wins; IDs match=True
+SmolLM3-3B invariant_fa2_graph C16-O128: -0.63% [-0.86, -0.40], 0/6 wins; IDs match=True
