@@ -1,0 +1,39 @@
+Public repository cleanup — 5 November 2026
+============================================
+
+Scope
+-----
+Merged the A100 research branch with the existing main publication cleanup.
+The public front page now leads with the latest A100 findings and separates
+historical Mac pilot results from validated NVIDIA configurations.
+
+Removed from the current tree
+-----------------------------
+* src/snapshot_metal.py
+* src/verify_editable.py
+* src/verify_request.py
+* src/serve.sh
+* workloads/build_workloads_raw.py
+* workloads/build_workloads_vllm_library.py
+
+These are initial machine-specific environment capture/import checks, a one-off
+HTTP smoke request, the original fixed-environment server launcher, and early
+standalone MLX / installed-wheel clients. They are not the controlled experiment
+or A100 benchmark drivers. Earlier Git commits retain their original contents.
+The local-checkout request client remains because the scheduler trace guide
+uses it. Historical experiment launchers, analysis tools and tests remain.
+
+Preserved
+---------
+Every pre-cleanup tracked byte under experiments/, research/ and output/ was
+checked against a SHA-256 inventory after cleanup. All result summaries,
+per-request records, plots, PDFs, patches, reproduction scripts, executed-code
+snapshots, source provenance, package manifests and negative results remain.
+All eight A100 package manifests were independently verified.
+
+No ignored local environments, model files, raw results, source checkout,
+archives or worktrees were deleted. No history rewrite or force push was used.
+Existing evidence-storage notes still apply: not every older diagnostic archive
+or full logprob dump is available in a fresh clone. See research/public-prep/
+and research/08-a100-serving-extension/raw-evidence-storage.json for boundaries.
+No GPU experiment was rerun for this repository-only cleanup.

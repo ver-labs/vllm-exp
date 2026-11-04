@@ -1,9 +1,41 @@
-vLLM cache and scheduler experiments
-====================================
+vLLM performance experiments: from cache policies to A100 serving
+================================================================
 
-Exploratory Apple Silicon / Metal experiments with Qwen3-0.6B and Qwen3-1.7B.
-This repository preserves positive, mixed and negative results. The Mac pilot
-measurements do not establish CUDA correctness or a general serving speedup.
+An engineering case study of KV-cache policies, scheduler overhead and a guarded
+FlashAttention-2 routing change. This repository preserves positive, mixed and
+negative results, the tested source patches and reproduction instructions.
+It is a research artifact, not an installable vLLM replacement.
+
+Latest results
+--------------
+Start with research/08-a100-serving-extension/INTERPRETATION.txt and the four-panel
+figure in research/08-a100-serving-extension/figures/invariant_fa2_graph-comparison.png.
+The CUDA-graph HTTP study covers Qwen3-0.6B, Qwen3-1.7B and SmolLM3-3B on an A100.
+In the validated batch-invariant FA2 configuration, throughput improves about
+1.8–3.2% at concurrency 3. Concurrency 16 is mostly neutral, with a 0.63%
+SmolLM3 long-output regression. These are configuration-specific findings,
+not a general speedup or a claim of a new attention algorithm.
+
+For reproduction, use that phase's REPRODUCE.txt, PROTOCOL.txt and VALIDATION.txt.
+Pinned model/data revisions, raw request evidence and package checksums are
+included there. Read LITERATURE-AND-NOVELTY.txt for related work and limitations.
+The earlier eager-mode A100 studies are under research/01 through research/07;
+experiments/ contains the separate historical Apple Silicon pilot.
+
+Public repository layout
+------------------------
+* research/: frozen A100 studies, source patches, executed-code snapshots,
+  evidence, plots, protocols and limitations. Preserve these packages unchanged.
+* experiments/: all 14 historical Mac pilot experiments and their results.
+* src/, workloads/, tests/, configs/: historical experiment drivers, tests and
+  settings retained where they support the pilot or scheduler trace workflow.
+* output/pdf/: historical comparison report, its data and report generator.
+* PUBLICATION-CLEANUP.txt: removed setup-only tools and preservation checks.
+
+Mac pilot context
+-----------------
+The pilot uses Qwen3-0.6B and Qwen3-1.7B with the Apple Silicon / Metal plugin.
+Those measurements do not establish CUDA correctness or a general serving speedup.
 
 Start here
 ----------
@@ -46,7 +78,7 @@ raw diagnostic archive. research/public-prep/README.txt explains the boundary.
 
 Generated machine setup receipts, virtual environments, model weights, native
 binaries, credentials and distribution archives are ignored. Generate local
-setup receipts with the setup helpers rather than committing machine paths.
+setup receipts locally rather than committing machine paths.
 
 Research status
 ---------------
