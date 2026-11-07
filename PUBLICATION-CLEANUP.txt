@@ -37,3 +37,21 @@ Existing evidence-storage notes still apply: not every older diagnostic archive
 or full logprob dump is available in a fresh clone. See research/public-prep/
 and research/08-a100-serving-extension/raw-evidence-storage.json for boundaries.
 No GPU experiment was rerun for this repository-only cleanup.
+
+Article alignment — 7 November 2026
+----------------------------------
+Reorganized README.rst around "What I Saw from Profiling vLLM on an NVIDIA
+A100": final serving results, tested scope, correctness boundaries, routing
+and split-KV interpretation, reproduction, and the earlier profiling journey.
+Added direct evidence links, the existing results figure, all 12 throughput
+effects, both highlighted high-concurrency regressions, and WildChat attribution.
+Historical Mac drivers remain available in their existing locations.
+
+The README now gives CPU-only verification and statistical replay commands;
+replay writes into a temporary workspace rather than the frozen package.
+The existing verifier passed all 36 server results, 144 timed cells, 13,824
+requests and 1,105,920 output tokens. Statistical replay reproduced summary.json,
+comparison.csv and RESULTS.txt byte for byte. All 1,528 tracked files under
+research/, experiments/ and output/ matched HEAD byte for byte. README evidence
+links were checked locally. No GPU benchmark was rerun, and the supplied
+article draft was left unchanged.
